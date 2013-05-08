@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>JTAF</title>
+        <link rel="stylesheet" type="text/css" href="css/jtaf.css">
+        <script src="javascript/util.js"></script>
+        <script>
+            var ascending = true;
+            var series;
+
+            function listSeries() {
+                sendRequest("GET", "/jtaf/res/series", 200, function(response) {
+                    series = JSON.parse(response);
+                    createTableBody(series);
+                });
+            }
+
+            function deleteSerie(id) {
+                sendRequest("DELETE", "/jtaf/res/series/" + id, 204, function() {
+                    listSeries();
+                    info("Serie deleted");
+                });
+            }
+
+            function createTableBody(rows) {
+                var table = el("serie_table");
+                table.innerHTML = "";
+
+                if (rows === undefined || rows.length === 0) {
+                    var row = table.insertRow(0);
+                    row.className = "result edit";
+
+                    var cellName = row.insertCell(0);
+                    cellName.className = "result";
+                    cellName.innerHTML = "No series found";
+
+                    var cellFunction = row.insertCell(1);
+                    cellFunction.className = "result";
+                }
+                else {
+                    for (var i in rows) {
+                        var serie = rows[i];
+                        var row = table.insertRow(i);
+                        row.className = "result";
+
+                        var onclickEdit = "window.location = 'serie.html?id=" +
+                                serie.id + "'";
+
+                        var cellName = row.insertCell(0);
+                        cellName.className = "result edit";
+                        cellName.innerHTML = serie.name;
+                        cellName.setAttribute("onclick", onclickEdit);
+
+                        var del = document.createElement("a");
+                        del.setAttribute("href", "#");
+                        del.setAttribute("onclick", "deleteSerie(" + serie.id + ")");
+                        del.appendChild(document.createTextNode("Delete"));
+
+                        var cellFunction = row.insertCell(1);
+                        cellFunction.className = "result";
+                        cellFunction.appendChild(del);
+                    }
+                }
+            }
+
+            function sortBy(property) {
+                series.sort(createComparator(property));
+                if (ascending) {
+                    series.reverse();
+                }
+                ascending = !ascending;
+                createTableBody(series);
+            }
+
+            function filter(property) {
+                var filteredSerie = new Array();
+                var searchString = document.getElementById(property).value;
+                if (searchString !== "") {
+                    var j = 0;
+                    for (i in series) {
+                        var serie = series[i];
+                        if (serie[property].toLowerCase().indexOf(searchString.toLowerCase()) !== -1) {
+                            filteredSerie[j] = serie;
+                            j++;
+                        }
+                    }
+                    createTableBody(filteredSerie);
+                } else {
+                    createTableBody(series);
+                }
+            }
+        </script>
+    </head>
+    <body onload="listSeries();">
+        <div id="main">
+            <div id="navigation">
+                <script src="javascript/navigation.js"></script>
+            </div>
+
+            <h1>Series</h1>
+
+            <table class="result">
+                <thead>
+                    <tr>
+                        <th class="result" onclick="sortBy('name');" style="width:200px;">
+                            Name<br />
+                            <input id="name" type="text" onkeyup="filter('name');" />
+                        </th>
+                        <th class="result" style="width:40px;"></th>
+                    </tr>
+                </thead>
+                <tbody id="serie_table">
+                    <tr class="result">
+                        <td class="result">Loading series</td>
+                        <td class="result"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/>
+            <a href="serie.html">Add serie</a>
+        </div>
+    </body>
+</html>
