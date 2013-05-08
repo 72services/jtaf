@@ -4,3 +4,5 @@
 *.jar
 *.war
 *.ear
+/jtaf-web/nbproject/private/
+/jtaf-web/build/
