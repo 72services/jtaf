@@ -30,13 +30,14 @@
 
             function parseAndFill(response) {
                 competition = JSON.parse(response);
+                serieId = competition.serie_id;
                 fillForm();
             }
 
             function fillForm() {
                 el("competition_id").value = competition.id;
                 el("competition_name").value = competition.name;
-                el("competition_date").value = competition.competitonDate;
+                el("competition_date").value = competition.competitionDate;
                 el("competition_name").focus();
             }
 
