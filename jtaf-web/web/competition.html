@@ -9,10 +9,12 @@
         <script src="javascript/navigation.js"></script>
         <script>
             var competition;
-            var serieId;
+            var serie;
 
             function getCompetition() {
-                serieId = param().serieId;
+                var s = sessionStorage.getItem("serie");
+                serie = JSON.parse(s);
+
                 var id = param().id;
                 if (id === undefined) {
                     competition = new Object();
@@ -25,12 +27,11 @@
             }
 
             function back() {
-                window.location = "serie.html?id=" + serieId;
+                window.location = "serie.html?id=" + serie.id;
             }
 
             function parseAndFill(response) {
                 competition = JSON.parse(response);
-                serieId = competition.serie_id;
                 fillForm();
             }
 
@@ -52,6 +53,7 @@
             function fillCompetition() {
                 competition.name = el("competition_name").value;
                 competition.competitionDate = el("competition_date").value;
+                competition.serie = serie;
             }
 
             function deleteCompetition(id) {

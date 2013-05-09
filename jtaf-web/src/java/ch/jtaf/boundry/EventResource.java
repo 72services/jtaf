@@ -1,7 +1,7 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.model.Event;
-import ch.jtaf.control.CompetitionService;
+import ch.jtaf.control.DataService;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response;
 public class EventResource {
 
     @EJB
-    private CompetitionService competitionService;
+    private DataService competitionService;
 
     @GET
     public List<Event> list() {

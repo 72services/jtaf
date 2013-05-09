@@ -1,7 +1,6 @@
 package ch.jtaf.boundry;
 
-import ch.jtaf.model.Event;
-import ch.jtaf.control.CompetitionService;
+import ch.jtaf.control.DataService;
 import ch.jtaf.model.Category;
 import java.util.List;
 import javax.ejb.EJB;
@@ -16,14 +15,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
-@Path("events")
+@Path("categories")
 @Produces({"application/json"})
 @Consumes({"application/json"})
 @Stateless
 public class CategoryResource {
 
     @EJB
-    private CompetitionService competitionService;
+    private DataService competitionService;
 
     @GET
     public List<Category> list() {

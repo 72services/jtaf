@@ -10,19 +10,19 @@ public class Category {
     @Id
     @GeneratedValue
     private Long id;
-    private String key;
+    private String abbrevation;
+
+    public String getAbbrevation() {
+        return abbrevation;
+    }
+
+    public void setAbbrevation(String abbrevation) {
+        this.abbrevation = abbrevation;
+    }
     private String name;
     private int yearFrom;
     private int yearTo;
     private String gender;
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public int getYearFrom() {
         return yearFrom;

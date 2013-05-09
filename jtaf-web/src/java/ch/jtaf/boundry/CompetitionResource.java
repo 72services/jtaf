@@ -1,6 +1,6 @@
 package ch.jtaf.boundry;
 
-import ch.jtaf.control.CompetitionService;
+import ch.jtaf.control.DataService;
 import ch.jtaf.model.Competition;
 import java.util.List;
 import javax.ejb.EJB;
@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response;
 public class CompetitionResource {
 
     @EJB
-    private CompetitionService competitionService;
+    private DataService competitionService;
 
     @GET
     public List<Competition> list() {

@@ -19,21 +19,19 @@
                     sendRequest("GET", "/jtaf/res/series/" + id, 200, function(response) {
                         parseAndFillSerie(response);
                     });
-                    sendRequest("GET", "/jtaf/res/catgories/" + id, 200, function(response) {
-                        parseAndFillCatgories(response);
+                    sendRequest("GET", "/jtaf/res/categories", 200, function(response) {
+                        parseAndFillCategories(response);
                     });
-                    sendRequest("GET", "/jtaf/res/events/" + id, 200, function(response) {
+                    sendRequest("GET", "/jtaf/res/events", 200, function(response) {
                         parseAndFillEvents(response);
                     });
                 }
             }
 
-            function addCompetition() {
-                window.location = "competition.html?serieId=" + serie.id;
-            }
-
             function parseAndFillSerie(response) {
+                console.log(response);
                 serie = JSON.parse(response);
+                sessionStorage.setItem("serie", response);
                 fillForm();
                 fillCompetitionTable();
             }
@@ -45,34 +43,36 @@
             }
 
             function fillCompetitionTable() {
-                if (serie.competitions.length > 0) {
-                    var table = el("competition_table");
-                    table.innerHTML = "";
-
+                var table = el("competition_table");
+                table.innerHTML = "";
+                if (serie.competitions === undefined || serie.competitions.length === 0) {
+                    var row = table.insertRow(0);
+                    row.className = "result";
+                    var cellName = row.insertCell(0);
+                    cellName.className = "result";
+                    cellName.innerHTML = "No competitions found";
+                    cellName.setAttribute("colspan", 3);
+                }
+                else {
                     for (var i in serie.competitions) {
                         var competition = serie.competitions[i];
                         var row = table.insertRow(i);
                         row.className = "result";
-
                         var onclickEdit = "window.location = 'competition.html?id=" +
                                 competition.id + "'";
-
                         var cellName = row.insertCell(0);
                         cellName.className = "result edit";
                         cellName.innerHTML = competition.name;
                         cellName.setAttribute("onclick", onclickEdit);
-
                         var cellDate = row.insertCell(1);
                         cellDate.className = "result edit";
                         cellDate.innerHTML = competition.competitionDate;
                         cellDate.setAttribute("onclick", onclickEdit);
-
                         var del = document.createElement("a");
                         del.setAttribute("href", "#");
                         del.setAttribute("onclick", "deleteCompetition(" +
                                 competition.id + ")");
                         del.appendChild(document.createTextNode("Delete"));
-
                         var cellFunction = row.insertCell(2);
                         cellFunction.className = "result";
                         cellFunction.appendChild(del);
@@ -82,52 +82,52 @@
 
             function parseAndFillCategories(response) {
                 var categories = JSON.parse(response);
-
                 var table = el("category_table");
                 table.innerHTML = "";
-
-                for (var i in categories) {
-                    var category = categories[i];
-                    var row = table.insertRow(i);
+                if (categories === undefined || categories.length === 0) {
+                    var row = table.insertRow(0);
                     row.className = "result";
-
-                    var onclickEdit = "window.location = 'category.html?id=" +
-                            category.id + "'";
-
-                    var cellKey = row.insertCell(0);
-                    cellKey.className = "result edit";
-                    cellKey.innerHTML = category.abbr;
-                    cellKey.setAttribute("onclick", onclickEdit);
-
-                    var cellName = row.insertCell(1);
-                    cellName.className = "result edit";
-                    cellName.innerHTML = category.name;
-                    cellName.setAttribute("onclick", onclickEdit);
-
-                    var cellYearFrom = row.insertCell(2);
-                    cellYearFrom.className = "result edit";
-                    cellYearFrom.innerHTML = category.yearFrom;
-                    cellYearFrom.setAttribute("onclick", onclickEdit);
-
-                    var cellYearTo = row.insertCell(3);
-                    cellYearTo.className = "result edit";
-                    cellYearTo.innerHTML = category.yearTo;
-                    cellYearTo.setAttribute("onclick", onclickEdit);
-
-                    var cellGender = row.insertCell(4);
-                    cellGender.className = "result edit";
-                    cellGender.innerHTML = category.gender;
-                    cellGender.setAttribute("onclick", onclickEdit);
-
-                    var del = document.createElement("a");
-                    del.setAttribute("href", "#");
-                    del.setAttribute("onclick", "deleteCategory(" +
-                            category.id + ")");
-                    del.appendChild(document.createTextNode("Delete"));
-
-                    var cellFunction = row.insertCell(5);
-                    cellFunction.className = "result";
-                    cellFunction.appendChild(del);
+                    var cellName = row.insertCell(0);
+                    cellName.className = "result";
+                    cellName.innerHTML = "No competitions found";
+                    cellName.setAttribute("colspan", 6);
+                }
+                else {
+                    for (var i in categories) {
+                        var category = categories[i];
+                        var row = table.insertRow(i);
+                        row.className = "result";
+                        var onclickEdit = "window.location = 'category.html?id=" +
+                                category.id + "'";
+                        var cellAbbr = row.insertCell(0);
+                        cellAbbr.className = "result edit";
+                        cellAbbr.innerHTML = category.abbrevation;
+                        cellAbbr.setAttribute("onclick", onclickEdit);
+                        var cellName = row.insertCell(1);
+                        cellName.className = "result edit";
+                        cellName.innerHTML = category.name;
+                        cellName.setAttribute("onclick", onclickEdit);
+                        var cellYearFrom = row.insertCell(2);
+                        cellYearFrom.className = "result edit";
+                        cellYearFrom.innerHTML = category.yearFrom;
+                        cellYearFrom.setAttribute("onclick", onclickEdit);
+                        var cellYearTo = row.insertCell(3);
+                        cellYearTo.className = "result edit";
+                        cellYearTo.innerHTML = category.yearTo;
+                        cellYearTo.setAttribute("onclick", onclickEdit);
+                        var cellGender = row.insertCell(4);
+                        cellGender.className = "result edit";
+                        cellGender.innerHTML = category.gender;
+                        cellGender.setAttribute("onclick", onclickEdit);
+                        var del = document.createElement("a");
+                        del.setAttribute("href", "#");
+                        del.setAttribute("onclick", "deleteCategory(" +
+                                category.id + ")");
+                        del.appendChild(document.createTextNode("Delete"));
+                        var cellFunction = row.insertCell(5);
+                        cellFunction.className = "result";
+                        cellFunction.appendChild(del);
+                    }
                 }
             }
 
@@ -135,59 +135,60 @@
                 var events = JSON.parse(response);
                 var table = el("event_table");
                 table.innerHTML = "";
-                for (var i in events) {
-                    var event = events[i];
-                    var row = table.insertRow(i);
+                if (events === undefined || events.length === 0) {
+                    var row = table.insertRow(0);
                     row.className = "result";
-
-                    var onclickEdit = "window.location = 'event.html?id=" +
-                            event.id + "'";
-
                     var cellName = row.insertCell(0);
-                    cellName.className = "result edit";
-                    cellName.innerHTML = event.name;
-                    cellName.setAttribute("onclick", onclickEdit);
-
-                    var cellType = row.insertCell(1);
-                    cellType.className = "result edit";
-                    cellType.innerHTML = event.type;
-                    cellType.setAttribute("onclick", onclickEdit);
-
-                    var cellGender = row.insertCell(2);
-                    cellGender.className = "result edit";
-                    cellGender.innerHTML = event.gender;
-                    cellGender.setAttribute("onclick", onclickEdit);
-
-                    var cellA = row.insertCell(2);
-                    cellA.className = "result edit";
-                    cellA.innerHTML = event.a;
-                    cellA.setAttribute("onclick", onclickEdit);
-
-                    var cellB = row.insertCell(3);
-                    cellB.className = "result edit";
-                    cellB.innerHTML = event.b;
-                    cellB.setAttribute("onclick", onclickEdit);
-
-                    var cellC = row.insertCell(3);
-                    cellC.className = "result edit";
-                    cellC.innerHTML = event.c;
-                    cellC.setAttribute("onclick", onclickEdit);
-
-                    var del = document.createElement("a");
-                    del.setAttribute("href", "#");
-                    del.setAttribute("onclick", "deleteEvent(" + event.id + ")");
-                    del.appendChild(document.createTextNode("Delete"));
-
-                    var cellFunction = row.insertCell(5);
-                    cellFunction.className = "result";
-                    cellFunction.appendChild(del);
+                    cellName.className = "result";
+                    cellName.innerHTML = "No events found";
+                    cellName.setAttribute("colspan", 8);
+                }
+                else {
+                    for (var i in events) {
+                        var event = events[i];
+                        var row = table.insertRow(i);
+                        row.className = "result";
+                        var onclickEdit = "window.location = 'event.html?id=" +
+                                event.id + "'";
+                        var cellName = row.insertCell(0);
+                        cellName.className = "result edit";
+                        cellName.innerHTML = event.name;
+                        cellName.setAttribute("onclick", onclickEdit);
+                        var cellType = row.insertCell(1);
+                        cellType.className = "result edit";
+                        cellType.innerHTML = event.type;
+                        cellType.setAttribute("onclick", onclickEdit);
+                        var cellGender = row.insertCell(2);
+                        cellGender.className = "result edit";
+                        cellGender.innerHTML = event.gender;
+                        cellGender.setAttribute("onclick", onclickEdit);
+                        var cellA = row.insertCell(2);
+                        cellA.className = "result edit";
+                        cellA.innerHTML = event.a;
+                        cellA.setAttribute("onclick", onclickEdit);
+                        var cellB = row.insertCell(3);
+                        cellB.className = "result edit";
+                        cellB.innerHTML = event.b;
+                        cellB.setAttribute("onclick", onclickEdit);
+                        var cellC = row.insertCell(3);
+                        cellC.className = "result edit";
+                        cellC.innerHTML = event.c;
+                        cellC.setAttribute("onclick", onclickEdit);
+                        var del = document.createElement("a");
+                        del.setAttribute("href", "#");
+                        del.setAttribute("onclick", "deleteEvent(" + event.id + ")");
+                        del.appendChild(document.createTextNode("Delete"));
+                        var cellFunction = row.insertCell(5);
+                        cellFunction.className = "result";
+                        cellFunction.appendChild(del);
+                    }
                 }
             }
 
             function save() {
-                fillSerie()();
+                fillSerie();
                 sendRequest("POST", "/jtaf/res/series/", 200, function(response) {
-                    parseAndFill(response);
+                    loadData();
                     info("Serie saved");
                 }, "application/json", JSON.stringify(serie));
             }
@@ -255,13 +256,13 @@
                     </thead>
                     <tbody id="competition_table">
                         <tr class="result">
-                            <td class="result" colspan="3">No competitions found</td>
+                            <td class="result" colspan="3">Loading competitions</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <p>
-                    <a href="javascript:addCompetition();">Add competition</a>
+                    <a href="competition.html">Add competition</a>
                 </p>
 
                 <h2>Events</h2>
@@ -280,7 +281,7 @@
                     </thead>
                     <tbody id="event_table">
                         <tr class="result">
-                            <td class="result" colspan="8">No events found</td>
+                            <td class="result" colspan="8">Loading events</td>
                         </tr>
                     </tbody>
                 </table>
@@ -304,7 +305,7 @@
                     </thead>
                     <tbody id="category_table">
                         <tr class="result">
-                            <td class="result" colspan="6">No categories found</td>
+                            <td class="result" colspan="6">Loading categories</td>
                         </tr>
                     </tbody>
                 </table>
