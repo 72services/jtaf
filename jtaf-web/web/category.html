@@ -13,8 +13,10 @@
             var events;
 
             function loadData() {
-                var s = sessionStorage.getItem("serie");
-                serie = JSON.parse(s);
+                if (serie === undefined) {
+                    var s = sessionStorage.getItem("serie");
+                    serie = JSON.parse(s);
+                }
 
                 if (events === undefined) {
                     sendRequest("GET", "/jtaf/res/events", 200, function(response) {
@@ -73,8 +75,9 @@
                     var option = document.createElement("option");
                     option.innerHTML = "";
                     select.appendChild(option);
-                    for (var e in events) {
-                        var ev = events[e];
+                    cell.appendChild(select);
+                    for (var j in events) {
+                        var ev = events[j];
                         var option = document.createElement("option");
                         option.value = ev.id;
                         option.innerHTML = ev.name;
@@ -84,7 +87,6 @@
                             option.selected = true;
                         }
                     }
-                    cell.appendChild(select);
                 }
             }
 
@@ -108,21 +110,22 @@
                 } else {
                     category.gender = "f";
                 }
-                getEvents();
+                fillCategoryEvents();
                 category.serie = serie;
             }
 
-            function getEvents() {
+            function fillCategoryEvents() {
                 var jtafEvents = [];
-                var j = 0;
+                var k = 0;
                 for (var i = 0; i < 10; i++) {
                     var select = el("select" + i);
                     var id = select.options[select.selectedIndex].value;
                     console.log(id);
-                    for (var e in events) {
-                        var jtafEvent = events[e];
+                    for (var j in events) {
+                        var jtafEvent = events[j];
                         if (jtafEvent.id == id) {
-                            jtafEvents[j] = jtafEvent;
+                            jtafEvents[k] = jtafEvent;
+                            k++;
                         }
                     }
                 }
@@ -162,11 +165,11 @@
                     </tr>
                     <tr>
                         <td>Year from</td>
-                        <td><input type="number" min="1900" max="2000" id="category_yearFrom" required /></td>
+                        <td><input type="number" min="1900" max="2100" id="category_yearFrom" required /></td>
                     </tr>
                     <tr>
                         <td>Year to</td>
-                        <td><input type="number" min="1900" max="2000" id="category_yearTo" required /></td>
+                        <td><input type="number" min="1900" max="2100" id="category_yearTo" required /></td>
                     </tr>
                     <tr>
                         <td>Gender</td>
