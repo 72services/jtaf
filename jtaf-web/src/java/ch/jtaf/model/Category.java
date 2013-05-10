@@ -3,6 +3,7 @@ package ch.jtaf.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Category {
@@ -11,6 +12,20 @@ public class Category {
     @GeneratedValue
     private Long id;
     private String abbrevation;
+    private String name;
+    private int yearFrom;
+    private int yearTo;
+    private String gender;
+    @ManyToOne
+    private Serie serie;
+
+    public Serie getSerie() {
+        return serie;
+    }
+
+    public void setSerie(Serie serie) {
+        this.serie = serie;
+    }
 
     public String getAbbrevation() {
         return abbrevation;
@@ -19,10 +34,6 @@ public class Category {
     public void setAbbrevation(String abbrevation) {
         this.abbrevation = abbrevation;
     }
-    private String name;
-    private int yearFrom;
-    private int yearTo;
-    private String gender;
 
     public int getYearFrom() {
         return yearFrom;

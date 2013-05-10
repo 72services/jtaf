@@ -29,9 +29,9 @@
             }
 
             function parseAndFillSerie(response) {
-                console.log(response);
                 serie = JSON.parse(response);
                 sessionStorage.setItem("serie", response);
+
                 fillForm();
                 fillCompetitionTable();
             }

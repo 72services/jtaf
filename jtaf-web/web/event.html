@@ -38,8 +38,22 @@
             function fillForm() {
                 el("event_id").value = jtafEvent.id;
                 el("event_name").value = jtafEvent.name;
-                el("event_type").value = jtafEvent.type;
-                el("event_gender").value = jtafEvent.gender;
+                var index = 0;
+                switch (jtafEvent.type) {
+                    case "jump":
+                        index = 1;
+                        break;
+                    case "throw":
+                        index = 2;
+                        break;
+                }
+                el("event_type").options[index].selected = true;
+                if (jtafEvent.gender === "m") {
+                    el("event_gender_m").checked = true;
+                }
+                else {
+                    el("event_gender_f").checked = true;
+                }
                 el("event_a").value = jtafEvent.a;
                 el("event_b").value = jtafEvent.b;
                 el("event_c").value = jtafEvent.c;
@@ -57,7 +71,12 @@
             function fillEvent() {
                 jtafEvent.name = el("event_name").value;
                 jtafEvent.type = el("event_type").value;
-                jtafEvent.gender = el("event_gender").value;
+                if (el("event_gender_m").checked) {
+                    jtafEvent.gender = "m";
+                }
+                else {
+                    jtafEvent.gender = "f";
+                }
                 jtafEvent.a = el("event_a").value;
                 jtafEvent.b = el("event_b").value;
                 jtafEvent.c = el("event_c").value;
@@ -93,11 +112,20 @@
                     </tr>
                     <tr>
                         <td>Type</td>
-                        <td><input type="text" id="event_type" required /></td>
+                        <td>
+                            <select id="event_type">
+                                <option value="run">run</option>
+                                <option value="jump">jump</option>
+                                <option value="throw">throw</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>Gender</td>
-                        <td><input type="text" id="event_gender" required /></td>
+                        <td>
+                            <input id="event_gender_m" type="radio" name="event_gender" value="m">m
+                            <input id="event_gender_f" type="radio" name="event_gender" value="f">f
+                        </td>
                     </tr>
                     <tr>
                         <td>A</td>
