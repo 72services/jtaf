@@ -12,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
@@ -25,8 +26,13 @@ public class EventResource {
     private DataService competitionService;
 
     @GET
-    public List<Event> list() {
-        return competitionService.getEvents();
+    @QueryParam("{serie}")
+    public List<Event> list(@QueryParam("serie") Long id) {
+        if (id != null) {
+            return competitionService.getEventFromSerie(id);
+        } else {
+            return competitionService.getEvents();
+        }
     }
 
     @POST

@@ -19,10 +19,10 @@
                     sendRequest("GET", "/jtaf/res/series/" + id, 200, function(response) {
                         parseAndFillSerie(response);
                     });
-                    sendRequest("GET", "/jtaf/res/categories", 200, function(response) {
+                    sendRequest("GET", "/jtaf/res/categories?serie=" + id, 200, function(response) {
                         parseAndFillCategories(response);
                     });
-                    sendRequest("GET", "/jtaf/res/events", 200, function(response) {
+                    sendRequest("GET", "/jtaf/res/events?serie=" + id, 200, function(response) {
                         parseAndFillEvents(response);
                     });
                 }
@@ -47,9 +47,7 @@
                 table.innerHTML = "";
                 if (serie.competitions === undefined || serie.competitions.length === 0) {
                     var row = table.insertRow(0);
-                    row.className = "result";
                     var cellName = row.insertCell(0);
-                    cellName.className = "result";
                     cellName.innerHTML = "No competitions found";
                     cellName.setAttribute("colspan", 3);
                 }
@@ -57,15 +55,14 @@
                     for (var i in serie.competitions) {
                         var competition = serie.competitions[i];
                         var row = table.insertRow(i);
-                        row.className = "result";
                         var onclickEdit = "window.location = 'competition.html?id=" +
                                 competition.id + "'";
                         var cellName = row.insertCell(0);
-                        cellName.className = "result edit";
+                        cellName.className = "edit";
                         cellName.innerHTML = competition.name;
                         cellName.setAttribute("onclick", onclickEdit);
                         var cellDate = row.insertCell(1);
-                        cellDate.className = "result edit";
+                        cellDate.className = "edit";
                         cellDate.innerHTML = competition.competitionDate;
                         cellDate.setAttribute("onclick", onclickEdit);
                         var del = document.createElement("a");
@@ -74,7 +71,6 @@
                                 competition.id + ")");
                         del.appendChild(document.createTextNode("Delete"));
                         var cellFunction = row.insertCell(2);
-                        cellFunction.className = "result";
                         cellFunction.appendChild(del);
                     }
                 }
@@ -86,9 +82,7 @@
                 table.innerHTML = "";
                 if (categories === undefined || categories.length === 0) {
                     var row = table.insertRow(0);
-                    row.className = "result";
                     var cellName = row.insertCell(0);
-                    cellName.className = "result";
                     cellName.innerHTML = "No competitions found";
                     cellName.setAttribute("colspan", 6);
                 }
@@ -96,27 +90,26 @@
                     for (var i in categories) {
                         var category = categories[i];
                         var row = table.insertRow(i);
-                        row.className = "result";
                         var onclickEdit = "window.location = 'category.html?id=" +
                                 category.id + "'";
                         var cellAbbr = row.insertCell(0);
-                        cellAbbr.className = "result edit";
+                        cellAbbr.className = "edit";
                         cellAbbr.innerHTML = category.abbrevation;
                         cellAbbr.setAttribute("onclick", onclickEdit);
                         var cellName = row.insertCell(1);
-                        cellName.className = "result edit";
+                        cellName.className = "edit";
                         cellName.innerHTML = category.name;
                         cellName.setAttribute("onclick", onclickEdit);
                         var cellYearFrom = row.insertCell(2);
-                        cellYearFrom.className = "result edit";
+                        cellYearFrom.className = "edit";
                         cellYearFrom.innerHTML = category.yearFrom;
                         cellYearFrom.setAttribute("onclick", onclickEdit);
                         var cellYearTo = row.insertCell(3);
-                        cellYearTo.className = "result edit";
+                        cellYearTo.className = "edit";
                         cellYearTo.innerHTML = category.yearTo;
                         cellYearTo.setAttribute("onclick", onclickEdit);
                         var cellGender = row.insertCell(4);
-                        cellGender.className = "result edit";
+                        cellGender.className = "edit";
                         cellGender.innerHTML = category.gender;
                         cellGender.setAttribute("onclick", onclickEdit);
                         var del = document.createElement("a");
@@ -125,7 +118,6 @@
                                 category.id + ")");
                         del.appendChild(document.createTextNode("Delete"));
                         var cellFunction = row.insertCell(5);
-                        cellFunction.className = "result";
                         cellFunction.appendChild(del);
                     }
                 }
@@ -137,9 +129,7 @@
                 table.innerHTML = "";
                 if (events === undefined || events.length === 0) {
                     var row = table.insertRow(0);
-                    row.className = "result";
                     var cellName = row.insertCell(0);
-                    cellName.className = "result";
                     cellName.innerHTML = "No events found";
                     cellName.setAttribute("colspan", 7);
                 }
@@ -147,31 +137,30 @@
                     for (var i in events) {
                         var event = events[i];
                         var row = table.insertRow(i);
-                        row.className = "result";
                         var onclickEdit = "window.location = 'event.html?id=" +
                                 event.id + "'";
                         var cellName = row.insertCell(0);
-                        cellName.className = "result edit";
+                        cellName.className = "edit";
                         cellName.innerHTML = event.name;
                         cellName.setAttribute("onclick", onclickEdit);
                         var cellType = row.insertCell(1);
-                        cellType.className = "result edit";
+                        cellType.className = "edit";
                         cellType.innerHTML = event.type;
                         cellType.setAttribute("onclick", onclickEdit);
                         var cellGender = row.insertCell(2);
-                        cellGender.className = "result edit";
+                        cellGender.className = "edit";
                         cellGender.innerHTML = event.gender;
                         cellGender.setAttribute("onclick", onclickEdit);
                         var cellA = row.insertCell(3);
-                        cellA.className = "result edit";
+                        cellA.className = "edit";
                         cellA.innerHTML = event.a;
                         cellA.setAttribute("onclick", onclickEdit);
                         var cellB = row.insertCell(4);
-                        cellB.className = "result edit";
+                        cellB.className = "edit";
                         cellB.innerHTML = event.b;
                         cellB.setAttribute("onclick", onclickEdit);
                         var cellC = row.insertCell(5);
-                        cellC.className = "result edit";
+                        cellC.className = "edit";
                         cellC.innerHTML = event.c;
                         cellC.setAttribute("onclick", onclickEdit);
                         var del = document.createElement("a");
@@ -179,7 +168,6 @@
                         del.setAttribute("onclick", "deleteEvent(" + event.id + ")");
                         del.appendChild(document.createTextNode("Delete"));
                         var cellFunction = row.insertCell(6);
-                        cellFunction.className = "result";
                         cellFunction.appendChild(del);
                     }
                 }
@@ -229,7 +217,7 @@
 
             <form action="javascript:save();">
 
-                <table style="width: 100%">
+                <table class="input">
                     <tr>
                         <td>Id</td>
                         <td><input type="text" id="serie_id" readonly disabled /></td>
@@ -249,14 +237,14 @@
                 <table class="result">
                     <thead>
                         <tr>
-                            <th class="result">Name</th>
-                            <th class="result">Date</th>
-                            <th class="result" style="width: 40px"></th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th style="width: 40px"></th>
                         </tr>
                     </thead>
                     <tbody id="competition_table">
-                        <tr class="result">
-                            <td class="result" colspan="3">Loading competitions</td>
+                        <tr>
+                            <td colspan="3">Loading competitions</td>
                         </tr>
                     </tbody>
                 </table>
@@ -270,18 +258,18 @@
                 <table class="result">
                     <thead>
                         <tr>
-                            <th class="result">Name</th>
-                            <th class="result">Type</th>
-                            <th class="result">Gender</th>
-                            <th class="result">A</th>
-                            <th class="result">B</th>
-                            <th class="result">C</th>
-                            <th class="result" style="width: 40px"></th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Gender</th>
+                            <th>A</th>
+                            <th>B</th>
+                            <th>C</th>
+                            <th style="width: 40px"></th>
                         </tr>
                     </thead>
                     <tbody id="event_table">
-                        <tr class="result">
-                            <td class="result" colspan="7">Loading events</td>
+                        <tr>
+                            <td colspan="7">Loading events</td>
                         </tr>
                     </tbody>
                 </table>
@@ -295,17 +283,17 @@
                 <table class="result">
                     <thead>
                         <tr>
-                            <th class="result">Key</th>
-                            <th class="result">Name</th>
-                            <th class="result">From</th>
-                            <th class="result">To</th>
-                            <th class="result">Gender</th>
-                            <th class="result" style="width: 40px"></th>
+                            <th>Key</th>
+                            <th>Name</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Gender</th>
+                            <th style="width: 40px"></th>
                         </tr>
                     </thead>
                     <tbody id="category_table">
-                        <tr class="result">
-                            <td class="result" colspan="6">Loading categories</td>
+                        <tr>
+                            <td colspan="6">Loading categories</td>
                         </tr>
                     </tbody>
                 </table>

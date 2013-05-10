@@ -50,4 +50,20 @@ public class DataService extends AbstractService {
         s.setCompetitions(cs);
         return s;
     }
+
+    public List<Category> getCategoryFromSerie(Long id) {
+        Serie serie = em.find(Serie.class, id);
+        TypedQuery<Category> q = em.createQuery("select c from Category c where c.serie = :serie order by c.abbrevation",
+                Category.class);
+        q.setParameter("serie", serie);
+        return q.getResultList();
+    }
+
+    public List<Event> getEventFromSerie(Long id) {
+        Serie serie = em.find(Serie.class, id);
+        TypedQuery<Event> q = em.createQuery("select e from Event e where e.serie = :serie order by e.name",
+                Event.class);
+        q.setParameter("serie", serie);
+        return q.getResultList();
+    }
 }

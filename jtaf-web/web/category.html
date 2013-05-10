@@ -10,14 +10,22 @@
         <script>
             var category;
             var serie;
+            var events;
 
             function loadData() {
                 var s = sessionStorage.getItem("serie");
                 serie = JSON.parse(s);
 
+                if (events === undefined) {
+                    sendRequest("GET", "/jtaf/res/events", 200, function(response) {
+                        events = JSON.parse(response);
+                    });
+                }
+
                 var id = param().id;
                 if (id === undefined) {
                     category = new Object();
+                    fillEventsTable();
                     el("category_abbr").focus();
                 } else {
                     sendRequest("GET", "/jtaf/res/categories/" + id, 200, function(response) {
@@ -47,15 +55,47 @@
                 else {
                     el("category_gender_f").checked = true;
                 }
+                fillEventsTable();
                 el("category_abbr").focus();
+            }
+
+            function fillEventsTable() {
+                var table = el("category_events");
+                table.innerHTML = "";
+
+                for (var i = 0; i < 10; i++) {
+                    var row = table.insertRow(i);
+                    var cellNo = row.insertCell(0);
+                    cellNo.innerHTML = i + 1;
+                    var cell = row.insertCell(1);
+                    var select = document.createElement("select");
+                    select.id = "select" + i;
+                    var option = document.createElement("option");
+                    option.innerHTML = "";
+                    select.appendChild(option);
+                    for (var e in events) {
+                        var ev = events[e];
+                        var option = document.createElement("option");
+                        option.value = ev.id;
+                        option.innerHTML = ev.name;
+                        select.appendChild(option);
+                        if (category.events[i] !== undefined &&
+                                category.events[i].id === ev.id) {
+                            option.selected = true;
+                        }
+                    }
+                    cell.appendChild(select);
+                }
             }
 
             function save() {
                 fillCategory();
+                var message = JSON.stringify(category);
+                console.log(message);
                 sendRequest("POST", "/jtaf/res/categories/", 200, function(response) {
                     parseAndFill(response);
                     info("Category saved");
-                }, "application/json", JSON.stringify(category));
+                }, "application/json", message);
             }
 
             function fillCategory() {
@@ -68,7 +108,25 @@
                 } else {
                     category.gender = "f";
                 }
+                getEvents();
                 category.serie = serie;
+            }
+
+            function getEvents() {
+                var jtafEvents = [];
+                var j = 0;
+                for (var i = 0; i < 10; i++) {
+                    var select = el("select" + i);
+                    var id = select.options[select.selectedIndex].value;
+                    console.log(id);
+                    for (var e in events) {
+                        var jtafEvent = events[e];
+                        if (jtafEvent.id == id) {
+                            jtafEvents[j] = jtafEvent;
+                        }
+                    }
+                }
+                category.events = jtafEvents;
             }
 
             function deleteCategory(id) {
@@ -89,7 +147,7 @@
 
             <form action="javascript:save();">
 
-                <table style="width: 100%">
+                <table class="input">
                     <tr>
                         <td>Id</td>
                         <td><input type="text" id="category_id" readonly disabled /></td>
@@ -115,6 +173,13 @@
                         <td>
                             <input id="category_gender_m" type="radio" name="category_gender" value="m">m
                             <input id="category_gender_f" type="radio" name="category_gender" value="f">f
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Events</td>
+                        <td>
+                            <table id="category_events" class="events">
+                            </table>
                         </td>
                     </tr>
                 </table>

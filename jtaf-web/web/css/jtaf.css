@@ -20,7 +20,7 @@ h3 {
     font-weight: bold;
 }
 
-form input[type="submit"], button {
+input[type="submit"], button {
     border: 1px solid #a8a8a8;
     background: #F5F5F5;
     color: #4f4f4f;
@@ -29,6 +29,14 @@ form input[type="submit"], button {
     padding-left: 10px;
     padding-right: 10px;
     cursor: pointer;
+}
+
+input[type="text"], input[type="number"], input[type="date"]{
+    width: 200px;
+}
+
+select {
+    width: 170px;
 }
 
 div#main {
@@ -72,28 +80,35 @@ div#error {
     border-color: tomato;
 }
 
-table.result {
+table.result, table.input, table.events {
     width: 100%;
     border-collapse: collapse;
 }
 
-td.result {
+table.result td, table.input td{
     padding: 15px;
 }
 
 
-th.result {
+table.result th {
     background: linear-gradient(#B4D179, #8AB92A);
     padding: 15px;
     cursor: pointer;
 }
 
-th.result:first-child { border-radius: 9px 0 0 0; }
-th.result:last-child { border-radius: 0 9px 0 0; }
-tr.result:last-child td:first-child { border-radius: 0 0 0 9px; }
-tr.result:last-child td:last-child { border-radius: 0 0 9px 0; }
-tr.result:nth-child(even) { background: #B4D179; }
-tr.result:nth-child(odd) { background: #E6F8C0; }
+table.result th:first-child { border-radius: 9px 0 0 0; }
+table.result th:last-child { border-radius: 0 9px 0 0; }
+table.result tr:last-child td:first-child { border-radius: 0 0 0 9px; }
+table.result tr:last-child td:last-child { border-radius: 0 0 9px 0; }
+table.result tr:nth-child(even) { background: #B4D179; }
+table.result tr:nth-child(odd) { background: #E6F8C0; }
+
+table.input tr:first-child td:first-child { border-radius: 9px 0 0 0; }
+table.input tr:first-child td:last-child { border-radius: 0 9px 0 0; }
+table.input tr:last-child td:first-child { border-radius: 0 0 0 9px; }
+table.input tr:last-child td:last-child { border-radius: 0 0 9px 0; }
+table.input tr:nth-child(even) { background: #B4D179; }
+table.input tr:nth-child(odd) { background: #E6F8C0; }
 
 .edit{
     cursor: pointer;

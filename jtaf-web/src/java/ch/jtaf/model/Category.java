@@ -1,9 +1,13 @@
 package ch.jtaf.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Category {
@@ -18,6 +22,16 @@ public class Category {
     private String gender;
     @ManyToOne
     private Serie serie;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Event> events = new ArrayList<Event>();
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
 
     public Serie getSerie() {
         return serie;
