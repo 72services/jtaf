@@ -20,6 +20,7 @@ public class AbstractService {
     }
 
     public <T> void delete(T t) {
+        t = em.merge(t);
         em.remove(t);
     }
 }
