@@ -141,7 +141,7 @@
                     var cellName = row.insertCell(0);
                     cellName.className = "result";
                     cellName.innerHTML = "No events found";
-                    cellName.setAttribute("colspan", 8);
+                    cellName.setAttribute("colspan", 7);
                 }
                 else {
                     for (var i in events) {
@@ -162,15 +162,15 @@
                         cellGender.className = "result edit";
                         cellGender.innerHTML = event.gender;
                         cellGender.setAttribute("onclick", onclickEdit);
-                        var cellA = row.insertCell(2);
+                        var cellA = row.insertCell(3);
                         cellA.className = "result edit";
                         cellA.innerHTML = event.a;
                         cellA.setAttribute("onclick", onclickEdit);
-                        var cellB = row.insertCell(3);
+                        var cellB = row.insertCell(4);
                         cellB.className = "result edit";
                         cellB.innerHTML = event.b;
                         cellB.setAttribute("onclick", onclickEdit);
-                        var cellC = row.insertCell(3);
+                        var cellC = row.insertCell(5);
                         cellC.className = "result edit";
                         cellC.innerHTML = event.c;
                         cellC.setAttribute("onclick", onclickEdit);
@@ -178,7 +178,7 @@
                         del.setAttribute("href", "#");
                         del.setAttribute("onclick", "deleteEvent(" + event.id + ")");
                         del.appendChild(document.createTextNode("Delete"));
-                        var cellFunction = row.insertCell(5);
+                        var cellFunction = row.insertCell(6);
                         cellFunction.className = "result";
                         cellFunction.appendChild(del);
                     }
@@ -281,13 +281,13 @@
                     </thead>
                     <tbody id="event_table">
                         <tr class="result">
-                            <td class="result" colspan="8">Loading events</td>
+                            <td class="result" colspan="7">Loading events</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <p>
-                    <a href="javascript:addEvent();">Add event</a>
+                    <a href="event.html">Add event</a>
                 </p>
 
                 <h2>Categories</h2>
@@ -311,7 +311,7 @@
                 </table>
 
                 <p>
-                    <a href="javascript:addCategory();">Add category</a>
+                    <a href="category.html">Add category</a>
                 </p>
 
             </form>

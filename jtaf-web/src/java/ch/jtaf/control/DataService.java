@@ -6,9 +6,12 @@ import ch.jtaf.model.Event;
 import ch.jtaf.model.Serie;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.TypedQuery;
 
 @Stateless
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class DataService extends AbstractService {
 
     public List<Serie> getSeries() {

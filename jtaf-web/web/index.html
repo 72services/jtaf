@@ -9,7 +9,7 @@
             var ascending = true;
             var series;
 
-            function listSeries() {
+            function loadData() {
                 sendRequest("GET", "/jtaf/res/series", 200, function(response) {
                     series = JSON.parse(response);
                     createTableBody(series);
@@ -18,7 +18,7 @@
 
             function deleteSerie(id) {
                 sendRequest("DELETE", "/jtaf/res/series/" + id, 204, function() {
-                    listSeries();
+                    loadData();
                     info("Serie deleted");
                 });
             }
@@ -90,7 +90,7 @@
             }
         </script>
     </head>
-    <body onload="listSeries();">
+    <body onload="loadData();">
         <div id="main">
             <div id="navigation">
                 <script src="javascript/navigation.js"></script>

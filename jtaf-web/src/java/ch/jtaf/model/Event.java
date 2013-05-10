@@ -3,6 +3,7 @@ package ch.jtaf.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Event {
@@ -16,6 +17,16 @@ public class Event {
     private double a;
     private double b;
     private double c;
+    @ManyToOne
+    private Serie serie;
+
+    public Serie getSerie() {
+        return serie;
+    }
+
+    public void setSerie(Serie serie) {
+        this.serie = serie;
+    }
 
     public Long getId() {
         return id;

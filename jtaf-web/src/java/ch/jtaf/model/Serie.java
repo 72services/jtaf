@@ -3,10 +3,9 @@ package ch.jtaf.model;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Serie {
@@ -15,6 +14,7 @@ public class Serie {
     @GeneratedValue
     private Long id;
     private String name;
+    @Transient
     private List<Competition> competitions = new ArrayList<Competition>();
 
     public String getName() {

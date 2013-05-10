@@ -11,7 +11,7 @@
             var competition;
             var serie;
 
-            function getCompetition() {
+            function loadData() {
                 var s = sessionStorage.getItem("serie");
                 serie = JSON.parse(s);
 
@@ -58,13 +58,13 @@
 
             function deleteCompetition(id) {
                 sendRequest("DELETE", "/jtaf/res/competitions/" + id, 204, function() {
-                    getCompetition();
+                    loadData();
                     info("Competition deleted");
                 });
             }
         </script>
     </head>
-    <body onload="getCompetition();">
+    <body onload="loadData();">
         <div id="main">
             <div id="navigation">
                 <script src="javascript/navigation.js"></script>
