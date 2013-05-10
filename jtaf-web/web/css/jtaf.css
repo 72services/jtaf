@@ -94,6 +94,7 @@ table.input td {
 }
 
 table.result th {
+    text-align: left;
     background: #99AC3B;
     padding: 15px;
     cursor: pointer;
