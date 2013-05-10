@@ -85,13 +85,16 @@ table.result, table.input, table.events {
     border-collapse: collapse;
 }
 
-table.result td, table.input td{
+table.result td {
     padding: 15px;
 }
 
+table.input td {
+    padding: 10px;
+}
 
 table.result th {
-    background: linear-gradient(#B4D179, #8AB92A);
+    background: #99AC3B;
     padding: 15px;
     cursor: pointer;
 }
@@ -100,15 +103,15 @@ table.result th:first-child { border-radius: 9px 0 0 0; }
 table.result th:last-child { border-radius: 0 9px 0 0; }
 table.result tr:last-child td:first-child { border-radius: 0 0 0 9px; }
 table.result tr:last-child td:last-child { border-radius: 0 0 9px 0; }
-table.result tr:nth-child(even) { background: #B4D179; }
-table.result tr:nth-child(odd) { background: #E6F8C0; }
+table.result tr:nth-child(even) { background: #B9CC5B; }
+table.result tr:nth-child(odd) { background: #FAF7B8; }
 
 table.input tr:first-child td:first-child { border-radius: 9px 0 0 0; }
 table.input tr:first-child td:last-child { border-radius: 0 9px 0 0; }
 table.input tr:last-child td:first-child { border-radius: 0 0 0 9px; }
 table.input tr:last-child td:last-child { border-radius: 0 0 9px 0; }
-table.input tr:nth-child(even) { background: #B4D179; }
-table.input tr:nth-child(odd) { background: #E6F8C0; }
+table.input tr:nth-child(even) { background: #FAF7B8; }
+table.input tr:nth-child(odd) { background: #B9CC5B; }
 
 .edit{
     cursor: pointer;
