@@ -1,7 +1,6 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
-import ch.jtaf.model.Competition;
 import ch.jtaf.model.Serie;
 import java.util.List;
 import javax.ejb.EJB;
@@ -23,22 +22,22 @@ import javax.ws.rs.core.Response;
 public class SeriesResource {
 
     @EJB
-    private DataService competitionService;
+    private DataService service;
 
     @GET
     public List<Serie> list() {
-        return competitionService.getSeries();
+        return service.getSeries();
     }
 
     @POST
     public Serie save(Serie serie) {
-        return competitionService.save(serie);
+        return service.save(serie);
     }
 
     @GET
     @Path("{id}")
     public Serie get(@PathParam("id") Long id) throws WebApplicationException {
-        Serie s = competitionService.getSerie(id);
+        Serie s = service.getSerie(id);
         if (s == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
@@ -49,11 +48,11 @@ public class SeriesResource {
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
-        Serie s = competitionService.get(Serie.class, id);
+        Serie s = service.get(Serie.class, id);
         if (s == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
-            competitionService.delete(s);
+            service.delete(s);
         }
     }
 }

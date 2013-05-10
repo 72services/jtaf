@@ -1,7 +1,7 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
-import ch.jtaf.model.Category;
+import ch.jtaf.model.Club;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -12,38 +12,32 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
-@Path("categories")
+@Path("clubs")
 @Produces({"application/json"})
 @Consumes({"application/json"})
 @Stateless
-public class CategoryResource {
+public class ClubResource {
 
     @EJB
     private DataService service;
 
     @GET
-    @QueryParam("{serie}")
-    public List<Category> list(@QueryParam("serie") Long id) {
-        if (id != null) {
-            return service.getCategoryFromSerie(id);
-        } else {
-            return service.getCategories();
-        }
+    public List<Club> list() {
+        return service.getClubs();
     }
 
     @POST
-    public Category save(Category c) {
-        return service.save(c);
+    public Club save(Club club) {
+        return service.save(club);
     }
 
     @GET
     @Path("{id}")
-    public Category get(@PathParam("id") Long id) throws WebApplicationException {
-        Category c = service.get(Category.class, id);
+    public Club get(@PathParam("id") Long id) throws WebApplicationException {
+        Club c = service.get(Club.class, id);
         if (c == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
@@ -54,7 +48,7 @@ public class CategoryResource {
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
-        Category c = service.get(Category.class, id);
+        Club c = service.get(Club.class, id);
         if (c == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {

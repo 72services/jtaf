@@ -25,6 +25,10 @@
                     sendRequest("GET", "/jtaf/res/events?serie=" + id, 200, function(response) {
                         parseAndFillEvents(response);
                     });
+
+                    sendRequest("GET", "/jtaf/res/athletes?serie=" + id, 200, function(response) {
+                        parseAndFillAthletes(response);
+                    });
                 }
             }
 
@@ -173,6 +177,63 @@
                 }
             }
 
+            function parseAndFillAthletes(response) {
+                var athletes = JSON.parse(response);
+                var table = el("athlete_table");
+                table.innerHTML = "";
+                if (athletes === undefined || athletes.length === 0) {
+                    var row = table.insertRow(0);
+                    var cellName = row.insertCell(0);
+                    cellName.innerHTML = "No athletes found";
+                    cellName.setAttribute("colspan", 8);
+                }
+                else {
+                    for (var i in athletes) {
+                        var athlete = athletes[i];
+                        var row = table.insertRow(i);
+                        var onclickEdit = "window.location = 'athlete.html?id=" +
+                                athlete.id + "'";
+                        var cellId = row.insertCell(0);
+                        cellId.className = "edit";
+                        cellId.innerHTML = athlete.id;
+                        cellId.setAttribute("onclick", onclickEdit);
+                        var cellLastName = row.insertCell(1);
+                        cellLastName.className = "edit";
+                        cellLastName.innerHTML = athlete.lastName;
+                        cellLastName.setAttribute("onclick", onclickEdit);
+                        var cellFirstName = row.insertCell(2);
+                        cellFirstName.className = "edit";
+                        cellFirstName.innerHTML = athlete.firstName;
+                        cellFirstName.setAttribute("onclick", onclickEdit);
+                        var cellYear = row.insertCell(3);
+                        cellYear.className = "edit";
+                        cellYear.innerHTML = athlete.year;
+                        cellYear.setAttribute("onclick", onclickEdit);
+                        var cellGender = row.insertCell(4);
+                        cellGender.className = "edit";
+                        cellGender.innerHTML = athlete.gender;
+                        cellGender.setAttribute("onclick", onclickEdit);
+                        var cellCategory = row.insertCell(5);
+                        cellCategory.className = "edit";
+                        cellCategory.innerHTML = athlete.category !== null
+                                ? athlete.category.abbrevation : "";
+                        cellCategory.setAttribute("onclick", onclickEdit);
+                        var cellClub = row.insertCell(6);
+                        cellClub.className = "edit";
+                        cellClub.innerHTML = athlete.club !== null
+                                ? athlete.club.name : "";
+                        cellClub.setAttribute("onclick", onclickEdit);
+
+                        var del = document.createElement("a");
+                        del.setAttribute("href", "#");
+                        del.setAttribute("onclick", "deleteAthlete(" + athlete.id + ")");
+                        del.appendChild(document.createTextNode("Delete"));
+                        var cellFunction = row.insertCell(7);
+                        cellFunction.appendChild(del);
+                    }
+                }
+            }
+
             function save() {
                 fillSerie();
                 sendRequest("POST", "/jtaf/res/series/", 200, function(response) {
@@ -203,6 +264,13 @@
                 sendRequest("DELETE", "/jtaf/res/catgories/" + id, 204, function() {
                     loadData();
                     info("Event deleted");
+                });
+            }
+
+            function deleteAthlete(id) {
+                sendRequest("DELETE", "/jtaf/res/athletes/" + id, 204, function() {
+                    loadData();
+                    info("Athlete deleted");
                 });
             }
         </script>
@@ -293,13 +361,39 @@
                     </thead>
                     <tbody id="category_table">
                         <tr>
-                            <td colspan="6">Loading categories</td>
+                            <td colspan="7">Loading categories</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <p>
                     <a href="category.html">Add category</a>
+                </p>
+
+                <h2>Athletes</h2>
+
+                <table class="result">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Last name</th>
+                            <th>First name</th>
+                            <th>Year</th>
+                            <th>Gender</th>
+                            <th>Category</th>
+                            <th>Club</th>
+                            <th style="width: 40px"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="athlete_table">
+                        <tr>
+                            <td colspan="7">Loading athletes</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>
+                    <a href="athlete.html">Add athlete</a>
                 </p>
 
             </form>

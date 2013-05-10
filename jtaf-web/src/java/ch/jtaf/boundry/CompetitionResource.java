@@ -22,22 +22,22 @@ import javax.ws.rs.core.Response;
 public class CompetitionResource {
 
     @EJB
-    private DataService competitionService;
+    private DataService service;
 
     @GET
     public List<Competition> list() {
-        return competitionService.getCompetititions();
+        return service.getCompetititions();
     }
 
     @POST
     public Competition save(Competition competition) {
-        return competitionService.save(competition);
+        return service.save(competition);
     }
 
     @GET
     @Path("{id}")
     public Competition get(@PathParam("id") Long id) throws WebApplicationException {
-        Competition c = competitionService.get(Competition.class, id);
+        Competition c = service.get(Competition.class, id);
         if (c == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
@@ -48,11 +48,11 @@ public class CompetitionResource {
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
-        Competition c = competitionService.get(Competition.class, id);
+        Competition c = service.get(Competition.class, id);
         if (c == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
-            competitionService.delete(c);
+            service.delete(c);
         }
     }
 }

@@ -1,6 +1,8 @@
 package ch.jtaf.control;
 
+import ch.jtaf.model.Athlete;
 import ch.jtaf.model.Category;
+import ch.jtaf.model.Club;
 import ch.jtaf.model.Competition;
 import ch.jtaf.model.Event;
 import ch.jtaf.model.Serie;
@@ -64,6 +66,20 @@ public class DataService extends AbstractService {
         TypedQuery<Event> q = em.createQuery("select e from Event e where e.serie = :serie order by e.name",
                 Event.class);
         q.setParameter("serie", serie);
+        return q.getResultList();
+    }
+
+    public List<Athlete> getAthleteFromSerie(Long id) {
+        Serie serie = em.find(Serie.class, id);
+        TypedQuery<Athlete> q = em.createQuery("select a from Athlete a where a.serie = :serie order by a.id",
+                Athlete.class);
+        q.setParameter("serie", serie);
+        return q.getResultList();
+    }
+
+    public List<Club> getClubs() {
+        TypedQuery<Club> q = em.createQuery("select c from Club c order by c.name",
+                Club.class);
         return q.getResultList();
     }
 }

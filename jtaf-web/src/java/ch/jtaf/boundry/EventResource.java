@@ -23,27 +23,27 @@ import javax.ws.rs.core.Response;
 public class EventResource {
 
     @EJB
-    private DataService competitionService;
+    private DataService service;
 
     @GET
     @QueryParam("{serie}")
     public List<Event> list(@QueryParam("serie") Long id) {
         if (id != null) {
-            return competitionService.getEventFromSerie(id);
+            return service.getEventFromSerie(id);
         } else {
-            return competitionService.getEvents();
+            return service.getEvents();
         }
     }
 
     @POST
     public Event save(Event event) {
-        return competitionService.save(event);
+        return service.save(event);
     }
 
     @GET
     @Path("{id}")
     public Event get(@PathParam("id") Long id) throws WebApplicationException {
-        Event e = competitionService.get(Event.class, id);
+        Event e = service.get(Event.class, id);
         if (e == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
@@ -54,11 +54,11 @@ public class EventResource {
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
-        Event e = competitionService.get(Event.class, id);
+        Event e = service.get(Event.class, id);
         if (e == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
-            competitionService.delete(e);
+            service.delete(e);
         }
     }
 }

@@ -1,7 +1,8 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
-import ch.jtaf.model.Category;
+import ch.jtaf.model.Athlete;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -16,49 +17,49 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
-@Path("categories")
+@Path("athletes")
 @Produces({"application/json"})
 @Consumes({"application/json"})
 @Stateless
-public class CategoryResource {
+public class AthleteResource {
 
     @EJB
     private DataService service;
 
     @GET
     @QueryParam("{serie}")
-    public List<Category> list(@QueryParam("serie") Long id) {
+    public List<Athlete> list(@QueryParam("serie") Long id) {
         if (id != null) {
-            return service.getCategoryFromSerie(id);
+            return service.getAthleteFromSerie(id);
         } else {
-            return service.getCategories();
+            return new ArrayList<Athlete>();
         }
     }
 
     @POST
-    public Category save(Category c) {
-        return service.save(c);
+    public Athlete save(Athlete a) {
+        return service.save(a);
     }
 
     @GET
     @Path("{id}")
-    public Category get(@PathParam("id") Long id) throws WebApplicationException {
-        Category c = service.get(Category.class, id);
-        if (c == null) {
+    public Athlete get(@PathParam("id") Long id) throws WebApplicationException {
+        Athlete a = service.get(Athlete.class, id);
+        if (a == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
-            return c;
+            return a;
         }
     }
 
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
-        Category c = service.get(Category.class, id);
-        if (c == null) {
+        Athlete a = service.get(Athlete.class, id);
+        if (a == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
-            service.delete(c);
+            service.delete(a);
         }
     }
 }

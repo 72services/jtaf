@@ -42,7 +42,7 @@
                 el("athlete_id").value = athlete.id;
                 el("athlete_lastName").value = athlete.lastName;
                 el("athlete_firstName").value = athlete.lastName;
-                el("ahtlete_year").value = athlete.yearTo;
+                el("ahtlete_year").value = athlete.year;
                 if (athlete.gender === "m") {
                     el("athlete_gender_m").checked = true;
                 }
@@ -60,14 +60,27 @@
                 var table = el("athlete_events");
                 table.innerHTML = "";
 
-                for (var i in athlete.category.events) {
-                    var aevent = athlete.category.events[i];
+                if (athlete.category !== undefined) {
+                    for (var i in athlete.category.events) {
+                        var aevent = athlete.category.events[i];
+                        var row = table.insertRow(i);
+                        var cellName = row.insertCell(0);
+                        cellName.innerHTML = aevent.name;
+                        var cellResult = row.insertCell(1);
+                        var result = document.createElement("input");
+                        input.id = "result" + i;
+                        cellResult.appendChild(result);
+                        var points = document.createElement("input");
+                        points.id = "points" + i;
+                        points.setAttribute("readonly");
+                        cellResult.appendChild(result);
+                    }
                 }
             }
 
             function save() {
                 fillAthlete();
-                var message = JSON.stringify(category);
+                var message = JSON.stringify(athlete);
                 console.log(message);
                 sendRequest("POST", "/jtaf/res/athletes/", 200, function(response) {
                     parseAndFill(response);
@@ -79,7 +92,7 @@
                 athlete.firstName = el("athlete_firstName").value;
                 athlete.lastName = el("athlete_lastName").value;
                 athlete.year = el("athlete_year").value;
-                if (el("category_gender_m").checked) {
+                if (el("athlete_gender_m").checked) {
                     athlete.gender = "m";
                 } else {
                     athlete.gender = "f";
