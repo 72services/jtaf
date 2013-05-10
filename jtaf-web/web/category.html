@@ -40,7 +40,7 @@
                 el("category_abbr").value = category.abbrevation;
                 el("category_name").value = category.name;
                 el("category_yearFrom").value = category.yearFrom;
-                el("category_yearFrom").value = category.yearTo;
+                el("category_yearTo").value = category.yearTo;
                 if (category.gender === "m") {
                     el("category_gender_m").checked = true;
                 }
@@ -104,11 +104,11 @@
                     </tr>
                     <tr>
                         <td>Year from</td>
-                        <td><input type="text" id="category_yearFrom" required /></td>
+                        <td><input type="number" min="1900" max="2000" id="category_yearFrom" required /></td>
                     </tr>
                     <tr>
                         <td>Year to</td>
-                        <td><input type="text" id="category_yearTo" required /></td>
+                        <td><input type="number" min="1900" max="2000" id="category_yearTo" required /></td>
                     </tr>
                     <tr>
                         <td>Gender</td>
