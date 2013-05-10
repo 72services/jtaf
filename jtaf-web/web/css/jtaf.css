@@ -92,7 +92,7 @@ th.result:first-child { border-radius: 9px 0 0 0; }
 th.result:last-child { border-radius: 0 9px 0 0; }
 tr.result:last-child td:first-child { border-radius: 0 0 0 9px; }
 tr.result:last-child td:last-child { border-radius: 0 0 9px 0; }
-tr.result:nth-child(even) { background: #D1E2E8; }
+tr.result:nth-child(even) { background: #CBECF7; }
 tr.result:nth-child(odd) { background: #DAEEF5; }
 
 .edit{
