@@ -1,13 +1,11 @@
 function sendRequest(method, url, status, func, contenttype, body) {
     var xhr = new XMLHttpRequest();
     xhr.open(method, url, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === status) {
-                func(xhr.response);
-            } else {
-                error(xhr.status);
-            }
+    xhr.onload = function() {
+        if (xhr.status === status) {
+            func(xhr.response);
+        } else {
+            error(xhr.status);
         }
     };
     if (contenttype !== undefined) {
