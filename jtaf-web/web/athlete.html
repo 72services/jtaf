@@ -10,6 +10,7 @@
         <script>
             var athlete;
             var serie;
+            var competition;
 
             function loadData() {
                 if (serie === undefined) {
@@ -41,7 +42,7 @@
             function fillForm() {
                 el("athlete_id").value = athlete.id;
                 el("athlete_lastName").value = athlete.lastName;
-                el("athlete_firstName").value = athlete.lastName;
+                el("athlete_firstName").value = athlete.firstName;
                 el("athlete_year").value = athlete.year;
                 if (athlete.gender === "m") {
                     el("athlete_gender_m").checked = true;
@@ -49,8 +50,13 @@
                 else {
                     el("athlete_gender_f").checked = true;
                 }
-                if (athlete.category !== undefined) {
+                competition = JSON.parse(sessionStorage.getItem("competition"));
+                if (athlete.category !== undefined
+                        && competition !== undefined
+                        && competition !== null) {
+                    el("results").setAttribute("style", "visbility: visible;");
                     el("athlete_category").value = athlete.category.abbrevation;
+                    el("competition").appendChild(document.createTextNode(competition.name));
                     fillEventsTable();
                 }
                 el("athlete_lastName").focus();
@@ -68,12 +74,17 @@
                         cellName.innerHTML = aevent.name;
                         var cellResult = row.insertCell(1);
                         var result = document.createElement("input");
-                        input.id = "result" + i;
+                        result.setAttribute("type", "text");
+                        result.id = "result" + i;
+                        result.setAttribute("style", "width: 60px");
                         cellResult.appendChild(result);
+                        var cellPoints = row.insertCell(2);
                         var points = document.createElement("input");
                         points.id = "points" + i;
+                        points.setAttribute("type", "text");
                         points.setAttribute("readonly");
-                        cellResult.appendChild(result);
+                        points.setAttribute("style", "width: 60px");
+                        cellPoints.appendChild(points);
                     }
                 }
             }
@@ -143,11 +154,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Events</td>
-                        <td>
-                            <table id="athlete_events" class="events">
-                            </table>
-                        </td>
+                        <td>Category</td>
+                        <td><input type="text" id="athlete_category" readonly disabled /></td>
                     </tr>
                 </table>
 
@@ -155,6 +163,16 @@
                     <input type="submit" value="Save" />&nbsp;
                     <a href="javascript:back();">Back</a>
                 </p>
+
+                <div id="results" style="visibility: hidden;">
+
+                    <h2>Results</h2>
+                    <h3 id="competition"></h3>
+
+                    <table id="athlete_events" class="input">
+                    </table>
+
+                </div>
 
             </form>
 

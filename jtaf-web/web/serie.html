@@ -69,12 +69,22 @@
                         cellDate.className = "edit";
                         cellDate.innerHTML = competition.competitionDate;
                         cellDate.setAttribute("onclick", onclickEdit);
+
+                        var activate = document.createElement("a");
+                        activate.setAttribute("href", "#");
+                        activate.setAttribute("onclick", "activateCompetition(" +
+                                competition.id + ")");
+                        activate.appendChild(document.createTextNode("Active"));
+
                         var del = document.createElement("a");
                         del.setAttribute("href", "#");
                         del.setAttribute("onclick", "deleteCompetition(" +
                                 competition.id + ")");
                         del.appendChild(document.createTextNode("Delete"));
+
                         var cellFunction = row.insertCell(2);
+                        cellFunction.appendChild(activate);
+                        cellFunction.appendChild(document.createTextNode(" "));
                         cellFunction.appendChild(del);
                     }
                 }
@@ -135,7 +145,7 @@
                     var row = table.insertRow(0);
                     var cellName = row.insertCell(0);
                     cellName.innerHTML = "No events found";
-                    cellName.setAttribute("colspan", 7);
+                    cellName.setAttribute("colspan", 8);
                 }
                 else {
                     for (var i in events) {
@@ -253,11 +263,21 @@
                 });
             }
 
-            function deleteCategory(id) {
-                sendRequest("DELETE", "/jtaf/res/catgories/" + id, 204, function() {
+            function deleteCompetition(id) {
+                sendRequest("DELETE", "/jtaf/res/competitions/" + id, 204, function() {
                     loadData();
-                    info("Category deleted");
+                    info("Competition deleted");
                 });
+            }
+
+            function activateCompetition(id) {
+                for (var i in serie.competitions) {
+                    var competition = serie.competitions[i];
+                    if (competition.id === id) {
+                        sessionStorage.setItem("competition", JSON.stringify(competition));
+                        break;
+                    }
+                }
             }
 
             function deleteEvent(id) {
@@ -307,7 +327,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Date</th>
-                            <th style="width: 40px"></th>
+                            <th style="width: 80px"></th>
                         </tr>
                     </thead>
                     <tbody id="competition_table">
@@ -361,7 +381,7 @@
                     </thead>
                     <tbody id="category_table">
                         <tr>
-                            <td colspan="7">Loading categories</td>
+                            <td colspan="6">Loading categories</td>
                         </tr>
                     </tbody>
                 </table>
@@ -387,7 +407,7 @@
                     </thead>
                     <tbody id="athlete_table">
                         <tr>
-                            <td colspan="7">Loading athletes</td>
+                            <td colspan="8">Loading athletes</td>
                         </tr>
                     </tbody>
                 </table>

@@ -82,4 +82,23 @@ public class DataService extends AbstractService {
                 Club.class);
         return q.getResultList();
     }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Athlete saveAthlete(Athlete a) {
+        Category c = this.getCategoryWithGenderAndAge(a.getGender(), a.getYear());
+        if (c == null) {
+            throw new IllegalArgumentException();
+        }
+        a.setCategory(c);
+        return this.save(a);
+    }
+
+    private Category getCategoryWithGenderAndAge(String gender, int year) {
+        TypedQuery<Category> q = em.createQuery("select c from Category c "
+                + "where c.gender = :gender and :year between c.yearFrom and c.yearTo",
+                Category.class);
+        q.setParameter("gender", gender);
+        q.setParameter("year", year);
+        return q.getSingleResult();
+    }
 }

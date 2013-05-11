@@ -38,7 +38,7 @@ public class AthleteResource {
 
     @POST
     public Athlete save(Athlete a) {
-        return service.save(a);
+        return service.saveAthlete(a);
     }
 
     @GET
