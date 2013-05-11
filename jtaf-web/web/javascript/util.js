@@ -1,5 +1,8 @@
 function sendRequest(method, url, status, func, contenttype, body) {
     var xhr = new XMLHttpRequest();
+    if (contenttype !== undefined) {
+        xhr.setRequestHeader("Content-Type", contenttype);
+    }
     xhr.open(method, url, true);
     xhr.onload = function() {
         if (xhr.status === status) {
@@ -8,9 +11,6 @@ function sendRequest(method, url, status, func, contenttype, body) {
             error(xhr.status);
         }
     };
-    if (contenttype !== undefined) {
-        xhr.setRequestHeader("Content-Type", contenttype);
-    }
     xhr.send(body);
 }
 
