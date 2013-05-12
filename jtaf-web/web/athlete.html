@@ -17,6 +17,10 @@
                     serie = JSON.parse(s);
                 }
 
+                xhrGet("/jtaf/res/clubs", function(response) {
+                    clubs = JSON.parse(response);
+                });
+
                 var id = param().id;
                 if (id === undefined) {
                     athlete = new Object();
@@ -26,10 +30,6 @@
                         parseAndFill(response);
                     });
                 }
-                xhrGet("/jtaf/res/clubs", function(response) {
-                    clubs = JSON.parse(response);
-                    fillClubSelect();
-                });
             }
 
             function fillClubSelect() {
@@ -40,7 +40,7 @@
                     option.value = club.id;
                     option.innerHTML = club.abbrevation;
                     select.appendChild(option);
-                    if (athlete.club !== undefined &&
+                    if (athlete.club !== undefined && athlete.club !== null &&
                             athlete.club.id === club.id) {
                         option.selected = true;
                     }
@@ -69,7 +69,8 @@
                     el("athlete_gender_f").checked = true;
                 }
                 el("athlete_category").value = athlete.category.abbrevation;
-
+                fillClubSelect()
+                        ;
                 competition = JSON.parse(localStorage.getItem("competition"));
                 if (athlete.category !== undefined
                         && competition !== undefined

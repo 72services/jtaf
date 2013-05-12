@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 public class Athlete {
@@ -102,5 +103,14 @@ public class Athlete {
 
     public void setSerie(Serie serie) {
         this.serie = serie;
+    }
+
+    @JsonIgnore
+    public int getTotalPoints() {
+        int p = 0;
+        for (Result r : results) {
+            p += r.getPoints();
+        }
+        return p;
     }
 }

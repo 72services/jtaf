@@ -18,6 +18,7 @@ public class ApplicationConfig extends Application {
     private Set<Class<?>> getRestResourceClasses() {
         Set<Class<?>> resources = new java.util.HashSet<Class<?>>();
         resources.add(ch.jtaf.boundry.CategoryResource.class);
+        resources.add(ch.jtaf.boundry.RankingResource.class);
         resources.add(ch.jtaf.boundry.ClubResource.class);
         resources.add(ch.jtaf.boundry.CompetitionResource.class);
         resources.add(ch.jtaf.boundry.AthleteResource.class);
