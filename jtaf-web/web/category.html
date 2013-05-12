@@ -19,7 +19,7 @@
                 }
 
                 if (events === undefined) {
-                    sendRequest("GET", "/jtaf/res/events", 200, function(response) {
+                    xhrGet("/jtaf/res/events", function(response) {
                         events = JSON.parse(response);
                     });
                 }
@@ -30,7 +30,7 @@
                     fillEventsTable();
                     el("category_abbr").focus();
                 } else {
-                    sendRequest("GET", "/jtaf/res/categories/" + id, 200, function(response) {
+                    xhrGet("/jtaf/res/categories/" + id, function(response) {
                         parseAndFill(response);
                     });
                 }
@@ -92,12 +92,10 @@
 
             function save() {
                 fillCategory();
-                var message = JSON.stringify(category);
-                console.log(message);
-                sendRequest("POST", "/jtaf/res/categories/", 200, function(response) {
+                xhrPost("/jtaf/res/categories/", function(response) {
                     parseAndFill(response);
                     info("Category saved");
-                }, "application/json", message);
+                }, category);
             }
 
             function fillCategory() {
@@ -133,7 +131,7 @@
             }
 
             function deleteCategory(id) {
-                sendRequest("DELETE", "/jtaf/res/categories/" + id, 204, function() {
+                xhrDelete("/jtaf/res/categories/" + id, function() {
                     loadData();
                     info("Category deleted");
                 });

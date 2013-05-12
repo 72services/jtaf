@@ -10,14 +10,14 @@
             var series;
 
             function loadData() {
-                sendRequest("GET", "/jtaf/res/series", 200, function(response) {
+                xhrGet("/jtaf/res/series", function(response) {
                     series = JSON.parse(response);
                     createTableBody(series);
                 });
             }
 
             function deleteSerie(id) {
-                sendRequest("DELETE", "/jtaf/res/series/" + id, 204, function() {
+                xhrDelete("/jtaf/res/series/" + id, function() {
                     loadData();
                     info("Serie deleted");
                 });

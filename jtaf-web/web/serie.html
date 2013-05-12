@@ -16,17 +16,17 @@
                     serie = new Object();
                     el("serie_name").focus();
                 } else {
-                    sendRequest("GET", "/jtaf/res/series/" + id, 200, function(response) {
+                    xhrGet("/jtaf/res/series/" + id, function(response) {
                         parseAndFillSerie(response);
                     });
-                    sendRequest("GET", "/jtaf/res/categories?serie=" + id, 200, function(response) {
+                    xhrGet("/jtaf/res/categories?serie=" + id, function(response) {
                         parseAndFillCategories(response);
                     });
-                    sendRequest("GET", "/jtaf/res/events?serie=" + id, 200, function(response) {
+                    xhrGet("/jtaf/res/events?serie=" + id, function(response) {
                         parseAndFillEvents(response);
                     });
 
-                    sendRequest("GET", "/jtaf/res/athletes?serie=" + id, 200, function(response) {
+                    xhrGet("/jtaf/res/athletes?serie=" + id, function(response) {
                         parseAndFillAthletes(response);
                     });
                 }
@@ -246,10 +246,10 @@
 
             function save() {
                 fillSerie();
-                sendRequest("POST", "/jtaf/res/series/", 200, function(response) {
+                xhrPost("/jtaf/res/series/", function(response) {
                     loadData();
                     info("Serie saved");
-                }, "application/json", JSON.stringify(serie));
+                }, serie);
             }
 
             function fillSerie() {
@@ -257,14 +257,14 @@
             }
 
             function deleteCompetition(id) {
-                sendRequest("DELETE", "/jtaf/res/competitions/" + id, 204, function() {
+                xhrDelete("/jtaf/res/competitions/" + id, function() {
                     loadData();
                     info("Competition deleted");
                 });
             }
 
             function deleteCompetition(id) {
-                sendRequest("DELETE", "/jtaf/res/competitions/" + id, 204, function() {
+                xhrDelete("/jtaf/res/competitions/" + id, function() {
                     loadData();
                     info("Competition deleted");
                 });
@@ -281,14 +281,14 @@
             }
 
             function deleteEvent(id) {
-                sendRequest("DELETE", "/jtaf/res/catgories/" + id, 204, function() {
+                xhrDelete("/jtaf/res/catgories/" + id, function() {
                     loadData();
                     info("Event deleted");
                 });
             }
 
             function deleteAthlete(id) {
-                sendRequest("DELETE", "/jtaf/res/athletes/" + id, 204, function() {
+                xhrDelete("/jtaf/res/athletes/" + id, function() {
                     loadData();
                     info("Athlete deleted");
                 });

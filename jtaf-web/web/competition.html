@@ -20,7 +20,7 @@
                     competition = new Object();
                     el("competition_name").focus();
                 } else {
-                    sendRequest("GET", "/jtaf/res/competitions/" + id, 200, function(response) {
+                    xhrGet("/jtaf/res/competitions/" + id, function(response) {
                         parseAndFill(response);
                     });
                 }
@@ -44,10 +44,10 @@
 
             function save() {
                 fillCompetition();
-                sendRequest("POST", "/jtaf/res/competitions/", 200, function(response) {
+                xhrPost("/jtaf/res/competitions/", function(response) {
                     parseAndFill(response);
                     info("Competition saved");
-                }, "application/json", JSON.stringify(competition));
+                }, competition);
             }
 
             function fillCompetition() {
@@ -57,7 +57,7 @@
             }
 
             function deleteCompetition(id) {
-                sendRequest("DELETE", "/jtaf/res/competitions/" + id, 204, function() {
+                xhrDelete("/jtaf/res/competitions/" + id, function() {
                     loadData();
                     info("Competition deleted");
                 });

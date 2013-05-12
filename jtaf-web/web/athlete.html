@@ -24,7 +24,7 @@
                     fillEventsTable();
                     el("athlete_lastName").focus();
                 } else {
-                    sendRequest("GET", "/jtaf/res/athletes/" + id, 200, function(response) {
+                    xhrGet("/jtaf/res/athletes/" + id, function(response) {
                         parseAndFill(response);
                     });
                 }
@@ -91,12 +91,10 @@
 
             function save() {
                 fillAthlete();
-                var message = JSON.stringify(athlete);
-                console.log(message);
-                sendRequest("POST", "/jtaf/res/athletes/", 200, function(response) {
+                xhrPost("/jtaf/res/athletes/", function(response) {
                     parseAndFill(response);
                     info("Athlete saved");
-                }, "application/json", message);
+                }, athlete);
             }
 
             function fillAthlete() {
@@ -112,7 +110,7 @@
             }
 
             function deleteAthlete(id) {
-                sendRequest("DELETE", "/jtaf/res/athletes/" + id, 204, function() {
+                xhrDelete("/jtaf/res/athletes/" + id, function() {
                     loadData();
                     info("Athlete deleted");
                 });

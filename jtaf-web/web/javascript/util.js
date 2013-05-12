@@ -1,17 +1,41 @@
-function sendRequest(method, url, status, func, contenttype, body) {
+function xhrGet(url, func) {
     var xhr = new XMLHttpRequest();
-    if (contenttype !== undefined) {
-        xhr.setRequestHeader("Content-Type", contenttype);
-    }
-    xhr.open(method, url, true);
+    xhr.open("GET", url, true);
     xhr.onload = function() {
-        if (xhr.status === status) {
+        if (xhr.status === 200) {
             func(xhr.response);
         } else {
             error(xhr.status);
         }
     };
-    xhr.send(body);
+    xhr.send();
+}
+
+function xhrDelete(url, func) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("DELETE", url, true);
+    xhr.onload = function() {
+        if (xhr.status === 204) {
+            func(xhr.response);
+        } else {
+            error(xhr.status);
+        }
+    };
+    xhr.send();
+}
+
+function xhrPost(url, func, body) {
+    var xhr = new XMLHttpRequest();
+    xhr.setRequestHeader("Content-Type", "contenttype", "application/json");
+    xhr.open("POST", url, true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            func(xhr.response);
+        } else {
+            error(xhr.status);
+        }
+    };
+    xhr.send(JSON.stringify(body));
 }
 
 function param() {

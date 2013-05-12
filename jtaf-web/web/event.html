@@ -20,7 +20,7 @@
                     jtafEvent = new Object();
                     el("event_name").focus();
                 } else {
-                    sendRequest("GET", "/jtaf/res/events/" + id, 200, function(response) {
+                    xhrGet("/jtaf/res/events/" + id, function(response) {
                         parseAndFill(response);
                     });
                 }
@@ -62,10 +62,10 @@
 
             function save() {
                 fillEvent();
-                sendRequest("POST", "/jtaf/res/events/", 200, function(response) {
+                xhrPost("/jtaf/res/events/", function(response) {
                     parseAndFill(response);
                     info("Event saved");
-                }, "application/json", JSON.stringify(jtafEvent));
+                }, jtafEvent);
             }
 
             function fillEvent() {
@@ -84,7 +84,7 @@
             }
 
             function deleteEvent(id) {
-                sendRequest("DELETE", "/jtaf/res/events/" + id, 204, function() {
+                xhrDelete("/jtaf/res/events/" + id, function() {
                     loadData();
                     info("Event deleted");
                 });
