@@ -80,8 +80,13 @@ div#error {
     border-color: tomato;
 }
 
-table.result, table.input, table.events {
+table.result, table.events {
     width: 100%;
+    border-collapse: collapse;
+}
+
+table.input {
+    width: 400px;
     border-collapse: collapse;
 }
 

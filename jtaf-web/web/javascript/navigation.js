@@ -1,3 +1,3 @@
-sendRequest("GET", "/jtaf/navigation.html", 200, function(response) {
+xhrGet("/jtaf/navigation.html", function(response) {
     document.getElementById("navigation").innerHTML = response;
 });

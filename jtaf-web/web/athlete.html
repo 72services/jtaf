@@ -4,9 +4,7 @@
         <meta charset="utf-8">
         <title>Edit Athlete</title>
         <link rel="stylesheet" href="css/jtaf.css">
-
         <script src="javascript/util.js"></script>
-        <script src="javascript/navigation.js"></script>
         <script>
             var athlete;
             var serie;
@@ -21,8 +19,8 @@
                 var id = param().id;
                 if (id === undefined) {
                     athlete = new Object();
-                    fillEventsTable();
                     el("athlete_lastName").focus();
+                    fillEventsTable();
                 } else {
                     xhrGet("/jtaf/res/athletes/" + id, function(response) {
                         parseAndFill(response);
@@ -42,6 +40,7 @@
             function fillForm() {
                 el("athlete_id").value = athlete.id;
                 el("athlete_lastName").value = athlete.lastName;
+                el("athlete_lastName").focus();
                 el("athlete_firstName").value = athlete.firstName;
                 el("athlete_year").value = athlete.year;
                 if (athlete.gender === "m") {
@@ -59,7 +58,6 @@
                     el("competition").appendChild(document.createTextNode(competition.name));
                     fillEventsTable();
                 }
-                el("athlete_lastName").focus();
             }
 
             function fillEventsTable() {
@@ -76,16 +74,17 @@
                         var result = document.createElement("input");
                         result.setAttribute("type", "text");
                         result.id = "result" + i;
-                        result.setAttribute("style", "width: 60px");
+                        result.setAttribute("style", "width: 100px");
                         cellResult.appendChild(result);
                         var cellPoints = row.insertCell(2);
                         var points = document.createElement("input");
                         points.id = "points" + i;
                         points.setAttribute("type", "text");
                         points.setAttribute("readonly");
-                        points.setAttribute("style", "width: 60px");
+                        points.setAttribute("style", "width: 100px");
                         cellPoints.appendChild(points);
                     }
+                    el("result0").focus();
                 }
             }
 
