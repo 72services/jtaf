@@ -76,7 +76,7 @@
                         && competition !== undefined
                         && competition !== null) {
                     el("results").setAttribute("style", "visbility: visible;");
-                    el("competition").appendChild(document.createTextNode(competition.name));
+                    el("competition").innerHTML = competition.name;
                     fillEventsTable();
                 }
             }
