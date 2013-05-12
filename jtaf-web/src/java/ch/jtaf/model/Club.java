@@ -10,7 +10,16 @@ public class Club {
     @Id
     @GeneratedValue
     private Long id;
+    private String abbrevation;
     private String name;
+
+    public String getAbbrevation() {
+        return abbrevation;
+    }
+
+    public void setAbbrevation(String abbrevation) {
+        this.abbrevation = abbrevation;
+    }
 
     public Long getId() {
         return id;

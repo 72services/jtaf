@@ -9,10 +9,11 @@
             var athlete;
             var serie;
             var competition;
+            var clubs;
 
             function loadData() {
                 if (serie === undefined) {
-                    var s = sessionStorage.getItem("serie");
+                    var s = localStorage.getItem("serie");
                     serie = JSON.parse(s);
                 }
 
@@ -20,11 +21,29 @@
                 if (id === undefined) {
                     athlete = new Object();
                     el("athlete_lastName").focus();
-                    fillEventsTable();
                 } else {
                     xhrGet("/jtaf/res/athletes/" + id, function(response) {
                         parseAndFill(response);
                     });
+                }
+                xhrGet("/jtaf/res/clubs", function(response) {
+                    clubs = JSON.parse(response);
+                    fillClubSelect();
+                });
+            }
+
+            function fillClubSelect() {
+                var select = el("athlete_club");
+                for (var i in clubs) {
+                    var club = clubs[i];
+                    var option = document.createElement("option");
+                    option.value = club.id;
+                    option.innerHTML = club.abbrevation;
+                    select.appendChild(option);
+                    if (athlete.club !== undefined &&
+                            athlete.club.id === club.id) {
+                        option.selected = true;
+                    }
                 }
             }
 
@@ -49,12 +68,13 @@
                 else {
                     el("athlete_gender_f").checked = true;
                 }
-                competition = JSON.parse(sessionStorage.getItem("competition"));
+                el("athlete_category").value = athlete.category.abbrevation;
+
+                competition = JSON.parse(localStorage.getItem("competition"));
                 if (athlete.category !== undefined
                         && competition !== undefined
                         && competition !== null) {
                     el("results").setAttribute("style", "visbility: visible;");
-                    el("athlete_category").value = athlete.category.abbrevation;
                     el("competition").appendChild(document.createTextNode(competition.name));
                     fillEventsTable();
                 }
@@ -70,7 +90,7 @@
                         var row = table.insertRow(i);
                         var cellName = row.insertCell(0);
                         cellName.innerHTML = aevent.name;
-                        
+
                         var cellResult = row.insertCell(1);
                         var result = document.createElement("input");
                         result.setAttribute("type", "text");
@@ -79,7 +99,7 @@
                         result.setAttribute("onblur", "calculatePoints(" + i + ")");
                         cellResult.appendChild(result);
                         var cellPoints = row.insertCell(2);
-                        
+
                         var points = document.createElement("input");
                         points.id = "points" + i;
                         points.setAttribute("type", "text");
@@ -87,7 +107,7 @@
                         points.setAttribute("disabled");
                         points.setAttribute("style", "width: 100px");
                         cellPoints.appendChild(points);
-                        
+
                         if (athlete.results[i] !== undefined) {
                             result.value = athlete.results[i].result;
                             points.value = athlete.results[i].points;
@@ -192,6 +212,10 @@
                     <tr>
                         <td>Category</td>
                         <td><input type="text" id="athlete_category" readonly disabled /></td>
+                    </tr>
+                    <tr>
+                        <td>Club</td>
+                        <td><select id="athlete_club"></select></td>
                     </tr>
                 </table>
 

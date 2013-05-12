@@ -10,7 +10,7 @@
             var serie;
 
             function loadData() {
-                var s = sessionStorage.getItem("serie");
+                var s = localStorage.getItem("serie");
                 serie = JSON.parse(s);
 
                 var id = param().id;

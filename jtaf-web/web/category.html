@@ -12,7 +12,7 @@
 
             function loadData() {
                 if (serie === undefined) {
-                    var s = sessionStorage.getItem("serie");
+                    var s = localStorage.getItem("serie");
                     serie = JSON.parse(s);
                 }
 
