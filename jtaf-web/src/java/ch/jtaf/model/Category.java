@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class Category {
@@ -23,6 +24,7 @@ public class Category {
     @ManyToOne
     private Serie serie;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderColumn(name = "index")
     private List<Event> events = new ArrayList<Event>();
 
     public List<Event> getEvents() {

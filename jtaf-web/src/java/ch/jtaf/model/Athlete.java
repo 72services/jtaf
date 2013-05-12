@@ -2,12 +2,14 @@ package ch.jtaf.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class Athlete {
@@ -25,7 +27,8 @@ public class Athlete {
     private Club club;
     @ManyToOne
     private Serie serie;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderColumn(name = "index")
     @JoinColumn(name = "athlete_id")
     private List<Result> results = new ArrayList<Result>();
 

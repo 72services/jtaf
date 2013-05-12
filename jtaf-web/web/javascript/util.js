@@ -26,7 +26,6 @@ function xhrDelete(url, func) {
 
 function xhrPost(url, func, body) {
     var xhr = new XMLHttpRequest();
-    xhr.setRequestHeader("Content-Type", "contenttype", "application/json");
     xhr.open("POST", url, true);
     xhr.onload = function() {
         if (xhr.status === 200) {
@@ -35,6 +34,7 @@ function xhrPost(url, func, body) {
             error(xhr.status);
         }
     };
+    xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify(body));
 }
 

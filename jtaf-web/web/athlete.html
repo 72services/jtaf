@@ -70,22 +70,61 @@
                         var row = table.insertRow(i);
                         var cellName = row.insertCell(0);
                         cellName.innerHTML = aevent.name;
+                        
                         var cellResult = row.insertCell(1);
                         var result = document.createElement("input");
                         result.setAttribute("type", "text");
                         result.id = "result" + i;
                         result.setAttribute("style", "width: 100px");
+                        result.setAttribute("onblur", "calculatePoints(" + i + ")");
                         cellResult.appendChild(result);
                         var cellPoints = row.insertCell(2);
+                        
                         var points = document.createElement("input");
                         points.id = "points" + i;
                         points.setAttribute("type", "text");
                         points.setAttribute("readonly");
+                        points.setAttribute("disabled");
                         points.setAttribute("style", "width: 100px");
                         cellPoints.appendChild(points);
+                        
+                        if (athlete.results[i] !== undefined) {
+                            result.value = athlete.results[i].result;
+                            points.value = athlete.results[i].points;
+                        }
                     }
                     el("result0").focus();
                 }
+            }
+
+            function calculatePoints(i) {
+                var ev = athlete.category.events[i];
+                var result = el("result" + i).value;
+
+                var points = 0;
+                if (ev.type === "run") {
+                    // A*((B-L)/100)^C
+                    points = ev.a * Math.pow((ev.b - result * 100) / 100, ev.c);
+                }
+                else if (ev.type === "throw") {
+                    // A*((L-B)/100)^C
+                    points = ev.a * Math.pow((result * 100 - ev.b) / 100, ev.c);
+                }
+                else if (ev.type === "jump") {
+                    // A*(L-B)^C
+                    points = ev.a * Math.pow((result * 100 - ev.b) / 100, ev.c);
+                }
+                points = Math.round(points);
+                if (points < 0) {
+                    points = 0;
+                }
+                var resultObject = new Object();
+                resultObject.result = result;
+                resultObject.points = points;
+                resultObject.event = ev;
+                resultObject.competition = competition;
+                athlete.results[i] = resultObject;
+                el("points" + i).value = points;
             }
 
             function save() {
