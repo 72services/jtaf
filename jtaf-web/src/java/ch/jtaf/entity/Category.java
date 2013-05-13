@@ -7,10 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Category.findAll", query = "select c from Category c order by c.abbrevation"),
+    @NamedQuery(name = "Category.findBySerie", query = "select c from Category c where c.serie = :serie order by c.abbrevation"),
+    @NamedQuery(name = "Category.findByYearAndGender", query = "select c from Category c where c.gender = :gender and :year between c.yearFrom and c.yearTo")
+})
 public class Category {
 
     @Id

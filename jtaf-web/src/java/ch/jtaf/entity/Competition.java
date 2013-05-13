@@ -5,8 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Competition.findAll", query = "select c from Competition c order by c.competitionDate"),
+    @NamedQuery(name = "Competition.findBySerie", query = "select c from Competition c where c.serie = :serie order by c.name")
+})
 public class Competition {
 
     @Id

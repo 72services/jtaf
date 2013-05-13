@@ -5,9 +5,14 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Serie.findAll", query = "select s from Serie s order by s.name")
+})
 public class Serie {
 
     @Id

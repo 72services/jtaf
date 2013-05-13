@@ -22,45 +22,39 @@ import javax.persistence.TypedQuery;
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class DataService extends AbstractService {
-    
+
     public List<Serie> getSeries() {
-        TypedQuery<Serie> q = em.createQuery("select s from Serie s order by s.name",
-                Serie.class);
+        TypedQuery<Serie> q = em.createNamedQuery("Serie.findAll", Serie.class);
         return q.getResultList();
     }
 
     public List<Serie> getSeriesWithCompetitions() {
-        TypedQuery<Serie> q = em.createQuery("select s from Serie s order by s.name",
-                Serie.class);
-        List<Serie> list = q.getResultList();
+        List<Serie> list = getSeries();
         List<Serie> series = new ArrayList<Serie>();
         for (Serie s : list) {
             series.add(getSerie(s.getId()));
         }
         return series;
     }
-    
+
     public List<Competition> getCompetititions() {
-        TypedQuery<Competition> q = em.createQuery("select c from Competition c order by c.competitionDate",
-                Competition.class);
+        TypedQuery<Competition> q = em.createNamedQuery("Competition.findAll", Competition.class);
         return q.getResultList();
     }
-    
+
     public List<Event> getEvents() {
-        TypedQuery<Event> q = em.createQuery("select e from Event e order by e.name",
-                Event.class);
+        TypedQuery<Event> q = em.createNamedQuery("Event.findAll", Event.class);
         return q.getResultList();
     }
-    
+
     public List<Category> getCategories() {
-        TypedQuery<Category> q = em.createQuery("select c from Category c order by c.abbrevation",
-                Category.class);
+        TypedQuery<Category> q = em.createNamedQuery("Category.findAll", Category.class);
         return q.getResultList();
     }
-    
+
     public Serie getSerie(Long id) {
         Serie s = em.find(Serie.class, id);
-        TypedQuery<Competition> q = em.createQuery("select c from Competition c where c.serie = :serie order by c.name",
+        TypedQuery<Competition> q = em.createNamedQuery("Competition.findBySerie",
                 Competition.class);
         q.setParameter("serie", s);
         List<Competition> cs = q.getResultList();
@@ -70,37 +64,33 @@ public class DataService extends AbstractService {
         s.setCompetitions(cs);
         return s;
     }
-    
+
     public List<Category> getCategoryFromSerie(Long id) {
         Serie serie = em.find(Serie.class, id);
-        TypedQuery<Category> q = em.createQuery("select c from Category c where c.serie = :serie order by c.abbrevation",
-                Category.class);
+        TypedQuery<Category> q = em.createNamedQuery("Category.findBySerie", Category.class);
         q.setParameter("serie", serie);
         return q.getResultList();
     }
-    
+
     public List<Event> getEventFromSerie(Long id) {
         Serie serie = em.find(Serie.class, id);
-        TypedQuery<Event> q = em.createQuery("select e from Event e where e.serie = :serie order by e.name",
-                Event.class);
+        TypedQuery<Event> q = em.createNamedQuery("Event.findBySerie", Event.class);
         q.setParameter("serie", serie);
         return q.getResultList();
     }
-    
+
     public List<Athlete> getAthleteFromSerie(Long id) {
         Serie serie = em.find(Serie.class, id);
-        TypedQuery<Athlete> q = em.createQuery("select a from Athlete a where a.serie = :serie order by a.id",
-                Athlete.class);
+        TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findBySerie", Athlete.class);
         q.setParameter("serie", serie);
         return q.getResultList();
     }
-    
+
     public List<Club> getClubs() {
-        TypedQuery<Club> q = em.createQuery("select c from Club c order by c.name",
-                Club.class);
+        TypedQuery<Club> q = em.createNamedQuery("Club.findAll", Club.class);
         return q.getResultList();
     }
-    
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Athlete saveAthlete(Athlete a) {
         Category c = this.getCategoryWithGenderAndAge(a.getGender(), a.getYear());
@@ -110,29 +100,25 @@ public class DataService extends AbstractService {
         a.setCategory(c);
         return this.save(a);
     }
-    
+
     private Category getCategoryWithGenderAndAge(String gender, int year) {
-        TypedQuery<Category> q = em.createQuery("select c from Category c "
-                + "where c.gender = :gender and :year between c.yearFrom and c.yearTo",
-                Category.class);
+        TypedQuery<Category> q = em.createNamedQuery("Category.findByYearAndGender", Category.class);
         q.setParameter("gender", gender);
         q.setParameter("year", year);
         return q.getSingleResult();
     }
-    
+
     public Ranking getCompetitionRanking(Long competitionid) {
-        TypedQuery<Athlete> q = em.createQuery("select distinct a from Athlete a "
-                + "join a.results r where r.competition.id = :competitionid",
-                Athlete.class);
+        TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findByCompetition", Athlete.class);
         q.setParameter("competitionid", competitionid);
         List<Athlete> list = q.getResultList();
-        
+
         Competition competition = em.find(Competition.class, competitionid);
         competition.setSerie(null);
-        
+
         Ranking ranking = new Ranking();
         ranking.setCompetition(competition);
-        
+
         Map<Category, List<Athlete>> map = new HashMap<Category, List<Athlete>>();
         for (Athlete a : list) {
             List<Athlete> as = map.get(a.getCategory());
@@ -153,7 +139,7 @@ public class DataService extends AbstractService {
         }
         return ranking;
     }
-    
+
     private List<Athlete> filterAndSort(Competition competition, List<Athlete> list) {
         for (Athlete a : list) {
             a.setCategory(null);

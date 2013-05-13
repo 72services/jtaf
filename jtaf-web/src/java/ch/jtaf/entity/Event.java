@@ -4,8 +4,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Event.findAll", query = "select e from Event e order by e.name"),
+    @NamedQuery(name = "Event.findBySerie", query = "select e from Event e where e.serie = :serie order by e.name")
+})
 public class Event {
 
     @Id

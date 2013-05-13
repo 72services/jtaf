@@ -8,10 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Athlete.findBySerie", query = "select a from Athlete a where a.serie = :serie order by a.id"),
+    @NamedQuery(name = "Athlete.findByCompetition", query = "select distinct a from Athlete a join a.results r where r.competition.id = :competitionid")
+})
 public class Athlete {
 
     @Id
