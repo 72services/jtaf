@@ -122,3 +122,31 @@ table.input tr:nth-child(odd) { background: #B9CC5B; }
 .edit{
     cursor: pointer;
 }
+
+ul.serie li {
+    display: block;
+    list-style: none;
+    margin: 0px;
+    padding: 20px;
+    width: 600px;
+    border: 2px solid white;
+    background-color: #B9CC5B;
+    overflow: hidden;
+} 
+
+ul.competition li {
+    display: block;
+    list-style: none;
+    margin: 20px;
+    padding: 20px;
+    width: 520px;
+    height: 50px;
+    border: 2px solid white;
+    background-color: #FAF7B8;
+    overflow: hidden;
+} 
+
+ul {
+    margin: 0px;
+    padding: 0px;
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>JTAF</title>
+        <link rel="stylesheet" type="text/css" href="css/jtaf.css">
+        <script src="javascript/util.js"></script>
+        <script>
+            var ascending = true;
+            var series;
+            var clubs;
+
+            function loadData() {
+                xhrGet("/jtaf/res/series", function(response) {
+                    series = JSON.parse(response);
+                    createSeriesTableBody();
+                });
+
+                xhrGet("/jtaf/res/clubs", function(response) {
+                    clubs = JSON.parse(response);
+                    createClubsTableBody();
+                });
+            }
+
+            function deleteSerie(id) {
+                xhrDelete("/jtaf/res/series/" + id, function() {
+                    loadData();
+                    info("Serie deleted");
+                });
+            }
+
+            function deleteClubs(id) {
+                xhrDelete("/jtaf/res/clubs/" + id, function() {
+                    loadData();
+                    info("Club deleted");
+                });
+            }
+
+            function createSeriesTableBody() {
+                var table = el("serie_table");
+                table.innerHTML = "";
+
+                if (series === undefined || series.length === 0) {
+                    var row = table.insertRow(0);
+                    row.className = "result";
+
+                    var cell = row.insertCell(0);
+                    cell.className = "result";
+                    cell.innerHTML = "No series found";
+                    cell.setAttribute("colspan", 2);
+                }
+                else {
+                    for (var i in series) {
+                        var serie = series[i];
+                        var row = table.insertRow(i);
+                        row.className = "result";
+
+                        var onclickEdit = "window.location = 'serie.html?id=" +
+                                serie.id + "'";
+
+                        var cellName = row.insertCell(0);
+                        cellName.className = "edit";
+                        cellName.innerHTML = serie.name;
+                        cellName.setAttribute("onclick", onclickEdit);
+
+                        var del = document.createElement("a");
+                        del.setAttribute("href", "#");
+                        del.setAttribute("onclick", "deleteSerie(" + serie.id + ")");
+                        del.appendChild(document.createTextNode("Delete"));
+
+                        var cellFunction = row.insertCell(1);
+                        cellFunction.className = "result";
+                        cellFunction.appendChild(del);
+                    }
+                }
+            }
+
+            function createClubsTableBody() {
+                var table = el("club_table");
+                table.innerHTML = "";
+
+                if (clubs === undefined || clubs.length === 0) {
+                    var row = table.insertRow(0);
+                    row.className = "result";
+
+                    var cell = row.insertCell(0);
+                    cell.className = "result";
+                    cell.innerHTML = "No clubs found";
+                    cell.setAttribute("colspan", 3);
+                }
+                else {
+                    for (var i in clubs) {
+                        var club = clubs[i];
+                        var row = table.insertRow(i);
+                        row.className = "result";
+
+                        var onclickEdit = "window.location = 'club.html?id=" +
+                                club.id + "'";
+
+                        var cellAbbr = row.insertCell(0);
+                        cellAbbr.className = "edit";
+                        cellAbbr.innerHTML = club.abbrevation;
+                        cellAbbr.setAttribute("onclick", onclickEdit);
+
+                        var cellName = row.insertCell(1);
+                        cellName.className = "edit";
+                        cellName.innerHTML = club.name;
+                        cellName.setAttribute("onclick", onclickEdit);
+
+                        var del = document.createElement("a");
+                        del.setAttribute("href", "#");
+                        del.setAttribute("onclick", "deleteClub(" + club.id + ")");
+                        del.appendChild(document.createTextNode("Delete"));
+
+                        var cellFunction = row.insertCell(2);
+                        cellFunction.className = "result";
+                        cellFunction.appendChild(del);
+                    }
+                }
+            }
+            function sortBy(property) {
+                series.sort(createComparator(property));
+                if (ascending) {
+                    series.reverse();
+                }
+                ascending = !ascending;
+                createTableBody(series);
+            }
+
+            function filter(property) {
+                var filteredSerie = new Array();
+                var searchString = document.getElementById(property).value;
+                if (searchString !== "") {
+                    var j = 0;
+                    for (i in series) {
+                        var serie = series[i];
+                        if (serie[property].toLowerCase().indexOf(searchString.toLowerCase()) !== -1) {
+                            filteredSerie[j] = serie;
+                            j++;
+                        }
+                    }
+                    createTableBody(filteredSerie);
+                } else {
+                    createTableBody(series);
+                }
+            }
+        </script>
+    </head>
+    <body onload="loadData();">
+        <div id="main">
+            <div id="navigation">
+                <script src="javascript/navigation.js"></script>
+            </div>
+
+            <h1>Series</h1>
+
+            <table class="result">
+                <thead>
+                    <tr>
+                        <th class="result" onclick="sortBy('name');">
+                            Name<br />
+                            <input id="name" type="text" onkeyup="filter('name');" />
+                        </th>
+                        <th class="result" style="width:40px; text-align: right;"></th>
+                    </tr>
+                </thead>
+                <tbody id="serie_table">
+                    <tr class="result">
+                        <td class="result">Loading series</td>
+                        <td class="result"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><a href="serie.html">Add serie</a></p>
+
+            <h1>Clubs</h1>
+
+            <table class="result">
+                <thead>
+                    <tr>
+                        <th class="result">Abbrevation</th>
+                        <th class="result">Name</th>
+                        <th class="result" style="width:40px; text-align: right;"></th>
+                    </tr>
+                </thead>
+                <tbody id="club_table">
+                    <tr class="result">
+                        <td class="result" colspan="3">Loading clubs</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><a href="club.html">Add club</a></p>
+
+        </div>
+    </body>
+</html>

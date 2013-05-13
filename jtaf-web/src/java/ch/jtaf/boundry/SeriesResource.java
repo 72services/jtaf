@@ -12,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
@@ -25,8 +26,13 @@ public class SeriesResource {
     private DataService service;
 
     @GET
-    public List<Serie> list() {
-        return service.getSeries();
+    @QueryParam("{withCompetitions}")
+    public List<Serie> list(@QueryParam("withCompetitions") String withCompetitions) {
+        if (withCompetitions == null || !Boolean.parseBoolean(withCompetitions)) {
+            return service.getSeries();
+        } else {
+            return service.getSeriesWithCompetitions();
+        }
     }
 
     @POST

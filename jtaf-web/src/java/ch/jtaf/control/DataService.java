@@ -28,6 +28,17 @@ public class DataService extends AbstractService {
                 Serie.class);
         return q.getResultList();
     }
+
+    public List<Serie> getSeriesWithCompetitions() {
+        TypedQuery<Serie> q = em.createQuery("select s from Serie s order by s.name",
+                Serie.class);
+        List<Serie> list = q.getResultList();
+        List<Serie> series = new ArrayList<Serie>();
+        for (Serie s : list) {
+            series.add(getSerie(s.getId()));
+        }
+        return series;
+    }
     
     public List<Competition> getCompetititions() {
         TypedQuery<Competition> q = em.createQuery("select c from Competition c order by c.competitionDate",
