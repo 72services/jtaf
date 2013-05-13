@@ -1,6 +1,6 @@
 package ch.jtaf.boundry;
 
-import ch.jtaf.model.Event;
+import ch.jtaf.entity.Event;
 import ch.jtaf.control.DataService;
 import java.util.List;
 import javax.ejb.EJB;

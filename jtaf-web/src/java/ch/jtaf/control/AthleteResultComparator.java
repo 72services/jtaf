@@ -1,6 +1,6 @@
 package ch.jtaf.control;
 
-import ch.jtaf.model.Athlete;
+import ch.jtaf.entity.Athlete;
 import java.util.Comparator;
 
 public class AthleteResultComparator implements Comparator<Athlete> {

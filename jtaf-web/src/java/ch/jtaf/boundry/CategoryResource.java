@@ -1,7 +1,7 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
-import ch.jtaf.model.Category;
+import ch.jtaf.entity.Category;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

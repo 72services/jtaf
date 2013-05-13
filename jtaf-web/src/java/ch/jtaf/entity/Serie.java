@@ -1,4 +1,4 @@
-package ch.jtaf.model;
+package ch.jtaf.entity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
-import ch.jtaf.model.Athlete;
+import ch.jtaf.entity.Athlete;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;

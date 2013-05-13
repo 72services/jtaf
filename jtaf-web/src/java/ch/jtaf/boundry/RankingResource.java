@@ -1,7 +1,7 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
-import ch.jtaf.model.Ranking;
+import ch.jtaf.entity.Ranking;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;

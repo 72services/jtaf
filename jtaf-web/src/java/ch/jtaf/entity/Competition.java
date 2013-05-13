@@ -1,4 +1,4 @@
-package ch.jtaf.model;
+package ch.jtaf.entity;
 
 import java.sql.Date;
 import javax.persistence.Entity;

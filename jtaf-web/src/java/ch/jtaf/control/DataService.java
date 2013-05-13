@@ -1,14 +1,14 @@
 package ch.jtaf.control;
 
-import ch.jtaf.model.Athlete;
-import ch.jtaf.model.Category;
-import ch.jtaf.model.Club;
-import ch.jtaf.model.Competition;
-import ch.jtaf.model.Event;
-import ch.jtaf.model.Ranking;
-import ch.jtaf.model.RankingCategory;
-import ch.jtaf.model.Result;
-import ch.jtaf.model.Serie;
+import ch.jtaf.entity.Athlete;
+import ch.jtaf.entity.Category;
+import ch.jtaf.entity.Club;
+import ch.jtaf.entity.Competition;
+import ch.jtaf.entity.Event;
+import ch.jtaf.entity.Ranking;
+import ch.jtaf.entity.RankingCategory;
+import ch.jtaf.entity.Result;
+import ch.jtaf.entity.Serie;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

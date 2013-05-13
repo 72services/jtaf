@@ -1,4 +1,4 @@
-package ch.jtaf.model;
+package ch.jtaf.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class Athlete {
     @ManyToOne
     private Serie serie;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderColumn(name = "index")
+    @OrderColumn(name = "postition")
     @JoinColumn(name = "athlete_id")
     private List<Result> results = new ArrayList<Result>();
 

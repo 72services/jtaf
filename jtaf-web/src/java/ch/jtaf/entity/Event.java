@@ -1,4 +1,4 @@
-package ch.jtaf.model;
+package ch.jtaf.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
