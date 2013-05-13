@@ -11,6 +11,19 @@ function xhrGet(url, func) {
     xhr.send();
 }
 
+function xhrGetSync(url, func) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, false);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            func(xhr.response);
+        } else {
+            error(xhr.status);
+        }
+    };
+    xhr.send();
+}
+
 function xhrDelete(url, func) {
     var xhr = new XMLHttpRequest();
     xhr.open("DELETE", url, true);

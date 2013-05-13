@@ -16,11 +16,9 @@
                     serie = JSON.parse(s);
                 }
 
-                if (events === undefined) {
-                    xhrGet("/jtaf/res/events", function(response) {
-                        events = JSON.parse(response);
-                    });
-                }
+                xhrGetSync("/jtaf/res/events", function(response) {
+                    events = JSON.parse(response);
+                });
 
                 var id = param().id;
                 if (id === undefined) {
@@ -73,18 +71,19 @@
                     var option = document.createElement("option");
                     option.innerHTML = "";
                     select.appendChild(option);
-                    cell.appendChild(select);
                     for (var j in events) {
                         var ev = events[j];
-                        var option = document.createElement("option");
+                        option = document.createElement("option");
                         option.value = ev.id;
-                        option.innerHTML = ev.name;
-                        select.appendChild(option);
-                        if (category.events[i] !== undefined &&
+                        option.innerHTML = ev.name + " (" + ev.gender + ")";
+                        if (category.events !== undefined && 
+                                category.events[i] !== undefined &&
                                 category.events[i].id === ev.id) {
                             option.selected = true;
                         }
+                        select.appendChild(option);
                     }
+                    cell.appendChild(select);
                 }
             }
 
