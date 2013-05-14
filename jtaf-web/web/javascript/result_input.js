@@ -22,12 +22,10 @@ function loadData() {
 }
 
 function search() {
-    if (event.keyCode === 13) {
-        var id = el("search_id").value;
-        xhrGet("/jtaf/res/athletes/" + id, function(response) {
-            parseAndFill(response);
-        });
-    }
+    var id = el("search_id").value;
+    xhrGet("/jtaf/res/athletes/" + id, function(response) {
+        parseAndFill(response);
+    });
 }
 
 function fillClubSelect() {
@@ -118,17 +116,17 @@ function calculatePoints(i) {
     if (ev.type === "run") {
         // A*((B-L)/100)^C
         points = ev.a * Math.pow((ev.b - result * 100) / 100, ev.c);
-    }
-    else if (ev.type === "throw") {
+    } else if (ev.type === "run_long") {
+        // A*((B-L)/100)^C
+        var parts = result.split(".");
+        var time = parts[0] * 6000 + parts[1] * 100;
+        points = ev.a * Math.pow((ev.b - time) / 100, ev.c);
+    } else if (ev.type === "jump_throw") {
         // A*((L-B)/100)^C
         points = ev.a * Math.pow((result * 100 - ev.b) / 100, ev.c);
     }
-    else if (ev.type === "jump") {
-        // A*(L-B)^C
-        points = ev.a * Math.pow((result * 100 - ev.b) / 100, ev.c);
-    }
     points = Math.round(points);
-    if (points < 0) {
+    if (isNaN(points) || points < 0) {
         points = 0;
     }
     var resultObject = new Object();

@@ -31,10 +31,10 @@ function fillForm() {
     el("event_name").value = jtafEvent.name;
     var index = 0;
     switch (jtafEvent.type) {
-        case "jump":
+        case "run_long":
             index = 1;
             break;
-        case "throw":
+        case "jump_throw":
             index = 2;
             break;
     }

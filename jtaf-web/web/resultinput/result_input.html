@@ -5,7 +5,7 @@
         <title>Enter results</title>
         <link rel="stylesheet" href="../css/jtaf.css">
         <script src="../javascript/util.js"></script>
-        <script src="../javascript/resultInput.js"></script>
+        <script src="../javascript/result_input.js"></script>
     </head>
     <body onload="loadData();">
         <div id="main">
@@ -13,13 +13,13 @@
                 <script src="../javascript/navigation.js"></script>
             </div>
 
-            <h1 id="title"></h1>
-
-            <p><input type="text" id="search_id" placeholder="Search id" onkeydown="search();"/></p>
-            
-            <br><br>
-
             <form action="javascript:save();">
+
+                <h1 id="title"></h1>
+
+                <p><input type="text" id="search_id" placeholder="Search id" onblur="search();" /></p>
+
+                <h2>Athlete</h2>
 
                 <table class="results">
                     <tr>
@@ -55,7 +55,7 @@
                 </p>
 
                 <br>
-                
+
                 <div id="results" style="visibility: hidden;">
                     <h2>Results</h2>
                     <table id="athlete_events" class="results"></table>

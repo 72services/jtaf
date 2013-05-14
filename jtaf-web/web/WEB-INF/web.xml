@@ -53,6 +53,7 @@
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
+            <role-name>resultinput</role-name>
         </auth-constraint>
     </security-constraint>
 

@@ -1,6 +1,6 @@
 package ch.jtaf.boundry;
 
-import ch.jtaf.control.DataService;
+import ch.jtaf.control.ReportSerivce;
 import ch.jtaf.entity.Ranking;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -17,7 +17,7 @@ import javax.ws.rs.Produces;
 public class RankingResource {
 
     @EJB
-    private DataService service;
+    private ReportSerivce serivce;
 
     @GET
     @Path("competition/{competitionid}")
