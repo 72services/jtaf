@@ -36,7 +36,7 @@ function createTable() {
             row = document.createElement("tr");
 
             cell = document.createElement("td");
-            var rank = parseInt(a + 1);
+            var rank = parseInt(a) + 1;
             cell.innerHTML = rank + ".";
             row.appendChild(cell);
 

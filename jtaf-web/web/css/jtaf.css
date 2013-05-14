@@ -147,7 +147,6 @@ ul.series li {
     margin: 0px;
     padding: 20px;
     width: 600px;
-    border: 2px solid white;
     border-radius: 9px 9px 9px 9px;
     background-color: #B9CC5B;
     overflow: hidden;
@@ -160,7 +159,6 @@ ul.competition li {
     padding: 20px;
     width: 520px;
     height: 50px;
-    border: 2px solid white;
     border-radius: 9px 9px 9px 9px;
     background-color: #FAF7B8;
     overflow: hidden;

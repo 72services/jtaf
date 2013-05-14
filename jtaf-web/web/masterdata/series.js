@@ -62,16 +62,6 @@ function fillCompetitionTable() {
             cellDate.innerHTML = competition.competitionDate;
             cellDate.setAttribute("onclick", onclickEdit);
 
-            var activate = document.createElement("a");
-            activate.setAttribute("href", "#");
-            activate.setAttribute("onclick", "activateCompetition(" +
-                    competition.id + ")");
-            activate.appendChild(document.createTextNode("Activate"));
-
-            var ranking = document.createElement("a");
-            ranking.setAttribute("href", "competitionRanking.html?id=" + competition.id);
-            ranking.appendChild(document.createTextNode("Ranking"));
-
             var del = document.createElement("a");
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteCompetition(" +
@@ -79,10 +69,6 @@ function fillCompetitionTable() {
             del.appendChild(document.createTextNode("Delete"));
 
             var cellFunction = row.insertCell(2);
-            cellFunction.appendChild(activate);
-            cellFunction.appendChild(document.createTextNode(" "));
-            cellFunction.appendChild(ranking);
-            cellFunction.appendChild(document.createTextNode(" "));
             cellFunction.appendChild(del);
         }
     }
@@ -266,17 +252,6 @@ function deleteCompetition(id) {
         loadData();
         info("Competition deleted");
     });
-}
-
-function activateCompetition(id) {
-    for (var i in series.competitions) {
-        var competition = series.competitions[i];
-        if (competition.id === id) {
-            localStorage.setItem("competition", JSON.stringify(competition));
-            break;
-        }
-    }
-    window.location.reload();
 }
 
 function deleteEvent(id) {

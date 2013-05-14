@@ -61,8 +61,7 @@ function fillForm() {
         el("athlete_gender_f").checked = true;
     }
     el("athlete_category").value = athlete.category.abbreviation;
-    fillClubSelect()
-            ;
+    fillClubSelect();
     if (athlete.category !== undefined
             && competition !== undefined
             && competition !== null) {
@@ -163,4 +162,11 @@ function deleteAthlete(id) {
         loadData();
         info("Athlete deleted");
     });
+}
+
+function addAthlete() {
+    athlete = new Object();
+    athlete.firstName = "";
+    athlete.lastName = "";
+    fillForm();
 }
