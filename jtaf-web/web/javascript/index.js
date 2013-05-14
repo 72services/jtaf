@@ -27,7 +27,7 @@ function fillSeries() {
 
             var a_ranking = document.createElement("a");
             a_ranking.setAttribute("href",
-                    "seriesRanking.html?id=" + series.id);
+                    "series_ranking.html?id=" + series.id);
             a_ranking.innerHTML = "Ranking";
             li_series.appendChild(a_ranking);
 
@@ -50,7 +50,7 @@ function fillSeries() {
 
                 var a_results = document.createElement("a");
                 a_results.setAttribute("href",
-                        "resultinput/resultInput.html?id=" + competition.id);
+                        "resultinput/result_input.html?id=" + competition.id);
                 a_results.innerHTML = "Enter results";
                 li_competition.appendChild(a_results);
 
@@ -58,7 +58,7 @@ function fillSeries() {
 
                 var a_ranking = document.createElement("a");
                 a_ranking.setAttribute("href",
-                        "competitionRanking.html?id=" + competition.id);
+                        "competition_ranking.html?id=" + competition.id);
                 a_ranking.innerHTML = "Ranking";
                 li_competition.appendChild(a_ranking);
 
