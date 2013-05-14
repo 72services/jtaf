@@ -12,7 +12,12 @@ function loadData() {
 
 function parseAndFill(response) {
     ranking = JSON.parse(response);
-    el("title").appendChild(document.createTextNode("Ranking of " + ranking.competition.name));
+    var h1 = document.createElement("h1");
+    h1.innerHTML = "Ranking";
+    var h2 = document.createElement("h2");
+    h2.innerHTML = ranking.competition.name + " " + ranking.competition.competitionDate;
+    el("title").appendChild(h1);
+    el("title").appendChild(h2);
 
     createTable();
 }
@@ -21,11 +26,11 @@ function createTable() {
     for (var c in ranking.categories) {
         var category = ranking.categories[c];
         var table = document.createElement("table");
-        table.setAttribute("style", "width: 100%");
+        table.className = "ranking";
         var row = document.createElement("tr");
         var cell = document.createElement("td");
         cell.setAttribute("colspan", 6);
-        var title = document.createElement("h2");
+        var title = document.createElement("h3");
         title.innerHTML = createCategoryTitle(category.category);
         cell.appendChild(title);
         row.appendChild(cell);
@@ -70,7 +75,7 @@ function createTable() {
             row.appendChild(cell);
 
             cell = document.createElement("td");
-            cell.setAttribute("style", "font-size: 11px");
+            cell.className = "small"
             cell.setAttribute("colspan", 5);
             cell.innerHTML = createResultRow(athlete);
             row.appendChild(cell);

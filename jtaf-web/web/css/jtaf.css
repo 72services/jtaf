@@ -77,14 +77,13 @@ div#error {
     border-color: tomato;
 }
 
-table.list, table.events {
+table.list, table.events, table.results  {
     width: 100%;
     border-collapse: collapse;
 }
 
-table.results {
+table.ranking {
     width: 100%;
-    border-collapse: collapse;
 }
 
 table.input {
@@ -92,20 +91,7 @@ table.input {
     border-collapse: collapse;
 }
 
-table.input {
-    width: 800px;
-    border-collapse: collapse;
-}
-
-table.list td {
-    padding: 15px;
-}
-
-table.input td {
-    padding: 15px;
-}
-
-table.results td {
+table.list td, table.input td, table.results td {
     padding: 15px;
 }
 
@@ -167,4 +153,9 @@ ul.competition li {
 ul {
     margin: 0px;
     padding: 0px;
+}
+
+td.small {
+    font-size: 11px;
+    padding-bottom: 15px;
 }
