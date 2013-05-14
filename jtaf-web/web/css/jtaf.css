@@ -42,7 +42,8 @@ a.navigation {
     background-color: #99AC3B;
     overflow: hidden;
     text-decoration: none;
-    color: black;
+    color: white;
+    font-weight: bold;
 }
 
 input[type="text"], input[type="date"], input[type="number"], input[type="password"], select {
@@ -164,6 +165,26 @@ ul.competition li {
     overflow: hidden;
 } 
 
+ul.series a {
+    padding: 7px;
+    border-radius: 9px 9px 9px 9px;
+    background-color: #99AC3B;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+ul.competitions a {
+    padding: 7px;
+    border-radius: 9px 9px 9px 9px;
+    background-color: #99AC3B;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
 ul {
     margin: 0px;
     padding: 0px;
@@ -174,7 +195,7 @@ td.small {
     padding-bottom: 15px;
 }
 
-input#search_id {
+input#search_term {
     width: 762px;
     padding: 15px;
 }

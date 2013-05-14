@@ -18,14 +18,38 @@ function loadData() {
         clubs = JSON.parse(response);
     });
 
-    el("search_id").focus();
+    el("search_term").focus();
 }
 
 function search() {
-    var id = el("search_id").value;
-    xhrGet("/jtaf/res/athletes/" + id, function(response) {
-        parseAndFill(response);
-    });
+    if (event.keyCode === 13) {
+        var error_div = el("error");
+        if (error_div !== null) {
+            document.body.removeChild(error_div);
+        }
+        var searchterm = el("search_term").value;
+        var number = parseInt(searchterm);
+        if (number !== undefined && !isNaN(number) && typeof number === "number") {
+            xhrGet("/jtaf/res/athletes/" + number, function(response) {
+                parseAndFill(response);
+            });
+        } else {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/jtaf/res/athletes/search?query=" + searchterm, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    parseAndFill(xhr.response);
+                } else if (xhr.status === 404) {
+                    clear();
+                    el("search_term").focus();
+                    error("No athlete matches your search criteria");
+                } else {
+                    error(xhr.status);
+                }
+            };
+            xhr.send();
+        }
+    }
 }
 
 function fillClubSelect() {
@@ -162,6 +186,10 @@ function deleteAthlete(id) {
 }
 
 function addAthlete() {
+    clear();
+}
+
+function clear() {
     athlete = new Object();
     athlete.id = null;
     athlete.firstName = null;

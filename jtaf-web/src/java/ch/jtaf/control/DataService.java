@@ -102,4 +102,28 @@ public class DataService extends AbstractService {
         return q.getSingleResult();
     }
 
+    public Athlete searchAthlete(String args) {
+        if (args == null || args.equals("")) {
+            return null;
+        } else {
+            String queryString = "select a from Athlete a where ";
+            String[] parts = args.split(" ");
+            boolean first = true;
+            for (String part : parts) {
+                String[] condition = part.split("=");
+                if (!first) {
+                    queryString += " and ";
+                }
+                queryString += " lower(a." + condition[0] + ") = '" + condition[1].toLowerCase() + "'";
+                first = false;
+            }
+            TypedQuery query = em.createQuery(queryString, Athlete.class);
+            List<Athlete> list = query.getResultList();
+            if (list != null && list.size() > 0) {
+                return list.get(0);
+            } else {
+                return null;
+            }
+        }
+    }
 }

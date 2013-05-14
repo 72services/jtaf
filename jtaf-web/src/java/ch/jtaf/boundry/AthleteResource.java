@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +23,7 @@ import javax.ws.rs.core.Response;
 @Produces({"application/json"})
 @Consumes({"application/json"})
 @Stateless
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class AthleteResource {
 
     @EJB
@@ -45,6 +48,18 @@ public class AthleteResource {
     @Path("{id}")
     public Athlete get(@PathParam("id") Long id) throws WebApplicationException {
         Athlete a = service.get(Athlete.class, id);
+        if (a == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } else {
+            return a;
+        }
+    }
+
+    @GET
+    @Path("search")
+    @QueryParam("{query}")
+    public Athlete search(@QueryParam("query") String query) throws WebApplicationException {
+        Athlete a = service.searchAthlete(query);
         if (a == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
