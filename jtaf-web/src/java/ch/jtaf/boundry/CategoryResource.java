@@ -26,10 +26,10 @@ public class CategoryResource {
     private DataService service;
 
     @GET
-    @QueryParam("{serie}")
-    public List<Category> list(@QueryParam("serie") Long id) {
+    @QueryParam("{series}")
+    public List<Category> list(@QueryParam("series") Long id) {
         if (id != null) {
-            return service.getCategoryFromSerie(id);
+            return service.getCategoryFromSeries(id);
         } else {
             return service.getCategories();
         }

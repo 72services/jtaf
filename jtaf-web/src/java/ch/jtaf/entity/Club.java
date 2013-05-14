@@ -15,15 +15,15 @@ public class Club {
     @Id
     @GeneratedValue
     private Long id;
-    private String abbrevation;
+    private String abbreviation;
     private String name;
 
-    public String getAbbrevation() {
-        return abbrevation;
+    public String getAbbreviation() {
+        return abbreviation;
     }
 
-    public void setAbbrevation(String abbrevation) {
-        this.abbrevation = abbrevation;
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
     }
 
     public Long getId() {

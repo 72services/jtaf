@@ -10,7 +10,7 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Event.findAll", query = "select e from Event e order by e.name"),
-    @NamedQuery(name = "Event.findBySerie", query = "select e from Event e where e.serie = :serie order by e.name")
+    @NamedQuery(name = "Event.findBySeries", query = "select e from Event e where e.series = :series order by e.name")
 })
 public class Event {
 
@@ -24,14 +24,14 @@ public class Event {
     private double b;
     private double c;
     @ManyToOne
-    private Serie serie;
+    private Series series;
 
-    public Serie getSerie() {
-        return serie;
+    public Series getSeries() {
+        return series;
     }
 
-    public void setSerie(Serie serie) {
-        this.serie = serie;
+    public void setSeries(Series series) {
+        this.series = series;
     }
 
     public Long getId() {

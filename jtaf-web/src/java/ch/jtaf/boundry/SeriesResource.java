@@ -1,7 +1,7 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
-import ch.jtaf.entity.Serie;
+import ch.jtaf.entity.Series;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -27,23 +27,23 @@ public class SeriesResource {
 
     @GET
     @QueryParam("{withCompetitions}")
-    public List<Serie> list(@QueryParam("withCompetitions") String withCompetitions) {
+    public List<Series> list(@QueryParam("withCompetitions") String withCompetitions) {
         if (withCompetitions == null || !Boolean.parseBoolean(withCompetitions)) {
-            return service.getSeries();
+            return service.getSeriesList();
         } else {
             return service.getSeriesWithCompetitions();
         }
     }
 
     @POST
-    public Serie save(Serie serie) {
-        return service.save(serie);
+    public Series save(Series series) {
+        return service.save(series);
     }
 
     @GET
     @Path("{id}")
-    public Serie get(@PathParam("id") Long id) throws WebApplicationException {
-        Serie s = service.getSerie(id);
+    public Series get(@PathParam("id") Long id) throws WebApplicationException {
+        Series s = service.getSeries(id);
         if (s == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
@@ -54,7 +54,7 @@ public class SeriesResource {
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
-        Serie s = service.get(Serie.class, id);
+        Series s = service.get(Series.class, id);
         if (s == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {

@@ -15,7 +15,7 @@ import javax.persistence.OrderColumn;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Athlete.findBySerie", query = "select a from Athlete a where a.serie = :serie order by a.id"),
+    @NamedQuery(name = "Athlete.findBySeries", query = "select a from Athlete a where a.series = :series order by a.id"),
     @NamedQuery(name = "Athlete.findByCompetition", query = "select distinct a from Athlete a join a.results r where r.competition.id = :competitionid")
 })
 public class Athlete {
@@ -32,7 +32,7 @@ public class Athlete {
     @ManyToOne
     private Club club;
     @ManyToOne
-    private Serie serie;
+    private Series series;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderColumn(name = "postition")
     @JoinColumn(name = "athlete_id")
@@ -102,12 +102,12 @@ public class Athlete {
         this.club = club;
     }
 
-    public Serie getSerie() {
-        return serie;
+    public Series getSeries() {
+        return series;
     }
 
-    public void setSerie(Serie serie) {
-        this.serie = serie;
+    public void setSeries(Series series) {
+        this.series = series;
     }
 
     public int getTotalPoints() {

@@ -11,9 +11,9 @@ import javax.persistence.Transient;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Serie.findAll", query = "select s from Serie s order by s.name")
+    @NamedQuery(name = "Series.findAll", query = "select s from Series s order by s.name")
 })
-public class Serie {
+public class Series {
 
     @Id
     @GeneratedValue

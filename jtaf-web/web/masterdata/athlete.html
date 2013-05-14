@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Edit Athlete</title>
+        <link rel="stylesheet" href="../css/jtaf.css">
+        <script src="../javascript/util.js"></script>
+        <script src="../javascript/athlete.js"></script>
+    </head>
+    <body onload="loadData();">
+        <div id="main">
+            <div id="navigation">
+                <script src="../javascript/navigation.js"></script>
+            </div>
+
+            <h1>Athlete</h1>
+
+            <form action="javascript:save();">
+
+                <table class="input">
+                    <tr>
+                        <td>Id</td>
+                        <td><input type="text" id="athlete_id" readonly disabled /></td>
+                    </tr>
+                    <tr>
+                        <td>Last name</td>
+                        <td><input type="text" id="athlete_lastName" required /></td>
+                    </tr>
+                    <tr>
+                        <td>First name</td>
+                        <td><input type="text" id="athlete_firstName" required /></td>
+                    </tr>
+                    <tr>
+                        <td>Year</td>
+                        <td><input type="number" min="1900" max="2100" id="athlete_year" required /></td>
+                    </tr>
+                    <tr>
+                        <td>Gender</td>
+                        <td>
+                            <input id="athlete_gender_m" type="radio" name="athlete_gender" value="m">m
+                            <input id="athlete_gender_f" type="radio" name="athlete_gender" value="f">f
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Category</td>
+                        <td><input type="text" id="athlete_category" readonly disabled /></td>
+                    </tr>
+                    <tr>
+                        <td>Club</td>
+                        <td><select id="athlete_club"></select></td>
+                    </tr>
+                </table>
+
+                <p>
+                    <input type="submit" value="Save" />&nbsp;
+                    <a href="javascript:back();">Back</a>
+                </p>
+
+            </form>
+
+        </div>
+    </body>
+</html>

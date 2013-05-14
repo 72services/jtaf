@@ -8,7 +8,7 @@ import ch.jtaf.entity.Event;
 import ch.jtaf.entity.Ranking;
 import ch.jtaf.entity.RankingCategory;
 import ch.jtaf.entity.Result;
-import ch.jtaf.entity.Serie;
+import ch.jtaf.entity.Series;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,16 +23,16 @@ import javax.persistence.TypedQuery;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class DataService extends AbstractService {
 
-    public List<Serie> getSeries() {
-        TypedQuery<Serie> q = em.createNamedQuery("Serie.findAll", Serie.class);
+    public List<Series> getSeriesList() {
+        TypedQuery<Series> q = em.createNamedQuery("Series.findAll", Series.class);
         return q.getResultList();
     }
 
-    public List<Serie> getSeriesWithCompetitions() {
-        List<Serie> list = getSeries();
-        List<Serie> series = new ArrayList<Serie>();
-        for (Serie s : list) {
-            series.add(getSerie(s.getId()));
+    public List<Series> getSeriesWithCompetitions() {
+        List<Series> list = getSeriesList();
+        List<Series> series = new ArrayList<Series>();
+        for (Series s : list) {
+            series.add(getSeries(s.getId()));
         }
         return series;
     }
@@ -52,37 +52,37 @@ public class DataService extends AbstractService {
         return q.getResultList();
     }
 
-    public Serie getSerie(Long id) {
-        Serie s = em.find(Serie.class, id);
-        TypedQuery<Competition> q = em.createNamedQuery("Competition.findBySerie",
+    public Series getSeries(Long id) {
+        Series s = em.find(Series.class, id);
+        TypedQuery<Competition> q = em.createNamedQuery("Competition.findBySeries",
                 Competition.class);
-        q.setParameter("serie", s);
+        q.setParameter("series", s);
         List<Competition> cs = q.getResultList();
         for (Competition c : cs) {
-            c.setSerie(null);
+            c.setSeries(null);
         }
         s.setCompetitions(cs);
         return s;
     }
 
-    public List<Category> getCategoryFromSerie(Long id) {
-        Serie serie = em.find(Serie.class, id);
-        TypedQuery<Category> q = em.createNamedQuery("Category.findBySerie", Category.class);
-        q.setParameter("serie", serie);
+    public List<Category> getCategoryFromSeries(Long id) {
+        Series series = em.find(Series.class, id);
+        TypedQuery<Category> q = em.createNamedQuery("Category.findBySeries", Category.class);
+        q.setParameter("series", series);
         return q.getResultList();
     }
 
-    public List<Event> getEventFromSerie(Long id) {
-        Serie serie = em.find(Serie.class, id);
-        TypedQuery<Event> q = em.createNamedQuery("Event.findBySerie", Event.class);
-        q.setParameter("serie", serie);
+    public List<Event> getEventFromSeries(Long id) {
+        Series series = em.find(Series.class, id);
+        TypedQuery<Event> q = em.createNamedQuery("Event.findBySeries", Event.class);
+        q.setParameter("series", series);
         return q.getResultList();
     }
 
-    public List<Athlete> getAthleteFromSerie(Long id) {
-        Serie serie = em.find(Serie.class, id);
-        TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findBySerie", Athlete.class);
-        q.setParameter("serie", serie);
+    public List<Athlete> getAthleteFromSeries(Long id) {
+        Series series = em.find(Series.class, id);
+        TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
+        q.setParameter("series", series);
         return q.getResultList();
     }
 
@@ -114,7 +114,7 @@ public class DataService extends AbstractService {
         List<Athlete> list = q.getResultList();
 
         Competition competition = em.find(Competition.class, competitionid);
-        competition.setSerie(null);
+        competition.setSeries(null);
 
         Ranking ranking = new Ranking();
         ranking.setCompetition(competition);
@@ -132,7 +132,7 @@ public class DataService extends AbstractService {
             RankingCategory rc = new RankingCategory();
             Category c = entry.getKey();
             c.setEvents(null);
-            c.setSerie(null);
+            c.setSeries(null);
             rc.setCategory(c);
             rc.setAthletes(filterAndSort(competition, entry.getValue()));
             ranking.getCategories().add(rc);
@@ -143,12 +143,12 @@ public class DataService extends AbstractService {
     private List<Athlete> filterAndSort(Competition competition, List<Athlete> list) {
         for (Athlete a : list) {
             a.setCategory(null);
-            a.setSerie(null);
+            a.setSeries(null);
             List<Result> rs = new ArrayList<Result>();
             for (Result r : a.getResults()) {
                 if (r.getCompetition().getId().compareTo(competition.getId()) == 0) {
                     r.setCompetition(null);
-                    r.getEvent().setSerie(null);
+                    r.getEvent().setSeries(null);
                     rs.add(r);
                 }
             }

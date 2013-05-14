@@ -14,8 +14,8 @@ import javax.persistence.OrderColumn;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "select c from Category c order by c.abbrevation"),
-    @NamedQuery(name = "Category.findBySerie", query = "select c from Category c where c.serie = :serie order by c.abbrevation"),
+    @NamedQuery(name = "Category.findAll", query = "select c from Category c order by c.abbreviation"),
+    @NamedQuery(name = "Category.findBySeries", query = "select c from Category c where c.series = :series order by c.abbreviation"),
     @NamedQuery(name = "Category.findByYearAndGender", query = "select c from Category c where c.gender = :gender and :year between c.yearFrom and c.yearTo")
 })
 public class Category {
@@ -23,13 +23,13 @@ public class Category {
     @Id
     @GeneratedValue
     private Long id;
-    private String abbrevation;
+    private String abbreviation;
     private String name;
     private int yearFrom;
     private int yearTo;
     private String gender;
     @ManyToOne
-    private Serie serie;
+    private Series series;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderColumn(name = "position")
     private List<Event> events = new ArrayList<Event>();
@@ -42,20 +42,20 @@ public class Category {
         this.events = events;
     }
 
-    public Serie getSerie() {
-        return serie;
+    public Series getSeries() {
+        return series;
     }
 
-    public void setSerie(Serie serie) {
-        this.serie = serie;
+    public void setSeries(Series series) {
+        this.series = series;
     }
 
-    public String getAbbrevation() {
-        return abbrevation;
+    public String getAbbreviation() {
+        return abbreviation;
     }
 
-    public void setAbbrevation(String abbrevation) {
-        this.abbrevation = abbrevation;
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
     }
 
     public int getYearFrom() {

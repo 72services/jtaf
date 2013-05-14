@@ -27,10 +27,10 @@ public class AthleteResource {
     private DataService service;
 
     @GET
-    @QueryParam("{serie}")
-    public List<Athlete> list(@QueryParam("serie") Long id) {
+    @QueryParam("{series}")
+    public List<Athlete> list(@QueryParam("series") Long id) {
         if (id != null) {
-            return service.getAthleteFromSerie(id);
+            return service.getAthleteFromSeries(id);
         } else {
             return new ArrayList<Athlete>();
         }

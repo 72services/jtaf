@@ -26,10 +26,10 @@ public class EventResource {
     private DataService service;
 
     @GET
-    @QueryParam("{serie}")
-    public List<Event> list(@QueryParam("serie") Long id) {
+    @QueryParam("{series}")
+    public List<Event> list(@QueryParam("series") Long id) {
         if (id != null) {
-            return service.getEventFromSerie(id);
+            return service.getEventFromSeries(id);
         } else {
             return service.getEvents();
         }

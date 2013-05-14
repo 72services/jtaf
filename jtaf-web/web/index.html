@@ -5,77 +5,7 @@
         <title>JTAF</title>
         <link rel="stylesheet" type="text/css" href="css/jtaf.css">
         <script src="javascript/util.js"></script>
-        <script>
-            var ascending = true;
-            var series;
-            var competitions;
-
-            function loadData() {
-                xhrGet("/jtaf/res/series?withCompetitions=true", function(response) {
-                    series = JSON.parse(response);
-                    fillSeries();
-                });
-            }
-
-            function fillSeries() {
-                if (series !== undefined && series !== null) {
-                    var ul_series = el("ul_series");
-                    ul_series.innerHTML = "";
-
-                    for (var s in series) {
-                        var serie = series[s];
-                        var li_serie = document.createElement("li");
-
-                        var serie_name = document.createElement("b");
-                        serie_name.innerHTML = serie.name;
-                        li_serie.appendChild(serie_name);
-
-                        li_serie.appendChild(document.createElement("br"));
-                        li_serie.appendChild(document.createElement("br"));
-
-                        var a_ranking = document.createElement("a");
-                        a_ranking.setAttribute("href",
-                                "serieRanking.html?id=" + serie.id);
-                        a_ranking.innerHTML = "Ranking";
-                        li_serie.appendChild(a_ranking);
-
-                        li_serie.appendChild(document.createElement("br"));
-                        li_serie.appendChild(document.createElement("br"));
-                        ul_series.appendChild(li_serie);
-
-                        var ul_competitions = document.createElement("ul");
-                        ul_competitions.className = "competition";
-                        li_serie.appendChild(ul_competitions);
-
-                        for (var c in serie.competitions) {
-                            var competition = serie.competitions[c];
-                            var li_competition = document.createElement("li");
-                            li_competition.innerHTML = "<b>" + competition.name
-                                    + "</b> " + competition.competitionDate;
-
-                            li_competition.appendChild(document.createElement("br"));
-                            li_competition.appendChild(document.createElement("br"));
-                            
-                            var a_results = document.createElement("a");
-                            a_results.setAttribute("href",
-                                    "results.html?id=" + competition.id);
-                            a_results.innerHTML = "Enter results";
-                            li_competition.appendChild(a_results);
-                            
-                            li_competition.appendChild(document.createTextNode(" "));
-                            
-                            var a_ranking = document.createElement("a");
-                            a_ranking.setAttribute("href",
-                                    "competitionRanking.html?id=" + competition.id);
-                            a_ranking.innerHTML = "Ranking";
-                            li_competition.appendChild(a_ranking);
-                            
-                            ul_competitions.appendChild(li_competition);
-                        }
-                    }
-                }
-            }
-        </script>
+        <script src="javascript/index.js"></script>
     </head>
     <body onload="loadData();">
         <div id="main">
@@ -85,7 +15,7 @@
 
             <h1>JTAF</h1>
 
-            <ul id="ul_series" class="serie"></ul>
+            <ul id="ul_series" class="series"></ul>
 
         </div>
     </body>

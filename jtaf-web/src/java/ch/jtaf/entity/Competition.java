@@ -11,7 +11,7 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Competition.findAll", query = "select c from Competition c order by c.competitionDate"),
-    @NamedQuery(name = "Competition.findBySerie", query = "select c from Competition c where c.serie = :serie order by c.name")
+    @NamedQuery(name = "Competition.findBySeries", query = "select c from Competition c where c.series = :series order by c.name")
 })
 public class Competition {
 
@@ -21,14 +21,14 @@ public class Competition {
     private String name;
     private Date competitionDate;
     @ManyToOne
-    private Serie serie;
+    private Series series;
 
-    public Serie getSerie() {
-        return serie;
+    public Series getSeries() {
+        return series;
     }
 
-    public void setSerie(Serie serie) {
-        this.serie = serie;
+    public void setSeries(Series series) {
+        this.series = series;
     }
 
     public Date getCompetitionDate() {
