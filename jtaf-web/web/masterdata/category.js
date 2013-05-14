@@ -55,8 +55,10 @@ function fillEventsTable() {
     for (var i = 0; i < 10; i++) {
         var row = table.insertRow(i);
         var cellNo = row.insertCell(0);
+        cellNo.setAttribute("style", "border-radius: 0 0 0 0;");
         cellNo.innerHTML = i + 1;
         var cell = row.insertCell(1);
+        cell.setAttribute("style", "border-radius: 0 0 0 0;");
         var select = document.createElement("select");
         select.id = "select" + i;
         var option = document.createElement("option");

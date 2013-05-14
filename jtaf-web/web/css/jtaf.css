@@ -1,5 +1,6 @@
 body {
-    margin: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
     font-family: Segoe UI, Arial, Helvetica, sans-serif;
     font-size: 13px;
     background: #FFFFFF;
@@ -29,6 +30,19 @@ input[type="submit"], input[type="reset"], button {
     padding-left: 10px;
     padding-right: 10px;
     cursor: pointer;
+}
+
+div#navigation {
+    padding-bottom: 20px;
+}
+
+a.navigation {
+    padding: 15px;
+    border-radius: 0 0 9px 9px;
+    background-color: #99AC3B;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
 }
 
 input[type="text"], input[type="date"], input[type="number"], input[type="password"], select {
@@ -158,4 +172,9 @@ ul {
 td.small {
     font-size: 11px;
     padding-bottom: 15px;
+}
+
+input#search_id {
+    width: 762px;
+    padding: 15px;
 }

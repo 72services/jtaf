@@ -64,6 +64,7 @@ function createTable() {
             row.appendChild(cell);
 
             cell = document.createElement("td");
+            cell.setAttribute("style", "text-align: right;");
             cell.innerHTML = calculateTotalPoints(athlete);
             row.appendChild(cell);
 
@@ -75,7 +76,7 @@ function createTable() {
             row.appendChild(cell);
 
             cell = document.createElement("td");
-            cell.className = "small"
+            cell.className = "small";
             cell.setAttribute("colspan", 5);
             cell.innerHTML = createResultRow(athlete);
             row.appendChild(cell);

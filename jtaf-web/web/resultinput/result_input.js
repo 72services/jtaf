@@ -57,30 +57,30 @@ function fillForm() {
     if (athlete.gender === "m") {
         el("athlete_gender_m").checked = true;
     }
-    else {
+    else if (athlete.gender === "f") {
         el("athlete_gender_f").checked = true;
     }
-    el("athlete_category").value = athlete.category.abbreviation;
-    fillClubSelect();
-    if (athlete.category !== undefined
-            && competition !== undefined
-            && competition !== null) {
-        el("results").setAttribute("style", "visbility: visible;");
+    if (athlete.category !== undefined) {
+        el("athlete_category").value = athlete.category.abbreviation;
+        el("results").setAttribute("style", "visibility: visible;");
         fillEventsTable();
     }
+    else {
+        el("athlete_category").value = "";
+        el("results").setAttribute("style", "visibility: hidden;");
+    }
+    fillClubSelect();
 }
 
 function fillEventsTable() {
     var table = el("athlete_events");
     table.innerHTML = "";
-
     if (athlete.category !== undefined) {
         for (var i in athlete.category.events) {
             var aevent = athlete.category.events[i];
             var row = table.insertRow(i);
             var cellName = row.insertCell(0);
             cellName.innerHTML = aevent.name;
-
             var cellResult = row.insertCell(1);
             var result = document.createElement("input");
             result.setAttribute("type", "text");
@@ -88,7 +88,6 @@ function fillEventsTable() {
             result.setAttribute("pattern", "\\d+\\.\\d{2}");
             result.setAttribute("onblur", "calculatePoints(" + i + ")");
             cellResult.appendChild(result);
-
             var cellPoints = row.insertCell(2);
             var points = document.createElement("input");
             points.id = "points" + i;
@@ -97,7 +96,6 @@ function fillEventsTable() {
             points.setAttribute("disabled");
             points.setAttribute("style", "width: 100px");
             cellPoints.appendChild(points);
-
             if (athlete.results[i] !== undefined) {
                 result.value = athlete.results[i].result;
                 points.value = athlete.results[i].points;
@@ -110,18 +108,17 @@ function fillEventsTable() {
 function calculatePoints(i) {
     var ev = athlete.category.events[i];
     var result = el("result" + i).value;
-
     var points = 0;
     if (ev.type === "run") {
-        // A*((B-L)/100)^C
+// A*((B-L)/100)^C
         points = ev.a * Math.pow((ev.b - result * 100) / 100, ev.c);
     } else if (ev.type === "run_long") {
-        // A*((B-L)/100)^C
+// A*((B-L)/100)^C
         var parts = result.split(".");
         var time = parts[0] * 6000 + parts[1] * 100;
         points = ev.a * Math.pow((ev.b - time) / 100, ev.c);
     } else if (ev.type === "jump_throw") {
-        // A*((L-B)/100)^C
+// A*((L-B)/100)^C
         points = ev.a * Math.pow((result * 100 - ev.b) / 100, ev.c);
     }
     points = Math.round(points);
@@ -166,7 +163,11 @@ function deleteAthlete(id) {
 
 function addAthlete() {
     athlete = new Object();
-    athlete.firstName = "";
-    athlete.lastName = "";
+    athlete.id = null;
+    athlete.firstName = null;
+    athlete.lastName = null;
+    athlete.category = undefined;
+    var table = el("athlete_events");
+    table.innerHTML = "";
     fillForm();
 }
