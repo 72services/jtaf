@@ -8,66 +8,90 @@
         <script src="result_input.js"></script>
     </head>
     <body onload="loadData();">
-        <div id="main">
-            <div id="navigation">
-                <script src="../util/navigation.js"></script>
-            </div>
+        <script src="/jtaf/navigation.js"></script>
 
+        <div id="main">
             <h1 id="title"></h1>
 
             <p><input type="text" id="search_term" placeholder="Search" onkeypress="search();" /></p>
 
-            <form action="javascript:save();">
+            <div id="athlete_list" class="invisible">
+                <h2>Athletes</h2>
 
-                <h2>Athlete</h2>
-
-                <table class="results">
-                    <tr>
-                        <td>Id</td>
-                        <td colspan="3"><input type="text" id="athlete_id" readonly disabled /></td>
-                    </tr>
-                    <tr>
-                        <td>Last name</td>
-                        <td><input type="text" id="athlete_lastName" required /></td>
-                        <td>First name</td>
-                        <td><input type="text" id="athlete_firstName" required /></td>
-                    </tr>
-                    <tr>
-                        <td>Year</td>
-                        <td><input type="number" min="1900" max="2100" id="athlete_year" required /></td>
-                        <td>Gender</td>
-                        <td>
-                            <input id="athlete_gender_m" type="radio" name="athlete_gender" value="m">m
-                            <input id="athlete_gender_f" type="radio" name="athlete_gender" value="f">f
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Category</td>
-                        <td><input type="text" id="athlete_category" readonly disabled /></td>
-                        <td>Club</td>
-                        <td><select id="athlete_club"></select></td>
-                    </tr>
+                <table class="list">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Last name</th>
+                            <th>First name</th>
+                            <th>Year</th>
+                            <th>Gender</th>
+                            <th>Category</th>
+                            <th>Club</th>
+                        </tr>
+                    </thead>
+                    <tbody id="athlete_table">
+                        <tr>
+                            <td colspan="7">Loading athletes</td>
+                        </tr>
+                    </tbody>
                 </table>
+            </div>
 
-                <p>
-                    <input type="submit" value="Save" />&nbsp;
-                    <a href="#" onclick="addAthlete();">Add athlete</a>&nbsp;
-                    <a href="../index.html">Back</a>
-                </p>
+            <div id="input_form" class="invisible">
+                <form action="javascript:save();">
 
-                <br>
+                    <h2>Athlete</h2>
 
-                <div id="results" style="visibility: hidden;">
-                    <h2>Results</h2>
-                    <table id="athlete_events" class="results"></table>
+                    <table class="results">
+                        <tr>
+                            <td>Id</td>
+                            <td colspan="3"><input type="text" id="athlete_id" readonly disabled /></td>
+                        </tr>
+                        <tr>
+                            <td>Last name</td>
+                            <td><input type="text" id="athlete_lastName" required /></td>
+                            <td>First name</td>
+                            <td><input type="text" id="athlete_firstName" required /></td>
+                        </tr>
+                        <tr>
+                            <td>Year</td>
+                            <td><input type="number" min="1900" max="2100" id="athlete_year" required /></td>
+                            <td>Gender</td>
+                            <td>
+                                <input id="athlete_gender_m" type="radio" name="athlete_gender" value="m">m
+                                <input id="athlete_gender_f" type="radio" name="athlete_gender" value="f">f
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Category</td>
+                            <td><input type="text" id="athlete_category" readonly disabled /></td>
+                            <td>Club</td>
+                            <td><select id="athlete_club"></select></td>
+                        </tr>
+                    </table>
 
                     <p>
-                        <input type="submit" value="Save" />
+                        <input type="submit" value="Save" />&nbsp;
+                        <a href="#" onclick="addAthlete();">Add athlete</a>&nbsp;
+                        <a href="../index.html">Back</a>
                     </p>
-                </div>
 
-            </form>
+                    <br>
 
+                    <div id="results">
+                        <h2>Results</h2>
+                        <table id="athlete_events" class="results"></table>
+
+                        <p>
+                            <input type="submit" value="Save" />
+                        </p>
+                    </div>
+
+                </form>
+            </div>
         </div>
+
+        <script src="/jtaf/footer.js"></script>
     </body>
 </html>

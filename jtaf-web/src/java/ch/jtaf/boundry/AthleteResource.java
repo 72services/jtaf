@@ -58,13 +58,8 @@ public class AthleteResource {
     @GET
     @Path("search")
     @QueryParam("{query}")
-    public Athlete search(@QueryParam("query") String query) throws WebApplicationException {
-        Athlete a = service.searchAthlete(query);
-        if (a == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        } else {
-            return a;
-        }
+    public List<Athlete> search(@QueryParam("query") String query) throws WebApplicationException {
+        return service.searchAthletes(query);
     }
 
     @DELETE

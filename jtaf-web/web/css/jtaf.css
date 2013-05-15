@@ -21,40 +21,11 @@ h3 {
     font-weight: bold;
 }
 
-input[type="submit"], input[type="reset"], button {
-    border: 1px solid #a8a8a8;
-    background: #F5F5F5;
-    color: #4f4f4f;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    cursor: pointer;
-}
-
-div#navigation {
-    padding-bottom: 20px;
-}
-
-a.navigation {
-    padding: 15px;
-    border-radius: 0 0 9px 9px;
-    background-color: #99AC3B;
-    overflow: hidden;
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-}
-
-input[type="text"], input[type="date"], input[type="number"], input[type="password"], select {
-    width: 200px;
-    margin-right: 40px;
-}
-
 div#main {
     margin-left: auto; 
     margin-right: auto; 
-    width: 800px
+    margin-top: 60px;
+    width: 800px;
 }
 
 div#info {
@@ -90,6 +61,82 @@ div#error {
     border-width: 1px;
     border-style: solid;
     border-color: tomato;
+}
+
+div#navigation {
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 800px;
+}
+
+div#footer {
+    margin-left: auto; 
+    margin-right: auto; 
+    margin-top: 60px;
+    width: 800px;
+}
+
+a.navigation_inactive {
+    padding: 15px;
+    border-radius: 0 0 9px 9px;
+    background-color: #99AC3B;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+a.navigation_active {
+    padding: 15px;
+    border-radius: 0 0 9px 9px;
+    background-color: #FAF7B8;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+a.tab_inactive {
+    padding: 15px;
+    border-radius: 9px 9px 0px 0px;
+    background-color: #99AC3B;
+    overflow: hidden;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+a.tab_active {
+    padding: 15px;
+    border-radius: 9px 9px 0px 0px;
+    background-color: #FAF7B8;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+
+input[type="submit"], input[type="reset"], button {
+    border: 1px solid #a8a8a8;
+    background: #F5F5F5;
+    color: #4f4f4f;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+
+input[type="text"], input[type="date"], input[type="number"], input[type="password"], select {
+    width: 200px;
+    margin-right: 40px;
+}
+
+input#search_term {
+    width: 762px;
+    padding: 15px;
 }
 
 table.list, table.events, table.results  {
@@ -138,8 +185,14 @@ table.results tr:last-child td:last-child { border-radius: 0 0 9px 0; }
 table.results tr:nth-child(even) { background: #FAF7B8; }
 table.results tr:nth-child(odd) { background: #B9CC5B; }
 
-.edit{
-    cursor: pointer;
+td.small {
+    font-size: 11px;
+    padding-bottom: 15px;
+}
+
+ul {
+    margin: 0px;
+    padding: 0px;
 }
 
 ul.series li {
@@ -159,7 +212,7 @@ ul.competition li {
     margin: 20px;
     padding: 20px;
     width: 520px;
-    height: 50px;
+    height: 80px;
     border-radius: 9px 9px 9px 9px;
     background-color: #FAF7B8;
     overflow: hidden;
@@ -185,17 +238,17 @@ ul.competitions a {
     font-weight: bold;
 }
 
-ul {
-    margin: 0px;
-    padding: 0px;
+.invisible {
+    display: none;
 }
 
-td.small {
-    font-size: 11px;
-    padding-bottom: 15px;
+.visible {
 }
 
-input#search_term {
-    width: 762px;
-    padding: 15px;
+.noborderradus  {
+    border-radius: 0 0 0 0 !important;
+}
+
+.edit{
+    cursor: pointer;
 }

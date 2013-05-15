@@ -34,7 +34,6 @@ function createSeriesTableBody() {
 
     if (seriesList === undefined || seriesList.length === 0) {
         var row = table.insertRow(0);
-
         var cell = row.insertCell(0);
         cell.innerHTML = "No series found";
         cell.setAttribute("colspan", 2);
@@ -43,20 +42,16 @@ function createSeriesTableBody() {
         for (var i in seriesList) {
             var series = seriesList[i];
             var row = table.insertRow(i);
-
             var onclickEdit = "window.location = 'series.html?id=" +
                     series.id + "'";
-
             var cellName = row.insertCell(0);
             cellName.className = "edit";
             cellName.innerHTML = series.name;
             cellName.setAttribute("onclick", onclickEdit);
-
             var del = document.createElement("a");
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteSeries(" + series.id + ")");
             del.appendChild(document.createTextNode("Delete"));
-
             var cellFunction = row.insertCell(1);
             cellFunction.appendChild(del);
         }
@@ -69,7 +64,6 @@ function createClubsTableBody() {
 
     if (clubs === undefined || clubs.length === 0) {
         var row = table.insertRow(0);
-
         var cell = row.insertCell(0);
         cell.innerHTML = "No clubs found";
         cell.setAttribute("colspan", 3);
@@ -78,20 +72,16 @@ function createClubsTableBody() {
         for (var i in clubs) {
             var club = clubs[i];
             var row = table.insertRow(i);
-
             var onclickEdit = "window.location = 'club.html?id=" +
                     club.id + "'";
-
             var cellAbbr = row.insertCell(0);
             cellAbbr.className = "edit";
             cellAbbr.innerHTML = club.abbreviation;
             cellAbbr.setAttribute("onclick", onclickEdit);
-
             var cellName = row.insertCell(1);
             cellName.className = "edit";
             cellName.innerHTML = club.name;
             cellName.setAttribute("onclick", onclickEdit);
-
             var del = document.createElement("a");
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteClub(" + club.id + ")");

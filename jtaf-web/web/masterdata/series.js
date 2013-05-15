@@ -15,7 +15,6 @@ function loadData() {
         xhrGet("/jtaf/res/events?series=" + id, function(response) {
             parseAndFillEvents(response);
         });
-
         xhrGet("/jtaf/res/athletes?series=" + id, function(response) {
             parseAndFillAthletes(response);
         });
@@ -51,23 +50,19 @@ function fillCompetitionTable() {
             var row = table.insertRow(i);
             var onclickEdit = "window.location = 'competition.html?id=" +
                     competition.id + "'";
-
             var cellName = row.insertCell(0);
             cellName.className = "edit";
             cellName.innerHTML = competition.name;
             cellName.setAttribute("onclick", onclickEdit);
-
             var cellDate = row.insertCell(1);
             cellDate.className = "edit";
             cellDate.innerHTML = competition.competitionDate;
             cellDate.setAttribute("onclick", onclickEdit);
-
             var del = document.createElement("a");
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteCompetition(" +
                     competition.id + ")");
             del.appendChild(document.createTextNode("Delete"));
-
             var cellFunction = row.insertCell(2);
             cellFunction.appendChild(del);
         }
@@ -266,4 +261,12 @@ function deleteAthlete(id) {
         loadData();
         info("Athlete deleted");
     });
+}
+
+function switchTo(div) {
+    var els = document.getElementsByClassName("visible");
+    for (var i in els) {
+        els[i].className = "invisible";
+    }
+    el(div).className = "visible";
 }

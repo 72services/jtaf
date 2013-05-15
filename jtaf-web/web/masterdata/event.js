@@ -2,9 +2,7 @@ var jtafEvent;
 var series;
 
 function loadData() {
-    if (series === undefined) {
-        series = JSON.parse(localStorage.getItem("series"));
-    }
+    series = JSON.parse(localStorage.getItem("series"));
 
     var id = param().id;
     if (id === undefined) {

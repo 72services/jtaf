@@ -24,6 +24,7 @@ function fillSeries() {
 
             li_series.appendChild(document.createElement("br"));
             li_series.appendChild(document.createElement("br"));
+            li_series.appendChild(document.createElement("br"));
 
             var a_ranking = document.createElement("a");
             a_ranking.setAttribute("href",
@@ -45,6 +46,7 @@ function fillSeries() {
                 li_competition.innerHTML = "<b>" + competition.name
                         + "</b> " + competition.competitionDate;
 
+                li_competition.appendChild(document.createElement("br"));
                 li_competition.appendChild(document.createElement("br"));
                 li_competition.appendChild(document.createElement("br"));
 

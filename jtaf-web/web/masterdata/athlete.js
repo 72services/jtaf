@@ -3,9 +3,7 @@ var series;
 var clubs;
 
 function loadData() {
-    if (series === undefined) {
-        series = JSON.parse(localStorage.getItem("series"));
-    }
+    series = JSON.parse(localStorage.getItem("series"));
 
     xhrGet("/jtaf/res/clubs", function(response) {
         clubs = JSON.parse(response);
@@ -52,11 +50,11 @@ function fillForm() {
     el("athlete_lastName").focus();
     el("athlete_firstName").value = athlete.firstName;
     el("athlete_year").value = athlete.year;
-    if (athlete.gender === "m") {
-        el("athlete_gender_m").checked = true;
-    }
-    else {
-        el("athlete_gender_f").checked = true;
+    if (athlete.gender !== undefined && athlete.gender !== null) {
+        el("athlete_gender_" + athlete.gender).checked = true;
+    } else {
+        el("athlete_gender_m").checked = false;
+        el("athlete_gender_f").checked = false;
     }
     el("athlete_category").value = athlete.category.abbreviation;
     fillClubSelect();
@@ -81,4 +79,3 @@ function fillAthlete() {
     }
     athlete.series = series;
 }
-

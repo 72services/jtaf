@@ -3,9 +3,7 @@ var series;
 var events;
 
 function loadData() {
-    if (series === undefined) {
-        series = JSON.parse(localStorage.getItem("series"));
-    }
+    series = JSON.parse(localStorage.getItem("series"));
 
     xhrGetSync("/jtaf/res/events", function(response) {
         events = JSON.parse(response);
@@ -55,10 +53,10 @@ function fillEventsTable() {
     for (var i = 0; i < 10; i++) {
         var row = table.insertRow(i);
         var cellNo = row.insertCell(0);
-        cellNo.setAttribute("style", "border-radius: 0 0 0 0;");
+        cellNo.className = "noborderradus";
         cellNo.innerHTML = i + 1;
-        var cell = row.insertCell(1);
-        cell.setAttribute("style", "border-radius: 0 0 0 0;");
+        var cellEvents = row.insertCell(1);
+        cellEvents.className = "noborderradus";
         var select = document.createElement("select");
         select.id = "select" + i;
         var option = document.createElement("option");
@@ -76,7 +74,7 @@ function fillEventsTable() {
             }
             select.appendChild(option);
         }
-        cell.appendChild(select);
+        cellEvents.appendChild(select);
     }
 }
 
@@ -103,21 +101,18 @@ function fillCategory() {
 }
 
 function fillCategoryEvents() {
-    var jtafEvents = [];
-    var k = 0;
+    category.events = [];
     for (var i = 0; i < 10; i++) {
         var select = el("select" + i);
         var id = select.options[select.selectedIndex].value;
         console.log(id);
         for (var j in events) {
-            var jtafEvent = events[j];
-            if (jtafEvent.id == id) {
-                jtafEvents[k] = jtafEvent;
-                k++;
+            var ev = events[j];
+            if (ev.id == id) {
+                category.events.push(ev);
             }
         }
     }
-    category.events = jtafEvents;
 }
 
 function deleteCategory(id) {

@@ -8,11 +8,9 @@
         <script src="series.js"></script>
     </head>
     <body onload="loadData();">
-        <div id = "main">
-            <div id = "navigation">
-                <script src = "../util/navigation.js" ></script>
-            </div>
+        <script src="/jtaf/navigation.js"></script>
 
+        <div id = "main">
             <h1>Series</h1>
 
             <form action="javascript:save();">
@@ -32,104 +30,123 @@
                     <input type="submit" value="Save" />&nbsp;<a href="../index.html">Back</a>
                 </p>
 
-                <h2>Competitions</h2>
+                <br><br>
 
-                <table class="list">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th style="width: 40px; text-align: right;"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="competition_table">
-                        <tr>
-                            <td colspan="3">Loading competitions</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <a class="tab_active" href="#" onclick="switchTo('competitions');">Competitions</a>&nbsp;
+                <a class="tab_inactive" href="#" onclick="switchTo('events');">Events</a>&nbsp;
+                <a class="tab_inactive" href="#" onclick="switchTo('categories');">Categories</a>&nbsp;
+                <a class="tab_inactive" href="#" onclick="switchTo('athletes');">Athletes</a>
 
-                <p>
-                    <a href="competition.html">Add competition</a>
-                </p>
+                <br><br>
 
-                <h2>Events</h2>
+                <div id="competitions" class="visible">
 
-                <table class="list">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Gender</th>
-                            <th>A</th>
-                            <th>B</th>
-                            <th>C</th>
-                            <th style="width: 40px; text-align: right;"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="event_table">
-                        <tr>
-                            <td colspan="7">Loading events</td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <h2>Competitions</h2>
 
-                <p>
-                    <a href="event.html">Add event</a>
-                </p>
+                    <table class="list">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th style="width: 40px; text-align: right;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="competition_table">
+                            <tr>
+                                <td colspan="3">Loading competitions</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                <h2>Categories</h2>
+                    <p>
+                        <a href="competition.html">Add competition</a>
+                    </p>
+                </div>
 
-                <table class="list">
-                    <thead>
-                        <tr>
-                            <th>Key</th>
-                            <th>Name</th>
-                            <th>From</th>
-                            <th>To</th>
-                            <th>Gender</th>
-                            <th style="width: 40px; text-align: right;"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="category_table">
-                        <tr>
-                            <td colspan="6">Loading categories</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div id="events" class="invisible">
+                    <h2>Events</h2>
 
-                <p>
-                    <a href="category.html">Add category</a>
-                </p>
+                    <table class="list">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Gender</th>
+                                <th>A</th>
+                                <th>B</th>
+                                <th>C</th>
+                                <th style="width: 40px; text-align: right;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="event_table">
+                            <tr>
+                                <td colspan="7">Loading events</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                <h2>Athletes</h2>
+                    <p>
+                        <a href="event.html">Add event</a>
+                    </p>
+                </div>
 
-                <table class="list">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Last name</th>
-                            <th>First name</th>
-                            <th>Year</th>
-                            <th>Gender</th>
-                            <th>Category</th>
-                            <th>Club</th>
-                            <th style="width: 40px; text-align: right;"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="athlete_table">
-                        <tr>
-                            <td colspan="8">Loading athletes</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div id="categories" class="invisible">
+                    <h2>Categories</h2>
 
-                <p>
-                    <a href="athlete.html">Add athlete</a>
-                </p>
+                    <table class="list">
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Name</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Gender</th>
+                                <th style="width: 40px; text-align: right;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="category_table">
+                            <tr>
+                                <td colspan="6">Loading categories</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        <a href="category.html">Add category</a>
+                    </p>
+                </div>
+
+                <div id="athletes" class="invisible">
+                    <h2>Athletes</h2>
+
+                    <table class="list">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Last name</th>
+                                <th>First name</th>
+                                <th>Year</th>
+                                <th>Gender</th>
+                                <th>Category</th>
+                                <th>Club</th>
+                                <th style="width: 40px; text-align: right;"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="athlete_table">
+                            <tr>
+                                <td colspan="8">Loading athletes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        <a href="athlete.html">Add athlete</a>
+                    </p>
+                </div>
 
             </form>
-
         </div>
+
+        <script src="/jtaf/footer.js"></script>
     </body>
 </html>
