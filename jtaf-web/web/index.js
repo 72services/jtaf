@@ -43,10 +43,18 @@ function fillSeries() {
             for (var c in series.competitions) {
                 var competition = series.competitions[c];
                 var li_competition = document.createElement("li");
-                li_competition.innerHTML = "<b>" + competition.name
-                        + "</b> " + competition.competitionDate;
+                var table = document.createElement("table");
+                table.setAttribute("style", "width: 100%");
+                var row = table.insertRow(0);
+                var cell0 = row.insertCell(0);
+                cell0.innerHTML = "<b>" + competition.name + "</b> ";
+                var cell1 = row.insertCell(1);
+                cell1.innerHTML = competition.competitionDate;
+                var cell2 = row.insertCell(2);
+                cell2.setAttribute("style", "text-align: right;");
+                cell2.innerHTML = "(#" + competition.numberOfAthletes + ")";
+                li_competition.appendChild(table);
 
-                li_competition.appendChild(document.createElement("br"));
                 li_competition.appendChild(document.createElement("br"));
                 li_competition.appendChild(document.createElement("br"));
 

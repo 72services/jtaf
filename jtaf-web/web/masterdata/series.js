@@ -269,4 +269,11 @@ function switchTo(div) {
         els[i].className = "invisible";
     }
     el(div).className = "visible";
+
+    el("a_competitions").className = "tab_inactive";
+    el("a_events").className = "tab_inactive";
+    el("a_categories").className = "tab_inactive";
+    el("a_athletes").className = "tab_inactive";
+
+    el("a_" + div).className = "tab_active";
 }

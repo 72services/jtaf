@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Transient;
 
 @Entity
 @NamedQueries({
@@ -22,6 +23,8 @@ public class Competition {
     private Date competitionDate;
     @ManyToOne
     private Series series;
+    @Transient
+    private int numberOfAthletes;
 
     public Series getSeries() {
         return series;
@@ -53,5 +56,13 @@ public class Competition {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getNumberOfAthletes() {
+        return numberOfAthletes;
+    }
+
+    public void setNumberOfAthletes(int numberOfAthletes) {
+        this.numberOfAthletes = numberOfAthletes;
     }
 }

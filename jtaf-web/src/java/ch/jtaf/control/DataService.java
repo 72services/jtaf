@@ -8,6 +8,7 @@ import ch.jtaf.entity.Event;
 import ch.jtaf.entity.Series;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -54,6 +55,7 @@ public class DataService extends AbstractService {
         List<Competition> cs = q.getResultList();
         for (Competition c : cs) {
             c.setSeries(null);
+            c.setNumberOfAthletes(getNumberOfAthletes(c).intValue());
         }
         s.setCompetitions(cs);
         return s;
@@ -111,7 +113,15 @@ public class DataService extends AbstractService {
             searchterm = searchterm.toLowerCase();
         }
         searchterm += "%";
-        query.setParameter("searchterm",  searchterm);
+        query.setParameter("searchterm", searchterm);
         return query.getResultList();
+    }
+
+    private Long getNumberOfAthletes(Competition c) {
+        String queryString = "select count(distinct a) from Athlete a join a.results r "
+                + "where r.competition = :competition";
+        TypedQuery query = em.createQuery(queryString, Athlete.class);
+        query.setParameter("competition", c);
+        return (Long) query.getSingleResult();
     }
 }
