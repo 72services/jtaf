@@ -9,69 +9,60 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CompetitionRanking {
-    
+
     private static final float CM_PER_INCH = 2.54f;
     private static final float DPI = 72f;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
     private Document document;
     private PdfWriter pdfWriter;
     private final CompetitionRankingTO ranking;
-    
+
     public CompetitionRanking(CompetitionRankingTO ranking) {
         this.ranking = ranking;
     }
-    
+
     public byte[] create() {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            document = new Document(PageSize.A5);
+            document = new Document(PageSize.A4);
             pdfWriter = PdfWriter.getInstance(document, baos);
-            
+            pdfWriter.setPageEvent(new HeaderFooter());
             document.open();
-            
-            createHeader();
+
             createRanking();
-            
+
             document.close();
-            
             pdfWriter.flush();
-            
+
             byte[] ba = baos.toByteArray();
             baos.close();
-            
+
             return ba;
         } catch (Exception e) {
             e.printStackTrace();
             return new byte[0];
         }
     }
-    
-    private void createHeader() throws DocumentException {
-        PdfPTable table = new PdfPTable(3);
-        table.setWidthPercentage(100);
-        table.setSpacingBefore(cmToPixel(1f));
-        
-        addCell(table, "Ranking");
-        addCell(table, ranking.getCompetition().getName());
-        addCell(table, sdf.format(ranking.getCompetition().getCompetitionDate()));
-        
-        document.add(table);
-    }
-    
+
     private void createRanking() throws DocumentException {
         for (RankingCategoryTO category : ranking.getCategories()) {
-            PdfPTable table = new PdfPTable(6);
+            PdfPTable table = new PdfPTable(new float[]{2f, 10f, 10f, 2f, 5f, 5f});
             table.setWidthPercentage(100);
             table.setSpacingBefore(cmToPixel(1f));
-            
+
             createCategoryTitle(table, category);
+            addCell(table, "", 6);
             int position = 1;
             for (Athlete athlete : category.getAthletes()) {
                 createRow(table, position, athlete);
@@ -80,13 +71,13 @@ public class CompetitionRanking {
             document.add(table);
         }
     }
-    
+
     private void createCategoryTitle(PdfPTable table, RankingCategoryTO category) {
-        addCell(table, category.getCategory().getAbbreviation());
-        addCell(table, category.getCategory().getName());
-        addCell(table, category.getCategory().getYearFrom() + " - " + category.getCategory().getYearTo(), 4);
+        addCell(table, category.getCategory().getAbbreviation(), 12f);
+        addCell(table, category.getCategory().getName() + " "
+                + category.getCategory().getYearFrom() + " - " + category.getCategory().getYearTo(), 5, 12f);
     }
-    
+
     private void createRow(PdfPTable table, int position, Athlete athlete) throws DocumentException {
         addCell(table, position + ".");
         addCell(table, athlete.getLastName());
@@ -94,7 +85,7 @@ public class CompetitionRanking {
         addCell(table, athlete.getYear() + "");
         addCell(table, athlete.getClub() == null ? "" : athlete.getClub().getAbbreviation());
         addCell(table, athlete.getTotalPoints() + "", false);
-        
+
         addCell(table, "");
         boolean first = true;
         StringBuilder sb = new StringBuilder();
@@ -112,18 +103,18 @@ public class CompetitionRanking {
         }
         addResultsCell(table, sb.toString());
     }
-    
+
     public float cmToPixel(Float cm) {
         return (cm / CM_PER_INCH) * DPI;
     }
-    
+
     private void addCell(PdfPTable table, String text) {
         PdfPCell cell = new PdfPCell(
                 new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, 9f)));
         cell.setBorder(0);
         table.addCell(cell);
     }
-    
+
     private void addCell(PdfPTable table, String text, boolean left) {
         PdfPCell cell = new PdfPCell(
                 new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, 9f)));
@@ -133,20 +124,71 @@ public class CompetitionRanking {
         }
         table.addCell(cell);
     }
-    
-    private void addCell(PdfPTable table, String text, int colspan) {
+
+    private void addCell(PdfPTable table, String text, int colspan, float fontSize) {
         PdfPCell cell = new PdfPCell(
-                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, 9f)));
+                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, fontSize)));
         cell.setColspan(colspan);
         cell.setBorder(0);
         table.addCell(cell);
     }
-    
+
+    private void addCell(PdfPTable table, String text, int colspan) {
+        PdfPCell cell = new PdfPCell(
+                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, 9f)));
+        cell.setBorder(0);
+        cell.setColspan(6);
+        table.addCell(cell);
+    }
+
+        private void addCell(PdfPTable table, String text, float fontSize) {
+        PdfPCell cell = new PdfPCell(
+                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, fontSize)));
+        cell.setBorder(0);
+        table.addCell(cell);
+    }
+
     private void addResultsCell(PdfPTable table, String text) {
         PdfPCell cell = new PdfPCell(
                 new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, 9f)));
         cell.setColspan(5);
         cell.setBorder(0);
         table.addCell(cell);
+    }
+
+    class HeaderFooter extends PdfPageEventHelper {
+
+        private final PdfPTable header;
+
+        public HeaderFooter() {
+            header = new PdfPTable(3);
+            header.setWidthPercentage(100);
+            header.setSpacingBefore(cmToPixel(1f));
+
+            addCell(header, "Ranking", 20f);
+            addCell(header, ranking.getCompetition().getName(), 20f);
+            addCell(header, sdf.format(ranking.getCompetition().getCompetitionDate()), 20f);
+        }
+
+        @Override
+        public void onStartPage(PdfWriter writer, Document document) {
+            try {
+                document.add(header);
+            } catch (DocumentException ex) {
+                Logger.getLogger(CompetitionRanking.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        @Override
+        public void onEndPage(PdfWriter writer, Document document) {
+            PdfPTable table = new PdfPTable(1);
+            table.setWidthPercentage(100);
+            addCell(table, "Page " + document.getPageNumber(), false);
+
+            Rectangle page = document.getPageSize();
+            table.setTotalWidth(page.getWidth() - document.leftMargin() - document.rightMargin());
+            table.writeSelectedRows(0, 1, document.leftMargin(), document.bottomMargin(),
+                    writer.getDirectContent());
+        }
     }
 }
