@@ -1,10 +1,11 @@
 package ch.jtaf.control;
 
+import ch.jtaf.control.util.AthleteResultComparator;
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Category;
 import ch.jtaf.entity.Competition;
-import ch.jtaf.entity.Ranking;
-import ch.jtaf.entity.RankingCategory;
+import ch.jtaf.entity.CompetitionRankingTO;
+import ch.jtaf.entity.RankingCategoryTO;
 import ch.jtaf.entity.Result;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,9 +19,9 @@ import javax.persistence.TypedQuery;
 
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-public class ReportSerivce extends AbstractService {
+public class RankingService extends AbstractService {
 
-    public Ranking getCompetitionRanking(Long competitionid) {
+    public CompetitionRankingTO getCompetitionRanking(Long competitionid) {
         TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findByCompetition", Athlete.class);
         q.setParameter("competitionid", competitionid);
         List<Athlete> list = q.getResultList();
@@ -28,7 +29,7 @@ public class ReportSerivce extends AbstractService {
         Competition competition = em.find(Competition.class, competitionid);
         competition.setSeries(null);
 
-        Ranking ranking = new Ranking();
+        CompetitionRankingTO ranking = new CompetitionRankingTO();
         ranking.setCompetition(competition);
 
         Map<Category, List<Athlete>> map = new HashMap<Category, List<Athlete>>();
@@ -41,7 +42,7 @@ public class ReportSerivce extends AbstractService {
             map.put(a.getCategory(), as);
         }
         for (Map.Entry<Category, List<Athlete>> entry : map.entrySet()) {
-            RankingCategory rc = new RankingCategory();
+            RankingCategoryTO rc = new RankingCategoryTO();
             Category c = entry.getKey();
             c.setEvents(null);
             c.setSeries(null);

@@ -1,27 +1,43 @@
 package ch.jtaf.boundry;
 
-import ch.jtaf.control.ReportSerivce;
-import ch.jtaf.entity.Ranking;
+import ch.jtaf.control.ReportService;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
-@Path("rankings")
-@Produces({"application/json"})
-@Consumes({"application/json"})
+@Path("reports")
 @Stateless
-public class RankingResource {
+public class ReportResource {
 
     @EJB
-    private ReportSerivce service;
+    private ReportService service;
 
     @GET
-    @Path("competition/{competitionid}")
-    public Ranking getCompetitionRanking(@PathParam("competitionid") Long competitionid) {
-        return service.getCompetitionRanking(competitionid);
+    @Path("sheet")
+    @QueryParam("{competitionid}")
+    @Produces({"application/pdf"})
+    public byte[] getSheets(@QueryParam("competitionid") Long competitionid) {
+        if (competitionid == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        } else {
+            return service.createSheets(competitionid);
+        }
+    }
+
+    @GET
+    @Path("competitionranking")
+    @QueryParam("{competitionid}")
+    @Produces({"application/pdf"})
+    public byte[] getCompetitionRanking(@QueryParam("competitionid") Long competitionid) {
+        if (competitionid == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        } else {
+            return service.createCompetitionRanking(competitionid);
+        }
     }
 }

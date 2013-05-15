@@ -3,7 +3,7 @@ package ch.jtaf.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RankingCategory {
+public class RankingCategoryTO {
 
     private Category category;
     private List<Athlete> athletes = new ArrayList<Athlete>();

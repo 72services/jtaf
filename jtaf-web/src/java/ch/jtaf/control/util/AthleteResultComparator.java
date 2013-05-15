@@ -1,4 +1,4 @@
-package ch.jtaf.control;
+package ch.jtaf.control.util;
 
 import ch.jtaf.entity.Athlete;
 import java.util.Comparator;
