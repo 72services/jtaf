@@ -104,7 +104,7 @@ function createResultRow(athlete) {
         if (!first) {
             text += "&nbsp;&nbsp;";
         }
-        text += result.event.name + ": " + result.result;
+        text += result.event.name + ": " + result.result + " (" + result.points + ")";
         first = false;
     }
     return text;

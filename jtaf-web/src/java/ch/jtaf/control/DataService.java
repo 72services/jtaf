@@ -5,10 +5,10 @@ import ch.jtaf.entity.Category;
 import ch.jtaf.entity.Club;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.entity.Event;
+import ch.jtaf.entity.Result;
 import ch.jtaf.entity.Series;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -76,9 +76,8 @@ public class DataService extends AbstractService {
     }
 
     public List<Athlete> getAthleteFromSeries(Long id) {
-        Series series = em.find(Series.class, id);
         TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
-        q.setParameter("series", series);
+        q.setParameter("seriesid", id);
         return q.getResultList();
     }
 
@@ -93,7 +92,11 @@ public class DataService extends AbstractService {
         if (c == null) {
             throw new IllegalArgumentException();
         }
-        a.setCategory(c);
+        if (!c.equals(a.getCategory())) {
+            // Category has changed. All Results must be deleted
+            a.setResults(new ArrayList<Result>());
+            a.setCategory(c);
+        }
         return this.save(a);
     }
 

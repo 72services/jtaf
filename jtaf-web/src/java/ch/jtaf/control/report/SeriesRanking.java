@@ -1,8 +1,9 @@
 package ch.jtaf.control.report;
 
 import ch.jtaf.entity.Athlete;
-import ch.jtaf.entity.CompetitionRankingCategoryData;
-import ch.jtaf.entity.Result;
+import ch.jtaf.entity.Competition;
+import ch.jtaf.entity.SeriesRankingCategoryData;
+import ch.jtaf.entity.SeriesRankingData;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.FontFactory;
@@ -12,14 +13,15 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
+import java.util.Date;
 
-public class CompetitionRanking extends ReportBase {
+public class SeriesRanking extends ReportBase {
 
     private Document document;
     private PdfWriter pdfWriter;
-    private final ch.jtaf.entity.CompetitionRankingData ranking;
+    private final SeriesRankingData ranking;
 
-    public CompetitionRanking(ch.jtaf.entity.CompetitionRankingData ranking) {
+    public SeriesRanking(SeriesRankingData ranking) {
         this.ranking = ranking;
     }
 
@@ -29,8 +31,8 @@ public class CompetitionRanking extends ReportBase {
             document = new Document(PageSize.A4);
             pdfWriter = PdfWriter.getInstance(document, baos);
             pdfWriter.setPageEvent(new HeaderFooter(
-                    "Ranking", ranking.getCompetition().getName(),
-                    sdf.format(ranking.getCompetition().getCompetitionDate())));
+                    "Series ranking", ranking.getSeries().getName(),
+                    sdf.format(new Date())));
             document.open();
 
             createRanking();
@@ -49,7 +51,7 @@ public class CompetitionRanking extends ReportBase {
     }
 
     private void createRanking() throws DocumentException {
-        for (CompetitionRankingCategoryData category : ranking.getCategories()) {
+        for (SeriesRankingCategoryData category : ranking.getCategories()) {
             PdfPTable table = new PdfPTable(new float[]{2f, 10f, 10f, 2f, 5f, 5f});
             table.setWidthPercentage(100);
             table.setSpacingBefore(cmToPixel(1f));
@@ -65,7 +67,7 @@ public class CompetitionRanking extends ReportBase {
         }
     }
 
-    private void createCategoryTitle(PdfPTable table, CompetitionRankingCategoryData category) {
+    private void createCategoryTitle(PdfPTable table, SeriesRankingCategoryData category) {
         addCell(table, category.getCategory().getAbbreviation(), 12f);
         addCell(table, category.getCategory().getName() + " "
                 + category.getCategory().getYearFrom() + " - " + category.getCategory().getYearTo(), 5, 12f);
@@ -79,16 +81,13 @@ public class CompetitionRanking extends ReportBase {
         addCell(table, athlete.getFirstName());
         addCell(table, athlete.getYear() + "");
         addCell(table, athlete.getClub() == null ? "" : athlete.getClub().getAbbreviation());
-        addCell(table, athlete.getTotalPoints(ranking.getCompetition()) + "", false);
+        addCell(table, athlete.getSeriesPoints(ranking.getSeries()) + "", false);
 
         StringBuilder sb = new StringBuilder();
-        for (Result result : athlete.getResults()) {
-            sb.append(result.getEvent().getName());
+        for (Competition competition : ranking.getSeries().getCompetitions()) {
+            sb.append(competition.getName());
             sb.append(": ");
-            sb.append(result.getResult());
-            sb.append(" (");
-            sb.append(result.getPoints());
-            sb.append(" ) ");
+            sb.append(athlete.getTotalPoints(competition));
         }
         addCell(table, "");
         addResultsCell(table, sb.toString());

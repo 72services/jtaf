@@ -20,11 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sheet {
+public class Sheet extends ReportBase {
 
-    private static final float CM_PER_INCH = 2.54f;
-    private static final float DPI = 72f;
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
     private Document document;
     private PdfWriter pdfWriter;
     private final Competition competition;
@@ -128,16 +125,5 @@ public class Sheet {
         }
 
         document.add(table);
-    }
-
-    public float cmToPixel(Float cm) {
-        return (cm / CM_PER_INCH) * DPI;
-    }
-
-    private void addCell(PdfPTable table, String text) {
-        PdfPCell cell = new PdfPCell(
-                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, 9f)));
-        cell.setBorder(0);
-        table.addCell(cell);
     }
 }

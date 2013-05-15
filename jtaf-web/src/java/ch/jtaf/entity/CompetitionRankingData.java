@@ -3,10 +3,10 @@ package ch.jtaf.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompetitionRankingTO {
+public class CompetitionRankingData {
 
     private Competition competition;
-    private List<RankingCategoryTO> categories = new ArrayList<RankingCategoryTO>();
+    private List<CompetitionRankingCategoryData> categories = new ArrayList<CompetitionRankingCategoryData>();
 
     public Competition getCompetition() {
         return competition;
@@ -16,11 +16,11 @@ public class CompetitionRankingTO {
         this.competition = competition;
     }
 
-    public List<RankingCategoryTO> getCategories() {
+    public List<CompetitionRankingCategoryData> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<RankingCategoryTO> categories) {
+    public void setCategories(List<CompetitionRankingCategoryData> categories) {
         this.categories = categories;
     }
 }

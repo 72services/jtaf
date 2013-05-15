@@ -25,7 +25,13 @@ public class ReportResource {
         if (competitionid == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         } else {
-            return service.createSheets(competitionid);
+            byte[] report = service.createSheets(competitionid);
+            if (report == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                return report;
+            }
+
         }
     }
 
@@ -37,7 +43,29 @@ public class ReportResource {
         if (competitionid == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         } else {
-            return service.createCompetitionRanking(competitionid);
+            byte[] report = service.createCompetitionRanking(competitionid);
+            if (report == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                return report;
+            }
+        }
+    }
+
+    @GET
+    @Path("seriesranking")
+    @QueryParam("{seriesid}")
+    @Produces({"application/pdf"})
+    public byte[] getSeriesRanking(@QueryParam("seriesid") Long seriesid) {
+        if (seriesid == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        } else {
+            byte[] report = service.createSeriesRanking(seriesid);
+            if (report == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                return report;
+            }
         }
     }
 }

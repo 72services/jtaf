@@ -15,8 +15,8 @@ import javax.persistence.OrderColumn;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Athlete.findBySeries", query = "select a from Athlete a "
-            + "where a.series = :series order by a.category.abbreviation, a.lastName, a.firstName"),
+    @NamedQuery(name = "Athlete.findBySeries", query = "select distinct a from Athlete a "
+            + "where a.series.id = :seriesid order by a.category.abbreviation, a.lastName, a.firstName"),
     @NamedQuery(name = "Athlete.findByCompetition", query = "select distinct a from Athlete a join a.results r "
             + "where r.competition.id = :competitionid order by a.category.abbreviation, a.lastName, a.firstName")
 })
@@ -112,15 +112,33 @@ public class Athlete {
         this.series = series;
     }
 
-    public int getTotalPoints() {
+    public int getTotalPoints(Competition competition) {
         int p = 0;
         for (Result r : results) {
-            p += r.getPoints();
+            if (r.getCompetition().equals(competition)) {
+                p += r.getPoints();
+            }
         }
         return p;
     }
 
     public void setTotalPoints(int p) {
+        // Ignore. This method is only for JSON serialization
+    }
+
+    public int getSeriesPoints(Series series) {
+        int p = 0;
+        for (Result r : results) {
+            for (Competition competition : series.getCompetitions()) {
+                if (r.getCompetition().equals(competition)) {
+                    p += r.getPoints();
+                }
+            }
+        }
+        return p;
+    }
+
+    public void setSeriesPoints(int p) {
         // Ignore. This method is only for JSON serialization
     }
 }
