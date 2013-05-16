@@ -16,7 +16,7 @@ import javax.persistence.OrderColumn;
 @NamedQueries({
     @NamedQuery(name = "Category.findAll", query = "select c from Category c order by c.abbreviation"),
     @NamedQuery(name = "Category.findBySeries", query = "select c from Category c where c.series = :series order by c.abbreviation"),
-    @NamedQuery(name = "Category.findBySeriesAndYearAndGender", query = "select c from Category c where c.series = :series c.gender = :gender and :year between c.yearFrom and c.yearTo")
+    @NamedQuery(name = "Category.findBySeriesAndYearAndGender", query = "select c from Category c where c.series = :series and c.gender = :gender and :year between c.yearFrom and c.yearTo")
 })
 public class Category {
 

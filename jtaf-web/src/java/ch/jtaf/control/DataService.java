@@ -102,7 +102,7 @@ public class DataService extends AbstractService {
     }
 
     private Category getCategoryWithGenderAndAge(Series series, String gender, int year) {
-        TypedQuery<Category> q = em.createNamedQuery("Category.findByYearAndGender", Category.class);
+        TypedQuery<Category> q = em.createNamedQuery("Category.findBySeriesAndYearAndGender", Category.class);
         q.setParameter("gender", gender);
         q.setParameter("year", year);
         q.setParameter("series", series);
