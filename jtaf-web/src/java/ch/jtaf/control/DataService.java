@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 @Stateless
@@ -128,11 +129,62 @@ public class DataService extends AbstractService {
         return (Long) query.getSingleResult();
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Series copySeries(Long id) {
-        // TODO
         Series series = em.find(Series.class, id);
         Series copy = new Series();
-
+        copy.setLogo(series.getLogo());
+        copy.setName("Copy of " + series.getName());
+        em.persist(copy);
+        List<Event> events = copyEvents(copy);
+        copyCategories(copy, events);
         return copy;
+    }
+
+    private List<Event> copyEvents(Series series) {
+        Query q = em.createNamedQuery("Event.findBySeries", Event.class);
+        q.setParameter("series", series);
+        List<Event> events = q.getResultList();
+        List<Event> copies = new ArrayList<Event>();
+        for (Event event : events) {
+            Event copy = new Event();
+            copy.setA(event.getA());
+            copy.setB(event.getB());
+            copy.setC(event.getC());
+            copy.setGender(event.getGender());
+            copy.setName(event.getName());
+            copy.setSeries(series);
+            copy.setType(event.getType());
+            em.persist(copy);
+            copies.add(copy);
+        }
+        return copies;
+    }
+
+    private List<Category> copyCategories(Series series, List<Event> events) {
+        Query q = em.createNamedQuery("Category.findBySeries", Category.class);
+        q.setParameter("series", series);
+        List<Category> categories = q.getResultList();
+        List<Category> copies = new ArrayList<Category>();
+        for (Category category : categories) {
+            Category copy = new Category();
+            copy.setAbbreviation(category.getAbbreviation());
+            copy.setGender(category.getGender());
+            copy.setName(category.getName());
+            copy.setSeries(series);
+            copy.setYearFrom(category.getYearFrom());
+            copy.setYearTo(category.getYearTo());
+            for (Event eventFromCategory : category.getEvents()) {
+                for (Event eventCopy : events) {
+                    if (eventFromCategory.getName().equals(eventCopy.getName())
+                            && eventFromCategory.getGender().equals(eventCopy.getGender())) {
+                        copy.getEvents().add(eventCopy);
+                    }
+                }
+            }
+            em.persist(copy);
+            copies.add(copy);
+        }
+        return copies;
     }
 }

@@ -127,7 +127,6 @@ a.tab_active {
     font-weight: bold;
 }
 
-
 input[type="submit"], input[type="reset"], button {
     border: 1px solid #a8a8a8;
     background: #F5F5F5;
@@ -209,8 +208,8 @@ ul {
 ul.series li {
     display: block;
     list-style: none;
-    margin: 0px;
-    padding: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
     width: 600px;
     border-radius: 9px 9px 9px 9px;
     background-color: #B9CC5B;
@@ -220,7 +219,7 @@ ul.series li {
 ul.competition li {
     display: block;
     list-style: none;
-    margin: 20px;
+    margin: 0px;
     padding: 20px;
     width: 520px;
     height: 80px;

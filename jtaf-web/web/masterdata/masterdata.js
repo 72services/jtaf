@@ -14,11 +14,19 @@ function loadData() {
     });
 }
 
-function deleteSerie(id) {
+function deleteSeries(id) {
     xhrDelete("/jtaf/res/series/" + id, function() {
         loadData();
         info("Serie deleted");
     });
+}
+
+function copySeries(id) {
+    xhrPost("/jtaf/res/series/" + id + "?function=copy", function() {
+        loadData();
+        info("Series copied");
+    });
+
 }
 
 function deleteClubs(id) {
@@ -49,7 +57,8 @@ function createSeriesTableBody() {
             cellName.innerHTML = series.name;
             cellName.setAttribute("onclick", onclickEdit);
             var copy = document.createElement("a");
-            copy.setAttribute("href", "/jtaf/res/series/" + series.id + "?function=copy");
+            copy.setAttribute("href", "#");
+            copy.setAttribute("onclick", "copySeries(" + series.id + ")")
             copy.appendChild(document.createTextNode("Copy"));
             var del = document.createElement("a");
             del.setAttribute("href", "#");

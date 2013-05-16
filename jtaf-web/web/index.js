@@ -35,6 +35,7 @@ function fillSeries() {
 
             li_series.appendChild(document.createElement("br"));
             li_series.appendChild(document.createElement("br"));
+            li_series.appendChild(document.createElement("br"));
             ul_series.appendChild(li_series);
 
             var ul_competitions = document.createElement("ul");

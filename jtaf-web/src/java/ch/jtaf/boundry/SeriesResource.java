@@ -39,20 +39,21 @@ public class SeriesResource {
         return service.save(series);
     }
 
+    @POST
+    @Path("{id}")
+    public void copy(@PathParam("id") Long id, @QueryParam("function") String function) {
+        service.copySeries(id);
+    }
+
     @GET
     @Path("{id}")
-    public Series get(@PathParam("id") Long id, @QueryParam("function") String function)
+    public Series get(@PathParam("id") Long id)
             throws WebApplicationException {
-        if (function == null) {
-            Series s = service.getSeries(id);
-            if (s == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
-            } else {
-                return s;
-            }
-        }
-        else {
-            return service.copySeries(id);
+        Series s = service.getSeries(id);
+        if (s == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } else {
+            return s;
         }
     }
 

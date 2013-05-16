@@ -237,7 +237,7 @@ function parseAndFillAthletes(response) {
 
 function save() {
     fillSeries();
-    xhrPost("/jtaf/res/series/", function(response) {
+    xhrPost("/jtaf/res/series/", function() {
         loadData();
         info("Series saved");
     }, series);

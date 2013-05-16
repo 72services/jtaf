@@ -41,7 +41,7 @@ function xhrPost(url, func, body) {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
     xhr.onload = function() {
-        if (xhr.status === 200) {
+        if (xhr.status === 200 || xhr.status === 204) {
             func(xhr.response);
         } else {
             error(xhr.status);
