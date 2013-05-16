@@ -89,7 +89,7 @@ public class DataService extends AbstractService {
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Athlete saveAthlete(Athlete a) {
-        Category c = this.getCategoryWithGenderAndAge(a.getGender(), a.getYear());
+        Category c = this.getCategoryWithGenderAndAge(a.getSeries(), a.getGender(), a.getYear());
         if (c == null) {
             throw new IllegalArgumentException();
         }
@@ -101,10 +101,11 @@ public class DataService extends AbstractService {
         return this.save(a);
     }
 
-    private Category getCategoryWithGenderAndAge(String gender, int year) {
+    private Category getCategoryWithGenderAndAge(Series series, String gender, int year) {
         TypedQuery<Category> q = em.createNamedQuery("Category.findByYearAndGender", Category.class);
         q.setParameter("gender", gender);
         q.setParameter("year", year);
+        q.setParameter("series", series);
         return q.getSingleResult();
     }
 
@@ -136,14 +137,15 @@ public class DataService extends AbstractService {
         copy.setLogo(series.getLogo());
         copy.setName("Copy of " + series.getName());
         em.persist(copy);
-        List<Event> events = copyEvents(copy);
-        copyCategories(copy, events);
+        List<Event> events = copyEvents(series, copy);
+        List<Category> categories = copyCategories(series, copy, events);
+        copyAthletes(series, copy);
         return copy;
     }
 
-    private List<Event> copyEvents(Series series) {
-        Query q = em.createNamedQuery("Event.findBySeries", Event.class);
-        q.setParameter("series", series);
+    private List<Event> copyEvents(Series orig, Series series) {
+        TypedQuery<Event> q = em.createNamedQuery("Event.findBySeries", Event.class);
+        q.setParameter("series", orig);
         List<Event> events = q.getResultList();
         List<Event> copies = new ArrayList<Event>();
         for (Event event : events) {
@@ -161,9 +163,9 @@ public class DataService extends AbstractService {
         return copies;
     }
 
-    private List<Category> copyCategories(Series series, List<Event> events) {
-        Query q = em.createNamedQuery("Category.findBySeries", Category.class);
-        q.setParameter("series", series);
+    private List<Category> copyCategories(Series orig, Series series, List<Event> events) {
+        TypedQuery<Category> q = em.createNamedQuery("Category.findBySeries", Category.class);
+        q.setParameter("series", orig);
         List<Category> categories = q.getResultList();
         List<Category> copies = new ArrayList<Category>();
         for (Category category : categories) {
@@ -186,5 +188,22 @@ public class DataService extends AbstractService {
             copies.add(copy);
         }
         return copies;
+    }
+
+    private void copyAthletes(Series orig, Series series) {
+        TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
+        q.setParameter("seriesid", orig.getId());
+        List<Athlete> athletes = q.getResultList();
+        for (Athlete athlete : athletes) {
+            Athlete copy = new Athlete();
+            copy.setCategory(getCategoryWithGenderAndAge(series, athlete.getGender(), athlete.getYear()));
+            copy.setClub(athlete.getClub());
+            copy.setFirstName(athlete.getFirstName());
+            copy.setGender(athlete.getGender());
+            copy.setLastName(athlete.getLastName());
+            copy.setSeries(series);
+            copy.setYear(athlete.getYear());
+            em.persist(copy);
+        }
     }
 }
