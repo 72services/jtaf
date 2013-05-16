@@ -58,12 +58,18 @@ function fillCompetitionTable() {
             cellDate.className = "edit";
             cellDate.innerHTML = competition.competitionDate;
             cellDate.setAttribute("onclick", onclickEdit);
+            var sheet = document.createElement("a");
+            sheet.setAttribute("href", "/jtaf/res/reports/sheet?competitionid=" + competition.id);
+            sheet.setAttribute("target", "_blank");
+            sheet.appendChild(document.createTextNode("Sheets"));
             var del = document.createElement("a");
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteCompetition(" +
                     competition.id + ")");
             del.appendChild(document.createTextNode("Delete"));
             var cellFunction = row.insertCell(2);
+            cellFunction.appendChild(sheet);
+            cellFunction.appendChild(document.createTextNode(" "));
             cellFunction.appendChild(del);
         }
     }
@@ -105,12 +111,18 @@ function parseAndFillCategories(response) {
             cellGender.className = "edit";
             cellGender.innerHTML = category.gender;
             cellGender.setAttribute("onclick", onclickEdit);
+            var sheet = document.createElement("a");
+            sheet.setAttribute("href", "/jtaf/res/reports/sheet?categoryid=" + category.id);
+            sheet.setAttribute("target", "_blank");
+            sheet.appendChild(document.createTextNode("Sheet"));
             var del = document.createElement("a");
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteCategory(" +
                     category.id + ")");
             del.appendChild(document.createTextNode("Delete"));
             var cellFunction = row.insertCell(5);
+            cellFunction.appendChild(sheet);
+            cellFunction.appendChild(document.createTextNode(" "));
             cellFunction.appendChild(del);
         }
     }

@@ -19,25 +19,24 @@ public class ReportResource {
 
     @GET
     @Path("sheet")
-    @QueryParam("{competitionid}")
     @Produces({"application/pdf"})
-    public byte[] getSheets(@QueryParam("competitionid") Long competitionid) {
-        if (competitionid == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+    public byte[] getSheets(@QueryParam("competitionid") Long competitionid, @QueryParam("categoryid") Long categoryid) {
+        byte[] report = null;
+        if (competitionid != null) {
+            report = service.createSheets(competitionid);
+        }
+        if (categoryid != null) {
+            report = service.createEmptySheets(categoryid);
+        }
+        if (report == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
-            byte[] report = service.createSheets(competitionid);
-            if (report == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
-            } else {
-                return report;
-            }
-
+            return report;
         }
     }
 
     @GET
     @Path("competitionranking")
-    @QueryParam("{competitionid}")
     @Produces({"application/pdf"})
     public byte[] getCompetitionRanking(@QueryParam("competitionid") Long competitionid) {
         if (competitionid == null) {
@@ -54,7 +53,6 @@ public class ReportResource {
 
     @GET
     @Path("seriesranking")
-    @QueryParam("{seriesid}")
     @Produces({"application/pdf"})
     public byte[] getSeriesRanking(@QueryParam("seriesid") Long seriesid) {
         if (seriesid == null) {

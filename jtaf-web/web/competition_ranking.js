@@ -12,12 +12,28 @@ function loadData() {
 
 function parseAndFill(response) {
     ranking = JSON.parse(response);
-    var h1 = document.createElement("h1");
-    h1.innerHTML = "Ranking";
-    var h2 = document.createElement("h2");
-    h2.innerHTML = ranking.competition.name + " " + ranking.competition.competitionDate;
-    el("title").appendChild(h1);
-    el("title").appendChild(h2);
+
+    var table = document.createElement("table");
+    table.setAttribute("style", "width: 100%;");
+    var row = table.insertRow(0);
+    var left = row.insertCell(0);
+    var hleft = document.createElement("h1");
+    hleft.innerHTML = "Ranking";
+    left.appendChild(hleft);
+
+    var middle = row.insertCell(1);
+    middle.setAttribute("style", "text-align: center;");
+    var hmiddle = document.createElement("h1");
+    hmiddle.innerHTML = ranking.competition.name;
+    middle.appendChild(hmiddle);
+
+    var right = row.insertCell(2);
+    right.setAttribute("style", "text-align: right;");
+    var hright = document.createElement("h1");
+    hright.innerHTML = ranking.competition.competitionDate;
+    right.appendChild(hright);
+
+    el("title").appendChild(table);
 
     createTable();
 }
@@ -113,4 +129,9 @@ function createResultRow(athlete) {
 function createCategoryTitle(category) {
     return category.abbreviation + " " + category.name + " " +
             category.yearFrom + " - " + category.yearTo;
+}
+
+function openAsPdf() {
+    var newtab = window.open();
+    newtab.location = "/jtaf/res/reports/competitionranking?competitionid=" + ranking.competition.id;
 }

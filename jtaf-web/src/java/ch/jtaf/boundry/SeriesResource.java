@@ -26,7 +26,6 @@ public class SeriesResource {
     private DataService service;
 
     @GET
-    @QueryParam("{withCompetitions}")
     public List<Series> list(@QueryParam("withCompetitions") String withCompetitions) {
         if (withCompetitions == null || !Boolean.parseBoolean(withCompetitions)) {
             return service.getSeriesList();
@@ -42,12 +41,18 @@ public class SeriesResource {
 
     @GET
     @Path("{id}")
-    public Series get(@PathParam("id") Long id) throws WebApplicationException {
-        Series s = service.getSeries(id);
-        if (s == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        } else {
-            return s;
+    public Series get(@PathParam("id") Long id, @QueryParam("function") String function)
+            throws WebApplicationException {
+        if (function == null) {
+            Series s = service.getSeries(id);
+            if (s == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                return s;
+            }
+        }
+        else {
+            return service.copySeries(id);
         }
     }
 

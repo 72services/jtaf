@@ -3,6 +3,7 @@ var seriesList;
 var competitions;
 
 function loadData() {
+    activateLink("navigation_0");
     xhrGet("/jtaf/res/series?withCompetitions=true", function(response) {
         seriesList = JSON.parse(response);
         fillSeries();
@@ -27,8 +28,8 @@ function fillSeries() {
             li_series.appendChild(document.createElement("br"));
 
             var a_ranking = document.createElement("a");
-            a_ranking.setAttribute("href",
-                    "series_ranking.html?id=" + series.id);
+            a_ranking.setAttribute("href", "javascript:openSeriesRankingPdf(" 
+                    + series.id + ");");
             a_ranking.innerHTML = "Ranking";
             li_series.appendChild(a_ranking);
 
@@ -52,7 +53,7 @@ function fillSeries() {
                 cell1.innerHTML = competition.competitionDate;
                 var cell2 = row.insertCell(2);
                 cell2.setAttribute("style", "text-align: right;");
-                cell2.innerHTML = "(#" + competition.numberOfAthletes + ")";
+                cell2.innerHTML = "Athletes: " + competition.numberOfAthletes;
                 li_competition.appendChild(table);
 
                 li_competition.appendChild(document.createElement("br"));
@@ -76,4 +77,9 @@ function fillSeries() {
             }
         }
     }
+}
+
+function openSeriesRankingPdf(id) {
+    var newtab = window.open();
+    newtab.location = "/jtaf/res/reports/seriesranking?seriesid=" + id;
 }

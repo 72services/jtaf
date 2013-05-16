@@ -4,6 +4,7 @@ import ch.jtaf.control.report.CompetitionRanking;
 import ch.jtaf.control.report.SeriesRanking;
 import ch.jtaf.control.report.Sheet;
 import ch.jtaf.entity.Athlete;
+import ch.jtaf.entity.Category;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.entity.CompetitionRankingData;
 import ch.jtaf.entity.SeriesRankingData;
@@ -51,5 +52,14 @@ public class ReportService extends AbstractService {
         }
         SeriesRanking report = new SeriesRanking(ranking);
         return report.create();
+    }
+
+    public byte[] createEmptySheets(Long categoryid) {
+        Category category = em.find(Category.class, categoryid);
+        Athlete template = new Athlete();
+        template.setCategory(category);
+        
+        Sheet sheet = new Sheet(template);
+        return sheet.create();
     }
 }

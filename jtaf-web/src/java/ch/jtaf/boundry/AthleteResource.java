@@ -30,7 +30,6 @@ public class AthleteResource {
     private DataService service;
 
     @GET
-    @QueryParam("{series}")
     public List<Athlete> list(@QueryParam("series") Long id) {
         if (id != null) {
             return service.getAthleteFromSeries(id);
@@ -57,7 +56,6 @@ public class AthleteResource {
 
     @GET
     @Path("search")
-    @QueryParam("{query}")
     public List<Athlete> search(@QueryParam("query") String query) throws WebApplicationException {
         return service.searchAthletes(query);
     }

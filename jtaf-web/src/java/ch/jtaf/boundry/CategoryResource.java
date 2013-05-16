@@ -26,7 +26,6 @@ public class CategoryResource {
     private DataService service;
 
     @GET
-    @QueryParam("{series}")
     public List<Category> list(@QueryParam("series") Long id) {
         if (id != null) {
             return service.getCategoryFromSeries(id);

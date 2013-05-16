@@ -68,7 +68,7 @@ public class RankingService extends AbstractService {
         TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
         q.setParameter("seriesid", seriesId);
         List<Athlete> list = q.getResultList();
-        
+
         TypedQuery<Competition> qc = em.createNamedQuery("Competition.findBySeries", Competition.class);
         qc.setParameter("series", series);
         List<Competition> cs = qc.getResultList();
@@ -89,8 +89,6 @@ public class RankingService extends AbstractService {
         for (Map.Entry<Category, List<Athlete>> entry : map.entrySet()) {
             SeriesRankingCategoryData rc = new SeriesRankingCategoryData();
             Category c = entry.getKey();
-            c.setEvents(null);
-            c.setSeries(null);
             rc.setCategory(c);
             rc.setAthletes(filterAndSort(series, entry.getValue()));
             ranking.getCategories().add(rc);
@@ -116,19 +114,23 @@ public class RankingService extends AbstractService {
     }
 
     private List<Athlete> filterAndSort(Series series, List<Athlete> list) {
-        for (Athlete a : list) {
-            a.setCategory(null);
-            a.setSeries(null);
-            List<Result> rs = new ArrayList<Result>();
-            for (Result r : a.getResults()) {
-                if (r.getCompetition().getSeries().equals(series)) {
+        List<Athlete> filtered = new ArrayList<Athlete>();
+        for (Athlete athlete : list) {
+            int soll = athlete.getCategory().getEvents().size() * series.getCompetitions().size();
+            int ist = athlete.getResults().size();
+            if (ist == soll) {
+                athlete.setCategory(null);
+                athlete.setSeries(null);
+                List<Result> rs = new ArrayList<Result>();
+                for (Result r : athlete.getResults()) {
                     r.getEvent().setSeries(null);
                     rs.add(r);
                 }
+                athlete.setResults(rs);
+                filtered.add(athlete);
             }
-            a.setResults(rs);
         }
-        Collections.sort(list, new AthleteSeriesResultComparator(series));
-        return list;
+        Collections.sort(filtered, new AthleteSeriesResultComparator(series));
+        return filtered;
     }
 }

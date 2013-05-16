@@ -127,4 +127,12 @@ public class DataService extends AbstractService {
         query.setParameter("competition", c);
         return (Long) query.getSingleResult();
     }
+
+    public Series copySeries(Long id) {
+        // TODO
+        Series series = em.find(Series.class, id);
+        Series copy = new Series();
+
+        return copy;
+    }
 }

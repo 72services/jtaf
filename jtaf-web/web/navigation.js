@@ -31,18 +31,32 @@ document.body.appendChild(div);
 
 var active = sessionStorage.getItem("navigation_active");
 if (active !== undefined) {
-    el(active).className = "navigation_active";
+    var active_element = el(active);
+    if (active_element !== null) {
+        active_element.className = "navigation_active";
+    }
 } else {
     home.className = "navigation_active";
 }
 
 function activateNavigation() {
-    var els = document.getElementsByName("navigation_element");
-    for (var i in els) {
-        els[i].className = "navigation_inactive";
+    deactivateLinks();
+
+    var element = event.srcElement;
+    sessionStorage.setItem("navigation_active", element.id);
+    element.className = "navigation_active";
+}
+
+function activateLink(id) {
+    deactivateLinks();
+    var element = el(id);
+    sessionStorage.setItem("navigation_active", id);
+    element.className = "navigation_active";
+}
+
+function deactivateLinks() {
+    var elements = document.getElementsByName("navigation_element");
+    for (var i in elements) {
+        elements[i].className = "navigation_inactive";
     }
-    
-    var el = event.srcElement;
-    sessionStorage.setItem("navigation_active", el.id);
-    el.className = "navigation_active";
 }

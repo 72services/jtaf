@@ -13,6 +13,9 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name = "Event.findBySeries", query = "select e from Event e where e.series = :series order by e.name")
 })
 public class Event {
+    public static final String JUMP_THROW = "jump_throw";
+    public static final String RUN = "run";
+    public static final String RUN_LONG = "run_long";
 
     @Id
     @GeneratedValue

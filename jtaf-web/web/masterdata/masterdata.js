@@ -48,11 +48,16 @@ function createSeriesTableBody() {
             cellName.className = "edit";
             cellName.innerHTML = series.name;
             cellName.setAttribute("onclick", onclickEdit);
+            var copy = document.createElement("a");
+            copy.setAttribute("href", "/jtaf/res/series/" + series.id + "?function=copy");
+            copy.appendChild(document.createTextNode("Copy"));
             var del = document.createElement("a");
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteSeries(" + series.id + ")");
             del.appendChild(document.createTextNode("Delete"));
             var cellFunction = row.insertCell(1);
+            cellFunction.appendChild(copy);
+            cellFunction.appendChild(document.createTextNode(" "));
             cellFunction.appendChild(del);
         }
     }

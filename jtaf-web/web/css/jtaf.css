@@ -76,6 +76,17 @@ div#footer {
     width: 800px;
 }
 
+div#tabs {
+    border-width: 2px;
+    border-style: solid;
+    border-color: #FAF7B8;
+    border-radius: 0px 9px 9px 9px;
+    padding-top: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+}
+
 a.navigation_inactive {
     padding: 15px;
     border-radius: 0 0 9px 9px;

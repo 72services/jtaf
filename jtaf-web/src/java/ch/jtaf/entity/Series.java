@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
@@ -19,6 +20,8 @@ public class Series {
     @GeneratedValue
     private Long id;
     private String name;
+    @Lob
+    private byte[] logo;
     @Transient
     private List<Competition> competitions = new ArrayList<Competition>();
 
@@ -44,5 +47,13 @@ public class Series {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public byte[] getLogo() {
+        return logo;
+    }
+
+    public void setLogo(byte[] logo) {
+        this.logo = logo;
     }
 }

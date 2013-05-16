@@ -26,7 +26,6 @@ public class EventResource {
     private DataService service;
 
     @GET
-    @QueryParam("{series}")
     public List<Event> list(@QueryParam("series") Long id) {
         if (id != null) {
             return service.getEventFromSeries(id);
