@@ -10,33 +10,28 @@ function createHeader() {
 
     var cell0 = row.insertCell(0);
     cell0.className = "navigation";
-    var home_div = document.createElement("div");
-    home_div.id = "navigation_0";
-    home_div.className = "navigation_inactive";
-    home_div.name = "navigation_element";
+    
     var home = document.createElement("a");
+    home.id = "navigation_0";
+    home.className = "navigation_inactive";
+    home.name = "navigation_element";
     home.setAttribute("href", "/jtaf/index.html");
     home.setAttribute("onclick", "activateNavigation(0); ");
     home.innerHTML = "Home";
-    home_div.appendChild(home);
-    cell0.appendChild(home_div);
-
-    var cell1 = row.insertCell(1);
-    cell1.className = "navigation";
-    var masterdata_div = document.createElement("div");
-    masterdata_div.id = "navigation_1";
-    masterdata_div.className = "navigation_inactive";
-    masterdata_div.name = "navigation_element";
+    cell0.appendChild(home);
+    
     var masterdata = document.createElement("a");
+    masterdata.id = "navigation_1";
+    masterdata.className = "navigation_inactive";
+    masterdata.name = "navigation_element";
     masterdata.setAttribute("href", "/jtaf/masterdata/masterdata.html");
     masterdata.setAttribute("onclick", "activateNavigation(1);");
     masterdata.innerHTML = "Master data";
-    masterdata_div.appendChild(masterdata);
-    cell1.appendChild(masterdata_div);
+    cell0.appendChild(masterdata);
 
-    var cell2 = row.insertCell(2);
-    cell2.setAttribute("style", "text-align: right;");
-    getUserInfo(cell2);
+    var cell1 = row.insertCell(1);
+    cell1.setAttribute("style", "text-align: right;");
+    getUserInfo(cell1);
 
     div.appendChild(table);
 
@@ -77,6 +72,6 @@ function deactivateLinks() {
 function getUserInfo(cell2) {
     xhrGet("/jtaf/res/users/current", function(response) {
         var user = JSON.parse(response);
-        cell2.innerHTML = "You are logged in as " + user.email;
+        cell2.innerHTML = user.firstName + " " + user.lastName + " (" + user.email + ")";
     });
 }
