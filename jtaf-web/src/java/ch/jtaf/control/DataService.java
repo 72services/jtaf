@@ -12,7 +12,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 @Stateless
@@ -26,7 +25,7 @@ public class DataService extends AbstractService {
 
     public List<Series> getSeriesWithCompetitions() {
         List<Series> list = getSeriesList();
-        List<Series> series = new ArrayList<Series>();
+        List<Series> series = new ArrayList<>();
         for (Series s : list) {
             series.add(getSeries(s.getId()));
         }
@@ -138,7 +137,7 @@ public class DataService extends AbstractService {
         copy.setName("Copy of " + series.getName());
         em.persist(copy);
         List<Event> events = copyEvents(series, copy);
-        List<Category> categories = copyCategories(series, copy, events);
+        copyCategories(series, copy, events);
         copyAthletes(series, copy);
         return copy;
     }
@@ -147,7 +146,7 @@ public class DataService extends AbstractService {
         TypedQuery<Event> q = em.createNamedQuery("Event.findBySeries", Event.class);
         q.setParameter("series", orig);
         List<Event> events = q.getResultList();
-        List<Event> copies = new ArrayList<Event>();
+        List<Event> copies = new ArrayList<>();
         for (Event event : events) {
             Event copy = new Event();
             copy.setA(event.getA());
@@ -167,7 +166,7 @@ public class DataService extends AbstractService {
         TypedQuery<Category> q = em.createNamedQuery("Category.findBySeries", Category.class);
         q.setParameter("series", orig);
         List<Category> categories = q.getResultList();
-        List<Category> copies = new ArrayList<Category>();
+        List<Category> copies = new ArrayList<>();
         for (Category category : categories) {
             Category copy = new Category();
             copy.setAbbreviation(category.getAbbreviation());
