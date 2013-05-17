@@ -16,7 +16,7 @@ public class ApplicationConfig extends Application {
      * support.
      */
     private Set<Class<?>> getRestResourceClasses() {
-        Set<Class<?>> resources = new java.util.HashSet<Class<?>>();
+        Set<Class<?>> resources = new java.util.HashSet<>();
         resources.add(ch.jtaf.boundry.CategoryResource.class);
         resources.add(ch.jtaf.boundry.ClubResource.class);
         resources.add(ch.jtaf.boundry.RankingResource.class);
@@ -25,6 +25,7 @@ public class ApplicationConfig extends Application {
         resources.add(ch.jtaf.boundry.AthleteResource.class);
         resources.add(ch.jtaf.boundry.SeriesResource.class);
         resources.add(ch.jtaf.boundry.EventResource.class);
+        resources.add(ch.jtaf.boundry.UserResource.class);
         try {
             Class<?> jacksonProvider = Class.forName("org.codehaus.jackson.jaxrs.JacksonJsonProvider");
             resources.add(jacksonProvider);

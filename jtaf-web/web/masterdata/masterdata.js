@@ -15,10 +15,12 @@ function loadData() {
 }
 
 function deleteSeries(id) {
-    xhrDelete("/jtaf/res/series/" + id, function() {
-        loadData();
-        info("Serie deleted");
-    });
+    if (confirm("Are you sure?")) {
+        xhrDelete("/jtaf/res/series/" + id, function() {
+            loadData();
+            info("Serie deleted");
+        });
+    }
 }
 
 function copySeries(id) {
@@ -29,11 +31,13 @@ function copySeries(id) {
 
 }
 
-function deleteClubs(id) {
-    xhrDelete("/jtaf/res/clubs/" + id, function() {
-        loadData();
-        info("Club deleted");
-    });
+function deleteClub(id) {
+    if (confirm("Are you sure?")) {
+        xhrDelete("/jtaf/res/clubs/" + id, function() {
+            loadData();
+            info("Club deleted");
+        });
+    }
 }
 
 function createSeriesTableBody() {

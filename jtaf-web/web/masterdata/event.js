@@ -73,8 +73,10 @@ function fillEvent() {
 }
 
 function deleteEvent(id) {
-    xhrDelete("/jtaf/res/events/" + id, function() {
-        loadData();
-        info("Event deleted");
-    });
+    if (confirm("Are you sure?")) {
+        xhrDelete("/jtaf/res/events/" + id, function() {
+            loadData();
+            info("Event deleted");
+        });
+    }
 }

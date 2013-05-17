@@ -6,6 +6,7 @@ import ch.jtaf.entity.Club;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.entity.Event;
 import ch.jtaf.entity.Result;
+import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.entity.Series;
 import java.util.ArrayList;
 import java.util.List;
@@ -204,5 +205,9 @@ public class DataService extends AbstractService {
             copy.setYear(athlete.getYear());
             em.persist(copy);
         }
+    }
+
+    public SecurityUser get(Class<SecurityUser> aClass, String name) {
+        return em.find(aClass, name);
     }
 }

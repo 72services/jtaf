@@ -46,8 +46,10 @@ function fillCompetition() {
 }
 
 function deleteCompetition(id) {
-    xhrDelete("/jtaf/res/competitions/" + id, function() {
-        loadData();
-        info("Competition deleted");
-    });
+    if (confirm("Are you sure?")) {
+        xhrDelete("/jtaf/res/competitions/" + id, function() {
+            loadData();
+            info("Competition deleted");
+        });
+    }
 }

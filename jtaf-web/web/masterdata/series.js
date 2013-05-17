@@ -248,31 +248,30 @@ function fillSeries() {
 }
 
 function deleteCompetition(id) {
-    xhrDelete("/jtaf/res/competitions/" + id, function() {
-        loadData();
-        info("Competition deleted");
-    });
-}
-
-function deleteCompetition(id) {
-    xhrDelete("/jtaf/res/competitions/" + id, function() {
-        loadData();
-        info("Competition deleted");
-    });
+    if (confirm("Are you sure?")) {
+        xhrDelete("/jtaf/res/competitions/" + id, function() {
+            loadData();
+            info("Competition deleted");
+        });
+    }
 }
 
 function deleteEvent(id) {
-    xhrDelete("/jtaf/res/catgories/" + id, function() {
-        loadData();
-        info("Event deleted");
-    });
+    if (confirm("Are you sure?")) {
+        xhrDelete("/jtaf/res/catgories/" + id, function() {
+            loadData();
+            info("Event deleted");
+        });
+    }
 }
 
 function deleteAthlete(id) {
-    xhrDelete("/jtaf/res/athletes/" + id, function() {
-        loadData();
-        info("Athlete deleted");
-    });
+    if (confirm("Are you sure?")) {
+        xhrDelete("/jtaf/res/athletes/" + id, function() {
+            loadData();
+            info("Athlete deleted");
+        });
+    }
 }
 
 function switchTo(div) {

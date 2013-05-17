@@ -1,4 +1,5 @@
 body {
+    margin-top: 0px;
     margin-left: 20px;
     margin-right: 20px;
     font-family: Segoe UI, Arial, Helvetica, sans-serif;
@@ -87,21 +88,35 @@ div#tabs {
     padding-bottom: 10px;
 }
 
-a.navigation_inactive {
+div.navigation_inactive {
+    margin-right: 5px;
+    margin-top: 0px;
+    width: 100px;
     padding: 15px;
     border-radius: 0 0 9px 9px;
     background-color: #99AC3B;
     overflow: hidden;
+    text-align: center;
+}
+
+div.navigation_active {
+    margin-right: 5px;
+    margin-top: 0px;
+    width: 100px;
+    padding: 15px;
+    border-radius: 0 0 9px 9px;
+    background-color: #FAF7B8;
+    overflow: hidden;
+    text-align: center;
+}
+
+div.navigation_inactive a {
     text-decoration: none;
     color: white;
     font-weight: bold;
 }
 
-a.navigation_active {
-    padding: 15px;
-    border-radius: 0 0 9px 9px;
-    background-color: #FAF7B8;
-    overflow: hidden;
+div.navigation_active a {
     text-decoration: none;
     color: black;
     font-weight: bold;
@@ -149,7 +164,7 @@ input#search_term {
     padding: 15px;
 }
 
-table.list, table.events, table.results  {
+table.list, table.events, table.results, table.navigation  {
     width: 100%;
     border-collapse: collapse;
 }
@@ -194,6 +209,10 @@ table.results tr:last-child td:first-child { border-radius: 0 0 0 9px; }
 table.results tr:last-child td:last-child { border-radius: 0 0 9px 0; }
 table.results tr:nth-child(even) { background: #FAF7B8; }
 table.results tr:nth-child(odd) { background: #B9CC5B; }
+
+td.navigation {
+    width: 120px;
+}
 
 td.small {
     font-size: 11px;

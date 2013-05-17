@@ -38,8 +38,10 @@ function fillClub() {
 }
 
 function deleteClub(id) {
-    xhrDelete("/jtaf/res/clubs/" + id, function() {
-        loadData();
-        info("Club deleted");
-    });
+    if (confirm("Are you sure?")) {
+        xhrDelete("/jtaf/res/clubs/" + id, function() {
+            loadData();
+            info("Club deleted");
+        });
+    }
 }
