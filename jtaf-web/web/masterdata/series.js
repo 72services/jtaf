@@ -258,7 +258,7 @@ function deleteCompetition(id) {
 
 function deleteEvent(id) {
     if (confirm("Are you sure?")) {
-        xhrDelete("/jtaf/res/catgories/" + id, function() {
+        xhrDelete("/jtaf/res/events/" + id, function() {
             loadData();
             info("Event deleted");
         });
@@ -270,6 +270,15 @@ function deleteAthlete(id) {
         xhrDelete("/jtaf/res/athletes/" + id, function() {
             loadData();
             info("Athlete deleted");
+        });
+    }
+}
+
+function deleteCategory(id) {
+    if (confirm("Are you sure?")) {
+        xhrDelete("/jtaf/res/categories/" + id, function() {
+            loadData();
+            info("Category deleted");
         });
     }
 }

@@ -30,7 +30,7 @@ public class Category {
     private String gender;
     @ManyToOne
     private Series series;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
     @OrderColumn(name = "position")
     private List<Event> events = new ArrayList<Event>();
 

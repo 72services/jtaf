@@ -77,6 +77,6 @@ function deactivateLinks() {
 function getUserInfo(cell2) {
     xhrGet("/jtaf/res/users/current", function(response) {
         var user = JSON.parse(response);
-        cell2.innerHTML = user.email;
+        cell2.innerHTML = "You are logged in as " + user.email;
     });
 }

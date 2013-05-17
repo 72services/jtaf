@@ -115,11 +115,3 @@ function fillCategoryEvents() {
     }
 }
 
-function deleteCategory(id) {
-    if (confirm("Are you sure?")) {
-        xhrDelete("/jtaf/res/categories/" + id, function() {
-            loadData();
-            info("Category deleted");
-        });
-    }
-}
