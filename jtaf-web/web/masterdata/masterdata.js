@@ -62,7 +62,7 @@ function createSeriesTableBody() {
             cellName.setAttribute("onclick", onclickEdit);
             var copy = document.createElement("a");
             copy.setAttribute("href", "#");
-            copy.setAttribute("onclick", "copySeries(" + series.id + ")")
+            copy.setAttribute("onclick", "copySeries(" + series.id + ")");
             copy.appendChild(document.createTextNode("Copy"));
             var del = document.createElement("a");
             del.setAttribute("href", "#");

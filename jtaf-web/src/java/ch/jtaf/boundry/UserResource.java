@@ -22,13 +22,15 @@ public class UserResource {
     private SessionContext sc;
     @EJB
     private DataService dataService;
-    
+
     @GET
     @Path("current")
     public SecurityUser getCompetitionRanking() {
         Principal principal = sc.getCallerPrincipal();
         SecurityUser user = dataService.get(SecurityUser.class, principal.getName());
-        user.setSecret(null);
+        if (user != null) {
+            user.setSecret(null);
+        }
         return user;
     }
 }

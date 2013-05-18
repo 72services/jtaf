@@ -2,7 +2,7 @@ function xhrGet(url, func) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.onload = function() {
-        if (xhr.status === 200) {
+        if (xhr.status === 200 || xhr.status === 204) {
             func(xhr.response);
         } else {
             error(xhr.status);
