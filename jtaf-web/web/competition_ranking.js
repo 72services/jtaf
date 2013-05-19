@@ -39,41 +39,45 @@ function parseAndFill(response) {
 }
 
 function createTable() {
-    for (var c in ranking.categories) {
-        var category = ranking.categories[c];
+    ranking.categories.forEach(function(category) {
         var table = document.createElement("table");
         table.className = "ranking";
         var row = document.createElement("tr");
         var cell = document.createElement("td");
         cell.setAttribute("colspan", 6);
+
         var title = document.createElement("h3");
         title.innerHTML = createCategoryTitle(category.category);
         cell.appendChild(title);
         row.appendChild(cell);
         table.appendChild(row);
 
-        for (var a in category.athletes) {
-            var athlete = category.athletes[a];
+        var rank = 1;
+        category.athletes.forEach(function(athlete) {
             row = document.createElement("tr");
 
             cell = document.createElement("td");
-            var rank = parseInt(a) + 1;
+            cell.setAttribute("style", "width: 40px");
             cell.innerHTML = rank + ".";
             row.appendChild(cell);
-
+            x
             cell = document.createElement("td");
+            cell.setAttribute("style", "width: 200px");
             cell.innerHTML = athlete.lastName;
             row.appendChild(cell);
 
             cell = document.createElement("td");
+            cell.setAttribute("style", "width: 200px");
             cell.innerHTML = athlete.firstName;
             row.appendChild(cell);
 
             cell = document.createElement("td");
+            cell.setAttribute("style", "width: 50px");
             cell.innerHTML = athlete.year;
             row.appendChild(cell);
 
             cell = document.createElement("td");
+            cell.setAttribute("style", "width: 150px");
             if (athlete.club !== undefined && athlete.club !== null) {
                 cell.innerHTML = athlete.club.abbreviation;
             }
@@ -98,9 +102,12 @@ function createTable() {
             row.appendChild(cell);
 
             table.appendChild(row);
-        }
-    }
-    el("main").appendChild(table);
+
+            i++;
+        });
+        el("main").appendChild(table);
+    });
+
 }
 
 function calculateTotalPoints(athlete) {
@@ -115,14 +122,13 @@ function calculateTotalPoints(athlete) {
 function createResultRow(athlete) {
     var text = "";
     var first = true;
-    for (var r in athlete.results) {
-        var result = athlete.results[r];
+    athlete.results.forEach(function(result) {
         if (!first) {
             text += "&nbsp;&nbsp;";
         }
         text += result.event.name + ": " + result.result + " (" + result.points + ")";
         first = false;
-    }
+    });
     return text;
 }
 

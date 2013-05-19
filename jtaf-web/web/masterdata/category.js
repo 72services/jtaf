@@ -62,8 +62,7 @@ function fillEventsTable() {
         var option = document.createElement("option");
         option.innerHTML = "";
         select.appendChild(option);
-        for (var j in events) {
-            var ev = events[j];
+        events.forEach(function(ev) {
             option = document.createElement("option");
             option.value = ev.id;
             option.innerHTML = ev.name + " (" + ev.gender + ")";
@@ -73,7 +72,7 @@ function fillEventsTable() {
                 option.selected = true;
             }
             select.appendChild(option);
-        }
+        });
         cellEvents.appendChild(select);
     }
 }
@@ -106,12 +105,11 @@ function fillCategoryEvents() {
         var select = el("select" + i);
         var id = select.options[select.selectedIndex].value;
         console.log(id);
-        for (var j in events) {
-            var ev = events[j];
+        event.forEach(function(ev) {
             if (ev.id == id) {
                 category.events.push(ev);
             }
-        }
+        });
     }
 }
 

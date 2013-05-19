@@ -39,11 +39,11 @@ public class RankingService extends AbstractService {
         CompetitionRankingData ranking = new CompetitionRankingData();
         ranking.setCompetition(competition);
 
-        Map<Category, List<Athlete>> map = new HashMap<Category, List<Athlete>>();
+        Map<Category, List<Athlete>> map = new HashMap<>();
         for (Athlete a : list) {
             List<Athlete> as = map.get(a.getCategory());
             if (as == null) {
-                as = new ArrayList<Athlete>();
+                as = new ArrayList<>();
             }
             as.add(a);
             map.put(a.getCategory(), as);
@@ -57,6 +57,7 @@ public class RankingService extends AbstractService {
             rc.setAthletes(filterAndSort(competition, entry.getValue()));
             ranking.getCategories().add(rc);
         }
+        Collections.sort(ranking.getCategories());
         return ranking;
     }
 
@@ -77,11 +78,11 @@ public class RankingService extends AbstractService {
         SeriesRankingData ranking = new SeriesRankingData();
         ranking.setSeries(series);
 
-        Map<Category, List<Athlete>> map = new HashMap<Category, List<Athlete>>();
+        Map<Category, List<Athlete>> map = new HashMap<>();
         for (Athlete a : list) {
             List<Athlete> as = map.get(a.getCategory());
             if (as == null) {
-                as = new ArrayList<Athlete>();
+                as = new ArrayList<>();
             }
             as.add(a);
             map.put(a.getCategory(), as);
@@ -100,7 +101,7 @@ public class RankingService extends AbstractService {
         for (Athlete a : list) {
             a.setCategory(null);
             a.setSeries(null);
-            List<Result> rs = new ArrayList<Result>();
+            List<Result> rs = new ArrayList<>();
             for (Result r : a.getResults()) {
                 if (r.getCompetition().equals(competition)) {
                     r.getEvent().setSeries(null);
@@ -114,14 +115,14 @@ public class RankingService extends AbstractService {
     }
 
     private List<Athlete> filterAndSort(Series series, List<Athlete> list) {
-        List<Athlete> filtered = new ArrayList<Athlete>();
+        List<Athlete> filtered = new ArrayList<>();
         for (Athlete athlete : list) {
             int soll = athlete.getCategory().getEvents().size() * series.getCompetitions().size();
             int ist = athlete.getResults().size();
             if (ist == soll) {
                 athlete.setCategory(null);
                 athlete.setSeries(null);
-                List<Result> rs = new ArrayList<Result>();
+                List<Result> rs = new ArrayList<>();
                 for (Result r : athlete.getResults()) {
                     r.getEvent().setSeries(null);
                     rs.add(r);

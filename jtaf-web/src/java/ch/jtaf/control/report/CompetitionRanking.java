@@ -88,7 +88,7 @@ public class CompetitionRanking extends ReportBase {
             sb.append(result.getResult());
             sb.append(" (");
             sb.append(result.getPoints());
-            sb.append(" ) ");
+            sb.append(") ");
         }
         addCell(table, "");
         addResultsCell(table, sb.toString());

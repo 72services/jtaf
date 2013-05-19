@@ -1,5 +1,6 @@
 var athlete;
 var series;
+var clubs;
 
 function loadData() {
     series = JSON.parse(localStorage.getItem("series"));
@@ -18,15 +19,14 @@ function loadData() {
 
 function fillClubSelect() {
     xhrGet("/jtaf/res/clubs", function(response) {
-        var clubs = JSON.parse(response);
+        clubs = JSON.parse(response);
         var select = el("athlete_club");
 
         var option = document.createElement("option");
         option.innerHTML = "";
         select.appendChild(option);
 
-        for (var i in clubs) {
-            var club = clubs[i];
+        clubs.forEach(function(club) {
             option = document.createElement("option");
             option.value = club.id;
             option.innerHTML = club.abbreviation;
@@ -35,9 +35,8 @@ function fillClubSelect() {
                     athlete.club.id === club.id) {
                 option.selected = true;
             }
-        }
+        });
     });
-
 }
 
 function back() {
@@ -81,6 +80,16 @@ function fillAthlete() {
         athlete.gender = "m";
     } else {
         athlete.gender = "f";
+    }
+    var select = el("athlete_club");
+    var id = select.options[select.selectedIndex].value;
+    if (id != null) {
+        clubs.forEach(function(club) {
+            if (club.id == id) {
+                athlete.club = club;
+                return;
+            }
+        });
     }
     athlete.series = series;
 }

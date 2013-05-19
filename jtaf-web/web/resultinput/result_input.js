@@ -93,8 +93,8 @@ function fillEventsTable() {
     var table = el("athlete_events");
     table.innerHTML = "";
     if (athlete.category !== undefined) {
-        for (var i in athlete.category.events) {
-            var aevent = athlete.category.events[i];
+        var i = 0;
+        athlete.category.events.forEach(function(aevent) {
             var row = table.insertRow(i);
             var cellName = row.insertCell(0);
             cellName.innerHTML = aevent.name;
@@ -117,7 +117,8 @@ function fillEventsTable() {
                 result.value = athlete.results[i].result;
                 points.value = athlete.results[i].points;
             }
-        }
+            i++;
+        });
         el("result0").focus();
     }
 }
@@ -198,8 +199,8 @@ function parseAndFillAthletes(response) {
         cellName.innerHTML = "No athletes found";
         cellName.setAttribute("colspan", 7);
     } else {
-        for (var i in athletes) {
-            var athlete = athletes[i];
+        var i = 0;
+        athletes.forEach(function(athlete) {
             var row = table.insertRow(i);
             var onclickEdit = "selectAthlete(" + athlete.id + ")";
             var cellId = row.insertCell(0);
@@ -232,7 +233,8 @@ function parseAndFillAthletes(response) {
             cellClub.innerHTML = athlete.club !== null
                     ? athlete.club.name : "";
             cellClub.setAttribute("onclick", onclickEdit);
-        }
+            i++;
+        });
     }
 }
 

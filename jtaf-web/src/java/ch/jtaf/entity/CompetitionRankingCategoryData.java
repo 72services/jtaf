@@ -3,10 +3,10 @@ package ch.jtaf.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompetitionRankingCategoryData {
+public class CompetitionRankingCategoryData implements Comparable<CompetitionRankingCategoryData> {
 
     private Category category;
-    private List<Athlete> athletes = new ArrayList<Athlete>();
+    private List<Athlete> athletes = new ArrayList<>();
 
     public Category getCategory() {
         return category;
@@ -22,5 +22,10 @@ public class CompetitionRankingCategoryData {
 
     public void setAthletes(List<Athlete> athletes) {
         this.athletes = athletes;
+    }
+
+    @Override
+    public int compareTo(CompetitionRankingCategoryData o) {
+        return this.category.getAbbreviation().compareTo(o.getCategory().getAbbreviation());
     }
 }

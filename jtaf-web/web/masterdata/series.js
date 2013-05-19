@@ -45,8 +45,8 @@ function fillCompetitionTable() {
         cellName.setAttribute("colspan", 3);
     }
     else {
-        for (var i in series.competitions) {
-            var competition = series.competitions[i];
+        var i = 0;
+        competitions.forEach(function(competition) {
             var row = table.insertRow(i);
             var onclickEdit = "window.location = 'competition.html?id=" +
                     competition.id + "'";
@@ -71,7 +71,8 @@ function fillCompetitionTable() {
             cellFunction.appendChild(sheet);
             cellFunction.appendChild(document.createTextNode(" "));
             cellFunction.appendChild(del);
-        }
+            i++;
+        });
     }
 }
 
@@ -86,8 +87,8 @@ function parseAndFillCategories(response) {
         cellName.setAttribute("colspan", 6);
     }
     else {
-        for (var i in categories) {
-            var category = categories[i];
+        var i = 0;
+        categories.forEach(function(category) {
             var row = table.insertRow(i);
             var onclickEdit = "window.location = 'category.html?id=" +
                     category.id + "'";
@@ -124,7 +125,8 @@ function parseAndFillCategories(response) {
             cellFunction.appendChild(sheet);
             cellFunction.appendChild(document.createTextNode(" "));
             cellFunction.appendChild(del);
-        }
+            i++;
+        });
     }
 }
 
@@ -139,8 +141,8 @@ function parseAndFillEvents(response) {
         cellName.setAttribute("colspan", 8);
     }
     else {
-        for (var i in events) {
-            var event = events[i];
+        var i = 0;
+        events.forEach(function(event) {
             var row = table.insertRow(i);
             var onclickEdit = "window.location = 'event.html?id=" +
                     event.id + "'";
@@ -174,7 +176,8 @@ function parseAndFillEvents(response) {
             del.appendChild(document.createTextNode("Delete"));
             var cellFunction = row.insertCell(6);
             cellFunction.appendChild(del);
-        }
+            i++;
+        });
     }
 }
 
@@ -189,8 +192,8 @@ function parseAndFillAthletes(response) {
         cellName.setAttribute("colspan", 8);
     }
     else {
-        for (var i in athletes) {
-            var athlete = athletes[i];
+        var i = 0;
+        athletes.forEach(function(athlete) {
             var row = table.insertRow(i);
             var onclickEdit = "window.location = 'athlete.html?id=" +
                     athlete.id + "'";
@@ -231,7 +234,8 @@ function parseAndFillAthletes(response) {
             del.appendChild(document.createTextNode("Delete"));
             var cellFunction = row.insertCell(7);
             cellFunction.appendChild(del);
-        }
+            i++;
+        });
     }
 }
 

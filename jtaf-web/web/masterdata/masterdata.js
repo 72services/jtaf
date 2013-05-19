@@ -51,8 +51,8 @@ function createSeriesTableBody() {
         cell.setAttribute("colspan", 2);
     }
     else {
-        for (var i in seriesList) {
-            var series = seriesList[i];
+        var i = 0;
+        seriesList.forEach(function(series) {
             var row = table.insertRow(i);
             var onclickEdit = "window.location = 'series.html?id=" +
                     series.id + "'";
@@ -72,7 +72,8 @@ function createSeriesTableBody() {
             cellFunction.appendChild(copy);
             cellFunction.appendChild(document.createTextNode(" "));
             cellFunction.appendChild(del);
-        }
+            i++;
+        });
     }
 }
 
@@ -87,8 +88,8 @@ function createClubsTableBody() {
         cell.setAttribute("colspan", 3);
     }
     else {
-        for (var i in clubs) {
-            var club = clubs[i];
+        var i = 0;
+        clubs.forEach(function(club) {
             var row = table.insertRow(i);
             var onclickEdit = "window.location = 'club.html?id=" +
                     club.id + "'";
@@ -107,7 +108,8 @@ function createClubsTableBody() {
 
             var cellFunction = row.insertCell(2);
             cellFunction.appendChild(del);
-        }
+            i++;
+        });
     }
 }
 function sortBy(property) {

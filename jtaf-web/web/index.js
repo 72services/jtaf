@@ -15,8 +15,7 @@ function fillSeries() {
         var ul_series = el("ul_series");
         ul_series.innerHTML = "";
 
-        for (var s in seriesList) {
-            var series = seriesList[s];
+        seriesList.forEach(function(series) {
             var li_series = document.createElement("li");
 
             var series_name = document.createElement("b");
@@ -28,7 +27,7 @@ function fillSeries() {
             li_series.appendChild(document.createElement("br"));
 
             var a_ranking = document.createElement("a");
-            a_ranking.setAttribute("href", "javascript:openSeriesRankingPdf(" 
+            a_ranking.setAttribute("href", "javascript:openSeriesRankingPdf("
                     + series.id + ");");
             a_ranking.innerHTML = "Ranking";
             li_series.appendChild(a_ranking);
@@ -42,8 +41,7 @@ function fillSeries() {
             ul_competitions.className = "competition";
             li_series.appendChild(ul_competitions);
 
-            for (var c in series.competitions) {
-                var competition = series.competitions[c];
+            series.competitions.forEach(function(competition) {
                 var li_competition = document.createElement("li");
                 var table = document.createElement("table");
                 table.setAttribute("style", "width: 100%");
@@ -75,8 +73,8 @@ function fillSeries() {
                 li_competition.appendChild(a_ranking);
 
                 ul_competitions.appendChild(li_competition);
-            }
-        }
+            });
+        });
     }
 }
 
