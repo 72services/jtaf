@@ -1,4 +1,6 @@
 var series;
+var athletes;
+var ascending = true;
 
 function loadData() {
     var id = param().id;
@@ -186,61 +188,67 @@ function parseAndFillEvents(response) {
 }
 
 function parseAndFillAthletes(response) {
-    var athletes = JSON.parse(response);
-    var table = el("athlete_table");
-    table.innerHTML = "";
+    athletes = JSON.parse(response);
     if (athletes === undefined || athletes.length === 0) {
+        var table = el("athlete_table");
+        table.innerHTML = "";
         var row = table.insertRow(0);
         var cellName = row.insertCell(0);
         cellName.innerHTML = "No athletes found";
         cellName.setAttribute("colspan", 8);
     }
     else {
-        var i = 0;
-        athletes.forEach(function(athlete) {
-            var row = table.insertRow(i);
-            var onclickEdit = "window.location = 'athlete.html?id=" +
-                    athlete.id + "'";
-            var cellId = row.insertCell(0);
-            cellId.className = "edit";
-            cellId.innerHTML = athlete.id;
-            cellId.setAttribute("onclick", onclickEdit);
-            var cellLastName = row.insertCell(1);
-            cellLastName.className = "edit";
-            cellLastName.innerHTML = athlete.lastName;
-            cellLastName.setAttribute("onclick", onclickEdit);
-            var cellFirstName = row.insertCell(2);
-            cellFirstName.className = "edit";
-            cellFirstName.innerHTML = athlete.firstName;
-            cellFirstName.setAttribute("onclick", onclickEdit);
-            var cellYear = row.insertCell(3);
-            cellYear.className = "edit";
-            cellYear.innerHTML = athlete.year;
-            cellYear.setAttribute("onclick", onclickEdit);
-            var cellGender = row.insertCell(4);
-            cellGender.className = "edit";
-            cellGender.innerHTML = athlete.gender;
-            cellGender.setAttribute("onclick", onclickEdit);
-            var cellCategory = row.insertCell(5);
-            cellCategory.className = "edit";
-            cellCategory.innerHTML = athlete.category !== null
-                    ? athlete.category.abbreviation : "";
-            cellCategory.setAttribute("onclick", onclickEdit);
-            var cellClub = row.insertCell(6);
-            cellClub.className = "edit";
-            cellClub.innerHTML = athlete.club !== null
-                    ? athlete.club.name : "";
-            cellClub.setAttribute("onclick", onclickEdit);
-
-            var del = document.createElement("a");
-            del.setAttribute("href", "#");
-            del.setAttribute("onclick", "deleteAthlete(" + athlete.id + ")");
-            del.appendChild(document.createTextNode("Delete"));
-            var cellFunction = row.insertCell(7);
-            cellFunction.appendChild(del);
-            i++;
-        });
+        fillAthletesTable(athletes);
     }
+}
+
+function fillAthletesTable(athletes) {
+    var table = el("athlete_table");
+    table.innerHTML = "";
+    var i = 0;
+    athletes.forEach(function(athlete) {
+        var row = table.insertRow(i);
+        var onclickEdit = "window.location = 'athlete.html?id=" +
+                athlete.id + "'";
+        var cellId = row.insertCell(0);
+        cellId.className = "edit";
+        cellId.innerHTML = athlete.id;
+        cellId.setAttribute("onclick", onclickEdit);
+        var cellLastName = row.insertCell(1);
+        cellLastName.className = "edit";
+        cellLastName.innerHTML = athlete.lastName;
+        cellLastName.setAttribute("onclick", onclickEdit);
+        var cellFirstName = row.insertCell(2);
+        cellFirstName.className = "edit";
+        cellFirstName.innerHTML = athlete.firstName;
+        cellFirstName.setAttribute("onclick", onclickEdit);
+        var cellYear = row.insertCell(3);
+        cellYear.className = "edit";
+        cellYear.innerHTML = athlete.year;
+        cellYear.setAttribute("onclick", onclickEdit);
+        var cellGender = row.insertCell(4);
+        cellGender.className = "edit";
+        cellGender.innerHTML = athlete.gender;
+        cellGender.setAttribute("onclick", onclickEdit);
+        var cellCategory = row.insertCell(5);
+        cellCategory.className = "edit";
+        cellCategory.innerHTML = athlete.category !== null
+                ? athlete.category.abbreviation : "";
+        cellCategory.setAttribute("onclick", onclickEdit);
+        var cellClub = row.insertCell(6);
+        cellClub.className = "edit";
+        cellClub.innerHTML = athlete.club !== null
+                ? athlete.club.abbreviation : "";
+        cellClub.setAttribute("onclick", onclickEdit);
+
+        var del = document.createElement("a");
+        del.setAttribute("href", "#");
+        del.setAttribute("onclick", "deleteAthlete(" + athlete.id + ")");
+        del.appendChild(document.createTextNode("Delete"));
+        var cellFunction = row.insertCell(7);
+        cellFunction.appendChild(del);
+        i++;
+    });
 }
 
 function save() {
@@ -310,4 +318,42 @@ function switchTo(div) {
 function back() {
     localStorage.removeItem("active_tab");
     window.location = "masterdata.html";
+}
+
+
+function sortBy(property) {
+    console.log(event.srcElement.id);
+    if (event.srcElement.id === "") {
+        athletes.sort(createComparator(property));
+        if (ascending) {
+            athletes.reverse();
+        }
+        ascending = !ascending;
+        fillAthletesTable(athletes);
+    }
+}
+
+function filter(property) {
+    var filteredAthletes = new Array();
+    var searchString = document.getElementById(property).value;
+    if (searchString !== "") {
+        var j = 0;
+        athletes.forEach(function(athlete) {
+            var valueToCompare = null;
+            if (property === "category") {
+                valueToCompare = athlete.category.abbreviation;
+            } else if (property === "club") {
+                valueToCompare = athlete.club.abbreviation;
+            } else {
+                valueToCompare = athlete[property];
+            }
+            if (valueToCompare !== null && valueToCompare.toLowerCase().indexOf(searchString.toLowerCase()) !== -1) {
+                filteredAthletes[j] = athlete;
+                j++;
+            }
+        });
+        fillAthletesTable(filteredAthletes);
+    } else {
+        fillAthletesTable(athletes);
+    }
 }

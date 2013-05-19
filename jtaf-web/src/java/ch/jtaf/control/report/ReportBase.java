@@ -18,7 +18,7 @@ public class ReportBase {
     protected static final float CM_PER_INCH = 2.54f;
     protected static final float DPI = 72f;
     protected static final float NORMAL_FONT_SIZE = 9f;
-    protected SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+    protected SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd.MM.yyyy");
 
     protected float cmToPixel(Float cm) {
         return (cm / CM_PER_INCH) * DPI;

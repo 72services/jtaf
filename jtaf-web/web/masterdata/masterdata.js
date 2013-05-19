@@ -1,4 +1,3 @@
-var ascending = true;
 var seriesList;
 var clubs;
 
@@ -112,29 +111,4 @@ function createClubsTableBody() {
         });
     }
 }
-function sortBy(property) {
-    seriesList.sort(createComparator(property));
-    if (ascending) {
-        seriesList.reverse();
-    }
-    ascending = !ascending;
-    createTableBody(seriesList);
-}
 
-function filter(property) {
-    var filteredSeries = new Array();
-    var searchString = document.getElementById(property).value;
-    if (searchString !== "") {
-        var j = 0;
-        for (i in seriesList) {
-            var series = seriesList[i];
-            if (series[property].toLowerCase().indexOf(searchString.toLowerCase()) !== -1) {
-                filteredSeries[j] = series;
-                j++;
-            }
-        }
-        createTableBody(filteredSeries);
-    } else {
-        createTableBody(seriesList);
-    }
-}

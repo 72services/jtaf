@@ -38,7 +38,7 @@ public class Athlete {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderColumn(name = "postition")
     @JoinColumn(name = "athlete_id")
-    private List<Result> results = new ArrayList<Result>();
+    private List<Result> results = new ArrayList<>();
 
     public Long getId() {
         return id;

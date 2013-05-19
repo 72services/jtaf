@@ -6,7 +6,7 @@ import java.util.List;
 public class CompetitionRankingData {
 
     private Competition competition;
-    private List<CompetitionRankingCategoryData> categories = new ArrayList<CompetitionRankingCategoryData>();
+    private List<CompetitionRankingCategoryData> categories = new ArrayList<>();
 
     public Competition getCompetition() {
         return competition;

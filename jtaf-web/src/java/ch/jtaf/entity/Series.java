@@ -23,7 +23,7 @@ public class Series {
     @Lob
     private byte[] logo;
     @Transient
-    private List<Competition> competitions = new ArrayList<Competition>();
+    private List<Competition> competitions = new ArrayList<>();
 
     public String getName() {
         return name;

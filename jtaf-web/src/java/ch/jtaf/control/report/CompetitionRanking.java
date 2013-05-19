@@ -26,7 +26,8 @@ public class CompetitionRanking extends ReportBase {
     public byte[] create() {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            document = new Document(PageSize.A4);
+            float border = cmToPixel(1.5f);
+            document = new Document(PageSize.A4, border, border, border, border);
             pdfWriter = PdfWriter.getInstance(document, baos);
             pdfWriter.setPageEvent(new HeaderFooter(
                     "Ranking", ranking.getCompetition().getName(),
@@ -96,7 +97,7 @@ public class CompetitionRanking extends ReportBase {
 
     private void addResultsCell(PdfPTable table, String text) {
         PdfPCell cell = new PdfPCell(
-                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, 8f)));
+                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, 7f)));
         cell.setColspan(5);
         cell.setBorder(0);
         cell.setPaddingBottom(8f);

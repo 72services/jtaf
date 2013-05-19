@@ -32,7 +32,7 @@ public class Category {
     private Series series;
     @OneToMany
     @OrderColumn(name = "position")
-    private List<Event> events = new ArrayList<Event>();
+    private List<Event> events = new ArrayList<>();
 
     public List<Event> getEvents() {
         return events;

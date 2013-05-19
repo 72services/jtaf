@@ -31,7 +31,7 @@
                     </p>
                 </div>
 
-                <div style="padding-bottom: 15px;">
+                <div style="padding-bottom: 14px;">
                     <a id="a_competitions" class="tab_active" href="#" onclick="switchTo('competitions');">Competitions</a>&nbsp;
                     <a id="a_events" class="tab_inactive" href="#" onclick="switchTo('events');">Events</a>&nbsp;
                     <a id="a_categories" class="tab_inactive" href="#" onclick="switchTo('categories');">Categories</a>&nbsp;
@@ -42,7 +42,7 @@
 
                     <div id="competitions" class="visible">
                         <h2>Competitions</h2>
-                        
+
                         <table class="list">
                             <thead>
                                 <tr>
@@ -113,16 +113,38 @@
                     <div id="athletes" class="invisible">
                         <h2>Athletes</h2>
 
-                        <table class="list">
+                        <table class="list_sortable">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Last name</th>
-                                    <th>First name</th>
-                                    <th>Year</th>
-                                    <th>Gender</th>
-                                    <th>Category</th>
-                                    <th>Club</th>
+                                    <th style="padding-left: 15px !important;" onclick="sortBy('id');">
+                                        Id<br />
+                                        <input id="id" type="text" style="width: 40px;" onkeyup="filter('lastName');">
+                                    </th>
+                                    <th onclick="sortBy('lastName');">
+                                        Last name<br />
+                                        <input id="lastName" type="text"  style="width: 80px;" onkeyup="filter('lastName');">
+                                    </th>
+                                    <th onclick="sortBy('firstName');">
+                                        First name<br />
+                                        <input id="firstName" type="text" style="width: 80px;" onkeyup="filter('firstName');">
+                                    </th>
+                                    <th onclick="sortBy('year');">
+                                        Year
+                                    </th>
+                                    <th onclick="sortBy('gender');">
+                                        Gender
+                                        <br />
+                                        <input id="gender" type="text" style="width: 40px;" onkeyup="filter('gender');">
+                                    </th>
+                                    <th onclick="sortBy('category');">
+                                        Category
+                                        <br />
+                                        <input id="category" type="text" style="width: 40px;" onkeyup="filter('category');">
+                                    </th>
+                                    <th onclick="sortBy('club');">
+                                        Club<br />
+                                        <input id="club" type="text" style="width: 40px;" onkeyup="filter('club');">
+                                    </th>
                                     <th style="width: 40px; text-align: right;"></th>
                                 </tr>
                             </thead>

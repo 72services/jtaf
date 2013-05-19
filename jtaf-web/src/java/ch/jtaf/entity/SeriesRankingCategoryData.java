@@ -6,7 +6,7 @@ import java.util.List;
 public class SeriesRankingCategoryData {
 
     private Category category;
-    private List<Athlete> athletes = new ArrayList<Athlete>();
+    private List<Athlete> athletes = new ArrayList<>();
 
     public Category getCategory() {
         return category;

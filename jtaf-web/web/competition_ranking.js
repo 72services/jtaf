@@ -60,7 +60,6 @@ function createTable() {
             cell.setAttribute("style", "width: 40px");
             cell.innerHTML = rank + ".";
             row.appendChild(cell);
-            x
             cell = document.createElement("td");
             cell.setAttribute("style", "width: 200px");
             cell.innerHTML = athlete.lastName;
@@ -103,7 +102,7 @@ function createTable() {
 
             table.appendChild(row);
 
-            i++;
+            rank++;
         });
         el("main").appendChild(table);
     });

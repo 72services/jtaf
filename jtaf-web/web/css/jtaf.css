@@ -140,7 +140,6 @@ input[type="submit"], input[type="reset"], button {
     cursor: pointer;
 }
 
-
 input[type="text"], input[type="date"], input[type="number"], input[type="password"], select {
     width: 200px;
     margin-right: 40px;
@@ -151,7 +150,7 @@ input#search_term {
     padding: 15px;
 }
 
-table.list, table.events, table.results, table.navigation  {
+table.list, table.list_sortable, table.events, table.results, table.navigation  {
     width: 100%;
     border-collapse: collapse;
 }
@@ -165,7 +164,7 @@ table.input {
     border-collapse: collapse;
 }
 
-table.list td, table.input td, table.results td {
+table.list td, table.list_sortable td, table.input td, table.results td {
     padding: 15px;
 }
 
@@ -173,6 +172,15 @@ table.list th {
     text-align: left;
     background: #99AC3B;
     padding: 15px;
+}
+
+table.list_sortable th {
+    text-align: left;
+    background: #99AC3B;
+    padding-top: 15px;
+    padding-right: 0px;
+    padding-bottom: 15px;
+    padding-left: 0px;
     cursor: pointer;
 }
 
@@ -182,6 +190,13 @@ table.list tr:last-child td:first-child { border-radius: 0 0 0 9px; }
 table.list tr:last-child td:last-child { border-radius: 0 0 9px 0; }
 table.list tr:nth-child(even) { background: #B9CC5B; }
 table.list tr:nth-child(odd) { background: #FAF7B8; }
+
+table.list_sortable th:first-child { border-radius: 9px 0 0 0; }
+table.list_sortable th:last-child { border-radius: 0 9px 0 0; }
+table.list_sortable tr:last-child td:first-child { border-radius: 0 0 0 9px; }
+table.list_sortable tr:last-child td:last-child { border-radius: 0 0 9px 0; }
+table.list_sortable tr:nth-child(even) { background: #B9CC5B; }
+table.list_sortable tr:nth-child(odd) { background: #FAF7B8; }
 
 table.input tr:first-child td:first-child { border-radius: 9px 0 0 0; }
 table.input tr:first-child td:last-child { border-radius: 0 9px 0 0; }
