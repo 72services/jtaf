@@ -19,6 +19,10 @@ function loadData() {
             parseAndFillAthletes(response);
         });
     }
+    var active_tab = localStorage.getItem("active_tab");
+    if (active_tab != null) {
+        switchTo(active_tab);
+    }
 }
 
 function parseAndFillSeries(response) {
@@ -46,7 +50,7 @@ function fillCompetitionTable() {
     }
     else {
         var i = 0;
-        competitions.forEach(function(competition) {
+        series.competitions.forEach(function(competition) {
             var row = table.insertRow(i);
             var onclickEdit = "window.location = 'competition.html?id=" +
                     competition.id + "'";
@@ -300,4 +304,10 @@ function switchTo(div) {
     el("a_athletes").className = "tab_inactive";
 
     el("a_" + div).className = "tab_active";
+    localStorage.setItem("active_tab", div);
+}
+
+function back() {
+    localStorage.removeItem("active_tab");
+    window.location = "masterdata.html";
 }

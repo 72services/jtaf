@@ -30,13 +30,16 @@
                     </tr>
                     <tr>
                         <td>Year</td>
-                        <td><input type="number" min="1900" max="2100" id="athlete_year" required /></td>
+                        <td>
+                            <input type="number" min="1900" max="2100" 
+                                   id="athlete_year" required onblur="resetCategory();" />
+                        </td>
                     </tr>
                     <tr>
                         <td>Gender</td>
                         <td>
                             <input id="athlete_gender_m" type="radio" name="athlete_gender" value="m">m
-                            <input id="athlete_gender_f" type="radio" name="athlete_gender" value="f">f
+                            <input id="athlete_gender_f" type="radio" name="athlete_gender" value="f" >f
                         </td>
                     </tr>
                     <tr>

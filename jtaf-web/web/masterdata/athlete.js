@@ -93,3 +93,7 @@ function fillAthlete() {
     }
     athlete.series = series;
 }
+
+function resetCategory() {
+    save();
+}
