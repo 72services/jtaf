@@ -71,7 +71,9 @@ function fillForm() {
     el("athlete_lastName").value = athlete.lastName;
     el("athlete_lastName").focus();
     el("athlete_firstName").value = athlete.firstName;
-    el("athlete_year").value = athlete.year;
+    var athlete_year = el("athlete_year");
+    athlete_year.value = athlete.year;
+    athlete_year.onblur = save;
     if (athlete.gender !== undefined && athlete.gender !== null) {
         el("athlete_gender_" + athlete.gender).checked = true;
     } else {
