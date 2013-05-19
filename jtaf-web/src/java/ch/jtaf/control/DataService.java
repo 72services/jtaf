@@ -96,7 +96,7 @@ public class DataService extends AbstractService {
         if (!c.equals(a.getCategory())) {
             // Category has changed. All Results must be deleted
             for (Result r : a.getResults()) {
-                em.remove(r);
+                delete(r);
             }
             a.setResults(new ArrayList<Result>());
             a.setCategory(c);

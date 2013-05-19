@@ -21,6 +21,7 @@ function fillClubSelect() {
     xhrGet("/jtaf/res/clubs", function(response) {
         clubs = JSON.parse(response);
         var select = el("athlete_club");
+        select.innerHTML = "";
 
         var option = document.createElement("option");
         option.innerHTML = "";
@@ -83,9 +84,9 @@ function fillAthlete() {
     }
     var select = el("athlete_club");
     var id = select.options[select.selectedIndex].value;
-    if (id != null) {
+    if (id !== null) {
         clubs.forEach(function(club) {
-            if (club.id == id) {
+            if (club.id === parseInt(id)) {
                 athlete.club = club;
                 return;
             }
