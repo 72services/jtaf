@@ -322,8 +322,7 @@ function back() {
 
 
 function sortBy(property) {
-    console.log(event.srcElement.id);
-    if (event.srcElement.id === "") {
+    if (event.srcElement.type === undefined) {
         athletes.sort(createComparator(property));
         if (ascending) {
             athletes.reverse();
