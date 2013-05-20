@@ -23,10 +23,12 @@ function deleteSeries(id) {
 }
 
 function copySeries(id) {
-    xhrPost("/jtaf/res/series/" + id + "?function=copy", function() {
-        loadData();
-        info("Series copied");
-    });
+    if (confirm("Are you sure?")) {
+        xhrPost("/jtaf/res/series/" + id + "?function=copy", function() {
+            loadData();
+            info("Series copied");
+        });
+    }
 
 }
 
@@ -60,11 +62,11 @@ function createSeriesTableBody() {
             cellName.innerHTML = series.name;
             cellName.setAttribute("onclick", onclickEdit);
             var copy = document.createElement("a");
-            copy.setAttribute("href", "#");
+            copy.href = "#";
             copy.setAttribute("onclick", "copySeries(" + series.id + ")");
             copy.appendChild(document.createTextNode("Copy"));
             var del = document.createElement("a");
-            del.setAttribute("href", "#");
+            del.href = "#";
             del.setAttribute("onclick", "deleteSeries(" + series.id + ")");
             del.appendChild(document.createTextNode("Delete"));
             var cellFunction = row.insertCell(1);

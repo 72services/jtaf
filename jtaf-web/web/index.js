@@ -27,8 +27,7 @@ function fillSeries() {
             li_series.appendChild(document.createElement("br"));
 
             var a_ranking = document.createElement("a");
-            a_ranking.setAttribute("href", "javascript:openSeriesRankingPdf("
-                    + series.id + ");");
+            a_ranking.href = "javascript:openSeriesRankingPdf(" + series.id + ");";
             a_ranking.innerHTML = "Ranking";
             li_series.appendChild(a_ranking);
 
@@ -44,14 +43,14 @@ function fillSeries() {
             series.competitions.forEach(function(competition) {
                 var li_competition = document.createElement("li");
                 var table = document.createElement("table");
-                table.setAttribute("style", "width: 100%");
+                table.style.width = "100%";
                 var row = table.insertRow(0);
                 var cell0 = row.insertCell(0);
                 cell0.innerHTML = "<b>" + competition.name + "</b> ";
                 var cell1 = row.insertCell(1);
                 cell1.innerHTML = competition.competitionDate;
                 var cell2 = row.insertCell(2);
-                cell2.setAttribute("style", "text-align: right;");
+                cell2.style.textAlign = "right;";
                 cell2.innerHTML = "Athletes: " + competition.numberOfAthletes;
                 li_competition.appendChild(table);
 
@@ -59,16 +58,14 @@ function fillSeries() {
                 li_competition.appendChild(document.createElement("br"));
 
                 var a_results = document.createElement("a");
-                a_results.setAttribute("href",
-                        "resultinput/result_input.html?id=" + competition.id);
+                a_results.href = "resultinput/result_input.html?id=" + competition.id;
                 a_results.innerHTML = "Enter results";
                 li_competition.appendChild(a_results);
 
                 li_competition.appendChild(document.createTextNode(" "));
 
                 var a_ranking = document.createElement("a");
-                a_ranking.setAttribute("href",
-                        "competition_ranking.html?id=" + competition.id);
+                a_ranking.href = "competition_ranking.html?id=" + competition.id;
                 a_ranking.innerHTML = "Ranking";
                 li_competition.appendChild(a_ranking);
 

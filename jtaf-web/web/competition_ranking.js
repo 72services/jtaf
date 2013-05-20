@@ -14,7 +14,7 @@ function parseAndFill(response) {
     ranking = JSON.parse(response);
 
     var table = document.createElement("table");
-    table.setAttribute("style", "width: 100%;");
+    table.style.width = "100%;";
     var row = table.insertRow(0);
     var left = row.insertCell(0);
     var hleft = document.createElement("h1");
@@ -22,13 +22,13 @@ function parseAndFill(response) {
     left.appendChild(hleft);
 
     var middle = row.insertCell(1);
-    middle.setAttribute("style", "text-align: center;");
+    middle.style.textAlign = "center";
     var hmiddle = document.createElement("h1");
     hmiddle.innerHTML = ranking.competition.name;
     middle.appendChild(hmiddle);
 
     var right = row.insertCell(2);
-    right.setAttribute("style", "text-align: right;");
+    right.style.textAlign = "right;";
     var hright = document.createElement("h1");
     hright.innerHTML = ranking.competition.competitionDate;
     right.appendChild(hright);
@@ -61,29 +61,29 @@ function createTable() {
             cell.innerHTML = rank + ".";
             row.appendChild(cell);
             cell = document.createElement("td");
-            cell.setAttribute("style", "width: 200px");
+            cell.style.width = "200px";
             cell.innerHTML = athlete.lastName;
             row.appendChild(cell);
 
             cell = document.createElement("td");
-            cell.setAttribute("style", "width: 200px");
+            cell.style.width = "200px";
             cell.innerHTML = athlete.firstName;
             row.appendChild(cell);
 
             cell = document.createElement("td");
-            cell.setAttribute("style", "width: 50px");
+            cell.style.width = "50px";
             cell.innerHTML = athlete.year;
             row.appendChild(cell);
 
             cell = document.createElement("td");
-            cell.setAttribute("style", "width: 150px");
+            cell.style.width = "150px";
             if (athlete.club !== undefined && athlete.club !== null) {
                 cell.innerHTML = athlete.club.abbreviation;
             }
             row.appendChild(cell);
 
             cell = document.createElement("td");
-            cell.setAttribute("style", "text-align: right;");
+            cell.style.textAlign = "right;";
             cell.innerHTML = calculateTotalPoints(athlete);
             row.appendChild(cell);
 
