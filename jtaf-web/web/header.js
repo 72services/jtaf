@@ -70,8 +70,27 @@ function deactivateLinks() {
 }
 
 function getUserInfo(cell2) {
-    xhrGet("/jtaf/res/users/current", function(response) {
-        var user = JSON.parse(response);
-        cell2.innerHTML = user.firstName + " " + user.lastName + " (" + user.email + ")";
-    });
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/jtaf/res/users/current", true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            var user = JSON.parse(xhr.response);
+            cell2.innerHTML = user.firstName + " " + user.lastName + " (" + user.email + ")";
+        } else if (xhr.status === 204) {
+            var login = document.createElement("a");
+            login.href = "profile.html";
+            login.innerHTML = "Login";
+            cell2.appendChild(login);
+
+            cell2.appendChild(document.createTextNode(" "));
+
+            var register = document.createElement("a");
+            register.href = "register.html";
+            register.innerHTML = "Register for JTAF";
+            cell2.appendChild(register);
+        } else {
+            error(xhr.status);
+        }
+    };
+    xhr.send();
 }
