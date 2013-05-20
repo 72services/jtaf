@@ -4,7 +4,8 @@
 ### Demo
 http://simas1.ch:8080/jtaf/
 
-User and password: admin
+User: john@doe.com
+Password: admin
 
 ### Description
 See the description of the previous version:
