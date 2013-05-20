@@ -1,4 +1,5 @@
-# JTAF - Track and Field Competition Administration
+# JTAF
+Track and Field Competition Administration
 
 ## Goals
 
