@@ -16,7 +16,7 @@ function createHeader() {
     home.className = "navigation_inactive";
     home.name = "navigation_element";
     home.setAttribute("href", "/jtaf/index.html");
-    home.setAttribute("onclick", "activateNavigation(0); ");
+    home.setAttribute("onclick", "activateNavigation(0);");
     home.innerHTML = "Home";
     cell0.appendChild(home);
     

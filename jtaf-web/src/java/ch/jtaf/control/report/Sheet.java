@@ -7,9 +7,12 @@ import ch.jtaf.entity.Series;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
@@ -22,7 +25,6 @@ public class Sheet extends ReportBase {
 
     private final static float FONT_SIZE_INFO = 8f;
     private final static float FONT_SIZE_TEXT = 16f;
-    private final static float FONT_SIZE_EVENT = 16f;
     public static final float INFO_LINE_HEIGHT = 40f;
     private Document document;
     private PdfWriter pdfWriter;
@@ -32,7 +34,7 @@ public class Sheet extends ReportBase {
 
     public Sheet(Athlete athlete) {
         this.competition = null;
-        this.athletes = new ArrayList<Athlete>();
+        this.athletes = new ArrayList<>();
         this.athletes.add(athlete);
         this.series = athlete.getCategory().getSeries();
     }
@@ -40,7 +42,7 @@ public class Sheet extends ReportBase {
     public Sheet(Competition competition, Athlete athlete) {
         this.competition = competition;
         this.series = competition.getSeries();
-        this.athletes = new ArrayList<Athlete>();
+        this.athletes = new ArrayList<>();
         this.athletes.add(athlete);
     }
 
@@ -98,7 +100,7 @@ public class Sheet extends ReportBase {
     private void createCategory(Athlete athlete) throws BadElementException, DocumentException, MalformedURLException, IOException {
         PdfPTable table = new PdfPTable(1);
         table.setWidthPercentage(100);
-        addCell(table, athlete.getCategory().getAbbreviation(), 80f, false);
+        addCategoryCell(table, athlete.getCategory().getAbbreviation());
 
         Rectangle page = document.getPageSize();
         table.setTotalWidth(page.getWidth() - document.leftMargin() - document.rightMargin());
@@ -110,45 +112,45 @@ public class Sheet extends ReportBase {
         table.setWidthPercentage(100);
 
         if (athlete.getId() != null) {
-            addCellWithHeight(table, athlete.getId() == null ? "Id" : athlete.getId().toString(), FONT_SIZE_TEXT, INFO_LINE_HEIGHT);
+            addInfoCell(table, athlete.getId() == null ? "Id" : athlete.getId().toString());
             addCell(table, "");
         }
         if (athlete.getLastName() == null) {
-            addCellWithHeightAndBorder(table, "Last name", FONT_SIZE_INFO, INFO_LINE_HEIGHT);
+            addInfoCellWithBorder(table, "Last name");
         } else {
-            addCellWithHeight(table, athlete.getLastName(), FONT_SIZE_TEXT, INFO_LINE_HEIGHT);
+            addInfoCell(table, athlete.getLastName());
         }
         if (athlete.getFirstName() == null) {
-            addCellWithHeightAndBorder(table, "First name", FONT_SIZE_INFO, INFO_LINE_HEIGHT);
+            addInfoCellWithBorder(table, "First name");
         } else {
-            addCellWithHeight(table, athlete.getFirstName(), FONT_SIZE_TEXT, INFO_LINE_HEIGHT);
+            addInfoCell(table, athlete.getFirstName());
         }
         if (athlete.getYear() == 0) {
-            addCellWithHeightAndBorder(table, "Year", FONT_SIZE_INFO, INFO_LINE_HEIGHT);
+            addInfoCellWithBorder(table, "Year");
         } else {
-            addCellWithHeight(table, athlete.getYear() + "", FONT_SIZE_TEXT, INFO_LINE_HEIGHT);
+            addInfoCell(table, athlete.getYear() + "");
         }
         if (athlete.getClub() == null) {
             if (athlete.getId() == null) {
-                addCellWithHeightAndBorder(table, "Club", FONT_SIZE_INFO, INFO_LINE_HEIGHT);
+                addInfoCellWithBorder(table, "Club");
             } else {
-                addCellWithHeight(table, "", FONT_SIZE_INFO, INFO_LINE_HEIGHT);
+                addInfoCell(table, "");
             }
         } else {
-            addCellWithHeight(table, athlete.getClub().getAbbreviation(), FONT_SIZE_TEXT, INFO_LINE_HEIGHT);
+            addInfoCell(table, athlete.getClub().getAbbreviation());
         }
 
         document.add(table);
     }
 
     private void createCompetitionRow() throws DocumentException {
-        PdfPTable table = new PdfPTable(2);
+        PdfPTable table = new PdfPTable(1);
         table.setWidthPercentage(100);
         table.setSpacingBefore(cmToPixel(0.5f));
         table.setSpacingAfter(cmToPixel(0.5f));
 
-        addCellBold(table, competition == null ? "" : competition.getName(), FONT_SIZE_TEXT);
-        addCellBold(table, competition == null ? "" : sdf.format(competition.getCompetitionDate()), FONT_SIZE_TEXT);
+        addCompetitionCell(table, competition == null ? "" : 
+                competition.getName() + " " + sdf.format(competition.getCompetitionDate()));
 
         document.add(table);
     }
@@ -160,16 +162,56 @@ public class Sheet extends ReportBase {
 
         for (Event event : athlete.getCategory().getEvents()) {
             if (event.getType().equals(Event.JUMP_THROW)) {
-                addCell(table, event.getName(), FONT_SIZE_EVENT);
-                addCellWithHeightAndBorder(table, "", FONT_SIZE_EVENT, 40f);
-                addCellWithHeightAndBorder(table, "", FONT_SIZE_EVENT, 40f);
-                addCellWithHeightAndBorder(table, "", FONT_SIZE_EVENT, 40f);
+                addInfoCell(table, event.getName());
+                addInfoCellWithBorder(table, "");
+                addInfoCellWithBorder(table, "");
+                addInfoCellWithBorder(table, "");
             } else {
-                addCell(table, event.getName(), 3, FONT_SIZE_EVENT);
-                addCellWithHeightAndBorder(table, "", FONT_SIZE_EVENT, 40f);
+                addInfoCellWithColspan(table, event.getName(), 3);
+                addInfoCellWithBorder(table, "");
             }
         }
 
         document.add(table);
+    }
+
+    protected void addCategoryCell(PdfPTable table, String text) {
+        PdfPCell cell = new PdfPCell(
+                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 80f)));
+        cell.setBorder(0);
+        cell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+        table.addCell(cell);
+    }
+
+    private void addCompetitionCell(PdfPTable table, String text) {
+        PdfPCell cell = new PdfPCell(
+                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA_BOLD, FONT_SIZE_TEXT)));
+        cell.setBorder(0);
+        table.addCell(cell);
+    }
+
+    private void addInfoCell(PdfPTable table, String text) {
+        PdfPCell cell = new PdfPCell(
+                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, FONT_SIZE_TEXT)));
+        cell.setBorder(0);
+        cell.setMinimumHeight(INFO_LINE_HEIGHT);
+        table.addCell(cell);
+    }
+
+    private void addInfoCellWithColspan(PdfPTable table, String text, int colspan) {
+        PdfPCell cell = new PdfPCell(
+                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, FONT_SIZE_TEXT)));
+        cell.setBorder(0);
+        cell.setColspan(colspan);
+        cell.setMinimumHeight(INFO_LINE_HEIGHT);
+        table.addCell(cell);
+    }
+
+    private void addInfoCellWithBorder(PdfPTable table, String text) {
+        PdfPCell cell = new PdfPCell(
+                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, FONT_SIZE_INFO)));
+        cell.setMinimumHeight(INFO_LINE_HEIGHT);
+        cell.setBorderWidth(1);
+        table.addCell(cell);
     }
 }

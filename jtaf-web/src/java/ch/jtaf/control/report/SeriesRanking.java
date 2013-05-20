@@ -6,16 +6,13 @@ import ch.jtaf.entity.SeriesRankingCategoryData;
 import ch.jtaf.entity.SeriesRankingData;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
-public class SeriesRanking extends ReportBase {
+public class SeriesRanking extends Ranking {
 
     private Document document;
     private PdfWriter pdfWriter;
@@ -68,11 +65,11 @@ public class SeriesRanking extends ReportBase {
     }
 
     private void createCategoryTitle(PdfPTable table, SeriesRankingCategoryData category) {
-        addCell(table, category.getCategory().getAbbreviation(), 12f);
-        addCell(table, category.getCategory().getName() + " "
-                + category.getCategory().getYearFrom() + " - " + category.getCategory().getYearTo(), 5, 12f);
+        addCategoryTitleCellWithColspan(table, category.getCategory().getAbbreviation(), 1);
+        addCategoryTitleCellWithColspan(table, category.getCategory().getName() + " "
+                + category.getCategory().getYearFrom() + " - " + category.getCategory().getYearTo(), 5);
 
-        addCell(table, " ", 6, NORMAL_FONT_SIZE, true);
+        addCategoryTitleCellWithColspan(table, " ", 6);
     }
 
     private void createAthleteRow(PdfPTable table, int position, Athlete athlete) throws DocumentException {
@@ -81,7 +78,7 @@ public class SeriesRanking extends ReportBase {
         addCell(table, athlete.getFirstName());
         addCell(table, athlete.getYear() + "");
         addCell(table, athlete.getClub() == null ? "" : athlete.getClub().getAbbreviation());
-        addCell(table, athlete.getSeriesPoints(ranking.getSeries()) + "", false);
+        addCellAlignRight(table, athlete.getSeriesPoints(ranking.getSeries()) + "");
 
         StringBuilder sb = new StringBuilder();
         for (Competition competition : ranking.getSeries().getCompetitions()) {
@@ -91,14 +88,5 @@ public class SeriesRanking extends ReportBase {
         }
         addCell(table, "");
         addResultsCell(table, sb.toString());
-    }
-
-    private void addResultsCell(PdfPTable table, String text) {
-        PdfPCell cell = new PdfPCell(
-                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, 8f)));
-        cell.setColspan(5);
-        cell.setBorder(0);
-        cell.setPaddingBottom(8f);
-        table.addCell(cell);
     }
 }

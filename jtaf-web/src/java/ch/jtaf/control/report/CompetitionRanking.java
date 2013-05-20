@@ -5,15 +5,12 @@ import ch.jtaf.entity.CompetitionRankingCategoryData;
 import ch.jtaf.entity.Result;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 
-public class CompetitionRanking extends ReportBase {
+public class CompetitionRanking extends Ranking {
 
     private Document document;
     private PdfWriter pdfWriter;
@@ -25,22 +22,20 @@ public class CompetitionRanking extends ReportBase {
 
     public byte[] create() {
         try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            float border = cmToPixel(1.5f);
-            document = new Document(PageSize.A4, border, border, border, border);
-            pdfWriter = PdfWriter.getInstance(document, baos);
-            pdfWriter.setPageEvent(new HeaderFooter(
-                    "Ranking", ranking.getCompetition().getName(),
-                    sdf.format(ranking.getCompetition().getCompetitionDate())));
-            document.open();
-
-            createRanking();
-
-            document.close();
-            pdfWriter.flush();
-
-            byte[] ba = baos.toByteArray();
-            baos.close();
+            byte[] ba;
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                float border = cmToPixel(1.5f);
+                document = new Document(PageSize.A4, border, border, border, border);
+                pdfWriter = PdfWriter.getInstance(document, baos);
+                pdfWriter.setPageEvent(new HeaderFooter(
+                        "Ranking", ranking.getCompetition().getName(),
+                        sdf.format(ranking.getCompetition().getCompetitionDate())));
+                document.open();
+                createRanking();
+                document.close();
+                pdfWriter.flush();
+                ba = baos.toByteArray();
+            }
 
             return ba;
         } catch (Exception e) {
@@ -67,11 +62,11 @@ public class CompetitionRanking extends ReportBase {
     }
 
     private void createCategoryTitle(PdfPTable table, CompetitionRankingCategoryData category) {
-        addCell(table, category.getCategory().getAbbreviation(), 12f);
-        addCell(table, category.getCategory().getName() + " "
-                + category.getCategory().getYearFrom() + " - " + category.getCategory().getYearTo(), 5, 12f);
+        addCategoryTitleCellWithColspan(table, category.getCategory().getAbbreviation(), 1);
+        addCategoryTitleCellWithColspan(table, category.getCategory().getName() + " "
+                + category.getCategory().getYearFrom() + " - " + category.getCategory().getYearTo(), 5);
 
-        addCell(table, " ", 6, NORMAL_FONT_SIZE, true);
+        addCategoryTitleCellWithColspan(table, " ", 6);
     }
 
     private void createAthleteRow(PdfPTable table, int position, Athlete athlete) throws DocumentException {
@@ -80,7 +75,7 @@ public class CompetitionRanking extends ReportBase {
         addCell(table, athlete.getFirstName());
         addCell(table, athlete.getYear() + "");
         addCell(table, athlete.getClub() == null ? "" : athlete.getClub().getAbbreviation());
-        addCell(table, athlete.getTotalPoints(ranking.getCompetition()) + "", false);
+        addCellAlignRight(table, athlete.getTotalPoints(ranking.getCompetition()) + "");
 
         StringBuilder sb = new StringBuilder();
         for (Result result : athlete.getResults()) {
@@ -95,12 +90,4 @@ public class CompetitionRanking extends ReportBase {
         addResultsCell(table, sb.toString());
     }
 
-    private void addResultsCell(PdfPTable table, String text) {
-        PdfPCell cell = new PdfPCell(
-                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, 7f)));
-        cell.setColspan(5);
-        cell.setBorder(0);
-        cell.setPaddingBottom(8f);
-        table.addCell(cell);
-    }
 }
