@@ -146,8 +146,14 @@ input[type="text"], input[type="date"], input[type="number"], input[type="passwo
 }
 
 input#search_term {
-    width: 762px;
+    width: 500px;
     padding: 15px;
+    margin: 0px;
+}
+
+input[type="submit"]#search {
+    padding: 16px;
+    font-weight: bold;
 }
 
 table.list, table.list_sortable, table.events, table.results, table.navigation  {

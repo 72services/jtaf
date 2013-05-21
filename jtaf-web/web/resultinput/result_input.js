@@ -21,21 +21,19 @@ function loadData() {
 }
 
 function search() {
-    if (event.keyCode === 13) {
-        clear();
-        hideOutput();
+    clear();
+    hideOutput();
 
-        var searchterm = el("search_term").value;
-        var number = parseInt(searchterm);
-        if (number !== undefined && !isNaN(number) && typeof number === "number") {
-            xhrGet("/jtaf/res/athletes/" + number, function(response) {
-                parseAndFill(response);
-            });
-        } else {
-            xhrGet("/jtaf/res/athletes/search?query=" + searchterm, function(response) {
-                parseAndFillAthletes(response);
-            });
-        }
+    var searchterm = el("search_term").value;
+    var number = parseInt(searchterm);
+    if (number !== undefined && !isNaN(number) && typeof number === "number") {
+        xhrGet("/jtaf/res/athletes/" + number, function(response) {
+            parseAndFill(response);
+        });
+    } else {
+        xhrGet("/jtaf/res/athletes/search?query=" + searchterm, function(response) {
+            parseAndFillAthletes(response);
+        });
     }
 }
 
