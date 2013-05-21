@@ -10,6 +10,16 @@ function createHeader() {
 
     var cell0 = row.insertCell(0);
     cell0.className = "navigation";
+    cell0.style.width = "130px";
+    cell0.style.paddingTop = "0px";
+    
+    var logo = document.createElement("img");
+    logo.src = "/jtaf/images/logo.png";
+    cell0.appendChild(logo);
+
+    var cell1 = row.insertCell(1);
+    cell1.className = "navigation";
+    cell1.style.paddingTop = "10px";
 
     var home = document.createElement("a");
     home.id = "navigation_0";
@@ -18,7 +28,7 @@ function createHeader() {
     home.href = "/jtaf/index.html";
     home.setAttribute("onclick", "activateNavigation(0);");
     home.innerHTML = "Home";
-    cell0.appendChild(home);
+    cell1.appendChild(home);
 
     var spaces = document.createElement("a");
     spaces.id = "navigation_1";
@@ -27,11 +37,11 @@ function createHeader() {
     spaces.href = "/jtaf/spaces/index.html";
     spaces.setAttribute("onclick", "activateNavigation(1);");
     spaces.innerHTML = "My spaces";
-    cell0.appendChild(spaces);
+    cell1.appendChild(spaces);
 
-    var cell1 = row.insertCell(1);
-    cell1.style.textAlign = "right";
-    getUserInfo(cell1);
+    var cell2 = row.insertCell(2);
+    cell2.style.textAlign = "right";
+    getUserInfo(cell2);
 
     div.appendChild(table);
 
