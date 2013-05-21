@@ -65,7 +65,7 @@ function fillSpaces() {
                     var cell1 = row.insertCell(1);
                     cell1.innerHTML = competition.competitionDate;
                     var cell2 = row.insertCell(2);
-                    cell2.style.textAlign = "right;";
+                    cell2.style.textAlign = "right";
                     cell2.innerHTML = "Athletes: " + competition.numberOfAthletes;
                     li_competition.appendChild(table);
 

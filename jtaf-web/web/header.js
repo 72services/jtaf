@@ -20,14 +20,14 @@ function createHeader() {
     home.innerHTML = "Home";
     cell0.appendChild(home);
 
-    var masterdata = document.createElement("a");
-    masterdata.id = "navigation_1";
-    masterdata.className = "navigation_inactive";
-    masterdata.name = "navigation_element";
-    masterdata.href = "/jtaf/masterdata/index.html";
-    masterdata.setAttribute("onclick", "activateNavigation(1);");
-    masterdata.innerHTML = "Master data";
-    cell0.appendChild(masterdata);
+    var spaces = document.createElement("a");
+    spaces.id = "navigation_1";
+    spaces.className = "navigation_inactive";
+    spaces.name = "navigation_element";
+    spaces.href = "/jtaf/spaces/index.html";
+    spaces.setAttribute("onclick", "activateNavigation(1);");
+    spaces.innerHTML = "My spaces";
+    cell0.appendChild(spaces);
 
     var cell1 = row.insertCell(1);
     cell1.style.textAlign = "right";

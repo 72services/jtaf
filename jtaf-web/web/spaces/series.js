@@ -317,7 +317,7 @@ function switchTo(div) {
 
 function back() {
     localStorage.removeItem("active_tab");
-    window.location = "masterdata.html";
+    window.location = "index.html";
 }
 
 

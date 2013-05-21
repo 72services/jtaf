@@ -94,6 +94,7 @@ public class RankingService extends AbstractService {
             rc.setAthletes(filterAndSort(series, entry.getValue()));
             ranking.getCategories().add(rc);
         }
+        Collections.sort(ranking.getCategories());
         return ranking;
     }
 
