@@ -24,7 +24,7 @@ function createHeader() {
     masterdata.id = "navigation_1";
     masterdata.className = "navigation_inactive";
     masterdata.name = "navigation_element";
-    masterdata.href = "/jtaf/masterdata/masterdata.html";
+    masterdata.href = "/jtaf/masterdata/index.html";
     masterdata.setAttribute("onclick", "activateNavigation(1);");
     masterdata.innerHTML = "Master data";
     cell0.appendChild(masterdata);

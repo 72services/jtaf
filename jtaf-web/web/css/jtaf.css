@@ -222,6 +222,17 @@ ul {
     padding: 0px;
 }
 
+ul.spaces li {
+    display: block;
+    list-style: none;
+    padding-left: 30px;
+    padding-top: 30px;
+    padding-right: 30px;
+    border-radius: 9px 9px 9px 9px;
+    background-color: #FAF7B8;
+    overflow: hidden;
+} 
+
 ul.series li {
     display: block;
     list-style: none;

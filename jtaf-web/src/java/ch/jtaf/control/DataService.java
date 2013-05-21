@@ -8,6 +8,7 @@ import ch.jtaf.entity.Event;
 import ch.jtaf.entity.Result;
 import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.entity.Series;
+import ch.jtaf.entity.Space;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,12 +19,12 @@ import javax.persistence.TypedQuery;
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class DataService extends AbstractService {
-    
+
     public List<Series> getSeriesList() {
         TypedQuery<Series> q = em.createNamedQuery("Series.findAll", Series.class);
         return q.getResultList();
     }
-    
+
     public List<Series> getSeriesWithCompetitions() {
         List<Series> list = getSeriesList();
         List<Series> series = new ArrayList<>();
@@ -32,22 +33,22 @@ public class DataService extends AbstractService {
         }
         return series;
     }
-    
+
     public List<Competition> getCompetititions() {
         TypedQuery<Competition> q = em.createNamedQuery("Competition.findAll", Competition.class);
         return q.getResultList();
     }
-    
+
     public List<Event> getEvents() {
         TypedQuery<Event> q = em.createNamedQuery("Event.findAll", Event.class);
         return q.getResultList();
     }
-    
+
     public List<Category> getCategories() {
         TypedQuery<Category> q = em.createNamedQuery("Category.findAll", Category.class);
         return q.getResultList();
     }
-    
+
     public Series getSeries(Long id) {
         Series s = em.find(Series.class, id);
         TypedQuery<Competition> q = em.createNamedQuery("Competition.findBySeries",
@@ -61,32 +62,32 @@ public class DataService extends AbstractService {
         s.setCompetitions(cs);
         return s;
     }
-    
+
     public List<Category> getCategoryFromSeries(Long id) {
         Series series = em.find(Series.class, id);
         TypedQuery<Category> q = em.createNamedQuery("Category.findBySeries", Category.class);
         q.setParameter("series", series);
         return q.getResultList();
     }
-    
+
     public List<Event> getEventFromSeries(Long id) {
         Series series = em.find(Series.class, id);
         TypedQuery<Event> q = em.createNamedQuery("Event.findBySeries", Event.class);
         q.setParameter("series", series);
         return q.getResultList();
     }
-    
+
     public List<Athlete> getAthleteFromSeries(Long id) {
         TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
         q.setParameter("seriesid", id);
         return q.getResultList();
     }
-    
+
     public List<Club> getClubs() {
         TypedQuery<Club> q = em.createNamedQuery("Club.findAll", Club.class);
         return q.getResultList();
     }
-    
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Athlete saveAthlete(Athlete a) {
         Category c = this.getCategoryWithGenderAndAge(a.getSeries(), a.getGender(), a.getYear());
@@ -103,7 +104,7 @@ public class DataService extends AbstractService {
         }
         return this.save(a);
     }
-    
+
     private Category getCategoryWithGenderAndAge(Series series, String gender, int year) {
         TypedQuery<Category> q = em.createNamedQuery("Category.findBySeriesAndYearAndGender", Category.class);
         q.setParameter("gender", gender);
@@ -111,7 +112,7 @@ public class DataService extends AbstractService {
         q.setParameter("series", series);
         return q.getSingleResult();
     }
-    
+
     public List<Athlete> searchAthletes(String searchterm) {
         String queryString = "select a from Athlete a "
                 + "where lower(a.lastName) like :searchterm "
@@ -124,7 +125,7 @@ public class DataService extends AbstractService {
         query.setParameter("searchterm", searchterm);
         return query.getResultList();
     }
-    
+
     private Long getNumberOfAthletes(Competition c) {
         String queryString = "select count(distinct a) from Athlete a join a.results r "
                 + "where r.competition = :competition";
@@ -132,7 +133,7 @@ public class DataService extends AbstractService {
         query.setParameter("competition", c);
         return (Long) query.getSingleResult();
     }
-    
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Series copySeries(Long id) {
         Series series = em.find(Series.class, id);
@@ -145,7 +146,7 @@ public class DataService extends AbstractService {
         copyAthletes(series, copy);
         return copy;
     }
-    
+
     private List<Event> copyEvents(Series orig, Series series) {
         TypedQuery<Event> q = em.createNamedQuery("Event.findBySeries", Event.class);
         q.setParameter("series", orig);
@@ -165,7 +166,7 @@ public class DataService extends AbstractService {
         }
         return copies;
     }
-    
+
     private List<Category> copyCategories(Series orig, Series series, List<Event> events) {
         TypedQuery<Category> q = em.createNamedQuery("Category.findBySeries", Category.class);
         q.setParameter("series", orig);
@@ -192,7 +193,7 @@ public class DataService extends AbstractService {
         }
         return copies;
     }
-    
+
     private void copyAthletes(Series orig, Series series) {
         TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
         q.setParameter("seriesid", orig.getId());
@@ -209,8 +210,26 @@ public class DataService extends AbstractService {
             em.persist(copy);
         }
     }
-    
+
     public SecurityUser get(Class<SecurityUser> aClass, String name) {
         return em.find(aClass, name);
+    }
+
+    public List<Space> getSpaces() {
+        TypedQuery<Space> q = em.createNamedQuery("Space.findAll", Space.class);
+        List<Space> spaces = q.getResultList();
+        for (Space space : spaces) {
+            List<Series> series = new ArrayList<>();
+            for (Series s : space.getSeries()) {
+                series.add(getSeries(s.getId()));
+            }
+            space.setSeries(series);
+        }
+        return spaces;
+    }
+
+    public Space getSpace(Long id) {
+        Space space = em.find(Space.class, id);
+        return space;
     }
 }

@@ -5,9 +5,16 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "TSPACE")
+@NamedQueries({
+    @NamedQuery(name = "Space.findAll", query = "select s from Space s order by s.name")
+})
 public class Space {
 
     @Id

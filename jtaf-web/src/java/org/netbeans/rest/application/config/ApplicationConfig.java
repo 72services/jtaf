@@ -26,6 +26,7 @@ public class ApplicationConfig extends Application {
         resources.add(ch.jtaf.boundry.SeriesResource.class);
         resources.add(ch.jtaf.boundry.EventResource.class);
         resources.add(ch.jtaf.boundry.UserResource.class);
+        resources.add(ch.jtaf.boundry.SpaceResource.class);
         try {
             Class<?> jacksonProvider = Class.forName("org.codehaus.jackson.jaxrs.JacksonJsonProvider");
             resources.add(jacksonProvider);
