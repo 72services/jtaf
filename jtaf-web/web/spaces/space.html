@@ -11,6 +11,28 @@
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
+            <p><a href="index.html">Spaces</a> . <span id="curent_space"></span></p>
+            <br />
+            
+            <form action="javascript:save();">
+                <div>
+                    <table class="input">
+                        <tr>
+                            <td>Id</td>
+                            <td><input type="text" id="space_id" readonly disabled /></td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td><input type="text" id="space_name" required /></td>
+                        </tr>
+                    </table>
+
+                    <p>
+                        <input type="submit" value="Save" />&nbsp;<a href="javascript:back();">Back</a>
+                    </p>
+                </div>
+            </form>
+
             <h1>Series</h1>
 
             <table class="list">
@@ -28,7 +50,7 @@
                 </tbody>
             </table>
 
-            <p><a href="series.html">Add series</a>&nbsp;<a href="index.html">Back</a></p>
+            <p><a href="javascript:addSeries();">Add series</a>&nbsp;<a href="index.html">Back</a></p>
 
             <h1>Clubs</h1>
 
@@ -47,7 +69,7 @@
                 </tbody>
             </table>
 
-            <p><a href="club.html">Add club</a></p>
+            <p><a href="javascript:addClub();">Add club</a></p>
         </div>
 
         <script src="/jtaf/footer.js"></script>

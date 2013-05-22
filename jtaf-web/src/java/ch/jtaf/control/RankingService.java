@@ -30,7 +30,6 @@ public class RankingService extends AbstractService {
         if (competition == null) {
             return null;
         }
-        competition.setSeries(null);
 
         TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findByCompetition", Athlete.class);
         q.setParameter("competitionid", competitionid);
@@ -52,7 +51,6 @@ public class RankingService extends AbstractService {
             CompetitionRankingCategoryData rc = new CompetitionRankingCategoryData();
             Category c = entry.getKey();
             c.setEvents(null);
-            c.setSeries(null);
             rc.setCategory(c);
             rc.setAthletes(filterAndSort(competition, entry.getValue()));
             ranking.getCategories().add(rc);
@@ -101,11 +99,10 @@ public class RankingService extends AbstractService {
     private List<Athlete> filterAndSort(Competition competition, List<Athlete> list) {
         for (Athlete a : list) {
             a.setCategory(null);
-            a.setSeries(null);
+
             List<Result> rs = new ArrayList<>();
             for (Result r : a.getResults()) {
                 if (r.getCompetition().equals(competition)) {
-                    r.getEvent().setSeries(null);
                     rs.add(r);
                 }
             }
@@ -122,10 +119,8 @@ public class RankingService extends AbstractService {
             int ist = athlete.getResults().size();
             if (ist == soll) {
                 athlete.setCategory(null);
-                athlete.setSeries(null);
                 List<Result> rs = new ArrayList<>();
                 for (Result r : athlete.getResults()) {
-                    r.getEvent().setSeries(null);
                     rs.add(r);
                 }
                 athlete.setResults(rs);

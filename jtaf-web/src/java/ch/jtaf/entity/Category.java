@@ -13,9 +13,8 @@ import javax.persistence.OrderColumn;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "select c from Category c order by c.abbreviation"),
-    @NamedQuery(name = "Category.findBySeries", query = "select c from Category c where c.series = :series order by c.abbreviation"),
-    @NamedQuery(name = "Category.findBySeriesAndYearAndGender", query = "select c from Category c where c.series = :series and c.gender = :gender and :year between c.yearFrom and c.yearTo")
+    @NamedQuery(name = "Category.findAll", query = "select c from Category c where c.series_id = :series_id order by c.abbreviation"),
+    @NamedQuery(name = "Category.findBySeriesAndYearAndGender", query = "select c from Category c where c.series_id = :series_id and c.gender = :gender and :year between c.yearFrom and c.yearTo")
 })
 public class Category {
 
@@ -27,8 +26,7 @@ public class Category {
     private int yearFrom;
     private int yearTo;
     private String gender;
-    @ManyToOne
-    private Series series;
+    private Long series_id;
     @OneToMany
     @OrderColumn(name = "position")
     private List<Event> events = new ArrayList<>();
@@ -39,14 +37,6 @@ public class Category {
 
     public void setEvents(List<Event> events) {
         this.events = events;
-    }
-
-    public Series getSeries() {
-        return series;
-    }
-
-    public void setSeries(Series series) {
-        this.series = series;
     }
 
     public String getAbbreviation() {
@@ -95,6 +85,14 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getSeries_id() {
+        return series_id;
+    }
+
+    public void setSeries_id(Long series_id) {
+        this.series_id = series_id;
     }
 
     @Override

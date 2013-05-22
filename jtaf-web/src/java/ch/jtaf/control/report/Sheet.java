@@ -3,7 +3,6 @@ package ch.jtaf.control.report;
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.entity.Event;
-import ch.jtaf.entity.Series;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -29,26 +28,25 @@ public class Sheet extends ReportBase {
     private Document document;
     private PdfWriter pdfWriter;
     private final Competition competition;
-    private final Series series;
     private final List<Athlete> athletes;
+    private byte[] logo;
 
-    public Sheet(Athlete athlete) {
+    public Sheet(Athlete athlete, byte[] logo) {
         this.competition = null;
         this.athletes = new ArrayList<>();
         this.athletes.add(athlete);
-        this.series = athlete.getCategory().getSeries();
+        this.logo = logo;
     }
 
-    public Sheet(Competition competition, Athlete athlete) {
+    public Sheet(Competition competition, Athlete athlete, byte[] logo) {
         this.competition = competition;
-        this.series = competition.getSeries();
         this.athletes = new ArrayList<>();
         this.athletes.add(athlete);
+        this.logo = logo;
     }
 
     public Sheet(Competition competition, List<Athlete> athletes) {
         this.competition = competition;
-        this.series = competition.getSeries();
         this.athletes = athletes;
     }
 
@@ -89,8 +87,8 @@ public class Sheet extends ReportBase {
     }
 
     private void createLogo() throws BadElementException, DocumentException, MalformedURLException, IOException {
-        if (series.getLogo() != null) {
-            Image image = Image.getInstance(series.getLogo());
+        if (logo != null) {
+            Image image = Image.getInstance(logo);
             image.setAbsolutePosition(cmToPixel(1f), cmToPixel(19f));
             image.scaleAbsolute(120, 100);
             document.add(image);

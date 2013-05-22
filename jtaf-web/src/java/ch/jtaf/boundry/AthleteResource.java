@@ -2,7 +2,6 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
 import ch.jtaf.entity.Athlete;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -30,12 +29,8 @@ public class AthleteResource {
     private DataService service;
 
     @GET
-    public List<Athlete> list(@QueryParam("series") Long id) {
-        if (id != null) {
-            return service.getAthleteFromSeries(id);
-        } else {
-            return new ArrayList<Athlete>();
-        }
+    public List<Athlete> list(@QueryParam("series") Long seriesId) {
+        return service.getAthletes(seriesId);
     }
 
     @POST
@@ -56,8 +51,8 @@ public class AthleteResource {
 
     @GET
     @Path("search")
-    public List<Athlete> search(@QueryParam("query") String query) throws WebApplicationException {
-        return service.searchAthletes(query);
+    public List<Athlete> search(@QueryParam("series_id") Long seriesId, @QueryParam("query") String query) throws WebApplicationException {
+        return service.searchAthletes(seriesId, query);
     }
 
     @DELETE

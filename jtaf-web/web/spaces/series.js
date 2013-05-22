@@ -1,8 +1,11 @@
 var series;
 var athletes;
 var ascending = true;
+var space_id;
 
 function loadData() {
+    space_id = param().space_id;
+
     var id = param().id;
     if (id === undefined) {
         series = new Object();
@@ -11,13 +14,13 @@ function loadData() {
         xhrGet("/jtaf/res/series/" + id, function(response) {
             parseAndFillSeries(response);
         });
-        xhrGet("/jtaf/res/categories?series=" + id, function(response) {
+        xhrGet("/jtaf/res/categories?series_id=" + id, function(response) {
             parseAndFillCategories(response);
         });
-        xhrGet("/jtaf/res/events?series=" + id, function(response) {
+        xhrGet("/jtaf/res/events?series_id=" + id, function(response) {
             parseAndFillEvents(response);
         });
-        xhrGet("/jtaf/res/athletes?series=" + id, function(response) {
+        xhrGet("/jtaf/res/athletes?series_id=" + id, function(response) {
             parseAndFillAthletes(response);
         });
     }
@@ -29,7 +32,6 @@ function loadData() {
 
 function parseAndFillSeries(response) {
     series = JSON.parse(response);
-    localStorage.setItem("series", response);
 
     fillForm();
     fillCompetitionTable();
@@ -89,7 +91,7 @@ function parseAndFillCategories(response) {
     if (categories === undefined || categories.length === 0) {
         var row = table.insertRow(0);
         var cellName = row.insertCell(0);
-        cellName.innerHTML = "No competitions found";
+        cellName.innerHTML = "No categories found";
         cellName.setAttribute("colspan", 6);
     }
     else {
@@ -208,8 +210,7 @@ function fillAthletesTable(athletes) {
     var i = 0;
     athletes.forEach(function(athlete) {
         var row = table.insertRow(i);
-        var onclickEdit = "window.location = 'athlete.html?id=" +
-                athlete.id + "'";
+        var onclickEdit = "window.location = 'athlete.html?id=" + athlete.id + "&space_id=" + space_id + "'";
         var cellId = row.insertCell(0);
         cellId.className = "edit";
         cellId.innerHTML = athlete.id;
@@ -261,6 +262,7 @@ function save() {
 
 function fillSeries() {
     series.name = el("series_name").value;
+    series.space_id = space_id;
 }
 
 function deleteCompetition(id) {
@@ -355,4 +357,20 @@ function filter(property) {
     } else {
         fillAthletesTable(athletes);
     }
+}
+
+function addCompetition() {
+    window.location = "competition.html?series_id=" + series.id;
+}
+
+function addEvent() {
+    window.location = "event.html?series_id=" + series.id;
+}
+
+function addCategory() {
+    window.location = "category.html?series_id=" + series.id;
+}
+
+function addAthlete() {
+    window.location = "athlete.html?series_id=" + series.id + "&space_id=" + space_id;
 }

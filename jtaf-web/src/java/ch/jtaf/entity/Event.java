@@ -3,20 +3,18 @@ package ch.jtaf.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Event.findAll", query = "select e from Event e order by e.name"),
-    @NamedQuery(name = "Event.findBySeries", query = "select e from Event e where e.series = :series order by e.name")
+    @NamedQuery(name = "Event.findAll", query = "select e from Event e where e.series_id = :series_id order by e.name")
 })
 public class Event {
+
     public static final String JUMP_THROW = "jump_throw";
     public static final String RUN = "run";
     public static final String RUN_LONG = "run_long";
-
     @Id
     @GeneratedValue
     private Long id;
@@ -26,16 +24,7 @@ public class Event {
     private double a;
     private double b;
     private double c;
-    @ManyToOne
-    private Series series;
-
-    public Series getSeries() {
-        return series;
-    }
-
-    public void setSeries(Series series) {
-        this.series = series;
-    }
+    private Long series_id;
 
     public Long getId() {
         return id;
@@ -91,5 +80,13 @@ public class Event {
 
     public void setC(double c) {
         this.c = c;
+    }
+
+    public Long getSeries_id() {
+        return series_id;
+    }
+
+    public void setSeries_id(Long series_id) {
+        this.series_id = series_id;
     }
 }

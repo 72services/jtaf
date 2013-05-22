@@ -1,19 +1,18 @@
 var athlete;
 var athletes;
-var series;
 var competition;
 var clubs;
 
 function loadData() {
+    space_id = param().space_id;
     var id = param().id;
+
     xhrGet("/jtaf/res/competitions/" + id, function(response) {
         competition = JSON.parse(response);
         el("title").innerHTML = competition.name;
     });
 
-    series = JSON.parse(localStorage.getItem("series"));
-
-    xhrGetSync("/jtaf/res/clubs", function(response) {
+    xhrGetSync("/jtaf/res/clubs?space_id=" + space_id, function(response) {
         clubs = JSON.parse(response);
     });
 
@@ -159,7 +158,7 @@ function fillAthlete() {
     } else {
         athlete.gender = "f";
     }
-    athlete.series = series;
+    athlete.series_id = competition.series_id;
 }
 
 function deleteAthlete(id) {

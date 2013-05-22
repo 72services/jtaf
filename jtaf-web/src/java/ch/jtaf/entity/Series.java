@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Series.findAll", query = "select s from Series s order by s.name")
+    @NamedQuery(name = "Series.findAll", query = "select s from Series s where s.space_id = :space_id order by s.name")
 })
 public class Series {
 
@@ -20,6 +20,7 @@ public class Series {
     @GeneratedValue
     private Long id;
     private String name;
+    private Long space_id;
     @Lob
     private byte[] logo;
     @Transient
@@ -55,5 +56,13 @@ public class Series {
 
     public void setLogo(byte[] logo) {
         this.logo = logo;
+    }
+
+    public Long getSpace_id() {
+        return space_id;
+    }
+
+    public void setSpace_id(Long space_id) {
+        this.space_id = space_id;
     }
 }

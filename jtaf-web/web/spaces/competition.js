@@ -1,9 +1,8 @@
 var competition;
-var series;
+var series_id;
 
 function loadData() {
-    series = JSON.parse(localStorage.getItem("series"));
-
+    series_id = param().series_id;
     var id = param().id;
     if (id === undefined) {
         competition = new Object();
@@ -16,7 +15,7 @@ function loadData() {
 }
 
 function back() {
-    window.location = "series.html?id=" + series.id;
+    window.location = "series.html?id=" + series_id;
 }
 
 function parseAndFill(response) {
@@ -42,7 +41,7 @@ function save() {
 function fillCompetition() {
     competition.name = el("competition_name").value;
     competition.competitionDate = el("competition_date").value;
-    competition.series = series;
+    competition.series_id = series_id;
 }
 
 function deleteCompetition(id) {

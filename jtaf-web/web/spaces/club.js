@@ -1,7 +1,8 @@
-
 var club;
+var space_id;
 
 function loadData() {
+    space_id = param().space_id;
     var id = param().id;
     if (id === undefined) {
         club = new Object();
@@ -36,6 +37,7 @@ function save() {
 function fillClub() {
     club.abbreviation = el("club_abbreviation").value;
     club.name = el("club_name").value;
+    club.space_id = space_id;
 }
 
 function deleteClub(id) {

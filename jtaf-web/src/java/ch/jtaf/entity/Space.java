@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -22,7 +23,11 @@ public class Space {
     private Long id;
     private String name;
     @OneToMany
+    @JoinColumn(name = "space_id", insertable = false, updatable = false)
     private List<Series> series = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "space_id", insertable = false, updatable = false)
+    private List<Club> clubs = new ArrayList<>();
     @OneToMany
     private List<SecurityUser> users = new ArrayList<>();
 
@@ -56,5 +61,13 @@ public class Space {
 
     public void setUsers(List<SecurityUser> users) {
         this.users = users;
+    }
+
+    public List<Club> getClubs() {
+        return clubs;
+    }
+
+    public void setClubs(List<Club> clubs) {
+        this.clubs = clubs;
     }
 }

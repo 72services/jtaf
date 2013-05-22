@@ -1,8 +1,8 @@
 var jtafEvent;
-var series;
+var series_id;
 
 function loadData() {
-    series = JSON.parse(localStorage.getItem("series"));
+    series_id = param().series_id;
 
     var id = param().id;
     if (id === undefined) {
@@ -16,7 +16,7 @@ function loadData() {
 }
 
 function back() {
-    window.location = "series.html?id=" + series.id;
+    window.location = "series.html?id=" + series_id;
 }
 
 function parseAndFill(response) {
@@ -69,7 +69,7 @@ function fillEvent() {
     jtafEvent.a = el("event_a").value;
     jtafEvent.b = el("event_b").value;
     jtafEvent.c = el("event_c").value;
-    jtafEvent.series = series;
+    jtafEvent.series_id = series_id;
 }
 
 function deleteEvent(id) {

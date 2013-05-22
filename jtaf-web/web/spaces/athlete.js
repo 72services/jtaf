@@ -1,11 +1,13 @@
 var athlete;
-var series;
 var clubs;
+var series_id;
+var space_id;
 
 function loadData() {
-    series = JSON.parse(localStorage.getItem("series"));
-
     var id = param().id;
+    series_id = param().series_id;
+    space_id = param().space_id;
+
     if (id === undefined) {
         fillClubSelect();
         athlete = new Object();
@@ -18,7 +20,7 @@ function loadData() {
 }
 
 function fillClubSelect() {
-    xhrGet("/jtaf/res/clubs", function(response) {
+    xhrGet("/jtaf/res/clubs?space_id=" + space_id, function(response) {
         clubs = JSON.parse(response);
         var select = el("athlete_club");
         select.innerHTML = "";
@@ -41,7 +43,7 @@ function fillClubSelect() {
 }
 
 function back() {
-    window.location = "series.html?id=" + series.id;
+    window.location = "series.html?id=" + series_id;
 }
 
 function parseAndFill(response) {
@@ -92,5 +94,5 @@ function fillAthlete() {
             }
         });
     }
-    athlete.series = series;
+    athlete.series_id = series_id;
 }

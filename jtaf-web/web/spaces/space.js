@@ -1,16 +1,37 @@
-var seriesList;
-var clubs;
+var space;
 
 function loadData() {
-    xhrGet("/jtaf/res/series", function(response) {
-        seriesList = JSON.parse(response);
-        createSeriesTableBody();
-    });
+    var id = param().id;
 
-    xhrGet("/jtaf/res/clubs", function(response) {
-        clubs = JSON.parse(response);
+    if (id === undefined) {
+        space = new Object();
+        createSeriesTableBody();
         createClubsTableBody();
-    });
+        el("space_name").focus();
+    } else {
+        xhrGet("/jtaf/res/spaces/" + id, function(response) {
+            parseAndFillSpace(response);
+            fillBreadCrumb();
+        });
+    }
+}
+
+function parseAndFillSpace(response) {
+    space = JSON.parse(response);
+
+    fillForm();
+    createSeriesTableBody();
+    createClubsTableBody();
+}
+
+function fillForm() {
+    el("space_id").value = space.id;
+    el("space_name").value = space.name;
+    el("space_name").focus();
+}
+
+function fillBreadCrumb() {
+    el("curent_space").innerHTML = space.name;
 }
 
 function deleteSeries(id) {
@@ -45,7 +66,7 @@ function createSeriesTableBody() {
     var table = el("series_table");
     table.innerHTML = "";
 
-    if (seriesList === undefined || seriesList.length === 0) {
+    if (space.series === undefined || space.series.length === 0) {
         var row = table.insertRow(0);
         var cell = row.insertCell(0);
         cell.innerHTML = "No series found";
@@ -53,10 +74,9 @@ function createSeriesTableBody() {
     }
     else {
         var i = 0;
-        seriesList.forEach(function(series) {
+        space.series.forEach(function(series) {
             var row = table.insertRow(i);
-            var onclickEdit = "window.location = 'series.html?id=" +
-                    series.id + "'";
+            var onclickEdit = "window.location = 'series.html?id=" + series.id + "&space_id=" + space.id + "'";
             var cellName = row.insertCell(0);
             cellName.className = "edit";
             cellName.innerHTML = series.name;
@@ -82,7 +102,7 @@ function createClubsTableBody() {
     var table = el("club_table");
     table.innerHTML = "";
 
-    if (clubs === undefined || clubs.length === 0) {
+    if (space.clubs === undefined || space.clubs.length === 0) {
         var row = table.insertRow(0);
         var cell = row.insertCell(0);
         cell.innerHTML = "No clubs found";
@@ -90,10 +110,9 @@ function createClubsTableBody() {
     }
     else {
         var i = 0;
-        clubs.forEach(function(club) {
+        space.clubs.forEach(function(club) {
             var row = table.insertRow(i);
-            var onclickEdit = "window.location = 'club.html?id=" +
-                    club.id + "'";
+            var onclickEdit = "window.location = 'club.html?id=" + club.id + "&space_id=" + space.id + "'";
             var cellAbbr = row.insertCell(0);
             cellAbbr.className = "edit";
             cellAbbr.innerHTML = club.abbreviation;
@@ -114,3 +133,22 @@ function createClubsTableBody() {
     }
 }
 
+function addSeries() {
+    window.location = "series.html?space_id=" + space.id;
+}
+
+function addClub() {
+    window.location = "club.html?space_id=" + space.id;
+}
+
+function fillSpace() {
+    space.name = el("space_name").value;
+}
+
+function save() {
+    fillSpace();
+    xhrPost("/jtaf/res/spaces/", function() {
+        loadData();
+        info("Space saved");
+    }, space);
+}

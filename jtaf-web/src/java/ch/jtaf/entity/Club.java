@@ -8,7 +8,7 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Club.findAll", query = "select c from Club c order by c.name")
+    @NamedQuery(name = "Club.findAll", query = "select c from Club c where c.space_id = :space_id order by c.name")
 })
 public class Club {
 
@@ -17,6 +17,7 @@ public class Club {
     private Long id;
     private String abbreviation;
     private String name;
+    private Long space_id;
 
     public String getAbbreviation() {
         return abbreviation;
@@ -40,5 +41,13 @@ public class Club {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getSpace_id() {
+        return space_id;
+    }
+
+    public void setSpace_id(Long space_id) {
+        this.space_id = space_id;
     }
 }

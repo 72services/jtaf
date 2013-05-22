@@ -4,15 +4,13 @@ import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Competition.findAll", query = "select c from Competition c order by c.competitionDate"),
-    @NamedQuery(name = "Competition.findBySeries", query = "select c from Competition c where c.series = :series order by c.name")
+    @NamedQuery(name = "Competition.findAll", query = "select c from Competition c where c.series_id = :series_id order by c.competitionDate")
 })
 public class Competition {
 
@@ -21,18 +19,9 @@ public class Competition {
     private Long id;
     private String name;
     private Date competitionDate;
-    @ManyToOne
-    private Series series;
+    private Long series_id;
     @Transient
     private int numberOfAthletes;
-
-    public Series getSeries() {
-        return series;
-    }
-
-    public void setSeries(Series series) {
-        this.series = series;
-    }
 
     public Date getCompetitionDate() {
         return competitionDate;
@@ -56,6 +45,14 @@ public class Competition {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getSeries_id() {
+        return series_id;
+    }
+
+    public void setSeries_id(Long series_id) {
+        this.series_id = series_id;
     }
 
     public int getNumberOfAthletes() {

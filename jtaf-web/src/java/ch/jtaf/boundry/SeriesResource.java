@@ -26,11 +26,11 @@ public class SeriesResource {
     private DataService service;
 
     @GET
-    public List<Series> list(@QueryParam("withCompetitions") String withCompetitions) {
+    public List<Series> list(@QueryParam("space_id") Long spaceId, @QueryParam("withCompetitions") String withCompetitions) {
         if (withCompetitions == null || !Boolean.parseBoolean(withCompetitions)) {
-            return service.getSeriesList();
+            return service.getSeriesList(spaceId);
         } else {
-            return service.getSeriesWithCompetitions();
+            return service.getSeriesWithCompetitions(spaceId);
         }
     }
 

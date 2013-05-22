@@ -1,11 +1,10 @@
 var category;
-var series;
 var events;
+var series_id;
 
 function loadData() {
-    series = JSON.parse(localStorage.getItem("series"));
-
-    xhrGetSync("/jtaf/res/events", function(response) {
+    series_id = param().series_id;
+    xhrGetSync("/jtaf/res/events?series_id=" + series_id, function(response) {
         events = JSON.parse(response);
     });
 
@@ -15,14 +14,14 @@ function loadData() {
         fillEventsTable();
         el("category_abbr").focus();
     } else {
-        xhrGet("/jtaf/res/categories/" + id, function(response) {
+        xhrGet("/jtaf/res/categories/" + series_id, function(response) {
             parseAndFill(response);
         });
     }
 }
 
 function back() {
-    window.location = "series.html?id=" + series.id;
+    window.location = "series.html?id=" + series_id;
 }
 
 function parseAndFill(response) {
@@ -96,7 +95,7 @@ function fillCategory() {
         category.gender = "f";
     }
     fillCategoryEvents();
-    category.series = series;
+    category.series_id = series_id;
 }
 
 function fillCategoryEvents() {
@@ -104,8 +103,7 @@ function fillCategoryEvents() {
     for (var i = 0; i < 10; i++) {
         var select = el("select" + i);
         var id = select.options[select.selectedIndex].value;
-        console.log(id);
-        event.forEach(function(ev) {
+        events.forEach(function(ev) {
             if (ev.id == id) {
                 category.events.push(ev);
             }

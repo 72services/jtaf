@@ -7,6 +7,7 @@ import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Category;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.entity.CompetitionRankingData;
+import ch.jtaf.entity.Series;
 import ch.jtaf.entity.SeriesRankingData;
 import java.util.List;
 import javax.ejb.EJB;
@@ -28,7 +29,7 @@ public class ReportService extends AbstractService {
             return null;
         } else {
             TypedQuery<Athlete> query = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
-            query.setParameter("seriesid", competition.getSeries().getId());
+            query.setParameter("series_id", competition.getSeries_id());
             List<Athlete> athletes = query.getResultList();
 
             Sheet sheet = new Sheet(competition, athletes);
@@ -56,10 +57,11 @@ public class ReportService extends AbstractService {
 
     public byte[] createEmptySheets(Long categoryid) {
         Category category = em.find(Category.class, categoryid);
+        Series series = em.find(Series.class, category.getSeries_id());
         Athlete template = new Athlete();
         template.setCategory(category);
         
-        Sheet sheet = new Sheet(template);
+        Sheet sheet = new Sheet(template, series.getLogo());
         return sheet.create();
     }
 }

@@ -18,6 +18,7 @@ function fillSpaces() {
             ul_spaces.appendChild(li_space);
 
             var space_name = document.createElement("b");
+            space_name.className = "bigger";
             space_name.innerHTML = space.name;
             li_space.appendChild(space_name);
 
@@ -35,6 +36,7 @@ function fillSpaces() {
                 ul_series.appendChild(li_series);
 
                 var series_name = document.createElement("b");
+                series_name.className = "bigger";
                 series_name.innerHTML = series.name;
                 li_series.appendChild(series_name);
 
@@ -61,7 +63,10 @@ function fillSpaces() {
                     table.style.width = "100%";
                     var row = table.insertRow(0);
                     var cell0 = row.insertCell(0);
-                    cell0.innerHTML = "<b>" + competition.name + "</b> ";
+                    var name = document.createElement("b");
+                    name.className = "bigger";
+                    name.innerHTML = competition.name;
+                    cell0.appendChild(name);
                     var cell1 = row.insertCell(1);
                     cell1.innerHTML = competition.competitionDate;
                     var cell2 = row.insertCell(2);
@@ -73,7 +78,7 @@ function fillSpaces() {
                     li_competition.appendChild(document.createElement("br"));
 
                     var a_results = document.createElement("a");
-                    a_results.href = "resultinput/result_input.html?id=" + competition.id;
+                    a_results.href = "input/results.html?id=" + competition.id + "&space_id=" + space.id;
                     a_results.innerHTML = "Enter results";
                     li_competition.appendChild(a_results);
 
