@@ -215,9 +215,7 @@ public class DataService extends AbstractService {
     }
 
     public Space getSpace(Long id) {
-        Space s = em.find(Space.class, id);
-
-        return s;
+        return em.find(Space.class, id);
     }
 
     public List<Athlete> getAthletes(Long seriesId) {
