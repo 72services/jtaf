@@ -12,7 +12,7 @@ function createHeader() {
     cell0.className = "navigation";
     cell0.style.width = "130px";
     cell0.style.paddingTop = "0px";
-    
+
     var logo = document.createElement("img");
     logo.src = "/jtaf/images/logo.png";
     cell0.appendChild(logo);
@@ -85,7 +85,11 @@ function getUserInfo(cell2) {
     xhr.onload = function() {
         if (xhr.status === 200) {
             var user = JSON.parse(xhr.response);
-            cell2.innerHTML = user.firstName + " " + user.lastName + " (" + user.email + ")";
+            var profile = document.createElement("a");
+            profile.href = "/jtaf/user/profile.html";
+            profile.innerHTML = user.firstName + " " + user.lastName;
+            cell2.appendChild(profile);
+            cell2.appendChild(document.createTextNode(" (" + user.email + ")"));
         } else if (xhr.status === 204) {
             var login = document.createElement("a");
             login.href = "profile.html";

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Profile</title>
+        <link rel="stylesheet" href="../css/jtaf.css">
+        <script src="../util/util.js"></script>
+        <script src="profile.js"></script>
+    </head>
+    <body onload="loadData();">
+        <script src="/jtaf/header.js"></script>
+
+        <div id="main">
+            <h1>Profile</h1>
+
+            <form action="javascript:save();">
+
+                <table class="input">
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="text" id="user_email" readonly disabled /></td>
+                    </tr>
+                    <tr>
+                        <td>Last name</td>
+                        <td><input type="text" id="user_lastName" required /></td>
+                    </tr>
+                    <tr>
+                        <td>First name</td>
+                        <td><input type="text" id="user_firstName" required /></td>
+                    </tr>
+                </table>
+
+                <p>
+                    <input type="submit" value="Save" />
+                </p>
+
+            </form>
+
+            <script src="/jtaf/footer.js"></script>
+        </div>
+    </body>
+</html>

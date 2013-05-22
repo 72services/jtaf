@@ -28,8 +28,20 @@
     <security-constraint>
         <display-name>Result input</display-name>
         <web-resource-collection>
-            <web-resource-name>resultinput</web-resource-name>
-            <url-pattern>/resultinput/*</url-pattern>
+            <web-resource-name>input</web-resource-name>
+            <url-pattern>/input/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>resultinput</role-name>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <display-name>User</display-name>
+        <web-resource-collection>
+            <web-resource-name>user</web-resource-name>
+            <url-pattern>/user/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>resultinput</role-name>
@@ -47,6 +59,8 @@
             <url-pattern>/res/competitions/*</url-pattern>
             <url-pattern>/res/events/*</url-pattern>
             <url-pattern>/res/series/*</url-pattern>
+            <url-pattern>/res/spaces/*</url-pattern>
+            <url-pattern>/res/users/*</url-pattern>
             <http-method>POST</http-method>
             <http-method>PUT</http-method>
             <http-method>DELETE</http-method>
