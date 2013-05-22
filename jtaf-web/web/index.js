@@ -1,11 +1,28 @@
 var spaces;
+var user;
 
 function loadData() {
     activateLink("navigation_0");
+    getCurrentUser();
+
     xhrGet("/jtaf/res/spaces", function(response) {
         spaces = JSON.parse(response);
         fillSpaces();
     });
+}
+
+function getCurrentUser() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/jtaf/res/users/current", true);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            user = JSON.parse(xhr.response);
+        } else if (xhr.status === 204) {
+        } else {
+            error(xhr.status);
+        }
+    };
+    xhr.send();
 }
 
 function fillSpaces() {
@@ -63,12 +80,14 @@ function fillSpaces() {
                     cell2.innerHTML = "Athletes: " + competition.numberOfAthletes;
                     li_competition.appendChild(table);
 
-                    var a_results = document.createElement("a");
-                    a_results.href = "input/results.html?id=" + competition.id + "&space_id=" + space.id;
-                    a_results.innerHTML = "Enter results";
-                    li_competition.appendChild(a_results);
+                    if (user !== undefined && user !== null) {
+                        var a_results = document.createElement("a");
+                        a_results.href = "input/results.html?id=" + competition.id + "&space_id=" + space.id;
+                        a_results.innerHTML = "Enter results";
+                        li_competition.appendChild(a_results);
 
-                    li_competition.appendChild(document.createTextNode(" "));
+                        li_competition.appendChild(document.createTextNode(" "));
+                    }
 
                     var a_ranking = document.createElement("a");
                     a_ranking.href = "competition_ranking.html?id=" + competition.id;
