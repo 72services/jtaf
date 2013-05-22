@@ -65,11 +65,11 @@ public class RankingService extends AbstractService {
             return null;
         }
         TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
-        q.setParameter("seriesid", seriesId);
+        q.setParameter("series_id", seriesId);
         List<Athlete> list = q.getResultList();
 
-        TypedQuery<Competition> qc = em.createNamedQuery("Competition.findBySeries", Competition.class);
-        qc.setParameter("series", series);
+        TypedQuery<Competition> qc = em.createNamedQuery("Competition.findAll", Competition.class);
+        qc.setParameter("series_id", seriesId);
         List<Competition> cs = qc.getResultList();
         series.setCompetitions(cs);
 

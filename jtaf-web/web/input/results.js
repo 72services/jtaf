@@ -2,6 +2,7 @@ var athlete;
 var athletes;
 var competition;
 var clubs;
+var space_id;
 
 function loadData() {
     space_id = param().space_id;
@@ -30,7 +31,8 @@ function search() {
             parseAndFill(response);
         });
     } else {
-        xhrGet("/jtaf/res/athletes/search?query=" + searchterm, function(response) {
+        xhrGet("/jtaf/res/athletes/search?series_id=" + competition.series_id +
+                "&query=" + searchterm, function(response) {
             parseAndFillAthletes(response);
         });
     }

@@ -2,25 +2,27 @@ var series;
 var athletes;
 var ascending = true;
 var space_id;
+var series_id;
 
 function loadData() {
     space_id = param().space_id;
 
-    var id = param().id;
-    if (id === undefined) {
+    series_id = param().id;
+    
+    if (series_id === undefined) {
         series = new Object();
         el("series_name").focus();
     } else {
-        xhrGet("/jtaf/res/series/" + id, function(response) {
+        xhrGet("/jtaf/res/series/" + series_id, function(response) {
             parseAndFillSeries(response);
         });
-        xhrGet("/jtaf/res/categories?series_id=" + id, function(response) {
+        xhrGet("/jtaf/res/categories?series_id=" + series_id, function(response) {
             parseAndFillCategories(response);
         });
-        xhrGet("/jtaf/res/events?series_id=" + id, function(response) {
+        xhrGet("/jtaf/res/events?series_id=" + series_id, function(response) {
             parseAndFillEvents(response);
         });
-        xhrGet("/jtaf/res/athletes?series_id=" + id, function(response) {
+        xhrGet("/jtaf/res/athletes?series_id=" + series_id, function(response) {
             parseAndFillAthletes(response);
         });
     }
@@ -56,8 +58,7 @@ function fillCompetitionTable() {
         var i = 0;
         series.competitions.forEach(function(competition) {
             var row = table.insertRow(i);
-            var onclickEdit = "window.location = 'competition.html?id=" +
-                    competition.id + "'";
+            var onclickEdit = "window.location = 'competition.html?id=" + competition.id + "&series_id=" + series_id + "'";
             var cellName = row.insertCell(0);
             cellName.className = "edit";
             cellName.innerHTML = competition.name;
@@ -98,8 +99,7 @@ function parseAndFillCategories(response) {
         var i = 0;
         categories.forEach(function(category) {
             var row = table.insertRow(i);
-            var onclickEdit = "window.location = 'category.html?id=" +
-                    category.id + "'";
+            var onclickEdit = "window.location = 'category.html?id=" + category.id + "&series_id=" + series_id + "'";
             var cellAbbr = row.insertCell(0);
             cellAbbr.className = "edit";
             cellAbbr.innerHTML = category.abbreviation;
@@ -152,8 +152,7 @@ function parseAndFillEvents(response) {
         var i = 0;
         events.forEach(function(event) {
             var row = table.insertRow(i);
-            var onclickEdit = "window.location = 'event.html?id=" +
-                    event.id + "'";
+            var onclickEdit = "window.location = 'event.html?id=" + event.id + "&series_id=" + series_id + "'";
             var cellName = row.insertCell(0);
             cellName.className = "edit";
             cellName.innerHTML = event.name;
@@ -210,7 +209,8 @@ function fillAthletesTable(athletes) {
     var i = 0;
     athletes.forEach(function(athlete) {
         var row = table.insertRow(i);
-        var onclickEdit = "window.location = 'athlete.html?id=" + athlete.id + "&space_id=" + space_id + "'";
+        var onclickEdit = "window.location = 'athlete.html?id=" + athlete.id + 
+                "&series_id=" + series_id + "&space_id=" + space_id + "'";
         var cellId = row.insertCell(0);
         cellId.className = "edit";
         cellId.innerHTML = athlete.id;
@@ -360,17 +360,17 @@ function filter(property) {
 }
 
 function addCompetition() {
-    window.location = "competition.html?series_id=" + series.id;
+    window.location = "competition.html?series_id=" + series_id;
 }
 
 function addEvent() {
-    window.location = "event.html?series_id=" + series.id;
+    window.location = "event.html?series_id=" + series_id;
 }
 
 function addCategory() {
-    window.location = "category.html?series_id=" + series.id;
+    window.location = "category.html?series_id=" + series_id;
 }
 
 function addAthlete() {
-    window.location = "athlete.html?series_id=" + series.id + "&space_id=" + space_id;
+    window.location = "athlete.html?series_id=" + series_id + "&space_id=" + space_id;
 }

@@ -29,7 +29,7 @@ public class AthleteResource {
     private DataService service;
 
     @GET
-    public List<Athlete> list(@QueryParam("series") Long seriesId) {
+    public List<Athlete> list(@QueryParam("series_id") Long seriesId) {
         return service.getAthletes(seriesId);
     }
 
