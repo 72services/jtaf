@@ -92,7 +92,7 @@ function getUserInfo(cell2) {
             cell2.appendChild(document.createTextNode(" (" + user.email + ")"));
         } else if (xhr.status === 204) {
             var login = document.createElement("a");
-            login.href = "profile.html";
+            login.href = "/jtaf/spaces/index.html";
             login.innerHTML = "Login";
             cell2.appendChild(login);
 
