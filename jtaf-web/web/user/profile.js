@@ -23,6 +23,7 @@ function save() {
     xhrPost("/jtaf/res/users/", function(response) {
         parseAndFill(response);
         info("Profile saved");
+        window.location.reload();
     }, user);
 }
 
