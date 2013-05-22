@@ -4,7 +4,7 @@ body {
     margin-right: 20px;
     font-family: Segoe UI, Arial, Helvetica, sans-serif;
     font-size: 13px;
-    background: #FFFFFF;
+    background-image: url("/jtaf/images/background.jpg");
     overflow: auto;
 }
 h1 {
@@ -27,10 +27,47 @@ h3 {
 }
 
 div#main {
+    padding-top: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
     margin-left: auto; 
     margin-right: auto; 
     margin-top: 30px;
     width: 800px;
+    background: #FFFFFF;
+    border-radius: 9px 9px 9px 9px;
+}
+
+div#navigation {
+    padding-left: 5px;
+    padding-right: 30px;
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 820px;
+    background: #FFFFFF;
+    border-radius: 0px 0px 9px 9px;
+}
+
+div#footer {
+    padding: 30px;
+    margin-left: auto; 
+    margin-right: auto; 
+    margin-top: 30px;
+    width: 800px;
+    background: #FFFFFF;
+    border-radius: 9px 9px 9px 9px;
+}
+
+div#tabs {
+    border-width: 2px;
+    border-style: solid;
+    border-color: #FAF7B8;
+    border-radius: 0px 9px 9px 9px;
+    padding-top: 0px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
 }
 
 div#info {
@@ -66,30 +103,6 @@ div#error {
     border-width: 1px;
     border-style: solid;
     border-color: tomato;
-}
-
-div#navigation {
-    margin-left: auto; 
-    margin-right: auto; 
-    width: 800px;
-}
-
-div#footer {
-    margin-left: auto; 
-    margin-right: auto; 
-    margin-top: 60px;
-    width: 800px;
-}
-
-div#tabs {
-    border-width: 2px;
-    border-style: solid;
-    border-color: #FAF7B8;
-    border-radius: 0px 9px 9px 9px;
-    padding-top: 0px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 10px;
 }
 
 a.navigation_inactive {
