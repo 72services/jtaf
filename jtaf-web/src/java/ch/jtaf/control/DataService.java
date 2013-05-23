@@ -12,18 +12,31 @@ import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.entity.Series;
 import ch.jtaf.entity.Space;
 import ch.jtaf.interceptor.TraceInterceptor;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.TypedQuery;
 
 @Interceptors({TraceInterceptor.class})
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class DataService extends AbstractService {
+
+    @Resource(mappedName = "mail/jtaf")
+    private Session mailSession;
 
     public List<Series> getSeriesList(Long spaceId) {
         TypedQuery<Series> q = em.createNamedQuery("Series.findAll", Series.class);
@@ -246,9 +259,32 @@ public class DataService extends AbstractService {
             }
         }
         user = em.merge(user);
-        // TODO send mail to user;
-        // TODO temporary hack
-        user.setConfirmed(true);
+        sendMail(user);
         return user;
+    }
+
+    private void sendMail(SecurityUser user) {
+        try {
+            Message msg = new MimeMessage(mailSession);
+            msg.setFrom(new InternetAddress("noreply@jtaf.ch", "JTAF - Track and Field"));
+            msg.addRecipient(Message.RecipientType.TO,
+                    new InternetAddress(user.getEmail(), user.getFirstName() + " " + user.getLastName()));
+            msg.setSubject("JTAF Registration");
+            msg.setText("Please confirm your registration: https://localhost:8181/jtaf/confirm.html?confirmation_id="
+                    + user.getConfirmationId());
+            msg.saveChanges();
+            Transport.send(msg);
+        } catch (UnsupportedEncodingException | MessagingException ex) {
+            Logger.getLogger(DataService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void confirmUser(String confirmationId) {
+        TypedQuery<SecurityUser> q = em.createNamedQuery("SecurityUser.findByConfirmationId", SecurityUser.class);
+        q.setParameter("confirmationId", confirmationId);
+        SecurityUser u = q.getSingleResult();
+        u.setConfirmed(true);
+        em.merge(u);
     }
 }

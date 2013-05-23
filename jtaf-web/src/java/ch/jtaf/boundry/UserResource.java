@@ -31,7 +31,7 @@ public class UserResource {
 
     @GET
     @Path("current")
-    public SecurityUser getCompetitionRanking() {
+    public SecurityUser getCurrentUser() {
         Principal principal = sc.getCallerPrincipal();
         SecurityUser user = service.get(SecurityUser.class, principal.getName());
         if (user != null) {
@@ -47,5 +47,12 @@ public class UserResource {
         } catch (IllegalStateException e) {
             throw new WebApplicationException(Response.Status.PRECONDITION_FAILED);
         }
+    }
+
+    @POST
+    @Path("confirm")
+    @Consumes({"text/plain"})
+    public void save(String confirmationId) {
+        service.confirmUser(confirmationId);
     }
 }

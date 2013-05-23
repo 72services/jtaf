@@ -16,7 +16,9 @@ public class TraceInterceptor {
     @AroundInvoke
     public Object logCall(InvocationContext context) throws Exception {
         Principal principal = sessionContext.getCallerPrincipal();
-        Logger.getAnonymousLogger().log(Level.INFO, "{0}: {1} {2} ({3})", new Object[]{principal.getName(), context.getTarget().getClass().getName(), context.getMethod().getName(), extractParameters(context)});
+        Logger.getLogger(context.getTarget().getClass().getName()).log(
+                Level.FINEST, "{0}: {1} ({2})", 
+                new Object[]{principal.getName(), context.getMethod().getName(), extractParameters(context)});
         return context.proceed();
     }
 
