@@ -13,6 +13,8 @@ import ch.jtaf.entity.Series;
 import ch.jtaf.entity.Space;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -270,11 +272,12 @@ public class DataService extends AbstractService {
             msg.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(user.getEmail(), user.getFirstName() + " " + user.getLastName()));
             msg.setSubject("JTAF Registration");
-            msg.setText("Please confirm your registration: https://localhost:8181/jtaf/confirm.html?confirmation_id="
+            msg.setText("Please confirm your registration: https://" + InetAddress.getLocalHost().getHostName()
+                    + ":8181/jtaf/confirm.html?confirmation_id="
                     + user.getConfirmationId());
             msg.saveChanges();
             Transport.send(msg);
-        } catch (UnsupportedEncodingException | MessagingException ex) {
+        } catch (UnsupportedEncodingException | MessagingException | UnknownHostException ex) {
             Logger.getLogger(DataService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
