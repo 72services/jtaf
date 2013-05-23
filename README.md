@@ -28,9 +28,6 @@ Now JTAF will be developed using HTML5 and will be SaaS! http://en.wikipedia.org
 ## Demo
 http://simas1.ch:8080/jtaf/
 
-User: john@doe.com
-Password: admin
-
 ###License
 JTAF is open source and free software under Apache License, Version 2:
 
