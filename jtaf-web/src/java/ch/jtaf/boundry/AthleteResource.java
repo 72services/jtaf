@@ -2,11 +2,13 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
 import ch.jtaf.entity.Athlete;
+import ch.jtaf.interceptor.TraceInterceptor;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +23,7 @@ import javax.ws.rs.core.Response;
 @Path("athletes")
 @Produces({"application/json"})
 @Consumes({"application/json"})
+@Interceptors({TraceInterceptor.class})
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class AthleteResource {

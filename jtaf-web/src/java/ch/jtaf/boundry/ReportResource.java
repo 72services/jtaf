@@ -1,8 +1,10 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.control.ReportService;
+import ch.jtaf.interceptor.TraceInterceptor;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -11,6 +13,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 @Path("reports")
+@Interceptors({TraceInterceptor.class})
 @Stateless
 public class ReportResource {
 

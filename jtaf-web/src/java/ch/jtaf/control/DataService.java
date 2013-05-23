@@ -1,21 +1,26 @@
 package ch.jtaf.control;
 
+import ch.jtaf.control.util.Sha256Helper;
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Category;
 import ch.jtaf.entity.Club;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.entity.Event;
 import ch.jtaf.entity.Result;
+import ch.jtaf.entity.SecurityGroup;
 import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.entity.Series;
 import ch.jtaf.entity.Space;
+import ch.jtaf.interceptor.TraceInterceptor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import javax.persistence.TypedQuery;
 
+@Interceptors({TraceInterceptor.class})
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class DataService extends AbstractService {
@@ -101,7 +106,7 @@ public class DataService extends AbstractService {
                 + "where a.series_id = :series_id and "
                 + "lower(a.lastName) like :searchterm "
                 + "or lower(a.firstName) like :searchterm";
-        TypedQuery query = em.createQuery(queryString, Athlete.class);
+        TypedQuery<Athlete> query = em.createQuery(queryString, Athlete.class);
         query.setParameter("series_id", seriesId);
         if (searchterm != null) {
             searchterm = searchterm.toLowerCase();
@@ -222,5 +227,28 @@ public class DataService extends AbstractService {
         TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
         q.setParameter("series_id", seriesId);
         return q.getResultList();
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public SecurityUser saveUser(SecurityUser user) {
+        if (user.getConfirmationId() == null) {
+            if (em.find(SecurityUser.class, user.getEmail()) == null) {
+                user.setSecret(Sha256Helper.digest(user.getSecret()));
+                user.setConfirmationId(Sha256Helper.digest(user.getEmail() + user.getLastName() + user.getFirstName()));
+
+                SecurityGroup group = new SecurityGroup();
+                group.setEmail(user.getEmail());
+                group.setName("user");
+                em.persist(group);
+            } else {
+                // user already exisits!
+                throw new IllegalStateException();
+            }
+        }
+        user = em.merge(user);
+        // TODO send mail to user;
+        // TODO temporary hack
+        user.setConfirmed(true);
+        return user;
     }
 }

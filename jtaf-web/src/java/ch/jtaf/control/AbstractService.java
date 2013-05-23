@@ -1,7 +1,9 @@
 package ch.jtaf.control;
 
+import ch.jtaf.interceptor.TraceInterceptor;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 

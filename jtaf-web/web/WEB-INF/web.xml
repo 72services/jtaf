@@ -21,7 +21,7 @@
             <url-pattern>/spaces/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>admin</role-name>
+            <role-name>user</role-name>
         </auth-constraint>
     </security-constraint>
     
@@ -32,8 +32,7 @@
             <url-pattern>/input/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>resultinput</role-name>
-            <role-name>admin</role-name>
+            <role-name>user</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -44,8 +43,7 @@
             <url-pattern>/user/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>resultinput</role-name>
-            <role-name>admin</role-name>
+            <role-name>user</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -60,14 +58,18 @@
             <url-pattern>/res/events/*</url-pattern>
             <url-pattern>/res/series/*</url-pattern>
             <url-pattern>/res/spaces/*</url-pattern>
-            <url-pattern>/res/users/*</url-pattern>
             <http-method>POST</http-method>
             <http-method>PUT</http-method>
             <http-method>DELETE</http-method>
         </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>REST users protected</web-resource-name>
+            <url-pattern>/res/users/*</url-pattern>
+            <http-method>PUT</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
         <auth-constraint>
-            <role-name>admin</role-name>
-            <role-name>resultinput</role-name>
+            <role-name>user</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -81,10 +83,7 @@
     </login-config>
 
     <security-role>
-        <role-name>admin</role-name>
-    </security-role>
-    <security-role>
-        <role-name>resultinput</role-name>
+        <role-name>user</role-name>
     </security-role>
     
 </web-app>

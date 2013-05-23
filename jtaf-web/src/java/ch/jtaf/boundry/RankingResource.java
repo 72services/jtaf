@@ -2,8 +2,10 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.control.RankingService;
 import ch.jtaf.entity.CompetitionRankingData;
+import ch.jtaf.interceptor.TraceInterceptor;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -15,6 +17,7 @@ import javax.ws.rs.core.Response;
 @Path("rankings")
 @Produces({"application/json"})
 @Consumes({"application/json"})
+@Interceptors({TraceInterceptor.class})
 @Stateless
 public class RankingResource {
 

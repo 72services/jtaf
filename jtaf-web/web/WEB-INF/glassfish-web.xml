@@ -3,12 +3,8 @@
 <glassfish-web-app error-url="">
   <context-root>/jtaf</context-root>
   <security-role-mapping>
-    <role-name>admin</role-name>
-    <group-name>admin</group-name>
-  </security-role-mapping>
-  <security-role-mapping>
-    <role-name>resultinput</role-name>
-    <group-name>resultinput</group-name>
+    <role-name>user</role-name>
+    <group-name>user</group-name>
   </security-role-mapping>
   <class-loader delegate="true"/>
 </glassfish-web-app>

@@ -99,8 +99,8 @@ function getUserInfo(cell2) {
             cell2.appendChild(document.createTextNode(" "));
 
             var register = document.createElement("a");
-            register.href = "register.html";
-            register.innerHTML = "Register for JTAF";
+            register.href = "/jtaf/register.html";
+            register.innerHTML = "Register";
             cell2.appendChild(register);
         } else {
             error(xhr.status);

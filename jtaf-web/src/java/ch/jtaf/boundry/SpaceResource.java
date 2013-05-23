@@ -1,10 +1,17 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
+import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.entity.Space;
+import ch.jtaf.entity.UserSpace;
+import ch.jtaf.interceptor.TraceInterceptor;
+import java.security.Principal;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,9 +25,12 @@ import javax.ws.rs.core.Response;
 @Path("spaces")
 @Produces({"application/json"})
 @Consumes({"application/json"})
+@Interceptors({TraceInterceptor.class})
 @Stateless
 public class SpaceResource {
 
+    @Resource
+    private SessionContext sessionContext;
     @EJB
     private DataService service;
 
@@ -31,6 +41,14 @@ public class SpaceResource {
 
     @POST
     public Space save(Space space) {
+        if (space.getId() == null) {
+            Principal principal = sessionContext.getCallerPrincipal();
+            SecurityUser user = service.get(SecurityUser.class, principal.getName());
+            UserSpace userSpace = new UserSpace();
+            userSpace.setSpace(space);
+            userSpace.setUser(user);
+            service.save(userSpace);
+        }
         return service.save(space);
     }
 

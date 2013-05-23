@@ -9,13 +9,16 @@ import ch.jtaf.entity.Competition;
 import ch.jtaf.entity.CompetitionRankingData;
 import ch.jtaf.entity.Series;
 import ch.jtaf.entity.SeriesRankingData;
+import ch.jtaf.interceptor.TraceInterceptor;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import javax.persistence.TypedQuery;
 
+@Interceptors({TraceInterceptor.class})
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class ReportService extends AbstractService {

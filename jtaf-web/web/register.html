@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Register</title>
+        <link rel="stylesheet" href="css/jtaf.css">
+        <script src="util/util.js"></script>
+        <script src="register.js"></script>
+    </head>
+    <body>
+        <script src="/jtaf/header.js"></script>
+
+        <div id="main">
+            <h1>Register</h1>
+
+            <form action="javascript:save();">
+
+                <table class="input">
+                    <tr>
+                        <td>Email</td>
+                        <td><input type="text" id="user_email" required /></td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td><input type="password" id="user_password" required /></td>
+                    </tr>
+                    <tr>
+                        <td>Confirm password</td>
+                        <td><input type="password" id="user_password_confirm" required /></td>
+                    </tr>
+                    <tr>
+                        <td>Last name</td>
+                        <td><input type="text" id="user_lastName" required /></td>
+                    </tr>
+                    <tr>
+                        <td>First name</td>
+                        <td><input type="text" id="user_firstName" required /></td>
+                    </tr>
+                </table>
+
+                <p>
+                    <input type="submit" value="Register" />
+                </p>
+
+                <script>el("user_email").focus();</script>
+            </form>
+
+            <script src="/jtaf/footer.js"></script>
+        </div>
+    </body>
+</html>
