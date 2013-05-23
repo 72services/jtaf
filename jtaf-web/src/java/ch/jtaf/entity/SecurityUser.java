@@ -10,8 +10,8 @@ import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "SecurityUser.findByConfirmationId", 
-        query = "select u from SecurityUser u where u.confirmationId = :confirmationId")
+    @NamedQuery(name = "SecurityUser.findByConfirmationId",
+            query = "select u from SecurityUser u where u.confirmationId = :confirmationId")
 })
 public class SecurityUser {
 
@@ -22,8 +22,6 @@ public class SecurityUser {
     private String lastName;
     private String confirmationId;
     private boolean confirmed;
-    @OneToMany(mappedBy = "user")
-    private List<UserSpace> userSpaces = new ArrayList<>();
 
     public String getEmail() {
         return email;
@@ -73,11 +71,8 @@ public class SecurityUser {
         this.confirmed = confirmed;
     }
 
-    public List<UserSpace> getUserSpaces() {
-        return userSpaces;
-    }
-
-    public void setUserSpaces(List<UserSpace> userSpaces) {
-        this.userSpaces = userSpaces;
+    @Override
+    public String toString() {
+        return "SecurityUser{" + "email=" + email + ", firstName=" + firstName + ", lastName=" + lastName + ", confirmed=" + confirmed + '}';
     }
 }

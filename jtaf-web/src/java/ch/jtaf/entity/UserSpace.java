@@ -1,6 +1,7 @@
 package ch.jtaf.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -8,6 +9,7 @@ import javax.persistence.ManyToOne;
 public class UserSpace {
 
     @Id
+    @GeneratedValue
     private Long id;
     private UserSpaceRole role;
     @ManyToOne
@@ -45,5 +47,10 @@ public class UserSpace {
 
     public void setRole(UserSpaceRole role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "UserSpace{" + "id=" + id + ", role=" + role + ", user=" + user + ", space=" + space + '}';
     }
 }

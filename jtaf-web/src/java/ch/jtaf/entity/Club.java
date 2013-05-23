@@ -50,4 +50,9 @@ public class Club {
     public void setSpace_id(Long space_id) {
         this.space_id = space_id;
     }
+
+    @Override
+    public String toString() {
+        return "Club{" + "id=" + id + ", abbreviation=" + abbreviation + ", name=" + name + ", space_id=" + space_id + '}';
+    }
 }

@@ -25,4 +25,9 @@ public class SecurityGroup {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "SecurityGroup{" + "email=" + email + ", name=" + name + '}';
+    }
 }

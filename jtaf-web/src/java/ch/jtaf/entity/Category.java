@@ -116,4 +116,9 @@ public class Category {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Category{" + "id=" + id + ", abbreviation=" + abbreviation + ", name=" + name + ", yearFrom=" + yearFrom + ", yearTo=" + yearTo + ", gender=" + gender + ", series_id=" + series_id + '}';
+    }
 }

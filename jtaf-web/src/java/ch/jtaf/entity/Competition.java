@@ -84,4 +84,9 @@ public class Competition {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Competition{" + "id=" + id + ", name=" + name + ", competitionDate=" + competitionDate + ", series_id=" + series_id + ", numberOfAthletes=" + numberOfAthletes + '}';
+    }
 }

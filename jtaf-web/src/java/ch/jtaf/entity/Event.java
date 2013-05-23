@@ -89,4 +89,9 @@ public class Event {
     public void setSeries_id(Long series_id) {
         this.series_id = series_id;
     }
+
+    @Override
+    public String toString() {
+        return "Event{" + "id=" + id + ", name=" + name + ", type=" + type + ", gender=" + gender + ", a=" + a + ", b=" + b + ", c=" + c + ", series_id=" + series_id + '}';
+    }
 }

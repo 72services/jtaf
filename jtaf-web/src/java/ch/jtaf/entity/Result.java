@@ -57,4 +57,9 @@ public class Result {
     public void setCompetition(Competition competition) {
         this.competition = competition;
     }
+
+    @Override
+    public String toString() {
+        return "Result{" + "id=" + id + ", result=" + result + ", points=" + points + ", event=" + event + '}';
+    }
 }

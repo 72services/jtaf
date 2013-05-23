@@ -28,8 +28,6 @@ public class Space {
     @OneToMany
     @JoinColumn(name = "space_id", insertable = false, updatable = false)
     private List<Club> clubs = new ArrayList<>();
-    @OneToMany(mappedBy = "space")
-    private List<UserSpace> userSpaces = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -63,11 +61,8 @@ public class Space {
         this.clubs = clubs;
     }
 
-    public List<UserSpace> getUserSpaces() {
-        return userSpaces;
-    }
-
-    public void setUserSpaces(List<UserSpace> userSpaces) {
-        this.userSpaces = userSpaces;
+    @Override
+    public String toString() {
+        return "Space{" + "id=" + id + ", name=" + name + '}';
     }
 }

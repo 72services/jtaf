@@ -140,4 +140,9 @@ public class Athlete {
     public void setSeriesPoints(int p) {
         // Ignore. This method is only for JSON serialization
     }
+
+    @Override
+    public String toString() {
+        return "Athlete{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", yearOfBirth=" + yearOfBirth + ", gender=" + gender + ", series_id=" + series_id + '}';
+    }
 }
