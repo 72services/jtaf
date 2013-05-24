@@ -11,6 +11,7 @@ import ch.jtaf.entity.SecurityGroup;
 import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.entity.Series;
 import ch.jtaf.entity.Space;
+import ch.jtaf.entity.UserSpace;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
@@ -289,5 +290,11 @@ public class DataService extends AbstractService {
         SecurityUser u = q.getSingleResult();
         u.setConfirmed(true);
         em.merge(u);
+    }
+
+    public List<UserSpace> getUserSpaces(Long spaceId) {
+        TypedQuery<UserSpace> q = em.createNamedQuery("UserSpace.findAll", UserSpace.class);
+        q.setParameter("space_id", spaceId);
+        return q.getResultList();
     }
 }

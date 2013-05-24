@@ -4,6 +4,7 @@ import ch.jtaf.control.DataService;
 import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.entity.Space;
 import ch.jtaf.entity.UserSpace;
+import ch.jtaf.entity.UserSpaceRole;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.security.Principal;
 import java.util.List;
@@ -45,6 +46,7 @@ public class SpaceResource {
             Principal principal = sessionContext.getCallerPrincipal();
             SecurityUser user = service.get(SecurityUser.class, principal.getName());
             UserSpace userSpace = new UserSpace();
+            userSpace.setRole(UserSpaceRole.ADMIN);
             userSpace.setSpace(space);
             userSpace.setUser(user);
             service.save(userSpace);

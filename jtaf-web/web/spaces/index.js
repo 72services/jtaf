@@ -35,11 +35,16 @@ function createSpacesTableBody() {
             cellName.className = "edit";
             cellName.innerHTML = space.name;
             cellName.setAttribute("onclick", onclickEdit);
+            var share = document.createElement("a");
+            share.href = "share.html?space_id=" + space.id;
+            share.appendChild(document.createTextNode("Share"));
             var del = document.createElement("a");
             del.href = "#";
             del.setAttribute("onclick", "deleteSpace(" + space.id + ")");
             del.appendChild(document.createTextNode("Delete"));
             var cellFunction = row.insertCell(1);
+            cellFunction.appendChild(share);
+            cellFunction.appendChild(document.createTextNode(" "));
             cellFunction.appendChild(del);
             i++;
         });

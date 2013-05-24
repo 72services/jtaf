@@ -2,33 +2,34 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>My spaces</title>
+        <title>Share space</title>
         <link rel="stylesheet" type="text/css" href="../css/jtaf.css">
         <script src="../util/util.js"></script>
-        <script src="index.js"></script>
+        <script src="share.js"></script>
     </head>
     <body onload="loadData();">
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
-            <h1>Spaces</h1>
+            <h1>Share space </h1>
 
             <table class="list">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th style="width:80px; text-align: right;"></th>
+                        <th>User</th>
+                        <th>Role</th>
+                        <th style="width: 80px;"></th>
                     </tr>
                 </thead>
-                <tbody id="spaces_table">
+                <tbody id="shares_table">
                     <tr>
-                        <td>Loading space</td>
+                        <td>Loading shares</td>
                         <td></td>
                     </tr>
                 </tbody>
             </table>
 
-            <p><a href="space.html">Add space</a></p>
+            <p><a href="#" onclick="addShare();">Add share</a></p>
 
         </div>
 
