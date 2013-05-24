@@ -26,7 +26,7 @@ First these events were accomplished by hand, starting from 1997 with Excel and 
 Now JTAF will be developed using HTML5 and will be SaaS! http://en.wikipedia.org/wiki/Software_as_a_service
 
 ## Demo
-http://simas1.ch:8080/jtaf/
+https://5.35.243.119/jtaf/index.html
 
 ###License
 JTAF is open source and free software under Apache License, Version 2:
