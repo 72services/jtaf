@@ -297,4 +297,15 @@ public class DataService extends AbstractService {
         q.setParameter("space_id", spaceId);
         return q.getResultList();
     }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void deleteSpace(Space s) {
+        List<UserSpace> userSpaces = getUserSpaces(s.getId());
+        for (UserSpace userSpace : userSpaces) {
+            userSpace = em.merge(userSpace);
+            em.remove(userSpace);
+        }
+        s = em.merge(s);
+        em.remove(s);
+    }
 }

@@ -147,8 +147,8 @@ function fillSpace() {
 
 function save() {
     fillSpace();
-    xhrPost("/jtaf/res/spaces/", function() {
-        loadData();
+    xhrPost("/jtaf/res/spaces/", function(response) {
+        parseAndFillSpace(response);
         info("Space saved");
     }, space);
 }

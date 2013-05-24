@@ -8,7 +8,7 @@ function loadData() {
     space_id = param().space_id;
 
     series_id = param().id;
-    
+
     if (series_id === undefined) {
         series = new Object();
         el("series_name").focus();
@@ -209,7 +209,7 @@ function fillAthletesTable(athletes) {
     var i = 0;
     athletes.forEach(function(athlete) {
         var row = table.insertRow(i);
-        var onclickEdit = "window.location = 'athlete.html?id=" + athlete.id + 
+        var onclickEdit = "window.location = 'athlete.html?id=" + athlete.id +
                 "&series_id=" + series_id + "&space_id=" + space_id + "'";
         var cellId = row.insertCell(0);
         cellId.className = "edit";
@@ -254,8 +254,8 @@ function fillAthletesTable(athletes) {
 
 function save() {
     fillSeries();
-    xhrPost("/jtaf/res/series/", function() {
-        loadData();
+    xhrPost("/jtaf/res/series/", function(response) {
+        parseAndFillSeries(response);
         info("Series saved");
     }, series);
 }

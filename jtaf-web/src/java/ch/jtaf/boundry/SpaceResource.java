@@ -72,7 +72,7 @@ public class SpaceResource {
         if (s == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
-            service.delete(s);
+            service.deleteSpace(s);
         }
     }
 }

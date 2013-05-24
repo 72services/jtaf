@@ -7,7 +7,7 @@ function save() {
         xhr.open("POST", "/jtaf/res/users", true);
         xhr.onload = function() {
             if (xhr.status === 200) {
-                info("Thanks for registering!");
+                info("Thanks for registering!<br/>Please check your mailbox.");
             } else if (xhr.status === 412) {
                 error("User already exists");
             } else {

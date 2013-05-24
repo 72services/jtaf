@@ -1,3 +1,4 @@
+
 var confirmation_id;
 
 function loadData() {
@@ -10,6 +11,8 @@ function confirm() {
     xhr.open("POST", "/jtaf/res/users/confirm", true);
     xhr.onload = function() {
         if (xhr.status === 204) {
+            el("confirmation_id").setAttribute("disabled");
+            el("confirmation_id").setAttribute("readonly");
             info("Confirmation successful");
         } else {
             error(xhr.status);
