@@ -48,3 +48,7 @@ function deleteClub(id) {
         });
     }
 }
+
+function back() {
+    window.location = "space.html?id=" + space_id;
+}
