@@ -103,6 +103,7 @@ function fillEventsTable() {
             result.id = "result" + i;
             result.setAttribute("pattern", "\\d+\\.\\d{2}");
             result.setAttribute("onblur", "calculatePoints(" + i + ")");
+            //result.setAttribute("onkeyup", "mask('result" + i + "', '00.00', event);");
             cellResult.appendChild(result);
             var cellPoints = row.insertCell(2);
             var points = document.createElement("input");
