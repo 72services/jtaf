@@ -71,13 +71,20 @@ function fillCompetitionTable() {
             sheet.setAttribute("href", "/jtaf/res/reports/sheet?competitionid=" + competition.id);
             sheet.setAttribute("target", "_blank");
             sheet.appendChild(document.createTextNode("Sheets"));
+            var sheetOrderByClub = document.createElement("a");
+            sheetOrderByClub.setAttribute("href", "/jtaf/res/reports/sheet?orderby=club&competitionid=" + competition.id);
+            sheetOrderByClub.setAttribute("target", "_blank");
+            sheetOrderByClub.appendChild(document.createTextNode("(order by club)"));
             var del = document.createElement("a");
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteCompetition(" +
                     competition.id + ")");
             del.appendChild(document.createTextNode("Delete"));
             var cellFunction = row.insertCell(2);
+            cellFunction.setAttribute("style", "text-align: right;");
             cellFunction.appendChild(sheet);
+            cellFunction.appendChild(document.createTextNode(" "));
+            cellFunction.appendChild(sheetOrderByClub);
             cellFunction.appendChild(document.createTextNode(" "));
             cellFunction.appendChild(del);
             i++;
@@ -130,6 +137,7 @@ function parseAndFillCategories(response) {
                     category.id + ")");
             del.appendChild(document.createTextNode("Delete"));
             var cellFunction = row.insertCell(5);
+            cellFunction.setAttribute("style", "text-align: right;");
             cellFunction.appendChild(sheet);
             cellFunction.appendChild(document.createTextNode(" "));
             cellFunction.appendChild(del);
@@ -182,6 +190,7 @@ function parseAndFillEvents(response) {
             del.setAttribute("onclick", "deleteEvent(" + event.id + ")");
             del.appendChild(document.createTextNode("Delete"));
             var cellFunction = row.insertCell(6);
+            cellFunction.setAttribute("style", "text-align: right;");
             cellFunction.appendChild(del);
             i++;
         });
@@ -247,6 +256,7 @@ function fillAthletesTable(athletes) {
         del.setAttribute("onclick", "deleteAthlete(" + athlete.id + ")");
         del.appendChild(document.createTextNode("Delete"));
         var cellFunction = row.insertCell(7);
+        cellFunction.setAttribute("style", "text-align: right;");
         cellFunction.appendChild(del);
         i++;
     });

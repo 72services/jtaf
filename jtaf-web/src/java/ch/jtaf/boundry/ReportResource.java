@@ -23,10 +23,11 @@ public class ReportResource {
     @GET
     @Path("sheet")
     @Produces({"application/pdf"})
-    public byte[] getSheets(@QueryParam("competitionid") Long competitionid, @QueryParam("categoryid") Long categoryid) {
+    public byte[] getSheets(@QueryParam("competitionid") Long competitionid,
+            @QueryParam("categoryid") Long categoryid, @QueryParam("orderby") String order) {
         byte[] report = null;
         if (competitionid != null) {
-            report = service.createSheets(competitionid);
+            report = service.createSheets(competitionid, order);
         }
         if (categoryid != null) {
             report = service.createEmptySheets(categoryid);

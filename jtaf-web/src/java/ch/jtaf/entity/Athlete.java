@@ -15,10 +15,12 @@ import javax.persistence.OrderColumn;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Athlete.findBySeries", query = "select distinct a from Athlete a "
-            + "where a.series_id = :series_id order by a.category.abbreviation, a.lastName, a.firstName"),
-    @NamedQuery(name = "Athlete.findByCompetition", query = "select distinct a from Athlete a join a.results r "
-            + "where r.competition.id = :competitionid order by a.category.abbreviation, a.lastName, a.firstName")
+    @NamedQuery(name = "Athlete.findBySeriesOrderByClub",
+            query = "select distinct a from Athlete a where a.series_id = :series_id order by a.club.abbreviation, a.id"),
+    @NamedQuery(name = "Athlete.findBySeries",
+            query = "select distinct a from Athlete a where a.series_id = :series_id order by a.category.abbreviation, a.lastName, a.firstName"),
+    @NamedQuery(name = "Athlete.findByCompetition",
+            query = "select distinct a from Athlete a join a.results r where r.competition.id = :competitionid order by a.category.abbreviation, a.lastName, a.firstName")
 })
 public class Athlete {
 
