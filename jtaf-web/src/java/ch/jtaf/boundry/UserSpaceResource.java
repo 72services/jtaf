@@ -31,7 +31,7 @@ public class UserSpaceResource extends BaseResource {
 
     @POST
     public UserSpace save(UserSpace userSpace) {
-        if (isUserGrantedForSeries(userSpace.getSpace().getId())) {
+        if (isUserGrantedForSpace(userSpace.getSpace().getId())) {
             if (userSpace.getUser().getConfirmationId() == null) {
                 SecurityUser user = dataService.get(SecurityUser.class, userSpace.getUser().getEmail());
                 if (user == null) {
@@ -49,12 +49,10 @@ public class UserSpaceResource extends BaseResource {
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
         UserSpace s = dataService.get(UserSpace.class, id);
-        if (isUserGrantedForSpace(s.getId())) {
-            if (s == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
-            } else {
-                dataService.delete(s);
-            }
+        if (s == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } else if (isUserGrantedForSpace(s.getSpace().getId())) {
+            dataService.delete(s);
         } else {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }

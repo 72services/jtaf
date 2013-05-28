@@ -14,7 +14,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TSPACE")
 @NamedQueries({
-    @NamedQuery(name = "Space.findAll", query = "select s from Space s order by s.name")
+    @NamedQuery(name = "Space.findAll", query = "select s from Space s order by s.name"),
+    @NamedQuery(name = "Space.findByUser",
+            query = "select u.space from UserSpace u where u.user.email = :email")
 })
 public class Space {
 

@@ -49,6 +49,7 @@ function createRow(table, userSpace, i) {
     var cellRole = row.insertCell(1);
 
     var select = document.createElement("select");
+    select.setAttribute("onchange", "save(" + i + ")");
     if (user.email === userSpace.user.email) {
         select.setAttribute("readonly");
         select.setAttribute("disabled");
@@ -68,18 +69,15 @@ function createRow(table, userSpace, i) {
     select.appendChild(optionAdmin);
     cellRole.appendChild(select);
 
-    var save = document.createElement("a");
-    save.href = "#";
-    save.setAttribute("onclick", "save(" + i + ")");
-    save.appendChild(document.createTextNode("Save"));
-    var del = document.createElement("a");
-    del.href = "#";
-    del.setAttribute("onclick", "deleteUserSpace(" + space.id + ")");
-    del.appendChild(document.createTextNode("Delete"));
     var cellFunction = row.insertCell(2);
-    cellFunction.appendChild(save);
-    cellFunction.appendChild(document.createTextNode(" "));
-    cellFunction.appendChild(del);
+    cellFunction.setAttribute("style", "text-align: right;");
+    if (user.email !== userSpace.user.email) {
+        var del = document.createElement("a");
+        del.href = "#";
+        del.setAttribute("onclick", "deleteUserSpace(" + userSpace.id + ")");
+        del.appendChild(document.createTextNode("Delete"));
+        cellFunction.appendChild(del);
+    }
 }
 
 function deleteUserSpace(id) {
@@ -94,7 +92,7 @@ function deleteUserSpace(id) {
 function save(index) {
     var userSpace = userSpaces[index];
     var userinput = document.getElementById("userinput");
-    if (userinput !== undefined) {
+    if (userinput != null) {
         userSpace.user.email = userinput.value;
     }
     var select = document.getElementById("select_" + index);

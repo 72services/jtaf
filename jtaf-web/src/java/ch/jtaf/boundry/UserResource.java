@@ -38,15 +38,10 @@ public class UserResource extends BaseResource {
 
     @POST
     public SecurityUser save(SecurityUser user) {
-        Principal principal = sc.getCallerPrincipal();
-        if (user.getEmail().equals(principal.getName())) {
-            try {
-                return dataService.saveUser(user);
-            } catch (IllegalStateException e) {
-                throw new WebApplicationException(Response.Status.PRECONDITION_FAILED);
-            }
-        } else {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+        try {
+            return dataService.saveUser(user);
+        } catch (IllegalStateException e) {
+            throw new WebApplicationException(Response.Status.PRECONDITION_FAILED);
         }
     }
 

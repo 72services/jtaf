@@ -1,7 +1,7 @@
 var spaces;
 
 function loadData() {
-    xhrGet("/jtaf/res/spaces", function(response) {
+    xhrGet("/jtaf/res/spaces?my=true", function(response) {
         spaces = JSON.parse(response);
         createSpacesTableBody();
     });

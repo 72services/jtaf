@@ -18,6 +18,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
@@ -28,12 +29,14 @@ import javax.ws.rs.core.Response;
 @Stateless
 public class SpaceResource extends BaseResource {
 
-    @Resource
-    private SessionContext sessionContext;
-
     @GET
-    public List<Space> list() {
-        return dataService.getSpaces();
+    public List<Space> list(@QueryParam("my") Boolean my) {
+        if (my != null && my) {
+            Principal principal = sessionContext.getCallerPrincipal();
+            return dataService.getMySpaces(principal.getName());
+        } else {
+            return dataService.getSpaces();
+        }
     }
 
     @POST
