@@ -3,8 +3,6 @@ package ch.jtaf.boundry;
 import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.security.Principal;
-import javax.annotation.Resource;
-import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
@@ -22,13 +20,10 @@ import javax.ws.rs.core.Response;
 @Stateless
 public class UserResource extends BaseResource {
 
-    @Resource
-    private SessionContext sc;
-
     @GET
     @Path("current")
     public SecurityUser getCurrentUser() {
-        Principal principal = sc.getCallerPrincipal();
+        Principal principal = sessionContext.getCallerPrincipal();
         SecurityUser user = dataService.get(SecurityUser.class, principal.getName());
         if (user != null) {
             user.setSecret(null);

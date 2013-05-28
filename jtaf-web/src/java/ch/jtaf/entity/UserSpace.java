@@ -13,7 +13,9 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name = "UserSpace.findAll",
             query = "select u from UserSpace u where u.space.id = :space_id"),
     @NamedQuery(name = "UserSpace.findByUserAndSpace",
-            query = "select u from UserSpace u where u.user.email = :email and u.space.id = :space_id")
+            query = "select u from UserSpace u where u.user.email = :email and u.space.id = :space_id"),
+    @NamedQuery(name = "UserSpace.findByUserAndSpaceAndRole",
+            query = "select u from UserSpace u where u.role = :role and u.space.id = :space_id")
 })
 @NamedNativeQuery(name = "UserSpace.findByUserAndSeries",
         query = "SELECT U.* FROM USERSPACE U JOIN SERIES S ON S.SPACE_ID = U.SPACE_ID "

@@ -67,6 +67,12 @@ function createRow(table, userSpace, i) {
         optionAdmin.selected = true;
     }
     select.appendChild(optionAdmin);
+    var optionOwner = document.createElement("option");
+    optionOwner.innerHTML = "OWNER";
+    if (userSpace.role === "OWNER") {
+        optionOwner.selected = true;
+    }
+    select.appendChild(optionOwner);
     cellRole.appendChild(select);
 
     var cellFunction = row.insertCell(2);

@@ -26,7 +26,7 @@ public class UserSpaceResource extends BaseResource {
 
     @GET
     public List<UserSpace> list(@QueryParam("space_id") Long spaceId) {
-        return dataService.getUserSpaces(spaceId);
+        return dataService.getUserSpacesBySpaceId(spaceId);
     }
 
     @POST

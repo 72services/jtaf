@@ -45,7 +45,7 @@ public class SpaceResource extends BaseResource {
             Principal principal = sessionContext.getCallerPrincipal();
             SecurityUser user = dataService.get(SecurityUser.class, principal.getName());
             UserSpace userSpace = new UserSpace();
-            userSpace.setRole(UserSpaceRole.ADMIN);
+            userSpace.setRole(UserSpaceRole.OWNER);
             userSpace.setSpace(space);
             userSpace.setUser(user);
             dataService.save(userSpace);

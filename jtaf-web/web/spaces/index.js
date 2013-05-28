@@ -1,9 +1,13 @@
 var spaces;
+var user;
 
 function loadData() {
     xhrGet("/jtaf/res/spaces?my=true", function(response) {
         spaces = JSON.parse(response);
         createSpacesTableBody();
+    });
+    xhrGet("/jtaf/res/users/current", function(response) {
+        user = JSON.parse(response);
     });
 }
 
@@ -43,9 +47,11 @@ function createSpacesTableBody() {
             del.setAttribute("onclick", "deleteSpace(" + space.id + ")");
             del.appendChild(document.createTextNode("Delete"));
             var cellFunction = row.insertCell(1);
-            cellFunction.appendChild(share);
-            cellFunction.appendChild(document.createTextNode(" "));
-            cellFunction.appendChild(del);
+            if (space.owner === user.email) {
+                cellFunction.appendChild(share);
+                cellFunction.appendChild(document.createTextNode(" "));
+                cellFunction.appendChild(del);
+            }
             i++;
         });
     }

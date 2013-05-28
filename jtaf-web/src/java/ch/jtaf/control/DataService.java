@@ -12,6 +12,7 @@ import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.entity.Series;
 import ch.jtaf.entity.Space;
 import ch.jtaf.entity.UserSpace;
+import ch.jtaf.entity.UserSpaceRole;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
@@ -292,7 +293,7 @@ public class DataService extends AbstractService {
         em.merge(u);
     }
 
-    public List<UserSpace> getUserSpaces(Long spaceId) {
+    public List<UserSpace> getUserSpacesBySpaceId(Long spaceId) {
         TypedQuery<UserSpace> q = em.createNamedQuery("UserSpace.findAll", UserSpace.class);
         q.setParameter("space_id", spaceId);
         return q.getResultList();
@@ -300,7 +301,7 @@ public class DataService extends AbstractService {
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void deleteSpace(Space s) {
-        List<UserSpace> userSpaces = getUserSpaces(s.getId());
+        List<UserSpace> userSpaces = getUserSpacesBySpaceId(s.getId());
         for (UserSpace userSpace : userSpaces) {
             userSpace = em.merge(userSpace);
             em.remove(userSpace);
@@ -326,6 +327,18 @@ public class DataService extends AbstractService {
     public List<Space> getMySpaces(String name) {
         TypedQuery<Space> q = em.createNamedQuery("Space.findByUser", Space.class);
         q.setParameter("email", name);
-        return q.getResultList();
+        List<Space> list = q.getResultList();
+        for (Space space : list) {
+            UserSpace userSpace = getUserSpacesOwnerBySpaceId(space.getId());
+            space.setOwner(userSpace.getUser().getEmail());
+        }
+        return list;
+    }
+
+    private UserSpace getUserSpacesOwnerBySpaceId(Long spaceId) {
+        TypedQuery<UserSpace> q = em.createNamedQuery("UserSpace.findByUserAndSpaceAndRole", UserSpace.class);
+        q.setParameter("role", UserSpaceRole.OWNER);
+        q.setParameter("space_id", spaceId);
+        return q.getSingleResult();
     }
 }
