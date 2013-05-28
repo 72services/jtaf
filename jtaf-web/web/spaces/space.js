@@ -1,13 +1,13 @@
 var space;
 
 function loadData() {
-    var id = param().id;
+    var id = searchMap.id;
 
     if (id === undefined) {
         space = new Object();
         createSeriesTableBody();
         createClubsTableBody();
-        el("space_name").focus();
+        document.getElementById("space_name").focus();
     } else {
         xhrGet("/jtaf/res/spaces/" + id, function(response) {
             parseAndFillSpace(response);
@@ -25,13 +25,13 @@ function parseAndFillSpace(response) {
 }
 
 function fillForm() {
-    el("space_id").value = space.id;
-    el("space_name").value = space.name;
-    el("space_name").focus();
+    document.getElementById("space_id").value = space.id;
+    document.getElementById("space_name").value = space.name;
+    document.getElementById("space_name").focus();
 }
 
 function fillBreadCrumb() {
-    el("curent_space").innerHTML = space.name;
+    document.getElementById("curent_space").innerHTML = space.name;
 }
 
 function deleteSeries(id) {
@@ -63,7 +63,7 @@ function deleteClub(id) {
 }
 
 function createSeriesTableBody() {
-    var table = el("series_table");
+    var table = document.getElementById("series_table");
     table.innerHTML = "";
 
     if (space.series === undefined || space.series.length === 0) {
@@ -99,7 +99,7 @@ function createSeriesTableBody() {
 }
 
 function createClubsTableBody() {
-    var table = el("club_table");
+    var table = document.getElementById("club_table");
     table.innerHTML = "";
 
     if (space.clubs === undefined || space.clubs.length === 0) {
@@ -142,7 +142,7 @@ function addClub() {
 }
 
 function fillSpace() {
-    space.name = el("space_name").value;
+    space.name = document.getElementById("space_name").value;
 }
 
 function save() {

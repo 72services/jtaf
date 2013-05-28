@@ -2,8 +2,8 @@
 var confirmation_id;
 
 function loadData() {
-    confirmation_id = param().confirmation_id;
-    el("confirmation_id").value = confirmation_id;
+    confirmation_id = searchMap.confirmation_id;
+    document.getElementById("confirmation_id").value = confirmation_id;
 }
 
 function confirm() {
@@ -11,8 +11,8 @@ function confirm() {
     xhr.open("POST", "/jtaf/res/users/confirm", true);
     xhr.onload = function() {
         if (xhr.status === 204) {
-            el("confirmation_id").setAttribute("disabled");
-            el("confirmation_id").setAttribute("readonly");
+            document.getElementById("confirmation_id").setAttribute("disabled");
+            document.getElementById("confirmation_id").setAttribute("readonly");
             info("Confirmation successful");
         } else {
             error(xhr.status);

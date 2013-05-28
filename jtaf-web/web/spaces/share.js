@@ -3,7 +3,7 @@ var space;
 var userSpaces;
 
 function loadData() {
-    var id = param().space_id;
+    var id = searchMap.space_id;
     xhrGet("/jtaf/res/users/current", function(response) {
         user = JSON.parse(response);
     });
@@ -17,7 +17,7 @@ function loadData() {
 }
 
 function createSharesTableBody() {
-    var table = el("shares_table");
+    var table = document.getElementById("shares_table");
     table.innerHTML = "";
 
     if (userSpaces === undefined || userSpaces.length === 0) {
@@ -93,11 +93,11 @@ function deleteUserSpace(id) {
 
 function save(index) {
     var userSpace = userSpaces[index];
-    var userinput = el("userinput");
+    var userinput = document.getElementById("userinput");
     if (userinput !== undefined) {
         userSpace.user.email = userinput.value;
     }
-    var select = el("select_" + index);
+    var select = document.getElementById("select_" + index);
     userSpace.role = select.options[select.selectedIndex].value;
 
     xhrPost("/jtaf/res/userspaces/", function() {
@@ -108,11 +108,11 @@ function save(index) {
 
 function addShare() {
     var index = userSpaces.length;
-    var table = el("shares_table");
+    var table = document.getElementById("shares_table");
     var userSpace = new Object();
     userSpace.space = space;
     userSpace.user = new Object();
     userSpaces[index] = userSpace;
     createRow(table, userSpace, index);
-    el("userinput").focus();
+    document.getElementById("userinput").focus();
 }

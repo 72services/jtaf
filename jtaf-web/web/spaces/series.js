@@ -5,13 +5,13 @@ var space_id;
 var series_id;
 
 function loadData() {
-    space_id = param().space_id;
+    space_id = searchMap.space_id;
 
-    series_id = param().id;
+    series_id = searchMap.id;
 
     if (series_id === undefined) {
         series = new Object();
-        el("series_name").focus();
+        document.getElementById("series_name").focus();
     } else {
         xhrGet("/jtaf/res/series/" + series_id, function(response) {
             parseAndFillSeries(response);
@@ -40,13 +40,13 @@ function parseAndFillSeries(response) {
 }
 
 function fillForm() {
-    el("series_id").value = series.id;
-    el("series_name").value = series.name;
-    el("series_name").focus();
+    document.getElementById("series_id").value = series.id;
+    document.getElementById("series_name").value = series.name;
+    document.getElementById("series_name").focus();
 }
 
 function fillCompetitionTable() {
-    var table = el("competition_table");
+    var table = document.getElementById("competition_table");
     table.innerHTML = "";
     if (series.competitions === undefined || series.competitions.length === 0) {
         var row = table.insertRow(0);
@@ -94,7 +94,7 @@ function fillCompetitionTable() {
 
 function parseAndFillCategories(response) {
     var categories = JSON.parse(response);
-    var table = el("category_table");
+    var table = document.getElementById("category_table");
     table.innerHTML = "";
     if (categories === undefined || categories.length === 0) {
         var row = table.insertRow(0);
@@ -148,7 +148,7 @@ function parseAndFillCategories(response) {
 
 function parseAndFillEvents(response) {
     var events = JSON.parse(response);
-    var table = el("event_table");
+    var table = document.getElementById("event_table");
     table.innerHTML = "";
     if (events === undefined || events.length === 0) {
         var row = table.insertRow(0);
@@ -200,7 +200,7 @@ function parseAndFillEvents(response) {
 function parseAndFillAthletes(response) {
     athletes = JSON.parse(response);
     if (athletes === undefined || athletes.length === 0) {
-        var table = el("athlete_table");
+        var table = document.getElementById("athlete_table");
         table.innerHTML = "";
         var row = table.insertRow(0);
         var cellName = row.insertCell(0);
@@ -213,7 +213,7 @@ function parseAndFillAthletes(response) {
 }
 
 function fillAthletesTable(athletes) {
-    var table = el("athlete_table");
+    var table = document.getElementById("athlete_table");
     table.innerHTML = "";
     var i = 0;
     athletes.forEach(function(athlete) {
@@ -271,7 +271,7 @@ function save() {
 }
 
 function fillSeries() {
-    series.name = el("series_name").value;
+    series.name = document.getElementById("series_name").value;
     series.space_id = space_id;
 }
 
@@ -316,14 +316,14 @@ function switchTo(div) {
     for (var i in els) {
         els[i].className = "invisible";
     }
-    el(div).className = "visible";
+    document.getElementById(div).className = "visible";
 
-    el("a_competitions").className = "tab_inactive";
-    el("a_events").className = "tab_inactive";
-    el("a_categories").className = "tab_inactive";
-    el("a_athletes").className = "tab_inactive";
+    document.getElementById("a_competitions").className = "tab_inactive";
+    document.getElementById("a_events").className = "tab_inactive";
+    document.getElementById("a_categories").className = "tab_inactive";
+    document.getElementById("a_athletes").className = "tab_inactive";
 
-    el("a_" + div).className = "tab_active";
+    document.getElementById("a_" + div).className = "tab_active";
     localStorage.setItem("active_tab", div);
 }
 

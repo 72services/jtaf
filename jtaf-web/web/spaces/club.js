@@ -2,11 +2,11 @@ var club;
 var space_id;
 
 function loadData() {
-    space_id = param().space_id;
-    var id = param().id;
+    space_id = searchMap.space_id;
+    var id = searchMap.id;
     if (id === undefined) {
         club = new Object();
-        el("club_abbreviation").focus();
+        document.getElementById("club_abbreviation").focus();
     } else {
         xhrGet("/jtaf/res/clubs/" + id, function(response) {
             parseAndFill(response);
@@ -20,10 +20,10 @@ function parseAndFill(response) {
 }
 
 function fillForm() {
-    el("club_id").value = club.id;
-    el("club_abbreviation").value = club.abbreviation;
-    el("club_name").value = club.name;
-    el("club_name").focus();
+    document.getElementById("club_id").value = club.id;
+    document.getElementById("club_abbreviation").value = club.abbreviation;
+    document.getElementById("club_name").value = club.name;
+    document.getElementById("club_name").focus();
 }
 
 function save() {
@@ -35,8 +35,8 @@ function save() {
 }
 
 function fillClub() {
-    club.abbreviation = el("club_abbreviation").value;
-    club.name = el("club_name").value;
+    club.abbreviation = document.getElementById("club_abbreviation").value;
+    club.name = document.getElementById("club_name").value;
     club.space_id = space_id;
 }
 

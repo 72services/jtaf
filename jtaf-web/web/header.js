@@ -49,7 +49,7 @@ function createHeader() {
 
     var active = sessionStorage.getItem("navigation_active");
     if (active !== undefined) {
-        var active_element = el(active);
+        var active_element = document.getElementById(active);
         if (active_element !== null) {
             active_element.className = "navigation_active";
         }
@@ -60,14 +60,14 @@ function createHeader() {
 
 function activateNavigation(index) {
     deactivateLinks();
-    var element = el("navigation_" + index);
+    var element = document.getElementById("navigation_" + index);
     sessionStorage.setItem("navigation_active", element.id);
     element.className = "navigation_active";
 }
 
 function activateLink(id) {
     deactivateLinks();
-    var element = el(id);
+    var element = document.getElementById(id);
     sessionStorage.setItem("navigation_active", id);
     element.className = "navigation_active";
 }

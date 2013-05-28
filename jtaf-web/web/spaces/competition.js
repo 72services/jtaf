@@ -2,11 +2,11 @@ var competition;
 var series_id;
 
 function loadData() {
-    series_id = param().series_id;
-    var id = param().id;
+    series_id = searchMap.series_id;
+    var id = searchMap.id;
     if (id === undefined) {
         competition = new Object();
-        el("competition_name").focus();
+        document.getElementById("competition_name").focus();
     } else {
         xhrGet("/jtaf/res/competitions/" + id, function(response) {
             parseAndFill(response);
@@ -24,10 +24,10 @@ function parseAndFill(response) {
 }
 
 function fillForm() {
-    el("competition_id").value = competition.id;
-    el("competition_name").value = competition.name;
-    el("competition_date").value = competition.competitionDate;
-    el("competition_name").focus();
+    document.getElementById("competition_id").value = competition.id;
+    document.getElementById("competition_name").value = competition.name;
+    document.getElementById("competition_date").value = competition.competitionDate;
+    document.getElementById("competition_name").focus();
 }
 
 function save() {
@@ -39,8 +39,8 @@ function save() {
 }
 
 function fillCompetition() {
-    competition.name = el("competition_name").value;
-    competition.competitionDate = el("competition_date").value;
+    competition.name = document.getElementById("competition_name").value;
+    competition.competitionDate = document.getElementById("competition_date").value;
     competition.series_id = series_id;
 }
 

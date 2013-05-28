@@ -17,7 +17,7 @@ function deleteSpace(id) {
 }
 
 function createSpacesTableBody() {
-    var table = el("spaces_table");
+    var table = document.getElementById("spaces_table");
     table.innerHTML = "";
 
     if (spaces === undefined || spaces.length === 0) {

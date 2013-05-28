@@ -27,7 +27,7 @@ function getCurrentUser() {
 
 function fillSpaces() {
     if (spaces !== undefined && spaces !== null) {
-        var ul_spaces = el("ul_spaces");
+        var ul_spaces = document.getElementById("ul_spaces");
         ul_spaces.innerHTML = "";
 
         spaces.forEach(function(space) {

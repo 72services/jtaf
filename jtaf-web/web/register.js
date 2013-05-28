@@ -24,14 +24,14 @@ function save() {
 
 function fillUser() {
     user = new Object();
-    user.email = el("user_email").value;
-    user.secret = el("user_password").value;
-    user.lastName = el("user_lastName").value;
-    user.firstName = el("user_firstName").value;
+    user.email = document.getElementById("user_email").value;
+    user.secret = document.getElementById("user_password").value;
+    user.lastName = document.getElementById("user_lastName").value;
+    user.firstName = document.getElementById("user_firstName").value;
 }
 
 function checkPassword() {
-    var password = el("user_password").value;
-    var confirm = el("user_password_confirm").value;
+    var password = document.getElementById("user_password").value;
+    var confirm = document.getElementById("user_password_confirm").value;
     return password === confirm;
 }
