@@ -32,6 +32,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 @Interceptors({TraceInterceptor.class})
@@ -310,8 +311,8 @@ public class DataService extends AbstractService {
         em.remove(s);
     }
 
-    public UserSpace getUserSpaceByUserAndSeries(String email, Long series_id) {
-        TypedQuery<UserSpace> q = em.createNamedQuery("UserSpace.findByUserAndSeries", UserSpace.class);
+    public Object getUserSpaceByUserAndSeries(String email, Long series_id) {
+        Query q = em.createNamedQuery("UserSpace.findByUserAndSeries");
         q.setParameter(1, email);
         q.setParameter(2, series_id);
         return q.getSingleResult();

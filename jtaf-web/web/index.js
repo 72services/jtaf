@@ -80,7 +80,7 @@ function fillSpaces() {
                     cell2.innerHTML = "Athletes: " + competition.numberOfAthletes;
                     li_competition.appendChild(table);
 
-                    if (user !== undefined && user !== null) {
+                    if (user != null) {
                         var a_results = document.createElement("a");
                         a_results.href = "input/results.html?id=" + competition.id + "&space_id=" + space.id;
                         a_results.innerHTML = "Enter results";
