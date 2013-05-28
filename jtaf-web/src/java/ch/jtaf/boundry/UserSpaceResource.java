@@ -3,6 +3,8 @@ package ch.jtaf.boundry;
 import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.entity.UserSpace;
 import ch.jtaf.interceptor.TraceInterceptor;
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
@@ -27,6 +29,17 @@ public class UserSpaceResource extends BaseResource {
     @GET
     public List<UserSpace> list(@QueryParam("space_id") Long spaceId) {
         return dataService.getUserSpacesBySpaceId(spaceId);
+    }
+
+    @GET
+    @Path("current")
+    public List<UserSpace> getUsersUserspaces() {
+        Principal principal = sessionContext.getCallerPrincipal();
+        if (principal != null) {
+            return dataService.getUserSpacesOfUser(principal.getName());
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     @POST

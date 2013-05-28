@@ -14,6 +14,8 @@ import javax.persistence.NamedQuery;
             query = "select u from UserSpace u where u.space.id = :space_id"),
     @NamedQuery(name = "UserSpace.findByUserAndSpace",
             query = "select u from UserSpace u where u.user.email = :email and u.space.id = :space_id"),
+    @NamedQuery(name = "UserSpace.findByUser",
+            query = "select u from UserSpace u where u.user.email = :email"),
     @NamedQuery(name = "UserSpace.findByUserAndSpaceAndRole",
             query = "select u from UserSpace u where u.role = :role and u.space.id = :space_id")
 })

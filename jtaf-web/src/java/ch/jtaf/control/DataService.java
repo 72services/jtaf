@@ -342,4 +342,10 @@ public class DataService extends AbstractService {
         q.setParameter("space_id", spaceId);
         return q.getSingleResult();
     }
+
+    public List<UserSpace> getUserSpacesOfUser(String email) {
+        TypedQuery<UserSpace> q = em.createNamedQuery("UserSpace.findByUser", UserSpace.class);
+        q.setParameter("email", email);
+        return q.getResultList();
+    }
 }

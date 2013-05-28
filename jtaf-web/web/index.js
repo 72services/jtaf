@@ -1,4 +1,5 @@
 var spaces;
+var userSpaces;
 var user;
 
 function loadData() {
@@ -7,6 +8,10 @@ function loadData() {
 
     xhrGet("/jtaf/res/spaces", function(response) {
         spaces = JSON.parse(response);
+        fillSpaces();
+    });
+    xhrGet("/jtaf/res/userspaces/current", function(response) {
+        userSpaces = JSON.parse(response);
         fillSpaces();
     });
 }
@@ -80,7 +85,7 @@ function fillSpaces() {
                     cell2.innerHTML = "Athletes: " + competition.numberOfAthletes;
                     li_competition.appendChild(table);
 
-                    if (user != null) {
+                    if (user != null && isUserGranted(user.email, series)) {
                         var a_results = document.createElement("a");
                         a_results.href = "input/results.html?id=" + competition.id + "&space_id=" + space.id;
                         a_results.innerHTML = "Enter results";
@@ -104,4 +109,15 @@ function fillSpaces() {
 function openSeriesRankingPdf(id) {
     var newtab = window.open();
     newtab.location = "/jtaf/res/reports/seriesranking?seriesid=" + id;
+}
+
+function isUserGranted(email, series) {
+    for (var u in userSpaces) {
+        var userSpace = userSpaces[u];
+        if (userSpace.user.email === email
+                && userSpace.space.id === series.space_id) {
+            return true;
+        }
+    }
+    return false;
 }
