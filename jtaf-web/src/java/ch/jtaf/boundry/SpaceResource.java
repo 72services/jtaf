@@ -1,6 +1,5 @@
 package ch.jtaf.boundry;
 
-import ch.jtaf.control.DataService;
 import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.entity.Space;
 import ch.jtaf.entity.UserSpace;
@@ -9,7 +8,6 @@ import ch.jtaf.interceptor.TraceInterceptor;
 import java.security.Principal;
 import java.util.List;
 import javax.annotation.Resource;
-import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
@@ -28,36 +26,38 @@ import javax.ws.rs.core.Response;
 @Consumes({"application/json"})
 @Interceptors({TraceInterceptor.class})
 @Stateless
-public class SpaceResource {
+public class SpaceResource extends BaseResource {
 
     @Resource
     private SessionContext sessionContext;
-    @EJB
-    private DataService service;
 
     @GET
     public List<Space> list() {
-        return service.getSpaces();
+        return dataService.getSpaces();
     }
 
     @POST
     public Space save(Space space) {
         if (space.getId() == null) {
             Principal principal = sessionContext.getCallerPrincipal();
-            SecurityUser user = service.get(SecurityUser.class, principal.getName());
+            SecurityUser user = dataService.get(SecurityUser.class, principal.getName());
             UserSpace userSpace = new UserSpace();
             userSpace.setRole(UserSpaceRole.ADMIN);
             userSpace.setSpace(space);
             userSpace.setUser(user);
-            service.save(userSpace);
+            dataService.save(userSpace);
+        } else {
+            if (!isUserGrantedForSpace(space.getId())) {
+                throw new WebApplicationException(Response.Status.FORBIDDEN);
+            }
         }
-        return service.save(space);
+        return dataService.save(space);
     }
 
     @GET
     @Path("{id}")
-    public Space get(@PathParam("id") Long id) throws WebApplicationException {
-        Space s = service.getSpace(id);
+    public Space get(@PathParam("id") Long id) {
+        Space s = dataService.getSpace(id);
         if (s == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
@@ -68,11 +68,15 @@ public class SpaceResource {
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
-        Space s = service.get(Space.class, id);
-        if (s == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        Space s = dataService.get(Space.class, id);
+        if (isUserGrantedForSpace(s.getId())) {
+            if (s == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                dataService.deleteSpace(s);
+            }
         } else {
-            service.deleteSpace(s);
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
     }
 }

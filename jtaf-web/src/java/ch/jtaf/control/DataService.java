@@ -308,4 +308,18 @@ public class DataService extends AbstractService {
         s = em.merge(s);
         em.remove(s);
     }
+
+    public UserSpace getUserSpaceByUserAndSeries(String email, Long series_id) {
+        TypedQuery<UserSpace> q = em.createNamedQuery("UserSpace.findByUserAndSeries", UserSpace.class);
+        q.setParameter(1, email);
+        q.setParameter(2, series_id);
+        return q.getSingleResult();
+    }
+
+    public UserSpace getUserSpaceByUserAndSpace(String email, Long space_id) {
+        TypedQuery<UserSpace> q = em.createNamedQuery("UserSpace.findByUserAndSpace", UserSpace.class);
+        q.setParameter("email", email);
+        q.setParameter("space_id", space_id);
+        return q.getSingleResult();
+    }
 }

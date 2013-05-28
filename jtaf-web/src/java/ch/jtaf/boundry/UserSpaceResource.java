@@ -1,11 +1,9 @@
 package ch.jtaf.boundry;
 
-import ch.jtaf.control.DataService;
 import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.entity.UserSpace;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
@@ -24,36 +22,41 @@ import javax.ws.rs.core.Response;
 @Consumes({"application/json"})
 @Interceptors({TraceInterceptor.class})
 @Stateless
-public class UserSpaceResource {
-
-    @EJB
-    private DataService service;
+public class UserSpaceResource extends BaseResource {
 
     @GET
     public List<UserSpace> list(@QueryParam("space_id") Long spaceId) {
-        return service.getUserSpaces(spaceId);
+        return dataService.getUserSpaces(spaceId);
     }
 
     @POST
     public UserSpace save(UserSpace userSpace) {
-        if (userSpace.getUser().getConfirmationId() == null) {
-            SecurityUser user = service.get(SecurityUser.class, userSpace.getUser().getEmail());
-            if (user == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
+        if (isUserGrantedForSeries(userSpace.getSpace().getId())) {
+            if (userSpace.getUser().getConfirmationId() == null) {
+                SecurityUser user = dataService.get(SecurityUser.class, userSpace.getUser().getEmail());
+                if (user == null) {
+                    throw new WebApplicationException(Response.Status.NOT_FOUND);
+                }
+                userSpace.setUser(user);
             }
-            userSpace.setUser(user);
+            return dataService.save(userSpace);
+        } else {
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
-        return service.save(userSpace);
     }
 
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
-        UserSpace s = service.get(UserSpace.class, id);
-        if (s == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        UserSpace s = dataService.get(UserSpace.class, id);
+        if (isUserGrantedForSpace(s.getId())) {
+            if (s == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                dataService.delete(s);
+            }
         } else {
-            service.delete(s);
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
     }
 }

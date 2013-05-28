@@ -1,10 +1,8 @@
 package ch.jtaf.boundry;
 
-import ch.jtaf.control.DataService;
 import ch.jtaf.entity.Series;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
@@ -23,36 +21,37 @@ import javax.ws.rs.core.Response;
 @Consumes({"application/json"})
 @Interceptors({TraceInterceptor.class})
 @Stateless
-public class SeriesResource {
-
-    @EJB
-    private DataService service;
+public class SeriesResource extends BaseResource {
 
     @GET
-    public List<Series> list(@QueryParam("space_id") Long spaceId, @QueryParam("withCompetitions") String withCompetitions) {
+    public List<Series> list(@QueryParam("space_id") Long spaceId,
+            @QueryParam("withCompetitions") String withCompetitions) {
         if (withCompetitions == null || !Boolean.parseBoolean(withCompetitions)) {
-            return service.getSeriesList(spaceId);
+            return dataService.getSeriesList(spaceId);
         } else {
-            return service.getSeriesWithCompetitions(spaceId);
+            return dataService.getSeriesWithCompetitions(spaceId);
         }
     }
 
     @POST
     public Series save(Series series) {
-        return service.save(series);
+        if (isUserGrantedForSpace(series.getSpace_id())) {
+            return dataService.save(series);
+        } else {
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
+        }
     }
 
     @POST
     @Path("{id}")
     public void copy(@PathParam("id") Long id, @QueryParam("function") String function) {
-        service.copySeries(id);
+        dataService.copySeries(id);
     }
 
     @GET
     @Path("{id}")
-    public Series get(@PathParam("id") Long id)
-            throws WebApplicationException {
-        Series s = service.getSeries(id);
+    public Series get(@PathParam("id") Long id) {
+        Series s = dataService.getSeries(id);
         if (s == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
@@ -63,11 +62,15 @@ public class SeriesResource {
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
-        Series s = service.get(Series.class, id);
-        if (s == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        Series s = dataService.get(Series.class, id);
+        if (isUserGrantedForSpace(s.getSpace_id())) {
+            if (s == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                dataService.delete(s);
+            }
         } else {
-            service.delete(s);
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
     }
 }
