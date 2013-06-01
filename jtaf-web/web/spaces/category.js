@@ -3,16 +3,16 @@ var events;
 var series_id;
 
 function loadData() {
-    series_id = param().series_id;
+    series_id = searchMap.series_id;
     xhrGetSync("/jtaf/res/events?series_id=" + series_id, function(response) {
         events = JSON.parse(response);
     });
 
-    var id = param().id;
+    var id = searchMap.id;
     if (id === undefined) {
         category = new Object();
         fillEventsTable();
-        el("category_abbr").focus();
+        document.getElementById("category_abbr").focus();
     } else {
         xhrGet("/jtaf/res/categories/" + series_id, function(response) {
             parseAndFill(response);
@@ -30,23 +30,23 @@ function parseAndFill(response) {
 }
 
 function fillForm() {
-    el("category_id").value = category.id;
-    el("category_abbr").value = category.abbreviation;
-    el("category_name").value = category.name;
-    el("category_yearFrom").value = category.yearFrom;
-    el("category_yearTo").value = category.yearTo;
+    document.getElementById("category_id").value = category.id;
+    document.getElementById("category_abbr").value = category.abbreviation;
+    document.getElementById("category_name").value = category.name;
+    document.getElementById("category_yearFrom").value = category.yearFrom;
+    document.getElementById("category_yearTo").value = category.yearTo;
     if (category.gender === "m") {
-        el("category_gender_m").checked = true;
+        document.getElementById("category_gender_m").checked = true;
     }
     else {
-        el("category_gender_f").checked = true;
+        document.getElementById("category_gender_f").checked = true;
     }
     fillEventsTable();
-    el("category_abbr").focus();
+    document.getElementById("category_abbr").focus();
 }
 
 function fillEventsTable() {
-    var table = el("category_events");
+    var table = document.getElementById("category_events");
     table.innerHTML = "";
 
     for (var i = 0; i < 10; i++) {
@@ -85,11 +85,11 @@ function save() {
 }
 
 function fillCategory() {
-    category.abbreviation = el("category_abbr").value;
-    category.name = el("category_name").value;
-    category.yearFrom = el("category_yearFrom").value;
-    category.yearTo = el("category_yearTo").value;
-    if (el("category_gender_m").checked) {
+    category.abbreviation = document.getElementById("category_abbr").value;
+    category.name = document.getElementById("category_name").value;
+    category.yearFrom = document.getElementById("category_yearFrom").value;
+    category.yearTo = document.getElementById("category_yearTo").value;
+    if (document.getElementById("category_gender_m").checked) {
         category.gender = "m";
     } else {
         category.gender = "f";
@@ -101,7 +101,7 @@ function fillCategory() {
 function fillCategoryEvents() {
     category.events = [];
     for (var i = 0; i < 10; i++) {
-        var select = el("select" + i);
+        var select = document.getElementById("select" + i);
         var id = select.options[select.selectedIndex].value;
         events.forEach(function(ev) {
             if (ev.id == id) {

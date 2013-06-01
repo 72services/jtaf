@@ -12,6 +12,7 @@ import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.entity.Series;
 import ch.jtaf.entity.Space;
 import ch.jtaf.entity.UserSpace;
+import ch.jtaf.entity.UserSpaceRole;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
@@ -31,6 +32,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 @Interceptors({TraceInterceptor.class})
@@ -292,9 +294,58 @@ public class DataService extends AbstractService {
         em.merge(u);
     }
 
-    public List<UserSpace> getUserSpaces(Long spaceId) {
+    public List<UserSpace> getUserSpacesBySpaceId(Long spaceId) {
         TypedQuery<UserSpace> q = em.createNamedQuery("UserSpace.findAll", UserSpace.class);
         q.setParameter("space_id", spaceId);
+        return q.getResultList();
+    }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void deleteSpace(Space s) {
+        List<UserSpace> userSpaces = getUserSpacesBySpaceId(s.getId());
+        for (UserSpace userSpace : userSpaces) {
+            userSpace = em.merge(userSpace);
+            em.remove(userSpace);
+        }
+        s = em.merge(s);
+        em.remove(s);
+    }
+
+    public Object getUserSpaceByUserAndSeries(String email, Long series_id) {
+        Query q = em.createNamedQuery("UserSpace.findByUserAndSeries");
+        q.setParameter(1, email);
+        q.setParameter(2, series_id);
+        return q.getSingleResult();
+    }
+
+    public UserSpace getUserSpaceByUserAndSpace(String email, Long space_id) {
+        TypedQuery<UserSpace> q = em.createNamedQuery("UserSpace.findByUserAndSpace", UserSpace.class);
+        q.setParameter("email", email);
+        q.setParameter("space_id", space_id);
+        return q.getSingleResult();
+    }
+
+    public List<Space> getMySpaces(String name) {
+        TypedQuery<Space> q = em.createNamedQuery("Space.findByUser", Space.class);
+        q.setParameter("email", name);
+        List<Space> list = q.getResultList();
+        for (Space space : list) {
+            UserSpace userSpace = getUserSpacesOwnerBySpaceId(space.getId());
+            space.setOwner(userSpace.getUser().getEmail());
+        }
+        return list;
+    }
+
+    private UserSpace getUserSpacesOwnerBySpaceId(Long spaceId) {
+        TypedQuery<UserSpace> q = em.createNamedQuery("UserSpace.findByUserAndSpaceAndRole", UserSpace.class);
+        q.setParameter("role", UserSpaceRole.OWNER);
+        q.setParameter("space_id", spaceId);
+        return q.getSingleResult();
+    }
+
+    public List<UserSpace> getUserSpacesOfUser(String email) {
+        TypedQuery<UserSpace> q = em.createNamedQuery("UserSpace.findByUser", UserSpace.class);
+        q.setParameter("email", email);
         return q.getResultList();
     }
 }

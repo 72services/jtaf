@@ -1,7 +1,7 @@
 var ranking;
 
 function loadData() {
-    var id = param().id;
+    var id = searchMap.id;
     if (id === undefined) {
     } else {
         xhrGet("/jtaf/res/rankings/competition/" + id, function(response) {
@@ -33,7 +33,7 @@ function parseAndFill(response) {
     hright.innerHTML = ranking.competition.competitionDate;
     right.appendChild(hright);
 
-    el("title").appendChild(table);
+    document.getElementById("title").appendChild(table);
 
     createTable();
 }
@@ -104,7 +104,7 @@ function createTable() {
 
             rank++;
         });
-        el("main").appendChild(table);
+        document.getElementById("main").appendChild(table);
     });
 
 }

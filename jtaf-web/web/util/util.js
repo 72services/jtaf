@@ -1,3 +1,28 @@
+var searchMap = new (function(sSearch) {
+    var rNull = /^\s*$/, rBool = /^(true|false)$/i;
+    function buildValue(sValue) {
+        if (rNull.test(sValue)) {
+            return null;
+        }
+        if (rBool.test(sValue)) {
+            return sValue.toLowerCase() === "true";
+        }
+        if (isFinite(sValue)) {
+            return parseFloat(sValue);
+        }
+        if (isFinite(Date.parse(sValue))) {
+            return new Date(sValue);
+        }
+        return sValue;
+    }
+    if (sSearch.length > 1) {
+        for (var aItKey, nKeyId = 0, aCouples = sSearch.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {
+            aItKey = aCouples[nKeyId].split("=");
+            this[unescape(aItKey[0])] = aItKey.length > 1 ? buildValue(unescape(aItKey[1])) : null;
+        }
+    }
+})(window.location.search);
+
 function xhrGet(url, func) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
@@ -51,38 +76,6 @@ function xhrPost(url, func, body) {
     xhr.send(JSON.stringify(body));
 }
 
-function param() {
-    var sequence = window.location.search;
-    map = new Object();
-    if (sequence.length > 1) {
-        p = sequence.substr(1).split("&");
-        for (var i = 0; i < p.length; i++) {
-            kv = p[i].split("=");
-            key = decodeURIComponent(kv[0]);
-            if (key.match(/\W/)) {
-                throw "Error: key \"" + key
-                        + "\" has non alphanumeric characters";
-            }
-            if (key.charAt(0).match(/\d/)) {
-                throw "Error: key \"" + key
-                        + "\" has a leading numeric character";
-            }
-            value = decodeURIComponent(kv[1]);
-            if (eval("map." + key + "!=undefined")) {
-                throw "Error: key \"" + key + "\" set multiple times";
-            }
-            try {
-                eval("map." + key + "=value");
-            } catch (err) {
-            }
-        }
-    }
-    return map;
-}
-function el(name) {
-    return document.getElementById(name);
-}
-
 function createComparator(property) {
     return function(a, b) {
         if (a[property] < b[property]) {
@@ -100,7 +93,7 @@ function info(message) {
     div.setAttribute("id", "info");
     div.innerHTML = "<b>INFO</b><br />" + message;
     document.body.appendChild(div);
-    window.setTimeout("fade(el('info'))", 5000);
+    window.setTimeout("fade(document.getElementById('info'))", 5000);
 }
 
 function error(message) {
@@ -108,7 +101,7 @@ function error(message) {
     div.setAttribute("id", "error");
     div.innerHTML = "<b>ERROR</b><br />" + message;
     document.body.appendChild(div);
-    window.setTimeout("fade(el('error''))", 5000);
+    window.setTimeout("fade(document.getElementById('error''))", 5000);
 }
 
 function fade(element) {
@@ -122,4 +115,43 @@ function fade(element) {
         element.style.filter = "alpha(opacity=" + opacity * 100 + ")";
         opacity -= opacity * 0.1;
     }, 50);
+}
+
+function mask(inputName, mask, evt) {
+    try {
+        var text = document.getElementById(inputName);
+        var value = text.value;
+        // If user pressed DEL or BACK SPACE, clean the value
+        try {
+            var e = (evt.which) ? evt.which : event.keyCode;
+            if (e == 46 || e == 8) {
+                text.value = "";
+                return;
+            }
+        } catch (e1) {
+        }
+        var literalPattern = /[0\*]/;
+        var numberPattern = /[0-9]/;
+        var newValue = "";
+        for (var vId = 0, mId = 0; mId < mask.length; ) {
+            if (mId >= value.length) {
+                break;
+            }
+            // Number expected but got a different value, store only the valid portion
+            if (mask[mId] == '0' && value[vId].match(numberPattern) == null) {
+                break;
+            }
+            // Found a literal
+            while (mask[mId].match(literalPattern) == null) {
+                if (value[vId] == mask[mId]) {
+                    break;
+                }
+                newValue += mask[mId++];
+            }
+            newValue += value[vId++];
+            mId++;
+        }
+        text.value = newValue;
+    } catch (e) {
+    }
 }

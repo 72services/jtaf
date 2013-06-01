@@ -1,10 +1,8 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.entity.Event;
-import ch.jtaf.control.DataService;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
@@ -23,25 +21,26 @@ import javax.ws.rs.core.Response;
 @Consumes({"application/json"})
 @Interceptors({TraceInterceptor.class})
 @Stateless
-public class EventResource {
-
-    @EJB
-    private DataService service;
+public class EventResource extends BaseResource {
 
     @GET
     public List<Event> list(@QueryParam("series_id") Long seriesId) {
-        return service.getEvents(seriesId);
+        return dataService.getEvents(seriesId);
     }
 
     @POST
     public Event save(Event event) {
-        return service.save(event);
+        if (isUserGrantedForSeries(event.getSeries_id())) {
+            return dataService.save(event);
+        } else {
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
+        }
     }
 
     @GET
     @Path("{id}")
-    public Event get(@PathParam("id") Long id) throws WebApplicationException {
-        Event e = service.get(Event.class, id);
+    public Event get(@PathParam("id") Long id) {
+        Event e = dataService.get(Event.class, id);
         if (e == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
@@ -52,11 +51,15 @@ public class EventResource {
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
-        Event e = service.get(Event.class, id);
-        if (e == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        Event e = dataService.get(Event.class, id);
+        if (isUserGrantedForSeries(e.getSeries_id())) {
+            if (e == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                dataService.delete(e);
+            }
         } else {
-            service.delete(e);
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
     }
 }

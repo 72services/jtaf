@@ -10,11 +10,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "TSPACE")
 @NamedQueries({
-    @NamedQuery(name = "Space.findAll", query = "select s from Space s order by s.name")
+    @NamedQuery(name = "Space.findAll", query = "select s from Space s order by s.name"),
+    @NamedQuery(name = "Space.findByUser",
+            query = "select u.space from UserSpace u where u.user.email = :email")
 })
 public class Space {
 
@@ -28,6 +31,8 @@ public class Space {
     @OneToMany
     @JoinColumn(name = "space_id", insertable = false, updatable = false)
     private List<Club> clubs = new ArrayList<>();
+    @Transient
+    private String owner;
 
     public Long getId() {
         return id;
@@ -59,6 +64,14 @@ public class Space {
 
     public void setClubs(List<Club> clubs) {
         this.clubs = clubs;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     @Override

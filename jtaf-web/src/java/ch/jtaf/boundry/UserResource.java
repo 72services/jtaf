@@ -1,12 +1,8 @@
 package ch.jtaf.boundry;
 
-import ch.jtaf.control.DataService;
 import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.security.Principal;
-import javax.annotation.Resource;
-import javax.ejb.EJB;
-import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
@@ -22,18 +18,13 @@ import javax.ws.rs.core.Response;
 @Consumes({"application/json"})
 @Interceptors({TraceInterceptor.class})
 @Stateless
-public class UserResource {
-
-    @Resource
-    private SessionContext sc;
-    @EJB
-    private DataService service;
+public class UserResource extends BaseResource {
 
     @GET
     @Path("current")
     public SecurityUser getCurrentUser() {
-        Principal principal = sc.getCallerPrincipal();
-        SecurityUser user = service.get(SecurityUser.class, principal.getName());
+        Principal principal = sessionContext.getCallerPrincipal();
+        SecurityUser user = dataService.get(SecurityUser.class, principal.getName());
         if (user != null) {
             user.setSecret(null);
         }
@@ -43,7 +34,7 @@ public class UserResource {
     @POST
     public SecurityUser save(SecurityUser user) {
         try {
-            return service.saveUser(user);
+            return dataService.saveUser(user);
         } catch (IllegalStateException e) {
             throw new WebApplicationException(Response.Status.PRECONDITION_FAILED);
         }
@@ -53,6 +44,6 @@ public class UserResource {
     @Path("confirm")
     @Consumes({"text/plain"})
     public void save(String confirmationId) {
-        service.confirmUser(confirmationId);
+        dataService.confirmUser(confirmationId);
     }
 }

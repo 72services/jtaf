@@ -26,12 +26,17 @@ public class ReportService extends AbstractService {
     @EJB
     private RankingService rankingService;
 
-    public byte[] createSheets(Long competitionId) {
+    public byte[] createSheets(Long competitionId, String order) {
         Competition competition = em.find(Competition.class, competitionId);
         if (competition == null) {
             return null;
         } else {
-            TypedQuery<Athlete> query = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
+            TypedQuery<Athlete> query;
+            if (order != null && order.equals("club")) {
+                query = em.createNamedQuery("Athlete.findBySeriesOrderByClub", Athlete.class);
+            } else {
+                query = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
+            }
             query.setParameter("series_id", competition.getSeries_id());
             List<Athlete> athletes = query.getResultList();
 
@@ -63,7 +68,7 @@ public class ReportService extends AbstractService {
         Series series = em.find(Series.class, category.getSeries_id());
         Athlete template = new Athlete();
         template.setCategory(category);
-        
+
         Sheet sheet = new Sheet(template, series.getLogo());
         return sheet.create();
     }

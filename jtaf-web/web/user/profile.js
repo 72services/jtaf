@@ -12,10 +12,10 @@ function parseAndFill(response) {
 }
 
 function fillForm() {
-    el("user_email").value = user.email;
-    el("user_lastName").value = user.lastName;
-    el("user_firstName").value = user.firstName;
-    el("user_lastName").focus();
+    document.getElementById("user_email").value = user.email;
+    document.getElementById("user_lastName").value = user.lastName;
+    document.getElementById("user_firstName").value = user.firstName;
+    document.getElementById("user_lastName").focus();
 }
 
 function save() {
@@ -28,6 +28,6 @@ function save() {
 }
 
 function fillUser() {
-    user.lastName = el("user_lastName").value;
-    user.firstName = el("user_firstName").value;
+    user.lastName = document.getElementById("user_lastName").value;
+    user.firstName = document.getElementById("user_firstName").value;
 }

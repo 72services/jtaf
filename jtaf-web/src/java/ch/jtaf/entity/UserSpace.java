@@ -4,13 +4,24 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "UserSpace.findAll", query = "select u from UserSpace u where u.space.id = :space_id")
+    @NamedQuery(name = "UserSpace.findAll",
+            query = "select u from UserSpace u where u.space.id = :space_id"),
+    @NamedQuery(name = "UserSpace.findByUserAndSpace",
+            query = "select u from UserSpace u where u.user.email = :email and u.space.id = :space_id"),
+    @NamedQuery(name = "UserSpace.findByUser",
+            query = "select u from UserSpace u where u.user.email = :email"),
+    @NamedQuery(name = "UserSpace.findByUserAndSpaceAndRole",
+            query = "select u from UserSpace u where u.role = :role and u.space.id = :space_id")
 })
+@NamedNativeQuery(name = "UserSpace.findByUserAndSeries",
+        query = "SELECT U.* FROM USERSPACE U JOIN SERIES S ON S.SPACE_ID = U.SPACE_ID "
+        + "WHERE U.USER_EMAIL = ? AND S.ID = ?")
 public class UserSpace {
 
     @Id

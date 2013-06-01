@@ -1,10 +1,8 @@
 package ch.jtaf.boundry;
 
-import ch.jtaf.control.DataService;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
@@ -23,25 +21,26 @@ import javax.ws.rs.core.Response;
 @Consumes({"application/json"})
 @Interceptors({TraceInterceptor.class})
 @Stateless
-public class CompetitionResource {
-
-    @EJB
-    private DataService service;
+public class CompetitionResource extends BaseResource {
 
     @GET
     public List<Competition> list(@QueryParam("series_id") Long seriesId) {
-        return service.getCompetititions(seriesId);
+        return dataService.getCompetititions(seriesId);
     }
 
     @POST
     public Competition save(Competition competition) {
-        return service.save(competition);
+        if (isUserGrantedForSeries(competition.getSeries_id())) {
+            return dataService.save(competition);
+        } else {
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
+        }
     }
 
     @GET
     @Path("{id}")
-    public Competition get(@PathParam("id") Long id) throws WebApplicationException {
-        Competition c = service.get(Competition.class, id);
+    public Competition get(@PathParam("id") Long id) {
+        Competition c = dataService.get(Competition.class, id);
         if (c == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
@@ -52,11 +51,15 @@ public class CompetitionResource {
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
-        Competition c = service.get(Competition.class, id);
-        if (c == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        Competition c = dataService.get(Competition.class, id);
+        if (isUserGrantedForSeries(c.getSeries_id())) {
+            if (c == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                dataService.delete(c);
+            }
         } else {
-            service.delete(c);
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
     }
 }

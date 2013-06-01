@@ -3,7 +3,7 @@ var space;
 var userSpaces;
 
 function loadData() {
-    var id = param().space_id;
+    var id = searchMap.space_id;
     xhrGet("/jtaf/res/users/current", function(response) {
         user = JSON.parse(response);
     });
@@ -17,7 +17,7 @@ function loadData() {
 }
 
 function createSharesTableBody() {
-    var table = el("shares_table");
+    var table = document.getElementById("shares_table");
     table.innerHTML = "";
 
     if (userSpaces === undefined || userSpaces.length === 0) {
@@ -49,6 +49,7 @@ function createRow(table, userSpace, i) {
     var cellRole = row.insertCell(1);
 
     var select = document.createElement("select");
+    select.setAttribute("onchange", "save(" + i + ")");
     if (user.email === userSpace.user.email) {
         select.setAttribute("readonly");
         select.setAttribute("disabled");
@@ -66,20 +67,23 @@ function createRow(table, userSpace, i) {
         optionAdmin.selected = true;
     }
     select.appendChild(optionAdmin);
+    var optionOwner = document.createElement("option");
+    optionOwner.innerHTML = "OWNER";
+    if (userSpace.role === "OWNER") {
+        optionOwner.selected = true;
+    }
+    select.appendChild(optionOwner);
     cellRole.appendChild(select);
 
-    var save = document.createElement("a");
-    save.href = "#";
-    save.setAttribute("onclick", "save(" + i + ")");
-    save.appendChild(document.createTextNode("Save"));
-    var del = document.createElement("a");
-    del.href = "#";
-    del.setAttribute("onclick", "deleteUserSpace(" + space.id + ")");
-    del.appendChild(document.createTextNode("Delete"));
     var cellFunction = row.insertCell(2);
-    cellFunction.appendChild(save);
-    cellFunction.appendChild(document.createTextNode(" "));
-    cellFunction.appendChild(del);
+    cellFunction.setAttribute("style", "text-align: right;");
+    if (user.email !== userSpace.user.email) {
+        var del = document.createElement("a");
+        del.href = "#";
+        del.setAttribute("onclick", "deleteUserSpace(" + userSpace.id + ")");
+        del.appendChild(document.createTextNode("Delete"));
+        cellFunction.appendChild(del);
+    }
 }
 
 function deleteUserSpace(id) {
@@ -93,11 +97,11 @@ function deleteUserSpace(id) {
 
 function save(index) {
     var userSpace = userSpaces[index];
-    var userinput = el("userinput");
-    if (userinput !== undefined) {
+    var userinput = document.getElementById("userinput");
+    if (userinput != null) {
         userSpace.user.email = userinput.value;
     }
-    var select = el("select_" + index);
+    var select = document.getElementById("select_" + index);
     userSpace.role = select.options[select.selectedIndex].value;
 
     xhrPost("/jtaf/res/userspaces/", function() {
@@ -108,11 +112,11 @@ function save(index) {
 
 function addShare() {
     var index = userSpaces.length;
-    var table = el("shares_table");
+    var table = document.getElementById("shares_table");
     var userSpace = new Object();
     userSpace.space = space;
     userSpace.user = new Object();
     userSpaces[index] = userSpace;
     createRow(table, userSpace, index);
-    el("userinput").focus();
+    document.getElementById("userinput").focus();
 }

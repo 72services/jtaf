@@ -5,26 +5,26 @@ var clubs;
 var space_id;
 
 function loadData() {
-    space_id = param().space_id;
-    var id = param().id;
+    space_id = searchMap.space_id;
+    var id = searchMap.id;
 
     xhrGet("/jtaf/res/competitions/" + id, function(response) {
         competition = JSON.parse(response);
-        el("title").innerHTML = competition.name;
+        document.getElementById("title").innerHTML = competition.name;
     });
 
     xhrGetSync("/jtaf/res/clubs?space_id=" + space_id, function(response) {
         clubs = JSON.parse(response);
     });
 
-    el("search_term").focus();
+    document.getElementById("search_term").focus();
 }
 
 function search() {
     clear();
     hideOutput();
 
-    var searchterm = el("search_term").value;
+    var searchterm = document.getElementById("search_term").value;
     var number = parseInt(searchterm);
     if (number !== undefined && !isNaN(number) && typeof number === "number") {
         xhrGet("/jtaf/res/athletes/" + number, function(response) {
@@ -39,12 +39,12 @@ function search() {
 }
 
 function hideOutput() {
-    el("input_form").className = "invisible";
-    el("athlete_list").className = "invisible";
+    document.getElementById("input_form").className = "invisible";
+    document.getElementById("athlete_list").className = "invisible";
 }
 
 function fillClubSelect() {
-    var select = el("athlete_club");
+    var select = document.getElementById("athlete_club");
     for (var i in clubs) {
         var club = clubs[i];
         var option = document.createElement("option");
@@ -64,32 +64,32 @@ function parseAndFill(response) {
 }
 
 function fillForm() {
-    el("input_form").className = "";
+    document.getElementById("input_form").className = "";
 
-    el("athlete_id").value = athlete.id;
-    el("athlete_lastName").value = athlete.lastName;
-    el("athlete_lastName").focus();
-    el("athlete_firstName").value = athlete.firstName;
-    el("athlete_year").value = athlete.year;
+    document.getElementById("athlete_id").value = athlete.id;
+    document.getElementById("athlete_lastName").value = athlete.lastName;
+    document.getElementById("athlete_lastName").focus();
+    document.getElementById("athlete_firstName").value = athlete.firstName;
+    document.getElementById("athlete_year").value = athlete.year;
     if (athlete.gender !== undefined && athlete.gender !== null) {
-        el("athlete_gender_" + athlete.gender).checked = true;
+        document.getElementById("athlete_gender_" + athlete.gender).checked = true;
     } else {
-        el("athlete_gender_m").checked = false;
-        el("athlete_gender_f").checked = false;
+        document.getElementById("athlete_gender_m").checked = false;
+        document.getElementById("athlete_gender_f").checked = false;
     }
     if (athlete.category !== undefined) {
-        el("athlete_category").value = athlete.category.abbreviation;
-        el("results").setAttribute("style", "visibility: visible;");
+        document.getElementById("athlete_category").value = athlete.category.abbreviation;
+        document.getElementById("results").setAttribute("style", "visibility: visible;");
         fillEventsTable();
     } else {
-        el("athlete_category").value = "";
-        el("results").setAttribute("style", "visibility: hidden;");
+        document.getElementById("athlete_category").value = "";
+        document.getElementById("results").setAttribute("style", "visibility: hidden;");
     }
     fillClubSelect();
 }
 
 function fillEventsTable() {
-    var table = el("athlete_events");
+    var table = document.getElementById("athlete_events");
     table.innerHTML = "";
     if (athlete.category !== undefined) {
         var i = 0;
@@ -103,6 +103,7 @@ function fillEventsTable() {
             result.id = "result" + i;
             result.setAttribute("pattern", "\\d+\\.\\d{2}");
             result.setAttribute("onblur", "calculatePoints(" + i + ")");
+            //result.setAttribute("onkeyup", "mask('result" + i + "', '00.00', event);");
             cellResult.appendChild(result);
             var cellPoints = row.insertCell(2);
             var points = document.createElement("input");
@@ -118,13 +119,13 @@ function fillEventsTable() {
             }
             i++;
         });
-        el("result0").focus();
+        document.getElementById("result0").focus();
     }
 }
 
 function calculatePoints(i) {
     var ev = athlete.category.events[i];
-    var result = el("result" + i).value;
+    var result = document.getElementById("result" + i).value;
     var points = 0;
     if (ev.type === "run") {
         points = ev.a * Math.pow((ev.b - result * 100) / 100, ev.c);
@@ -140,7 +141,7 @@ function calculatePoints(i) {
         points = 0;
     }
     athlete.results[i] = {result: result, points: points, event: ev, competition: competition};
-    el("points" + i).value = points;
+    document.getElementById("points" + i).value = points;
 }
 
 function save() {
@@ -152,10 +153,10 @@ function save() {
 }
 
 function fillAthlete() {
-    athlete.firstName = el("athlete_firstName").value;
-    athlete.lastName = el("athlete_lastName").value;
-    athlete.year = el("athlete_year").value;
-    if (el("athlete_gender_m").checked) {
+    athlete.firstName = document.getElementById("athlete_firstName").value;
+    athlete.lastName = document.getElementById("athlete_lastName").value;
+    athlete.year = document.getElementById("athlete_year").value;
+    if (document.getElementById("athlete_gender_m").checked) {
         athlete.gender = "m";
     } else {
         athlete.gender = "f";
@@ -175,22 +176,22 @@ function addAthlete() {
 }
 
 function clear() {
-    var error_div = el("error");
+    var error_div = document.getElementById("error");
     if (error_div !== null) {
         document.body.removeChild(error_div);
     }
     athletes = null;
     athlete = {lastName: "", firstName: ""};
-    var table = el("athlete_events");
+    var table = document.getElementById("athlete_events");
     table.innerHTML = "";
     fillForm();
 }
 
 function parseAndFillAthletes(response) {
-    el("athlete_list").className = "";
+    document.getElementById("athlete_list").className = "";
 
     athletes = JSON.parse(response);
-    var table = el("athlete_table");
+    var table = document.getElementById("athlete_table");
     table.innerHTML = "";
     if (athletes === undefined || athletes.length === 0) {
         var row = table.insertRow(0);
@@ -239,7 +240,7 @@ function parseAndFillAthletes(response) {
 
 function selectAthlete(id) {
     xhrGet("/jtaf/res/athletes/" + id, function(response) {
-        el("athlete_list").className = "invisible";
+        document.getElementById("athlete_list").className = "invisible";
         parseAndFill(response);
     });
 }

@@ -1,10 +1,8 @@
 package ch.jtaf.boundry;
 
-import ch.jtaf.control.DataService;
 import ch.jtaf.entity.Club;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
@@ -23,25 +21,26 @@ import javax.ws.rs.core.Response;
 @Consumes({"application/json"})
 @Interceptors({TraceInterceptor.class})
 @Stateless
-public class ClubResource {
-
-    @EJB
-    private DataService service;
+public class ClubResource extends BaseResource {
 
     @GET
     public List<Club> list(@QueryParam("space_id") Long spaceId) {
-        return service.getClubs(spaceId);
+        return dataService.getClubs(spaceId);
     }
 
     @POST
     public Club save(Club club) {
-        return service.save(club);
+        if (isUserGrantedForSpace(club.getSpace_id())) {
+            return dataService.save(club);
+        } else {
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
+        }
     }
 
     @GET
     @Path("{id}")
-    public Club get(@PathParam("id") Long id) throws WebApplicationException {
-        Club c = service.get(Club.class, id);
+    public Club get(@PathParam("id") Long id) {
+        Club c = dataService.get(Club.class, id);
         if (c == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
@@ -52,11 +51,15 @@ public class ClubResource {
     @DELETE
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
-        Club c = service.get(Club.class, id);
-        if (c == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        Club c = dataService.get(Club.class, id);
+        if (isUserGrantedForSpace(c.getSpace_id())) {
+            if (c == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                dataService.delete(c);
+            }
         } else {
-            service.delete(c);
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
     }
 }

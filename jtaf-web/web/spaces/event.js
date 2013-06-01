@@ -2,12 +2,12 @@ var jtafEvent;
 var series_id;
 
 function loadData() {
-    series_id = param().series_id;
+    series_id = searchMap.series_id;
 
-    var id = param().id;
+    var id = searchMap.id;
     if (id === undefined) {
         jtafEvent = new Object();
-        el("event_name").focus();
+        document.getElementById("event_name").focus();
     } else {
         xhrGet("/jtaf/res/events/" + id, function(response) {
             parseAndFill(response);
@@ -25,8 +25,8 @@ function parseAndFill(response) {
 }
 
 function fillForm() {
-    el("event_id").value = jtafEvent.id;
-    el("event_name").value = jtafEvent.name;
+    document.getElementById("event_id").value = jtafEvent.id;
+    document.getElementById("event_name").value = jtafEvent.name;
     var index = 0;
     switch (jtafEvent.type) {
         case "run_long":
@@ -36,17 +36,17 @@ function fillForm() {
             index = 2;
             break;
     }
-    el("event_type").options[index].selected = true;
+    document.getElementById("event_type").options[index].selected = true;
     if (jtafEvent.gender === "m") {
-        el("event_gender_m").checked = true;
+        document.getElementById("event_gender_m").checked = true;
     }
     else {
-        el("event_gender_f").checked = true;
+        document.getElementById("event_gender_f").checked = true;
     }
-    el("event_a").value = jtafEvent.a;
-    el("event_b").value = jtafEvent.b;
-    el("event_c").value = jtafEvent.c;
-    el("event_name").focus();
+    document.getElementById("event_a").value = jtafEvent.a;
+    document.getElementById("event_b").value = jtafEvent.b;
+    document.getElementById("event_c").value = jtafEvent.c;
+    document.getElementById("event_name").focus();
 }
 
 function save() {
@@ -58,17 +58,17 @@ function save() {
 }
 
 function fillEvent() {
-    jtafEvent.name = el("event_name").value;
-    jtafEvent.type = el("event_type").value;
-    if (el("event_gender_m").checked) {
+    jtafEvent.name = document.getElementById("event_name").value;
+    jtafEvent.type = document.getElementById("event_type").value;
+    if (document.getElementById("event_gender_m").checked) {
         jtafEvent.gender = "m";
     }
     else {
         jtafEvent.gender = "f";
     }
-    jtafEvent.a = el("event_a").value;
-    jtafEvent.b = el("event_b").value;
-    jtafEvent.c = el("event_c").value;
+    jtafEvent.a = document.getElementById("event_a").value;
+    jtafEvent.b = document.getElementById("event_b").value;
+    jtafEvent.c = document.getElementById("event_c").value;
     jtafEvent.series_id = series_id;
 }
 
