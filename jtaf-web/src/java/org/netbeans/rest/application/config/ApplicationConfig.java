@@ -16,21 +16,24 @@ public class ApplicationConfig extends Application {
      * support.
      */
     private Set<Class<?>> getRestResourceClasses() {
-        Set<Class<?>> resources = new java.util.HashSet<Class<?>>();
+        Set<Class<?>> resources = new java.util.HashSet<>();
+        resources.add(ch.jtaf.boundry.AthleteResource.class);
         resources.add(ch.jtaf.boundry.CategoryResource.class);
         resources.add(ch.jtaf.boundry.ClubResource.class);
+        resources.add(ch.jtaf.boundry.CompetitionResource.class);
+        resources.add(ch.jtaf.boundry.EventResource.class);
         resources.add(ch.jtaf.boundry.RankingResource.class);
         resources.add(ch.jtaf.boundry.ReportResource.class);
+        resources.add(ch.jtaf.boundry.SeriesResource.class);
         resources.add(ch.jtaf.boundry.SpaceResource.class);
         resources.add(ch.jtaf.boundry.UserResource.class);
-        resources.add(ch.jtaf.boundry.CompetitionResource.class);
-        resources.add(ch.jtaf.boundry.AthleteResource.class);
-        resources.add(ch.jtaf.boundry.SeriesResource.class);
         resources.add(ch.jtaf.boundry.UserSpaceResource.class);
-        resources.add(ch.jtaf.boundry.EventResource.class);
+        // following code can be used to customize Jersey 2.0 JSON provider:
         try {
-            Class<?> jacksonProvider = Class.forName("org.codehaus.jackson.jaxrs.JacksonJsonProvider");
-            resources.add(jacksonProvider);
+            Class jsonProvider = Class.forName("org.glassfish.jersey.jackson.JacksonFeature");
+            // Class jsonProvider = Class.forName("org.glassfish.jersey.moxy.json.MoxyJsonFeature");
+            // Class jsonProvider = Class.forName("org.glassfish.jersey.jettison.JettisonFeature");
+            resources.add(jsonProvider);
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(getClass().getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
