@@ -16,7 +16,7 @@ public class ApplicationConfig extends Application {
      * support.
      */
     private Set<Class<?>> getRestResourceClasses() {
-        Set<Class<?>> resources = new java.util.HashSet<>();
+        Set<Class<?>> resources = new java.util.HashSet<Class<?>>();
         resources.add(ch.jtaf.boundry.AthleteResource.class);
         resources.add(ch.jtaf.boundry.CategoryResource.class);
         resources.add(ch.jtaf.boundry.ClubResource.class);
