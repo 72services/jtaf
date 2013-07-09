@@ -1,22 +1,23 @@
 var div = document.createElement("div");
+
 div.id = "navigation";
 
 var table = document.createElement("table");
 table.className = "navigation";
-var row = table.insertRow();
 
-var cell0 = row.insertCell(0);
-cell0.className = "navigation";
-cell0.style.width = "130px";
-cell0.style.paddingTop = "0px";
+var row0 = table.insertRow(0);
 
-var logo = document.createElement("img");
-logo.src = "/jtaf/images/logo.png";
-cell0.appendChild(logo);
+var cell00 = row0.insertCell(0);
+var cell01 = row0.insertCell(1);
+cell01.style.textAlign = "right";
+cell01.style.paddingTop = "35px";
+getUserInfo(cell01);
 
-var cell1 = row.insertCell(1);
-cell1.className = "navigation";
-cell1.style.paddingTop = "10px";
+var row1 = table.insertRow(1);
+
+var cell10 = row1.insertCell(0);
+cell10.className = "navigation";
+cell10.style.paddingTop = "40px";
 
 var home = document.createElement("a");
 home.id = "navigation_0";
@@ -25,7 +26,7 @@ home.name = "navigation_element";
 home.href = "/jtaf/index.html";
 home.setAttribute("onclick", "activateNavigation(0);");
 home.innerHTML = "Home";
-cell1.appendChild(home);
+cell10.appendChild(home);
 
 var spaces = document.createElement("a");
 spaces.id = "navigation_1";
@@ -34,11 +35,9 @@ spaces.name = "navigation_element";
 spaces.href = "/jtaf/spaces/index.html";
 spaces.setAttribute("onclick", "activateNavigation(1);");
 spaces.innerHTML = "My spaces";
-cell1.appendChild(spaces);
+cell10.appendChild(spaces);
 
-var cell2 = row.insertCell(2);
-cell2.style.textAlign = "right";
-getUserInfo(cell2);
+var cell11 = row1.insertCell(1);
 
 div.appendChild(table);
 
@@ -84,12 +83,15 @@ function getUserInfo(cell) {
             var profile = document.createElement("a");
             profile.href = "/jtaf/user/profile.html";
             profile.innerHTML = user.firstName + " " + user.lastName;
+            profile.style.color = "white";
             cell.appendChild(profile);
             cell.appendChild(document.createTextNode(" (" + user.email + ")"));
+            cell.style.color = "white";
         } else if (xhr.status === 204) {
             var login = document.createElement("a");
             login.href = "/jtaf/spaces/index.html";
             login.innerHTML = "Login";
+            login.style.color = "white";
             cell.appendChild(login);
 
             cell.appendChild(document.createTextNode(" "));
@@ -97,6 +99,7 @@ function getUserInfo(cell) {
             var register = document.createElement("a");
             register.href = "/jtaf/register.html";
             register.innerHTML = "Register";
+            register.style.color = "white";
             cell.appendChild(register);
         } else {
             error(xhr.status);

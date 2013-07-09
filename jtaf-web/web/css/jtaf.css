@@ -1,10 +1,10 @@
 body {
-    margin-top: 0px;
-    margin-left: 20px;
-    margin-right: 20px;
+    background-image: url(/jtaf/images/background.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0px;
     font-family: Segoe UI, Arial, Helvetica, sans-serif;
     font-size: 13px;
-    background-image: url("/jtaf/images/background.jpg");
     overflow: auto;
 }
 h1 {
@@ -26,44 +26,50 @@ h3 {
     font-size: 18px;
 }
 
-div#main {
-    padding-top: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-bottom: 30px;
+div#navigation {
+    padding-left: 35px;
+    padding-right: 50px;
     margin-left: auto; 
     margin-right: auto; 
-    margin-top: 30px;
     width: 800px;
-    background: #FFFFFF;
-    border-radius: 9px 9px 9px 9px;
+    height: 142px;
+    background-image: url(/jtaf/images/header.png); 
+    background-repeat: no-repeat;
 }
 
-div#navigation {
-    padding-left: 5px;
-    padding-right: 30px;
+div#main {
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 15px;
+    padding-bottom: 50px;
     margin-left: auto; 
     margin-right: auto; 
-    width: 820px;
-    background: #FFFFFF;
-    border-radius: 0px 0px 9px 9px;
+    width: 785px;
+    min-height: 300px;
+    background-image: url(/jtaf/images/content.png); 
+    background-repeat: repeat-y;
 }
 
 div#footer {
-    padding: 30px;
+    /*margin-top: -17px;*/
+    margin-top: 0px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 70px;
+    text-align: center;
+    color: white;
     margin-left: auto; 
     margin-right: auto; 
-    margin-top: 30px;
-    width: 800px;
-    background: #FFFFFF;
-    border-radius: 9px 9px 9px 9px;
+    width: 785px;
+    height: 137px;
+    background-image: url(/jtaf/images/footer.png); 
+    background-repeat: no-repeat;
 }
 
 div#tabs {
     border-width: 2px;
     border-style: solid;
     border-color: #FAF7B8;
-    border-radius: 0px 9px 9px 9px;
     padding-top: 0px;
     padding-left: 20px;
     padding-right: 20px;
@@ -106,32 +112,26 @@ div#error {
 }
 
 a.navigation_inactive {
-    margin-top: 5px;
     margin-right: 8px;
     padding: 15px;
-    border-radius: 0 0 9px 9px;
-    background-color: #99AC3B;
     overflow: hidden;
     text-decoration: none;
-    color: white;
+    color: #efefef;
     font-weight: bold;
 }
 
 a.navigation_active {
     margin-right: 8px;
     padding: 15px;
-    border-radius: 0 0 9px 9px;
-    background-color: #FAF7B8;
     overflow: hidden;
     text-decoration: none;
-    color: black;
+    color: #bddb8d;
     font-weight: bold;
 }
 
 a.tab_inactive {
     padding: 15px;
-    border-radius: 9px 9px 0px 0px;
-    background-color: #99AC3B;
+    background-color: #bddb8d;
     overflow: hidden;
     text-decoration: none;
     color: white;
@@ -140,8 +140,7 @@ a.tab_inactive {
 
 a.tab_active {
     padding: 15px;
-    border-radius: 9px 9px 0px 0px;
-    background-color: #FAF7B8;
+    background-color: #e1efca;
     overflow: hidden;
     text-decoration: none;
     color: black;
@@ -175,8 +174,14 @@ input[type="submit"]#search {
     font-weight: bold;
 }
 
-table.list, table.list_sortable, table.events, table.results, table.navigation  {
+table.list, table.list_sortable, table.events, table.results {
     width: 100%;
+    border-collapse: collapse;
+}
+
+table.navigation {
+    width: 100%;
+    height: 142px;
     border-collapse: collapse;
 }
 
@@ -195,13 +200,13 @@ table.list td, table.list_sortable td, table.input td, table.results td {
 
 table.list th {
     text-align: left;
-    background: #99AC3B;
+    background: #bddb8d;
     padding: 15px;
 }
 
 table.list_sortable th {
     text-align: left;
-    background: #99AC3B;
+    background: #bddb8d;
     padding-top: 15px;
     padding-right: 0px;
     padding-bottom: 15px;
@@ -209,33 +214,17 @@ table.list_sortable th {
     cursor: pointer;
 }
 
-table.list th:first-child { border-radius: 9px 0 0 0; }
-table.list th:last-child { border-radius: 0 9px 0 0; }
-table.list tr:last-child td:first-child { border-radius: 0 0 0 9px; }
-table.list tr:last-child td:last-child { border-radius: 0 0 9px 0; }
-table.list tr:nth-child(even) { background: #B9CC5B; }
-table.list tr:nth-child(odd) { background: #FAF7B8; }
+table.list tr:nth-child(even) { background: #e1efca; }
+table.list tr:nth-child(odd) { background: #efefef; }
 
-table.list_sortable th:first-child { border-radius: 9px 0 0 0; }
-table.list_sortable th:last-child { border-radius: 0 9px 0 0; }
-table.list_sortable tr:last-child td:first-child { border-radius: 0 0 0 9px; }
-table.list_sortable tr:last-child td:last-child { border-radius: 0 0 9px 0; }
-table.list_sortable tr:nth-child(even) { background: #B9CC5B; }
-table.list_sortable tr:nth-child(odd) { background: #FAF7B8; }
+table.list_sortable tr:nth-child(even) { background: #e1efca; }
+table.list_sortable tr:nth-child(odd) { background: #efefef; }
 
-table.input tr:first-child td:first-child { border-radius: 9px 0 0 0; }
-table.input tr:first-child td:last-child { border-radius: 0 9px 0 0; }
-table.input tr:last-child td:first-child { border-radius: 0 0 0 9px; }
-table.input tr:last-child td:last-child { border-radius: 0 0 9px 0; }
-table.input tr:nth-child(even) { background: #FAF7B8; }
-table.input tr:nth-child(odd) { background: #B9CC5B; }
+table.input tr:nth-child(even) { background: #e1efca; }
+table.input tr:nth-child(odd) { background: #efefef; }
 
-table.results tr:first-child td:first-child { border-radius: 9px 0 0 0; }
-table.results tr:first-child td:last-child { border-radius: 0 9px 0 0; }
-table.results tr:last-child td:first-child { border-radius: 0 0 0 9px; }
-table.results tr:last-child td:last-child { border-radius: 0 0 9px 0; }
-table.results tr:nth-child(even) { background: #FAF7B8; }
-table.results tr:nth-child(odd) { background: #B9CC5B; }
+table.results tr:nth-child(even) { background: #e1efca; }
+table.results tr:nth-child(odd) { background: #efefef; }
 
 table.navigation td {
     vertical-align: top;
@@ -257,8 +246,7 @@ ul.spaces li {
     padding-left: 30px;
     padding-top: 30px;
     padding-right: 30px;
-    border-radius: 9px 9px 9px 9px;
-    background-color: #FAF7B8;
+    background-color: #e1efca;
     overflow: hidden;
 } 
 
@@ -268,8 +256,7 @@ ul.series li {
     padding: 30px;
     margin-top: 20px;
     margin-bottom: 30px;
-    border-radius: 9px 9px 9px 9px;
-    background-color: #B9CC5B;
+    background-color: #bddb8d;
     overflow: hidden;
 } 
 
@@ -280,15 +267,13 @@ ul.competition li {
     margin-bottom: 0px;
     padding: 20px;
     height: 80px;
-    border-radius: 9px 9px 9px 9px;
-    background-color: #FAF7B8;
+    background-color: #e1efca;
     overflow: hidden;
 } 
 
 ul.series a {
     padding: 7px;
-    border-radius: 9px 9px 9px 9px;
-    background-color: #99AC3B;
+    background-color: #bddb8d;
     overflow: hidden;
     text-decoration: none;
     color: white;
@@ -297,8 +282,7 @@ ul.series a {
 
 ul.competitions a {
     padding: 7px;
-    border-radius: 9px 9px 9px 9px;
-    background-color: #99AC3B;
+    background-color: #bddb8d;
     overflow: hidden;
     text-decoration: none;
     color: white;
