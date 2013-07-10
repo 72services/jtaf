@@ -14,7 +14,7 @@ home.className = "navigation_inactive";
 home.name = "navigation_element";
 home.href = "/jtaf/index.html";
 home.setAttribute("onclick", "activateNavigation(0);");
-home.innerHTML = "Home";
+home.innerHTML = "HOME";
 divNavigation.appendChild(home);
 
 var spaces = document.createElement("a");
@@ -23,7 +23,7 @@ spaces.className = "navigation_inactive";
 spaces.name = "navigation_element";
 spaces.href = "/jtaf/spaces/index.html";
 spaces.setAttribute("onclick", "activateNavigation(1);");
-spaces.innerHTML = "My spaces";
+spaces.innerHTML = "MY SPACES";
 divNavigation.appendChild(spaces);
 
 divHeader.appendChild(divUserinfo);

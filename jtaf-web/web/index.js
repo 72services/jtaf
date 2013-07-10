@@ -32,21 +32,13 @@ function getCurrentUser() {
 
 function fillSpaces() {
     if (spaces !== undefined && spaces !== null) {
-        var ul_spaces = document.getElementById("ul_spaces");
-        ul_spaces.innerHTML = "";
+        var divSeries = document.getElementById("series");
+        divSeries.innerHTML = "";
 
         spaces.forEach(function(space) {
-            var li_space = document.createElement("li");
-            ul_spaces.appendChild(li_space);
-
-            var space_name = document.createElement("b");
-            space_name.className = "bigger";
-            space_name.innerHTML = space.name;
-            li_space.appendChild(space_name);
-
             var ul_series = document.createElement("ul");
             ul_series.className = "series";
-            li_space.appendChild(ul_series);
+            divSeries.appendChild(ul_series);
 
             space.series.forEach(function(series) {
                 var li_series = document.createElement("li");
