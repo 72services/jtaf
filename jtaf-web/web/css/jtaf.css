@@ -26,12 +26,12 @@ h3 {
     font-size: 18px;
 }
 
-div#navigation {
-    padding-left: 35px;
+div#header {
+    padding-left: 16px;
     padding-right: 50px;
     margin-left: auto; 
     margin-right: auto; 
-    width: 800px;
+    width: 819px;
     height: 142px;
     background-image: url(/jtaf/images/header.png); 
     background-repeat: no-repeat;
@@ -64,6 +64,15 @@ div#footer {
     height: 137px;
     background-image: url(/jtaf/images/footer.png); 
     background-repeat: no-repeat;
+}
+
+div#userinfo {
+    padding-top: 35px;
+    padding-left: 715px;
+}
+
+div#navigation {
+    padding-top: 55px;
 }
 
 div#tabs {
@@ -113,7 +122,7 @@ div#error {
 
 a.navigation_inactive {
     margin-right: 8px;
-    padding: 15px;
+    padding: 17px;
     overflow: hidden;
     text-decoration: none;
     color: #efefef;
@@ -122,10 +131,11 @@ a.navigation_inactive {
 
 a.navigation_active {
     margin-right: 8px;
-    padding: 15px;
+    padding: 17px;
     overflow: hidden;
     text-decoration: none;
     color: #bddb8d;
+    background-color: #010101;
     font-weight: bold;
 }
 
@@ -179,12 +189,6 @@ table.list, table.list_sortable, table.events, table.results {
     border-collapse: collapse;
 }
 
-table.navigation {
-    width: 100%;
-    height: 142px;
-    border-collapse: collapse;
-}
-
 table.ranking {
     width: 100%;
 }
@@ -225,10 +229,6 @@ table.input tr:nth-child(odd) { background: #efefef; }
 
 table.results tr:nth-child(even) { background: #e1efca; }
 table.results tr:nth-child(odd) { background: #efefef; }
-
-table.navigation td {
-    vertical-align: top;
-}
 
 td.small {
     font-size: 11px;

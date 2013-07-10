@@ -1,23 +1,12 @@
-var div = document.createElement("div");
+var divHeader = document.createElement("div");
+divHeader.id = "header";
 
-div.id = "navigation";
+var divUserinfo = document.createElement("div");
+divUserinfo.id = "userinfo";
+getUserInfo(divUserinfo);
 
-var table = document.createElement("table");
-table.className = "navigation";
-
-var row0 = table.insertRow(0);
-
-var cell00 = row0.insertCell(0);
-var cell01 = row0.insertCell(1);
-cell01.style.textAlign = "right";
-cell01.style.paddingTop = "35px";
-getUserInfo(cell01);
-
-var row1 = table.insertRow(1);
-
-var cell10 = row1.insertCell(0);
-cell10.className = "navigation";
-cell10.style.paddingTop = "40px";
+var divNavigation = document.createElement("div");
+divNavigation.id = "navigation";
 
 var home = document.createElement("a");
 home.id = "navigation_0";
@@ -26,7 +15,7 @@ home.name = "navigation_element";
 home.href = "/jtaf/index.html";
 home.setAttribute("onclick", "activateNavigation(0);");
 home.innerHTML = "Home";
-cell10.appendChild(home);
+divNavigation.appendChild(home);
 
 var spaces = document.createElement("a");
 spaces.id = "navigation_1";
@@ -35,13 +24,12 @@ spaces.name = "navigation_element";
 spaces.href = "/jtaf/spaces/index.html";
 spaces.setAttribute("onclick", "activateNavigation(1);");
 spaces.innerHTML = "My spaces";
-cell10.appendChild(spaces);
+divNavigation.appendChild(spaces);
 
-var cell11 = row1.insertCell(1);
+divHeader.appendChild(divUserinfo);
+divHeader.appendChild(divNavigation);
 
-div.appendChild(table);
-
-document.body.appendChild(div);
+document.body.appendChild(divHeader);
 
 var active = sessionStorage.getItem("navigation_active");
 if (active !== undefined) {
@@ -74,7 +62,7 @@ function deactivateLinks() {
     }
 }
 
-function getUserInfo(cell) {
+function getUserInfo(div) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/jtaf/res/users/current", true);
     xhr.onload = function() {
@@ -84,23 +72,21 @@ function getUserInfo(cell) {
             profile.href = "/jtaf/user/profile.html";
             profile.innerHTML = user.firstName + " " + user.lastName;
             profile.style.color = "white";
-            cell.appendChild(profile);
-            cell.appendChild(document.createTextNode(" (" + user.email + ")"));
-            cell.style.color = "white";
+            div.appendChild(profile);
         } else if (xhr.status === 204) {
             var login = document.createElement("a");
             login.href = "/jtaf/spaces/index.html";
             login.innerHTML = "Login";
             login.style.color = "white";
-            cell.appendChild(login);
+            div.appendChild(login);
 
-            cell.appendChild(document.createTextNode(" "));
+            div.appendChild(document.createTextNode(" "));
 
             var register = document.createElement("a");
             register.href = "/jtaf/register.html";
             register.innerHTML = "Register";
             register.style.color = "white";
-            cell.appendChild(register);
+            div.appendChild(register);
         } else {
             error(xhr.status);
         }
