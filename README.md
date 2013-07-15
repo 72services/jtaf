@@ -14,6 +14,7 @@ JTAF is used on the following events:
 
 - Concours intersection (Erlach, La Neuveville, Le Landeron, Nods, Twann) two to three times every year
 - Erlacher youth championship every year in autumn 
+
 It would be a pleasure if you send me a short email, if you use JTAF at your competition. The competition will be published here. Thank you.
 
 ## Background
