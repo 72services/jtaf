@@ -157,8 +157,8 @@ public class DataService extends AbstractService {
     }
 
     private List<Event> copyEvents(Series orig, Series series) {
-        TypedQuery<Event> q = em.createNamedQuery("Event.findBySeries", Event.class);
-        q.setParameter("series", orig);
+        TypedQuery<Event> q = em.createNamedQuery("Event.findAll", Event.class);
+        q.setParameter("series_id", orig.getId());
         List<Event> events = q.getResultList();
         List<Event> copies = new ArrayList<>();
         for (Event event : events) {
