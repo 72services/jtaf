@@ -176,17 +176,23 @@ function translate(field) {
     if (i18messages === undefined) {
         loadMessages();
     }
-    var message = i18messages[field];
-    if (message !== undefined) {
-        return i18messages[field];
+    if (i18messages !== undefined) {
+        var message = i18messages[field];
+        if (message !== undefined) {
+            return i18messages[field];
+        }
     }
-    else {
-        return field;
-    }
+    return field;
 }
 
 function loadMessages() {
     var lang = window.navigator.language;
+    if (lang === undefined) {
+        lang = window.navigator.browserLanguage;
+        if (lang !== undefined) {
+            lang = lang.substring(0, 2);
+        }
+    }
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/jtaf/i18n/messages_" + lang + ".json", false);
     xhr.onload = function() {
