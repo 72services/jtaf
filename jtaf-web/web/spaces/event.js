@@ -73,7 +73,7 @@ function fillEvent() {
 }
 
 function deleteEvent(id) {
-    if (confirm(getString("Are you sure?"))) {
+    if (confirm(translate("Are you sure?"))) {
         xhrDelete("/jtaf/res/events/" + id, function() {
             loadData();
             info("Event deleted");

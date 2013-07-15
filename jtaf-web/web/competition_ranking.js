@@ -19,7 +19,7 @@ function parseAndFill(response) {
     var row = table.insertRow(0);
     var left = row.insertCell(0);
     var hleft = document.createElement("h1");
-    hleft.innerHTML = "<i18n>Ranking</i18n>";
+    hleft.innerHTML = '<span class="i18n">Ranking</span>';
     left.appendChild(hleft);
 
     var middle = row.insertCell(1);

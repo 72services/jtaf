@@ -76,7 +76,7 @@ function getUserInfo(div) {
         } else if (xhr.status === 204) {
             var login = document.createElement("a");
             login.href = "/jtaf/spaces/index.html";
-            login.innerHTML = "<i18n>Login</i18n>";
+            login.innerHTML = '<span class="i18n">Login</span>';
             login.style.color = "white";
             div.appendChild(login);
 
@@ -87,7 +87,7 @@ function getUserInfo(div) {
 
             var register = document.createElement("a");
             register.href = "/jtaf/register.html";
-            register.innerHTML = "<i18n>Register</i18n>";
+            register.innerHTML = '<span class="i18n">Register</span>';
             register.style.color = "white";
             div.appendChild(register);
         } else {

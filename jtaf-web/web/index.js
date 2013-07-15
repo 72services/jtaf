@@ -53,7 +53,7 @@ function fillSpaces() {
 
                 var a_ranking = document.createElement("a");
                 a_ranking.href = "javascript:openSeriesRankingPdf(" + series.id + ");";
-                a_ranking.innerHTML = "<i18n>Ranking</i18n>";
+                a_ranking.innerHTML = '<span class="i18n">Ranking</span>';
                 li_series.appendChild(a_ranking);
 
                 var ul_competitions = document.createElement("ul");
@@ -75,7 +75,7 @@ function fillSpaces() {
                     cell1.innerHTML = competition.competitionDate;
                     var cell2 = row.insertCell(2);
                     cell2.style.textAlign = "right";
-                    cell2.innerHTML = "<i18n>Athletes</i18n>" + competition.numberOfAthletes;
+                    cell2.innerHTML = '<span class="i18n">Athletes: </span>' + competition.numberOfAthletes;
 
                     var cell3 = row.insertCell(3);
                     cell3.style.textAlign = "right";
@@ -83,7 +83,7 @@ function fillSpaces() {
                     if (user != null && isUserGranted(user.email, series)) {
                         var a_results = document.createElement("a");
                         a_results.href = "input/results.html?id=" + competition.id + "&space_id=" + space.id;
-                        a_results.innerHTML = "<i18n>Enter results</i18n>";
+                        a_results.innerHTML = '<span class="i18n">Enter results</span>';
                         cell3.appendChild(a_results);
 
                         cell3.appendChild(document.createTextNode(" "));
@@ -91,7 +91,7 @@ function fillSpaces() {
 
                     var a_ranking = document.createElement("a");
                     a_ranking.href = "competition_ranking.html?id=" + competition.id;
-                    a_ranking.innerHTML = "<i18n>Ranking</i18n>";
+                    a_ranking.innerHTML = '<span class="i18n">Ranking</span>';
                     cell3.appendChild(a_ranking);
 
                     li_competition.appendChild(table);

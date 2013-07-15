@@ -1,7 +1,7 @@
 {
-    "MainTitle": "Track and Field Administration",
+    "Track and Field Administration": "Track and Field Administration",
     "Ranking": "Rangliste",
-    "Athletes": "Athleten: ",
+    "Athletes: ": "Athleten: ",
     "Enter results": "Resultateingabe",
     "Login": "Anmelden",
     "Email": "Email",
@@ -31,5 +31,7 @@
     "Copy": "Kopieren",
     "Save": "Speichern",
     "Space saved": "Space gespeichert",
-    "Are you sure?": "Sind Sie sicher?"
+    "Are you sure?": "Sind Sie sicher?",
+    "Loading space": "Spaces werden geladen",
+    "No clubs found": "Keine Vereine gefunden"
 }

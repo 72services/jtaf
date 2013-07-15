@@ -9,11 +9,12 @@ function loadData() {
     });
     xhrGet("/jtaf/res/users/current", function(response) {
         user = JSON.parse(response);
+        i18n();
     });
 }
 
 function deleteSpace(id) {
-    if (confirm(getString("Are you sure?"))) {
+    if (confirm(transalte("Are you sure?"))) {
         xhrDelete("/jtaf/res/spaces/" + id, function() {
             loadData();
             info("Space deleted");
@@ -42,13 +43,15 @@ function createSpacesTableBody() {
             cellName.setAttribute("onclick", onclickEdit);
             var share = document.createElement("a");
             share.href = "share.html?space_id=" + space.id;
-            var shareSpan = document.createElement("i18n");
+            var shareSpan = document.createElement("span");
+            shareSpan.setAttribute("class", "i18n");
             shareSpan.innerHTML = "Share";
             share.appendChild(shareSpan);
             var del = document.createElement("a");
             del.href = "#";
             del.setAttribute("onclick", "deleteSpace(" + space.id + ")");
-            var delSpan = document.createElement("i18n");
+            var delSpan = document.createElement("span");
+            delSpan.setAttribute("class", "i18n");
             delSpan.innerHTML = "Delete";
             del.appendChild(delSpan);
             var cellFunction = row.insertCell(1);

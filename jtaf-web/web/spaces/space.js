@@ -31,7 +31,7 @@ function fillForm() {
 }
 
 function deleteSeries(id) {
-    if (confirm(getString("Are you sure?"))) {
+    if (confirm(translate("Are you sure?"))) {
         xhrDelete("/jtaf/res/series/" + id, function() {
             loadData();
             info("Serie deleted");
@@ -40,7 +40,7 @@ function deleteSeries(id) {
 }
 
 function copySeries(id) {
-    if (confirm(getString("Are you sure?"))) {
+    if (confirm(translate("Are you sure?"))) {
         xhrPost("/jtaf/res/series/" + id + "?function=copy", function() {
             loadData();
             info("Series copied");
@@ -50,7 +50,7 @@ function copySeries(id) {
 }
 
 function deleteClub(id) {
-    if (confirm(getString("Are you sure?"))) {
+    if (confirm(translate("Are you sure?"))) {
         xhrDelete("/jtaf/res/clubs/" + id, function() {
             loadData();
             info("Club deleted");
@@ -65,7 +65,7 @@ function createSeriesTableBody() {
     if (space.series === undefined || space.series.length === 0) {
         var row = table.insertRow(0);
         var cell = row.insertCell(0);
-        cell.innerHTML = "<i18n>No series found</i18n>";
+        cell.innerHTML = translate("No series found");
         cell.setAttribute("colspan", 2);
     }
     else {
@@ -80,13 +80,15 @@ function createSeriesTableBody() {
             var copy = document.createElement("a");
             copy.href = "#";
             copy.setAttribute("onclick", "copySeries(" + series.id + ")");
-            var copySpan = document.createElement("i18n");
+            var copySpan = document.createElement("span");
+            copySpan.setAttribute("class", "i18n");
             copySpan.innerHTML = "Copy";
             copy.appendChild(copySpan);
             var del = document.createElement("a");
             del.href = "#";
             del.setAttribute("onclick", "deleteSeries(" + series.id + ")");
-            var delSpan = document.createElement("i18n");
+            var delSpan = document.createElement("span");
+            delSpan.setAttribute("class", "i18n");
             delSpan.innerHTML = "Delete";
             del.appendChild(delSpan);
             var cellFunction = row.insertCell(1);
@@ -107,7 +109,7 @@ function createClubsTableBody() {
     if (space.clubs === undefined || space.clubs.length === 0) {
         var row = table.insertRow(0);
         var cell = row.insertCell(0);
-        cell.innerHTML = "No clubs found";
+        cell.innerHTML = translate("No clubs found");
         cell.setAttribute("colspan", 3);
     }
     else {

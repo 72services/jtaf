@@ -93,7 +93,7 @@ function createComparator(property) {
 function info(message) {
     var div = document.createElement("div");
     div.setAttribute("id", "info");
-    div.innerHTML = "<b>INFO</b><br />" + getString(message);
+    div.innerHTML = "<b>INFO</b><br />" + translate(message);
     document.body.appendChild(div);
     window.setTimeout("fade(document.getElementById('info'))", 5000);
 }
@@ -101,7 +101,7 @@ function info(message) {
 function error(message) {
     var div = document.createElement("div");
     div.setAttribute("id", "error");
-    div.innerHTML = "<b>ERROR</b><br />" + getString(message);
+    div.innerHTML = "<b>ERROR</b><br />" + translate(message);
     document.body.appendChild(div);
     window.setTimeout("fade(document.getElementById('error''))", 5000);
 }
@@ -159,20 +159,20 @@ function mask(inputName, mask, evt) {
 }
 
 function i18n() {
-    document.title = getString(document.title);
+    document.title = translate(document.title);
 
-    var elements = document.getElementsByTagName("i18n");
+    var elements = document.getElementsByClassName("i18n");
     for (var i = 0; i < elements.length; ++i) {
-        elements[i].innerHTML = getString(elements[i].innerHTML);
+        elements[i].innerHTML = translate(elements[i].innerHTML);
     }
 
     var elements = document.getElementsByTagName("input");
     for (var i = 0; i < elements.length; ++i) {
-        elements[i].value = getString(elements[i].value);
+        elements[i].value = translate(elements[i].value);
     }
 }
 
-function getString(field) {
+function translate(field) {
     if (i18messages === undefined) {
         loadMessages();
     }
