@@ -18,6 +18,8 @@ function loadData() {
     });
 
     document.getElementById("search_term").focus();
+    
+    i18n();
 }
 
 function search() {

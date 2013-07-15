@@ -11,21 +11,21 @@
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
-            <h1>Edit Event</h1>
+            <h1><span class="i18n">Edit Event</span></h1>
 
             <form action="javascript:save();">
 
                 <table class="input">
                     <tr>
-                        <td>Id</td>
+                        <td><span class="i18n">Id</span></td>
                         <td><input type="text" id="event_id" readonly disabled /></td>
                     </tr>
                     <tr>
-                        <td>Name</td>
+                        <td><span class="i18n">Name</span></td>
                         <td><input type="text" id="event_name" required /></td>
                     </tr>
                     <tr>
-                        <td>Type</td>
+                        <td><span class="i18n">Type</span></td>
                         <td>
                             <select id="event_type">
                                 <option value="run">run</option>
@@ -35,7 +35,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Gender</td>
+                        <td><span class="i18n">Gender</span></td>
                         <td>
                             <input id="event_gender_m" type="radio" name="event_gender" value="m">m
                             <input id="event_gender_f" type="radio" name="event_gender" value="f">f
@@ -57,7 +57,7 @@
 
                 <p>
                     <input type="submit" value="Save" />&nbsp;
-                    <a href="javascript:back();">Back</a>
+                    <a href="javascript:back();"><span class="i18n">Back</span></a>
                 </p>
 
             </form>

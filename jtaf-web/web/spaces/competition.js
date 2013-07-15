@@ -7,9 +7,11 @@ function loadData() {
     if (id === undefined) {
         competition = new Object();
         document.getElementById("competition_name").focus();
+        i18n();
     } else {
         xhrGet("/jtaf/res/competitions/" + id, function(response) {
             parseAndFill(response);
+            i18n();
         });
     }
 }

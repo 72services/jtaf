@@ -12,9 +12,11 @@ function loadData() {
         fillClubSelect();
         athlete = new Object();
         document.getElementById("athlete_lastName").focus();
+        i18n();
     } else {
         xhrGet("/jtaf/res/athletes/" + id, function(response) {
             parseAndFill(response);
+            i18n();
         });
     }
 }

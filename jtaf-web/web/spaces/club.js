@@ -6,10 +6,12 @@ function loadData() {
     var id = searchMap.id;
     if (id === undefined) {
         club = new Object();
-        document.getElementById("club_abbreviation").focus();
+        document.getElementById("club_abbreviation").focus
+        i18n();
     } else {
         xhrGet("/jtaf/res/clubs/" + id, function(response) {
             parseAndFill(response);
+            i18n();
         });
     }
 }

@@ -27,23 +27,23 @@
             </form>
 
             <div id="athlete_list" class="invisible">
-                <h2>Athletes</h2>
+                <h2><span class="i18n">Athletes</span></h2>
 
                 <table class="list">
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Last name</th>
-                            <th>First name</th>
-                            <th>Year</th>
-                            <th>Gender</th>
-                            <th>Category</th>
-                            <th>Club</th>
+                            <th><span class="i18n">Id</span></th>
+                            <th><span class="i18n">Last name</span></th>
+                            <th><span class="i18n">First name</span></th>
+                            <th><span class="i18n">Year</span></th>
+                            <th><span class="i18n">Gender</span></th>
+                            <th><span class="i18n">Category</span></th>
+                            <th><span class="i18n">Club</span></th>
                         </tr>
                     </thead>
                     <tbody id="athlete_table">
                         <tr>
-                            <td colspan="7">Loading athletes</td>
+                            <td colspan="7"><span class="i18n">Loading athletes</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -60,38 +60,38 @@
                             <td colspan="3"><input type="text" id="athlete_id" readonly disabled /></td>
                         </tr>
                         <tr>
-                            <td>Last name</td>
+                            <td><span class="i18n">Last name</span></td>
                             <td><input type="text" id="athlete_lastName" required /></td>
-                            <td>First name</td>
+                            <td><span class="i18n">First name</span></td>
                             <td><input type="text" id="athlete_firstName" required /></td>
                         </tr>
                         <tr>
-                            <td>Year</td>
+                            <td><span class="i18n">Year</span></td>
                             <td><input type="number" min="1900" max="2100" id="athlete_year" required /></td>
-                            <td>Gender</td>
+                            <td><span class="i18n">Gender</span></td>
                             <td>
                                 <input id="athlete_gender_m" type="radio" name="athlete_gender" value="m">m
                                 <input id="athlete_gender_f" type="radio" name="athlete_gender" value="f">f
                             </td>
                         </tr>
                         <tr>
-                            <td>Category</td>
+                            <td><span class="i18n">Category</span></td>
                             <td><input type="text" id="athlete_category" readonly disabled /></td>
-                            <td>Club</td>
+                            <td><span class="i18n">Club</span></td>
                             <td><select id="athlete_club"></select></td>
                         </tr>
                     </table>
 
                     <p>
                         <input type="submit" value="Save" />&nbsp;
-                        <a href="#" onclick="addAthlete();">Add athlete</a>&nbsp;
-                        <a href="../index.html">Back</a>
+                        <a href="#" onclick="addAthlete();"><span class="i18n">Add athlete</span></a>&nbsp;
+                        <a href="../index.html"><span class="i18n">Back</span></a>
                     </p>
 
                     <br>
 
                     <div id="results">
-                        <h2>Results</h2>
+                        <h2><span class="i18n">Results</span></h2>
                         <table id="athlete_events" class="results"></table>
 
                         <p>

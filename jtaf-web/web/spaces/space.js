@@ -8,6 +8,7 @@ function loadData() {
         createSeriesTableBody();
         createClubsTableBody();
         document.getElementById("space_name").focus();
+        i18n();
     } else {
         xhrGet("/jtaf/res/spaces/" + id, function(response) {
             parseAndFillSpace(response);

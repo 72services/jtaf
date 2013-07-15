@@ -6,13 +6,16 @@ function loadData() {
     var id = searchMap.space_id;
     xhrGet("/jtaf/res/users/current", function(response) {
         user = JSON.parse(response);
+        i18n();
     });
     xhrGet("/jtaf/res/spaces/" + id, function(response) {
         space = JSON.parse(response);
+        i18n();
     });
     xhrGet("/jtaf/res/userspaces?space_id=" + id, function(response) {
         userSpaces = JSON.parse(response);
         createSharesTableBody();
+        i18();
     });
 }
 

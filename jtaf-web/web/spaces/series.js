@@ -12,18 +12,23 @@ function loadData() {
     if (series_id === undefined) {
         series = new Object();
         document.getElementById("series_name").focus();
+        i18n();
     } else {
         xhrGet("/jtaf/res/series/" + series_id, function(response) {
             parseAndFillSeries(response);
+            i18n();
         });
         xhrGet("/jtaf/res/categories?series_id=" + series_id, function(response) {
             parseAndFillCategories(response);
+            i18n();
         });
         xhrGet("/jtaf/res/events?series_id=" + series_id, function(response) {
             parseAndFillEvents(response);
+            i18n();
         });
         xhrGet("/jtaf/res/athletes?series_id=" + series_id, function(response) {
             parseAndFillAthletes(response);
+            i18n();
         });
     }
     var active_tab = localStorage.getItem("active_tab");

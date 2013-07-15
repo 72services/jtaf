@@ -13,9 +13,11 @@ function loadData() {
         category = new Object();
         fillEventsTable();
         document.getElementById("category_abbr").focus();
+        i18n();
     } else {
         xhrGet("/jtaf/res/categories/" + series_id, function(response) {
             parseAndFill(response);
+            i18n();
         });
     }
 }

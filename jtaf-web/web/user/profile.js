@@ -3,6 +3,7 @@ var user;
 function loadData() {
     xhrGet("/jtaf/res/users/current", function(response) {
         parseAndFill(response);
+        i18();
     });
 }
 

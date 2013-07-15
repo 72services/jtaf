@@ -11,49 +11,49 @@
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
-            <h1>Edit Athlete</h1>
+            <h1><span class="i18n">Edit Athlete</span></h1>
 
             <form action="javascript:save();">
 
                 <table class="input">
                     <tr>
-                        <td>Id</td>
+                        <td><span class="i18n">Id</span></td>
                         <td><input type="text" id="athlete_id" readonly disabled /></td>
                     </tr>
                     <tr>
-                        <td>Last name</td>
+                        <td><span class="i18n">Last name</span></td>
                         <td><input type="text" id="athlete_lastName" required /></td>
                     </tr>
                     <tr>
-                        <td>First name</td>
+                        <td><span class="i18n">First name</span></td>
                         <td><input type="text" id="athlete_firstName" required /></td>
                     </tr>
                     <tr>
-                        <td>Year</td>
+                        <td><span class="i18n">Year</span></td>
                         <td>
                             <input type="number" min="1900" max="2100" id="athlete_year" required />
                         </td>
                     </tr>
                     <tr>
-                        <td>Gender</td>
+                        <td><span class="i18n">Gender</span></td>
                         <td>
                             <input id="athlete_gender_m" type="radio" name="athlete_gender" value="m">m
                             <input id="athlete_gender_f" type="radio" name="athlete_gender" value="f" >f
                         </td>
                     </tr>
                     <tr>
-                        <td>Category</td>
+                        <td><span class="i18n">Category</span></td>
                         <td><input type="text" id="athlete_category" readonly disabled /></td>
                     </tr>
                     <tr>
-                        <td>Club</td>
+                        <td><span class="i18n">Club</span></td>
                         <td><select id="athlete_club"></select></td>
                     </tr>
                 </table>
 
                 <p>
                     <input type="submit" value="Save" />&nbsp;
-                    <a href="javascript:back();">Back</a>
+                    <a href="javascript:back();"><span class="i18n">Back</span></a>
                 </p>
 
             </form>

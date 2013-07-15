@@ -11,66 +11,66 @@
         <script src="/jtaf/header.js"></script>
 
         <div id = "main">
-            
-            <h1>Edit Series</h1>
+
+            <h1><span class="i18n">Edit Series</span></h1>
 
             <form action="javascript:save();">
                 <div style="padding-bottom: 50px;">
                     <table class="input">
                         <tr>
-                            <td>Id</td>
+                            <td><span class="i18n">Id</span></td>
                             <td><input type="text" id="series_id" readonly disabled /></td>
                         </tr>
                         <tr>
-                            <td>Name</td>
+                            <td><span class="i18n">Name</span></td>
                             <td><input type="text" id="series_name" required /></td>
                         </tr>
                     </table>
 
                     <p>
-                        <input type="submit" value="Save" />&nbsp;<a href="javascript:back();">Back</a>
+                        <input type="submit" value="Save" />&nbsp;<a href="javascript:back();"><span class="i18n">Back</span></a>
                     </p>
                 </div>
 
                 <div style="padding-bottom: 14px;">
-                    <a id="a_competitions" class="tab_active" href="#" onclick="switchTo('competitions');">Competitions</a>&nbsp;
-                    <a id="a_events" class="tab_inactive" href="#" onclick="switchTo('events');">Events</a>&nbsp;
-                    <a id="a_categories" class="tab_inactive" href="#" onclick="switchTo('categories');">Categories</a>&nbsp;
-                    <a id="a_athletes" class="tab_inactive" href="#" onclick="switchTo('athletes');">Athletes</a>
+                    <a id="a_competitions" class="tab_active" href="#" onclick="switchTo('competitions');"><span class="i18n">Competitions</span></a>&nbsp;
+                    <a id="a_events" class="tab_inactive" href="#" onclick="switchTo('events');"><span class="i18n">Events</span></a>&nbsp;
+                    <a id="a_categories" class="tab_inactive" href="#" onclick="switchTo('categories');"><span class="i18n">Categories</span></a>&nbsp;
+                    <a id="a_athletes" class="tab_inactive" href="#" onclick="switchTo('athletes');"><span class="i18n">Athletes</span></a>
                 </div>
 
                 <div id="tabs"> 
 
                     <div id="competitions" class="visible">
-                        <h2>Competitions</h2>
+                        <h2><span class="i18n">Competitions</span></h2>
 
                         <table class="list">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Date</th>
+                                    <th><span class="i18n">Name</span></th>
+                                    <th><span class="i18n">Date</span></th>
                                     <th style="width: 220px; text-align: right;"></th>
                                 </tr>
                             </thead>
                             <tbody id="competition_table">
                                 <tr>
-                                    <td colspan="3">Loading competitions</td>
+                                    <td colspan="3"><span class="i18n">Loading competitions</span></td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <p><a href="javascript:addCompetition();">Add competition</a></p>
+                        <p><a href="javascript:addCompetition();"><span class="i18n">Add competition</span></a></p>
                     </div>
 
                     <div id="events" class="invisible">
-                        <h2>Events</h2>
+                        <h2><span class="i18n">Events</span></h2>
 
                         <table class="list">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Type</th>
-                                    <th>Gender</th>
+                                    <th><span class="i18n">Name</span></th>
+                                    <th><span class="i18n">Type</span></th>
+                                    <th><span class="i18n">Gender</span></th>
                                     <th>A</th>
                                     <th>B</th>
                                     <th>C</th>
@@ -79,71 +79,71 @@
                             </thead>
                             <tbody id="event_table">
                                 <tr>
-                                    <td colspan="7">Loading events</td>
+                                    <td colspan="7"><span class="i18n">Loading events</span></td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <p><a href="javascript:addEvent();">Add event</a></p>
+                        <p><a href="javascript:addEvent();"><span class="i18n">Add event</span></a></p>
                     </div>
 
                     <div id="categories" class="invisible">
-                        <h2>Categories</h2>
+                        <h2><span class="i18n">Categories</span></h2>
 
                         <table class="list">
                             <thead>
                                 <tr>
-                                    <th>Key</th>
-                                    <th>Name</th>
-                                    <th>From</th>
-                                    <th>To</th>
-                                    <th>Gender</th>
+                                    <th><span class="i18n">Key</span></th>
+                                    <th><span class="i18n">Name</span></th>
+                                    <th><span class="i18n">From</span></th>
+                                    <th><span class="i18n">To</span></th>
+                                    <th><span class="i18n">Gender</span></th>
                                     <th style="width: 80px; text-align: right;"></th>
                                 </tr>
                             </thead>
                             <tbody id="category_table">
                                 <tr>
-                                    <td colspan="6">Loading categories</td>
+                                    <td colspan="6"><span class="i18n">Loading categories</span></td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <p><a href="javascript:addCategory();">Add category</a></p>
+                        <p><a href="javascript:addCategory();"><span class="i18n">Add category</span></a></p>
                     </div>
 
                     <div id="athletes" class="invisible">
-                        <h2>Athletes</h2>
+                        <h2><span class="i18n">Athletes</span></h2>
 
                         <table class="list_sortable">
                             <thead>
                                 <tr>
                                     <th style="padding-left: 15px !important;" onclick="sortBy('id');">
-                                        Id<br />
+                                        <span class="i18n">Id</span><br />
                                         <input id="id" type="text" style="width: 40px;" onkeyup="filter('lastName');">
                                     </th>
                                     <th onclick="sortBy('lastName');">
-                                        Last name<br />
+                                        <span class="i18n">Last name</span><br />
                                         <input id="lastName" type="text"  style="width: 80px;" onkeyup="filter('lastName');">
                                     </th>
                                     <th onclick="sortBy('firstName');">
-                                        First name<br />
+                                        <span class="i18n">First name</span><br />
                                         <input id="firstName" type="text" style="width: 80px;" onkeyup="filter('firstName');">
                                     </th>
                                     <th onclick="sortBy('year');">
-                                        Year
+                                        <span class="i18n">Year</span>
                                     </th>
                                     <th onclick="sortBy('gender');">
-                                        Gender
+                                        <span class="i18n">Gender</span>
                                         <br />
                                         <input id="gender" type="text" style="width: 40px;" onkeyup="filter('gender');">
                                     </th>
                                     <th onclick="sortBy('category');">
-                                        Category
+                                        <span class="i18n">Category</span>
                                         <br />
                                         <input id="category" type="text" style="width: 40px;" onkeyup="filter('category');">
                                     </th>
                                     <th onclick="sortBy('club');">
-                                        Club<br />
+                                        <span class="i18n">Club</span><br />
                                         <input id="club" type="text" style="width: 40px;" onkeyup="filter('club');">
                                     </th>
                                     <th style="width: 40px; text-align: right;"></th>
@@ -151,12 +151,12 @@
                             </thead>
                             <tbody id="athlete_table">
                                 <tr>
-                                    <td colspan="8">Loading athletes</td>
+                                    <td colspan="8"><span class="i18n">Loading athletes</span></td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <p><a href="javascript:addAthlete();">Add athlete</a></p>
+                        <p><a href="javascript:addAthlete();"><span class="i18n">Add athlete</span></a></p>
                     </div>
 
                 </div>

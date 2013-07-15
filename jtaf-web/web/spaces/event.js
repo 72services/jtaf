@@ -8,9 +8,11 @@ function loadData() {
     if (id === undefined) {
         jtafEvent = new Object();
         document.getElementById("event_name").focus();
+        i18n();
     } else {
         xhrGet("/jtaf/res/events/" + id, function(response) {
             parseAndFill(response);
+            i18n();
         });
     }
 }
