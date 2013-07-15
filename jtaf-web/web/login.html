@@ -4,21 +4,22 @@
         <meta charset="utf-8">
         <title>JTAF Login</title>
         <link rel="stylesheet" type="text/css" href="/jtaf/css/jtaf.css">
+        <script src="/jtaf/util/util.js"></script>
     </head>
-    <body>
+    <body onload="i18n();">
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
-            <h2>Login</h2>
+            <h2><i18n>Login</i18n></h2>
             <form action="j_security_check" method="POST">
 
                 <table class="input">
                     <tr>
-                        <td>Email</td>
+                        <td><i18n>Email</i18n></td>
                         <td><input id="username" type="text" name="j_username"></td>
                     </tr>
                     <tr>
-                        <td>Password</td>
+                        <td><i18n>Password</i18n></td>
                         <td><input type="password" name="j_password"></td>
                     </tr>
                 </table>

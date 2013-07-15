@@ -1,3 +1,5 @@
+var i18messages;
+
 var searchMap = new (function(sSearch) {
     var rNull = /^\s*$/, rBool = /^(true|false)$/i;
     function buildValue(sValue) {
@@ -137,11 +139,11 @@ function mask(inputName, mask, evt) {
             if (mId >= value.length) {
                 break;
             }
-            // Number expected but got a different value, store only the valid portion
+// Number expected but got a different value, store only the valid portion
             if (mask[mId] == '0' && value[vId].match(numberPattern) == null) {
                 break;
             }
-            // Found a literal
+// Found a literal
             while (mask[mId].match(literalPattern) == null) {
                 if (value[vId] == mask[mId]) {
                     break;
@@ -154,4 +156,38 @@ function mask(inputName, mask, evt) {
         text.value = newValue;
     } catch (e) {
     }
+}
+
+function i18n() {
+    document.title = getString(document.title);
+
+    var elements = document.getElementsByTagName("i18n");
+    for (var i = 0; i < elements.length; ++i) {
+        elements[i].innerHTML = getString(elements[i].innerHTML);
+    }
+}
+
+function getString(field) {
+    if (i18messages === undefined) {
+        loadMessages();
+    }
+    var message = i18messages[field];
+    if (message !== undefined) {
+        return i18messages[field];
+    }
+    else {
+        return field;
+    }
+}
+
+function loadMessages() {
+    var lang = window.navigator.language;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/jtaf/i18n/messages_" + lang + ".json", false);
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            i18messages = JSON.parse(xhr.response);
+        }
+    };
+    xhr.send();
 }

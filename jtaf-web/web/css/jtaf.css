@@ -26,6 +26,10 @@ h3 {
     font-size: 18px;
 }
 
+a, a:visited {
+   color: black; 
+}
+
 div#header {
     padding-left: 16px;
     padding-right: 50px;

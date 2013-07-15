@@ -80,7 +80,10 @@ function getUserInfo(div) {
             login.style.color = "white";
             div.appendChild(login);
 
-            div.appendChild(document.createTextNode(" | "));
+            var spacer = document.createElement("span");
+            spacer.innerHTML = " | ";
+            spacer.style.color = 'white';
+            div.appendChild(spacer);
 
             var register = document.createElement("a");
             register.href = "/jtaf/register.html";

@@ -6,6 +6,7 @@ function loadData() {
     } else {
         xhrGet("/jtaf/res/rankings/competition/" + id, function(response) {
             parseAndFill(response);
+            i18n();
         });
     }
 }
@@ -18,7 +19,7 @@ function parseAndFill(response) {
     var row = table.insertRow(0);
     var left = row.insertCell(0);
     var hleft = document.createElement("h1");
-    hleft.innerHTML = "Ranking";
+    hleft.innerHTML = "<i18n>Ranking</i18n>";
     left.appendChild(hleft);
 
     var middle = row.insertCell(1);

@@ -11,7 +11,6 @@ function loadData() {
     } else {
         xhrGet("/jtaf/res/spaces/" + id, function(response) {
             parseAndFillSpace(response);
-            fillBreadCrumb();
         });
     }
 }
@@ -28,10 +27,6 @@ function fillForm() {
     document.getElementById("space_id").value = space.id;
     document.getElementById("space_name").value = space.name;
     document.getElementById("space_name").focus();
-}
-
-function fillBreadCrumb() {
-    document.getElementById("curent_space").innerHTML = space.name;
 }
 
 function deleteSeries(id) {
