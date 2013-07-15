@@ -2,6 +2,8 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
 import java.security.Principal;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
@@ -19,6 +21,7 @@ public class BaseResource {
             dataService.getUserSpaceByUserAndSeries(principal.getName(), series_id);
             return true;
         } catch (Exception e) {
+            Logger.getLogger(BaseResource.class.getName()).log(Level.WARNING, e.getMessage(), e);
             return false;
         }
     }
@@ -29,6 +32,7 @@ public class BaseResource {
             dataService.getUserSpaceByUserAndSpace(principal.getName(), space_id);
             return true;
         } catch (Exception e) {
+            Logger.getLogger(BaseResource.class.getName()).log(Level.WARNING, e.getMessage(), e);
             return false;
         }
     }

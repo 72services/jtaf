@@ -75,22 +75,25 @@ function fillSpaces() {
                     var cell2 = row.insertCell(2);
                     cell2.style.textAlign = "right";
                     cell2.innerHTML = "Athletes: " + competition.numberOfAthletes;
-                    li_competition.appendChild(table);
+
+                    var cell3 = row.insertCell(3);
+                    cell3.style.textAlign = "right";
 
                     if (user != null && isUserGranted(user.email, series)) {
                         var a_results = document.createElement("a");
                         a_results.href = "input/results.html?id=" + competition.id + "&space_id=" + space.id;
                         a_results.innerHTML = "Enter results";
-                        li_competition.appendChild(a_results);
+                        cell3.appendChild(a_results);
 
-                        li_competition.appendChild(document.createTextNode(" "));
+                        cell3.appendChild(document.createTextNode(" "));
                     }
 
                     var a_ranking = document.createElement("a");
                     a_ranking.href = "competition_ranking.html?id=" + competition.id;
                     a_ranking.innerHTML = "Ranking";
-                    li_competition.appendChild(a_ranking);
+                    cell3.appendChild(a_ranking);
 
+                    li_competition.appendChild(table);
                     ul_competitions.appendChild(li_competition);
                 });
             });

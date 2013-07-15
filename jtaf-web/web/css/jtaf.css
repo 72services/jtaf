@@ -220,8 +220,8 @@ table.list_sortable th {
     cursor: pointer;
 }
 
-table.list, table.input tr:nth-child(even) { background: #f0f0f0; }
-table.list, table.input tr:nth-child(odd) { background: #fafafa; }
+table.list, table.input, table.list_sortable tr:nth-child(even) { background: #f0f0f0; }
+table.list, table.input, table.list_sortable tr:nth-child(odd) { background: #fafafa; }
 
 td.small {
     font-size: 11px;
@@ -236,10 +236,13 @@ ul {
 ul.series li {
     display: block;
     list-style: none;
-    padding: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 0px;
     margin-top: 20px;
     margin-bottom: 30px;
-    background-color: #bddb8d;
+    background-color: #f0f0f0;
     overflow: hidden;
 } 
 
@@ -247,29 +250,25 @@ ul.competition li {
     display: block;
     list-style: none;
     margin-top: 20px;
-    margin-bottom: 0px;
-    padding: 20px;
-    height: 80px;
-    background-color: #e1efca;
+    padding-bottom: 0px;
+    background-color: #fafafa;
     overflow: hidden;
 } 
 
 ul.series a {
     padding: 7px;
-    background-color: #bddb8d;
     overflow: hidden;
     text-decoration: none;
-    color: white;
-    font-weight: bold;
+    background-color: #fafafa;
+    color: black;
 }
 
-ul.competitions a {
+ul.competition a {
     padding: 7px;
-    background-color: #bddb8d;
+    background-color: #f0f0f0;
     overflow: hidden;
     text-decoration: none;
-    color: white;
-    font-weight: bold;
+    color: black;
 }
 
 .invisible {

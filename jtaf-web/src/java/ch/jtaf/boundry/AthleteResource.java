@@ -62,12 +62,10 @@ public class AthleteResource extends BaseResource {
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
         Athlete a = dataService.get(Athlete.class, id);
-        if (isUserGrantedForSeries(a.getSeries_id())) {
-            if (a == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
-            } else {
-                dataService.delete(a);
-            }
+        if (a == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } else if (isUserGrantedForSeries(a.getSeries_id())) {
+            dataService.delete(a);
         } else {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }

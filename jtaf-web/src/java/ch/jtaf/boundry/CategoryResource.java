@@ -52,12 +52,10 @@ public class CategoryResource extends BaseResource {
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
         Category c = dataService.get(Category.class, id);
-        if (isUserGrantedForSeries(c.getSeries_id())) {
-            if (c == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
-            } else {
-                dataService.delete(c);
-            }
+        if (c == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } else if (isUserGrantedForSeries(c.getSeries_id())) {
+            dataService.delete(c);
         } else {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }

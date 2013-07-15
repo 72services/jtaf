@@ -72,12 +72,10 @@ public class SpaceResource extends BaseResource {
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
         Space s = dataService.get(Space.class, id);
-        if (isUserGrantedForSpace(s.getId())) {
-            if (s == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
-            } else {
-                dataService.deleteSpace(s);
-            }
+        if (s == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } else if (isUserGrantedForSpace(s.getId())) {
+            dataService.deleteSpace(s);
         } else {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }

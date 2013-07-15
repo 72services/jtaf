@@ -63,12 +63,10 @@ public class SeriesResource extends BaseResource {
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
         Series s = dataService.get(Series.class, id);
-        if (isUserGrantedForSpace(s.getSpace_id())) {
-            if (s == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
-            } else {
-                dataService.delete(s);
-            }
+        if (s == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } else if (isUserGrantedForSpace(s.getSpace_id())) {
+            dataService.delete(s);
         } else {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }

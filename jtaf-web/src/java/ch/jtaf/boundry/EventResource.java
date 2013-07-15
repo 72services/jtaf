@@ -52,12 +52,10 @@ public class EventResource extends BaseResource {
     @Path("{id}")
     public void delete(@PathParam("id") Long id) {
         Event e = dataService.get(Event.class, id);
-        if (isUserGrantedForSeries(e.getSeries_id())) {
-            if (e == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
-            } else {
-                dataService.delete(e);
-            }
+        if (e == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } else if (isUserGrantedForSeries(e.getSeries_id())) {
+            dataService.delete(e);
         } else {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
