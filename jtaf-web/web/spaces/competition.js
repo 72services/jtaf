@@ -45,7 +45,7 @@ function fillCompetition() {
 }
 
 function deleteCompetition(id) {
-    if (confirm("Are you sure?")) {
+    if (confirm(getString("Are you sure?"))) {
         xhrDelete("/jtaf/res/competitions/" + id, function() {
             loadData();
             info("Competition deleted");

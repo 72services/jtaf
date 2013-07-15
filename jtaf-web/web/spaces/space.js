@@ -31,7 +31,7 @@ function fillForm() {
 }
 
 function deleteSeries(id) {
-    if (confirm("Are you sure?")) {
+    if (confirm(getString("Are you sure?"))) {
         xhrDelete("/jtaf/res/series/" + id, function() {
             loadData();
             info("Serie deleted");
@@ -40,7 +40,7 @@ function deleteSeries(id) {
 }
 
 function copySeries(id) {
-    if (confirm("Are you sure?")) {
+    if (confirm(getString("Are you sure?"))) {
         xhrPost("/jtaf/res/series/" + id + "?function=copy", function() {
             loadData();
             info("Series copied");
@@ -50,7 +50,7 @@ function copySeries(id) {
 }
 
 function deleteClub(id) {
-    if (confirm("Are you sure?")) {
+    if (confirm(getString("Are you sure?"))) {
         xhrDelete("/jtaf/res/clubs/" + id, function() {
             loadData();
             info("Club deleted");

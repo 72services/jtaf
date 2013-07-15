@@ -276,7 +276,7 @@ function fillSeries() {
 }
 
 function deleteCompetition(id) {
-    if (confirm("Are you sure?")) {
+    if (confirm(getString("Are you sure?"))) {
         xhrDelete("/jtaf/res/competitions/" + id, function() {
             loadData();
             info("Competition deleted");
@@ -285,7 +285,7 @@ function deleteCompetition(id) {
 }
 
 function deleteEvent(id) {
-    if (confirm("Are you sure?")) {
+    if (confirm(getString("Are you sure?"))) {
         xhrDelete("/jtaf/res/events/" + id, function() {
             loadData();
             info("Event deleted");
@@ -294,7 +294,7 @@ function deleteEvent(id) {
 }
 
 function deleteAthlete(id) {
-    if (confirm("Are you sure?")) {
+    if (confirm(getString("Are you sure?"))) {
         xhrDelete("/jtaf/res/athletes/" + id, function() {
             loadData();
             info("Athlete deleted");
@@ -303,7 +303,7 @@ function deleteAthlete(id) {
 }
 
 function deleteCategory(id) {
-    if (confirm("Are you sure?")) {
+    if (confirm(getString("Are you sure?"))) {
         xhrDelete("/jtaf/res/categories/" + id, function() {
             loadData();
             info("Category deleted");

@@ -41,7 +41,7 @@ function fillClub() {
 }
 
 function deleteClub(id) {
-    if (confirm("Are you sure?")) {
+    if (confirm(getString("Are you sure?"))) {
         xhrDelete("/jtaf/res/clubs/" + id, function() {
             loadData();
             info("Club deleted");

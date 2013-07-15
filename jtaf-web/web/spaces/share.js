@@ -87,7 +87,7 @@ function createRow(table, userSpace, i) {
 }
 
 function deleteUserSpace(id) {
-    if (confirm("Are you sure?")) {
+    if (confirm(getString("Are you sure?"))) {
         xhrDelete("/jtaf/res/userspaces/" + id, function() {
             loadData();
             info("Share deleted");

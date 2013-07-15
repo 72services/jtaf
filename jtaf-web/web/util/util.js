@@ -101,7 +101,7 @@ function info(message) {
 function error(message) {
     var div = document.createElement("div");
     div.setAttribute("id", "error");
-    div.innerHTML = "<b>ERROR</b><br />" + message;
+    div.innerHTML = "<b>ERROR</b><br />" + getString(message);
     document.body.appendChild(div);
     window.setTimeout("fade(document.getElementById('error''))", 5000);
 }

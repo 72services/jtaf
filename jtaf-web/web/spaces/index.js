@@ -13,7 +13,7 @@ function loadData() {
 }
 
 function deleteSpace(id) {
-    if (confirm("Are you sure?")) {
+    if (confirm(getString("Are you sure?"))) {
         xhrDelete("/jtaf/res/spaces/" + id, function() {
             loadData();
             info("Space deleted");
