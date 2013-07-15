@@ -71,8 +71,9 @@ div#footer {
 }
 
 div#userinfo {
+    width: 200px;
     padding-top: 35px;
-    padding-left: 715px;
+    padding-left: 685px;
 }
 
 div#navigation {

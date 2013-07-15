@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>JTAF</title>
+        <title>Edit Space</title>
         <link rel="stylesheet" type="text/css" href="../css/jtaf.css">
         <script src="../util/util.js"></script>
         <script src="space.js"></script>
@@ -11,8 +11,8 @@
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
-            <h1>Edit Space</h1>
-            
+            <h1><i18n>Edit Space</i18n></h1>
+
             <form action="javascript:save();">
                 <div>
                     <table class="input">
@@ -27,37 +27,37 @@
                     </table>
 
                     <p>
-                        <input type="submit" value="Save" />&nbsp;<a href="index.html">Back</a>
+                        <input type="submit" value="Save" />&nbsp;<a href="index.html"><i18n>Back</i18n></a>
                     </p>
                 </div>
             </form>
 
-            <h1>Series</h1>
+            <h1><i18n>Series</i18n></h1>
 
             <table class="list">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th><i18n>Name</i18n></th>
                         <th style="width:80px; text-align: right;"></th>
                     </tr>
                 </thead>
                 <tbody id="series_table">
                     <tr>
-                        <td>Loading series</td>
-                        <td></td>
-                    </tr>
+                        <td><i18n>Loading series</i18n></td>
+                <td></td>
+                </tr>
                 </tbody>
             </table>
 
-            <p><a href="javascript:addSeries();">Add series</a></p>
+            <p><a href="javascript:addSeries();"><i18n>Add series</i18n></a></p>
 
-            <h1>Clubs</h1>
+            <h1><i18n>Clubs</i18n></h1>
 
             <table class="list">
                 <thead>
                     <tr>
-                        <th>Abbreviation</th>
-                        <th>Name</th>
+                        <th><i18n>Abbreviation</i18n></th>
+                        <th><i18n>Name</i18n></th>
                         <th style="width:40px; text-align: right;"></th>
                     </tr>
                 </thead>
@@ -68,7 +68,7 @@
                 </tbody>
             </table>
 
-            <p><a href="javascript:addClub();">Add club</a></p>
+            <p><a href="javascript:addClub();"><i18n>Add club</i18n></a></p>
         </div>
 
         <script src="/jtaf/footer.js"></script>

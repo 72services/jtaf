@@ -11,6 +11,7 @@ function loadData() {
     } else {
         xhrGet("/jtaf/res/spaces/" + id, function(response) {
             parseAndFillSpace(response);
+            i18n();
         });
     }
 }
@@ -64,7 +65,7 @@ function createSeriesTableBody() {
     if (space.series === undefined || space.series.length === 0) {
         var row = table.insertRow(0);
         var cell = row.insertCell(0);
-        cell.innerHTML = "No series found";
+        cell.innerHTML = "<i18n>No series found</i18n>";
         cell.setAttribute("colspan", 2);
     }
     else {
@@ -79,12 +80,18 @@ function createSeriesTableBody() {
             var copy = document.createElement("a");
             copy.href = "#";
             copy.setAttribute("onclick", "copySeries(" + series.id + ")");
-            copy.appendChild(document.createTextNode("Copy"));
+            var copySpan = document.createElement("i18n");
+            copySpan.innerHTML = "Copy";
+            copy.appendChild(copySpan);
             var del = document.createElement("a");
             del.href = "#";
             del.setAttribute("onclick", "deleteSeries(" + series.id + ")");
-            del.appendChild(document.createTextNode("Delete"));
+            var delSpan = document.createElement("i18n");
+            delSpan.innerHTML = "Delete";
+            del.appendChild(delSpan);
             var cellFunction = row.insertCell(1);
+            cellFunction.style.width = "150px";
+            cellFunction.style.textAlign = "right";
             cellFunction.appendChild(copy);
             cellFunction.appendChild(document.createTextNode(" "));
             cellFunction.appendChild(del);
@@ -119,9 +126,14 @@ function createClubsTableBody() {
             var del = document.createElement("a");
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteClub(" + club.id + ")");
-            del.appendChild(document.createTextNode("Delete"));
+            var delSpan = document.createElement("i18n");
+            delSpan.innerHTML = "Delete";
+            del.appendChild(delSpan);
 
             var cellFunction = row.insertCell(2);
+            cellFunction.style.width = "150px";
+            cellFunction.style.textAlign = "right";
+            
             cellFunction.appendChild(del);
             i++;
         });

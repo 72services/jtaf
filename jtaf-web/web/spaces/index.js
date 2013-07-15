@@ -5,6 +5,7 @@ function loadData() {
     xhrGet("/jtaf/res/spaces?my=true", function(response) {
         spaces = JSON.parse(response);
         createSpacesTableBody();
+        i18n();
     });
     xhrGet("/jtaf/res/users/current", function(response) {
         user = JSON.parse(response);
@@ -41,12 +42,18 @@ function createSpacesTableBody() {
             cellName.setAttribute("onclick", onclickEdit);
             var share = document.createElement("a");
             share.href = "share.html?space_id=" + space.id;
-            share.appendChild(document.createTextNode("Share"));
+            var shareSpan = document.createElement("i18n");
+            shareSpan.innerHTML = "Share";
+            share.appendChild(shareSpan);
             var del = document.createElement("a");
             del.href = "#";
             del.setAttribute("onclick", "deleteSpace(" + space.id + ")");
-            del.appendChild(document.createTextNode("Delete"));
+            var delSpan = document.createElement("i18n");
+            delSpan.innerHTML = "Delete";
+            del.appendChild(delSpan);
             var cellFunction = row.insertCell(1);
+            cellFunction.style.width = "100px";
+            cellFunction.style.textAlign = "right";
             if (space.owner === user.email) {
                 cellFunction.appendChild(share);
                 cellFunction.appendChild(document.createTextNode(" "));

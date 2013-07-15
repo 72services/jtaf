@@ -7,33 +7,33 @@
         <script src="util/util.js"></script>
         <script src="register.js"></script>
     </head>
-    <body>
+    <body onload="i18n();">
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
-            <h1>Register</h1>
+            <h1><i18n>Register</i18n></h1>
 
             <form action="javascript:save();">
 
                 <table class="input">
                     <tr>
-                        <td>Email</td>
+                        <td><i18n>Email</i18n></td>
                         <td><input type="text" id="user_email" required /></td>
                     </tr>
                     <tr>
-                        <td>Password</td>
+                        <td><i18n>Password</i18n></td>
                         <td><input type="password" id="user_password" required /></td>
                     </tr>
                     <tr>
-                        <td>Confirm password</td>
+                        <td><i18n>Confirm password</i18n></td>
                         <td><input type="password" id="user_password_confirm" required /></td>
                     </tr>
                     <tr>
-                        <td>Last name</td>
+                        <td><i18n>Last name</i18n></td>
                         <td><input type="text" id="user_lastName" required /></td>
                     </tr>
                     <tr>
-                        <td>First name</td>
+                        <td><i18n>First name</i18n></td>
                         <td><input type="text" id="user_firstName" required /></td>
                     </tr>
                 </table>

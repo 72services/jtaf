@@ -93,7 +93,7 @@ function createComparator(property) {
 function info(message) {
     var div = document.createElement("div");
     div.setAttribute("id", "info");
-    div.innerHTML = "<b>INFO</b><br />" + message;
+    div.innerHTML = "<b>INFO</b><br />" + getString(message);
     document.body.appendChild(div);
     window.setTimeout("fade(document.getElementById('info'))", 5000);
 }
@@ -164,6 +164,11 @@ function i18n() {
     var elements = document.getElementsByTagName("i18n");
     for (var i = 0; i < elements.length; ++i) {
         elements[i].innerHTML = getString(elements[i].innerHTML);
+    }
+
+    var elements = document.getElementsByTagName("input");
+    for (var i = 0; i < elements.length; ++i) {
+        elements[i].value = getString(elements[i].value);
     }
 }
 
