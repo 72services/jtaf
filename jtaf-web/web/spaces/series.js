@@ -85,7 +85,7 @@ function fillCompetitionTable() {
             del.setAttribute("onclick", "deleteCompetition(" +
                     competition.id + ")");
             var delSpan = document.createElement("span");
-            delSpan.setAttribute("class", "i18n");
+            delSpan.className = "i18n";
             delSpan.innerHTML = "Delete";
             del.appendChild(delSpan);
             var cellFunction = row.insertCell(2);
@@ -139,7 +139,7 @@ function parseAndFillCategories(response) {
             sheet.setAttribute("href", "/jtaf/res/reports/sheet?categoryid=" + category.id);
             sheet.setAttribute("target", "_blank");
             var sheetSpan = document.createElement("span");
-            sheetSpan.setAttribute("class", "i18n");
+            sheetSpan.className = "i18n";
             sheetSpan.innerHTML = "Sheet";
             sheet.appendChild(sheetSpan);
             var del = document.createElement("a");
@@ -147,7 +147,7 @@ function parseAndFillCategories(response) {
             del.setAttribute("onclick", "deleteCategory(" +
                     category.id + ")");
             var delSpan = document.createElement("span");
-            delSpan.setAttribute("class", "i18n");
+            delSpan.className = "i18n";
             delSpan.innerHTML = "Delete";
             del.appendChild(delSpan);
             var cellFunction = row.insertCell(5);
@@ -203,7 +203,7 @@ function parseAndFillEvents(response) {
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteEvent(" + event.id + ")");
             var delSpan = document.createElement("span");
-            delSpan.setAttribute("class", "i18n");
+            delSpan.className = "i18n";
             delSpan.innerHTML = "Delete";
             del.appendChild(delSpan);
             var cellFunction = row.insertCell(6);
@@ -272,7 +272,7 @@ function fillAthletesTable(athletes) {
         del.setAttribute("href", "#");
         del.setAttribute("onclick", "deleteAthlete(" + athlete.id + ")");
         var delSpan = document.createElement("span");
-        delSpan.setAttribute("class", "i18n");
+        delSpan.className = "i18n";
         delSpan.innerHTML = "Delete";
         del.appendChild(delSpan);
         var cellFunction = row.insertCell(7);

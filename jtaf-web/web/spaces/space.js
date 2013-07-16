@@ -82,21 +82,21 @@ function createSeriesTableBody() {
             exporting.href = "/jtaf/res/series/" + series.id + "?function=export";
             exporting.setAttribute("target", "_blank");
             var exportingSpan = document.createElement("span");
-            exportingSpan.setAttribute("class", "i18n");
+            exportingSpan.className = "i18n";
             exportingSpan.innerHTML = "Export";
             exporting.appendChild(exportingSpan);
             var copy = document.createElement("a");
             copy.href = "#";
             copy.setAttribute("onclick", "copySeries(" + series.id + ")");
             var copySpan = document.createElement("span");
-            copySpan.setAttribute("class", "i18n");
+            copySpan.className = "i18n";
             copySpan.innerHTML = "Copy";
             copy.appendChild(copySpan);
             var del = document.createElement("a");
             del.href = "#";
             del.setAttribute("onclick", "deleteSeries(" + series.id + ")");
             var delSpan = document.createElement("span");
-            delSpan.setAttribute("class", "i18n");
+            delSpan.className = "i18n";
             delSpan.innerHTML = "Delete";
             del.appendChild(delSpan);
             
@@ -141,7 +141,7 @@ function createClubsTableBody() {
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteClub(" + club.id + ")");
             var delSpan = document.createElement("span");
-            delSpan.setAttribute("class", "i18n");
+            delSpan.className = "i18n";
             delSpan.innerHTML = "Delete";
             del.appendChild(delSpan);
 

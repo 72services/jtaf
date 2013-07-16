@@ -44,14 +44,14 @@ function createSpacesTableBody() {
             var share = document.createElement("a");
             share.href = "share.html?space_id=" + space.id;
             var shareSpan = document.createElement("span");
-            shareSpan.setAttribute("class", "i18n");
+            shareSpan.className = "i18n";
             shareSpan.innerHTML = "Share";
             share.appendChild(shareSpan);
             var del = document.createElement("a");
             del.href = "#";
             del.setAttribute("onclick", "deleteSpace(" + space.id + ")");
             var delSpan = document.createElement("span");
-            delSpan.setAttribute("class", "i18n");
+            delSpan.className = "i18n";
             delSpan.innerHTML = "Delete";
             del.appendChild(delSpan);
             var cellFunction = row.insertCell(1);
