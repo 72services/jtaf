@@ -348,4 +348,12 @@ public class DataService extends AbstractService {
         q.setParameter("email", email);
         return q.getResultList();
     }
+
+    public Series exportSeries(Series s) {
+        s.setAthletes(getAthletes(s.getId()));
+        s.setCategories(getCategories(s.getId()));
+        s.setCompetitions(getCompetititions(s.getId()));
+        s.setEvents(getEvents(s.getId()));
+        return s;
+    }
 }

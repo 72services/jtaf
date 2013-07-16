@@ -78,6 +78,13 @@ function createSeriesTableBody() {
             cellName.className = "edit";
             cellName.innerHTML = series.name;
             cellName.setAttribute("onclick", onclickEdit);
+            var exporting = document.createElement("a");
+            exporting.href = "/jtaf/res/series/" + series.id + "?function=export";
+            exporting.setAttribute("target", "_blank");
+            var exportingSpan = document.createElement("span");
+            exportingSpan.setAttribute("class", "i18n");
+            exportingSpan.innerHTML = "Export";
+            exporting.appendChild(exportingSpan);
             var copy = document.createElement("a");
             copy.href = "#";
             copy.setAttribute("onclick", "copySeries(" + series.id + ")");
@@ -92,9 +99,13 @@ function createSeriesTableBody() {
             delSpan.setAttribute("class", "i18n");
             delSpan.innerHTML = "Delete";
             del.appendChild(delSpan);
+            
             var cellFunction = row.insertCell(1);
-            cellFunction.style.width = "150px";
+            cellFunction.style.width = "200px";
             cellFunction.style.textAlign = "right";
+            
+            cellFunction.appendChild(exporting);
+            cellFunction.appendChild(document.createTextNode(" "));
             cellFunction.appendChild(copy);
             cellFunction.appendChild(document.createTextNode(" "));
             cellFunction.appendChild(del);
@@ -137,7 +148,7 @@ function createClubsTableBody() {
             var cellFunction = row.insertCell(2);
             cellFunction.style.width = "150px";
             cellFunction.style.textAlign = "right";
-            
+
             cellFunction.appendChild(del);
             i++;
         });

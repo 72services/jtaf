@@ -25,6 +25,12 @@ public class Series {
     private byte[] logo;
     @Transient
     private List<Competition> competitions = new ArrayList<>();
+    @Transient
+    private List<Event> events = new ArrayList<>();
+    @Transient
+    private List<Category> categories = new ArrayList<>();
+    @Transient
+    private List<Athlete> athletes = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -64,6 +70,30 @@ public class Series {
 
     public void setSpace_id(Long space_id) {
         this.space_id = space_id;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public List<Athlete> getAthletes() {
+        return athletes;
+    }
+
+    public void setAthletes(List<Athlete> athletes) {
+        this.athletes = athletes;
     }
 
     @Override

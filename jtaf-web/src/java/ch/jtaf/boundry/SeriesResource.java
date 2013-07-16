@@ -50,12 +50,16 @@ public class SeriesResource extends BaseResource {
 
     @GET
     @Path("{id}")
-    public Series get(@PathParam("id") Long id) {
+    public Series get(@PathParam("id") Long id, @QueryParam("function") String function) {
         Series s = dataService.getSeries(id);
         if (s == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
-            return s;
+            if (function != null && function.equals("export")) {
+                return dataService.exportSeries(s);
+            } else {
+                return s;
+            }
         }
     }
 
