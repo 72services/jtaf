@@ -27,7 +27,7 @@ h3 {
 }
 
 a, a:visited {
-   color: black; 
+    color: black; 
 }
 
 div#header {
@@ -78,7 +78,10 @@ div#userinfo {
 }
 
 div#navigation {
-    padding-top: 55px;
+    position: absolute;
+    top: 90px;
+    height: 35px;
+    padding-top: 17px;
 }
 
 div#tabs {
@@ -128,7 +131,7 @@ div#error {
 
 a.navigation_inactive {
     padding-top: 17px;
-    padding-bottom: 17px;
+    padding-bottom: 16px;
     padding-left: 34px;
     padding-right: 34px;
     overflow: hidden;
@@ -138,7 +141,7 @@ a.navigation_inactive {
 
 a.navigation_active {
     padding-top: 17px;
-    padding-bottom: 17px;
+    padding-bottom: 16px;
     padding-left: 34px;
     padding-right: 34px;
     overflow: hidden;
