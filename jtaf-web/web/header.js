@@ -90,9 +90,11 @@ function getUserInfo(div) {
             register.innerHTML = '<span class="i18n">Register</span>';
             register.style.color = "white";
             div.appendChild(register);
+
         } else {
             error(xhr.status);
         }
+        i18n();
     };
     xhr.send();
 }

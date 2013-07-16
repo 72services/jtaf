@@ -5,12 +5,12 @@ function loadData() {
     xhrGet("/jtaf/res/spaces?my=true", function(response) {
         spaces = JSON.parse(response);
         createSpacesTableBody();
-    i18n();
+        i18n();
     });
     xhrGet("/jtaf/res/users/current", function(response) {
         user = JSON.parse(response);
+        i18n();
     });
-    i18n();
 }
 
 function deleteSpace(id) {

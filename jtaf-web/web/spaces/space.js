@@ -31,7 +31,7 @@ function fillForm() {
     document.getElementById("space_name").focus();
 }
 
-function deleteSeries(id) {
+function Series(id) {
     if (confirm(translate("Are you sure?"))) {
         xhrDelete("/jtaf/res/series/" + id, function() {
             loadData();
@@ -129,7 +129,8 @@ function createClubsTableBody() {
             var del = document.createElement("a");
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteClub(" + club.id + ")");
-            var delSpan = document.createElement("i18n");
+            var delSpan = document.createElement("span");
+            delSpan.setAttribute("class", "i18n");
             delSpan.innerHTML = "Delete";
             del.appendChild(delSpan);
 

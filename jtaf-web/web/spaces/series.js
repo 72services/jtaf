@@ -84,7 +84,10 @@ function fillCompetitionTable() {
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteCompetition(" +
                     competition.id + ")");
-            del.appendChild(document.createTextNode("Delete"));
+            var delSpan = document.createElement("span");
+            delSpan.setAttribute("class", "i18n");
+            delSpan.innerHTML = "Delete";
+            del.appendChild(delSpan);
             var cellFunction = row.insertCell(2);
             cellFunction.setAttribute("style", "text-align: right;");
             cellFunction.appendChild(sheet);
@@ -135,14 +138,20 @@ function parseAndFillCategories(response) {
             var sheet = document.createElement("a");
             sheet.setAttribute("href", "/jtaf/res/reports/sheet?categoryid=" + category.id);
             sheet.setAttribute("target", "_blank");
-            sheet.appendChild(document.createTextNode("Sheet"));
+            var sheetSpan = document.createElement("span");
+            sheetSpan.setAttribute("class", "i18n");
+            sheetSpan.innerHTML = "Sheet";
+            sheet.appendChild(sheetSpan);
             var del = document.createElement("a");
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteCategory(" +
                     category.id + ")");
-            del.appendChild(document.createTextNode("Delete"));
+            var delSpan = document.createElement("span");
+            delSpan.setAttribute("class", "i18n");
+            delSpan.innerHTML = "Delete";
+            del.appendChild(delSpan);
             var cellFunction = row.insertCell(5);
-            cellFunction.setAttribute("style", "text-align: right;");
+            cellFunction.setAttribute("style", "width: 150px; text-align: right;");
             cellFunction.appendChild(sheet);
             cellFunction.appendChild(document.createTextNode(" "));
             cellFunction.appendChild(del);
@@ -193,7 +202,10 @@ function parseAndFillEvents(response) {
             var del = document.createElement("a");
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "deleteEvent(" + event.id + ")");
-            del.appendChild(document.createTextNode("Delete"));
+            var delSpan = document.createElement("span");
+            delSpan.setAttribute("class", "i18n");
+            delSpan.innerHTML = "Delete";
+            del.appendChild(delSpan);
             var cellFunction = row.insertCell(6);
             cellFunction.setAttribute("style", "text-align: right;");
             cellFunction.appendChild(del);
@@ -259,7 +271,10 @@ function fillAthletesTable(athletes) {
         var del = document.createElement("a");
         del.setAttribute("href", "#");
         del.setAttribute("onclick", "deleteAthlete(" + athlete.id + ")");
-        del.appendChild(document.createTextNode("Delete"));
+        var delSpan = document.createElement("span");
+        delSpan.setAttribute("class", "i18n");
+        delSpan.innerHTML = "Delete";
+        del.appendChild(delSpan);
         var cellFunction = row.insertCell(7);
         cellFunction.setAttribute("style", "text-align: right;");
         cellFunction.appendChild(del);
