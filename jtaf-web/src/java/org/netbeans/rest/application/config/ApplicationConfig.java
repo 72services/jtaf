@@ -28,15 +28,8 @@ public class ApplicationConfig extends Application {
         resources.add(ch.jtaf.boundry.SpaceResource.class);
         resources.add(ch.jtaf.boundry.UserResource.class);
         resources.add(ch.jtaf.boundry.UserSpaceResource.class);
-        // following code can be used to customize Jersey 2.0 JSON provider:
-        try {
-            Class jsonProvider = Class.forName("org.glassfish.jersey.jackson.JacksonFeature");
-            // Class jsonProvider = Class.forName("org.glassfish.jersey.moxy.json.MoxyJsonFeature");
-            // Class jsonProvider = Class.forName("org.glassfish.jersey.jettison.JettisonFeature");
-            resources.add(jsonProvider);
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(getClass().getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
         return resources;
     }
 }
