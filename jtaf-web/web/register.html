@@ -7,13 +7,13 @@
         <script src="util/util.js"></script>
         <script src="register.js"></script>
     </head>
-    <body onload="i18n();">
+    <body onload="var util = new Util(); util.i18n();">
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
             <h1><span class="i18n">Register</span></h1>
 
-            <form action="javascript:save();">
+            <form action="javascript:registerController.save();">
 
                 <table class="input">
                     <tr>
@@ -42,7 +42,7 @@
                     <input type="submit" value="Register" />
                 </p>
 
-                <script>el("user_email").focus();</script>
+                <script>document.getElementById("user_email").focus();</script>
             </form>
 
             <script src="/jtaf/footer.js"></script>

@@ -7,13 +7,13 @@
         <script src="util/util.js"></script>
         <script src="confirm.js"></script>
     </head>
-    <body onload="loadData();">
+    <body onload="confirmController.loadData();">
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
             <h1>Confirm registration</h1>
 
-            <form action="javascript:confirm();">
+            <form action="javascript:confirmController.confirm();">
 
                 <table class="input">
                     <tr>
@@ -26,7 +26,7 @@
                     <input type="submit" value="Confirm" />
                 </p>
 
-                <script>el("confirmation_id").focus();</script>
+                <script>document.getElementById("confirmation_id").focus();</script>
             </form>
 
             <script src="/jtaf/footer.js"></script>

@@ -7,13 +7,13 @@
         <script src="../util/util.js"></script>
         <script src="event.js"></script>
     </head>
-    <body onload="loadData();">
+    <body onload="eventController.loadData();">
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
             <h1><span class="i18n">Edit Event</span></h1>
 
-            <form action="javascript:save();">
+            <form action="javascript:eventController.save();">
 
                 <table class="input">
                     <tr>
@@ -57,7 +57,7 @@
 
                 <p>
                     <input type="submit" value="Save" />&nbsp;
-                    <a href="javascript:back();"><span class="i18n">Back</span></a>
+                    <a href="javascript:eventController.back();"><span class="i18n">Back</span></a>
                 </p>
 
             </form>

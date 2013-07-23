@@ -7,13 +7,13 @@
         <script src="../util/util.js"></script>
         <script src="results.js"></script>
     </head>
-    <body onload="loadData();">
+    <body onload="resultsController.loadData();">
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
             <h1 id="title"></h1>
 
-            <form action="javascript:search();">
+            <form action="javascript:resultsController.search();">
                 <table>
                     <tr>
                         <td>
@@ -50,7 +50,7 @@
             </div>
 
             <div id="input_form" class="invisible">
-                <form action="javascript:save();">
+                <form action="javascript:resultsController.save();">
 
                     <h2>Athlete</h2>
 

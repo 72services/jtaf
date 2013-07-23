@@ -7,11 +7,13 @@
         <script src="util/util.js"></script>
         <script src="competition_ranking.js"></script>
     </head>
-    <body onload="loadData();">
+    <body onload="competitionRankingController.loadData();">
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
-            <a href="javascript:openAsPdf();" target="_blank"><span class="i18n">Download as PDF</span></a>
+            <a href="javascript:competitionRankingController.openAsPdf();" target="_blank">
+                <span class="i18n">Download as PDF</span>
+            </a>
 
             <div id="title"></div>
         </div>

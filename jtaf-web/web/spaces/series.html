@@ -7,14 +7,14 @@
         <script src="../util/util.js"></script>
         <script src="series.js"></script>
     </head>
-    <body onload="loadData();">
+    <body onload="seriesController.loadData();">
         <script src="/jtaf/header.js"></script>
 
         <div id = "main">
 
             <h1><span class="i18n">Edit Series</span></h1>
 
-            <form action="javascript:save();">
+            <form action="javascript:seriesController.save();">
                 <div style="padding-bottom: 50px;">
                     <table class="input">
                         <tr>
@@ -28,15 +28,15 @@
                     </table>
 
                     <p>
-                        <input type="submit" value="Save" />&nbsp;<a href="javascript:back();"><span class="i18n">Back</span></a>
+                        <input type="submit" value="Save" />&nbsp;<a href="javascript:seriesController.back();"><span class="i18n">Back</span></a>
                     </p>
                 </div>
 
                 <div style="padding-bottom: 14px;">
-                    <a id="a_competitions" class="tab_active" href="#" onclick="switchTo('competitions');"><span class="i18n">Competitions</span></a>&nbsp;
-                    <a id="a_events" class="tab_inactive" href="#" onclick="switchTo('events');"><span class="i18n">Events</span></a>&nbsp;
-                    <a id="a_categories" class="tab_inactive" href="#" onclick="switchTo('categories');"><span class="i18n">Categories</span></a>&nbsp;
-                    <a id="a_athletes" class="tab_inactive" href="#" onclick="switchTo('athletes');"><span class="i18n">Athletes</span></a>
+                    <a id="a_competitions" class="tab_active" href="#" onclick="seriesController.switchTo('competitions');"><span class="i18n">Competitions</span></a>&nbsp;
+                    <a id="a_events" class="tab_inactive" href="#" onclick="seriesController.switchTo('events');"><span class="i18n">Events</span></a>&nbsp;
+                    <a id="a_categories" class="tab_inactive" href="#" onclick="seriesController.switchTo('categories');"><span class="i18n">Categories</span></a>&nbsp;
+                    <a id="a_athletes" class="tab_inactive" href="#" onclick="seriesController.switchTo('athletes');"><span class="i18n">Athletes</span></a>
                 </div>
 
                 <div id="tabs"> 
@@ -59,7 +59,7 @@
                             </tbody>
                         </table>
 
-                        <p><a href="javascript:addCompetition();"><span class="i18n">Add competition</span></a></p>
+                        <p><a href="javascript:seriesController.addCompetition();"><span class="i18n">Add competition</span></a></p>
                     </div>
 
                     <div id="events" class="invisible">
@@ -84,7 +84,7 @@
                             </tbody>
                         </table>
 
-                        <p><a href="javascript:addEvent();"><span class="i18n">Add event</span></a></p>
+                        <p><a href="javascript:seriesController.addEvent();"><span class="i18n">Add event</span></a></p>
                     </div>
 
                     <div id="categories" class="invisible">
@@ -108,7 +108,7 @@
                             </tbody>
                         </table>
 
-                        <p><a href="javascript:addCategory();"><span class="i18n">Add category</span></a></p>
+                        <p><a href="javascript:seriesController.addCategory();"><span class="i18n">Add category</span></a></p>
                     </div>
 
                     <div id="athletes" class="invisible">
@@ -117,34 +117,34 @@
                         <table class="list_sortable">
                             <thead>
                                 <tr>
-                                    <th style="padding-left: 15px !important;" onclick="sortBy('id');">
+                                    <th style="padding-left: 15px !important;" onclick="seriesController.sortBy('id');">
                                         <span class="i18n">Id</span><br />
-                                        <input id="id" type="text" style="width: 40px;" onkeyup="filter('lastName');">
+                                        <input id="id" type="text" style="width: 40px;" onkeyup="seriesController.filter('lastName');">
                                     </th>
-                                    <th onclick="sortBy('lastName');">
+                                    <th onclick="seriesController.sortBy('lastName');">
                                         <span class="i18n">Last name</span><br />
-                                        <input id="lastName" type="text"  style="width: 80px;" onkeyup="filter('lastName');">
+                                        <input id="lastName" type="text"  style="width: 80px;" onkeyup="seriesController.filter('lastName');">
                                     </th>
-                                    <th onclick="sortBy('firstName');">
+                                    <th onclick="seriesController.sortBy('firstName');">
                                         <span class="i18n">First name</span><br />
-                                        <input id="firstName" type="text" style="width: 80px;" onkeyup="filter('firstName');">
+                                        <input id="firstName" type="text" style="width: 80px;" onkeyup="seriesController.filter('firstName');">
                                     </th>
-                                    <th onclick="sortBy('year');">
+                                    <th onclick="seriesController.sortBy('year');">
                                         <span class="i18n">Year</span>
                                     </th>
-                                    <th onclick="sortBy('gender');">
+                                    <th onclick="seriesController.sortBy('gender');">
                                         <span class="i18n">Gender</span>
                                         <br />
-                                        <input id="gender" type="text" style="width: 40px;" onkeyup="filter('gender');">
+                                        <input id="gender" type="text" style="width: 40px;" onkeyup="seriesController.filter('gender');">
                                     </th>
-                                    <th onclick="sortBy('category');">
+                                    <th onclick="seriesController.sortBy('category');">
                                         <span class="i18n">Category</span>
                                         <br />
-                                        <input id="category" type="text" style="width: 40px;" onkeyup="filter('category');">
+                                        <input id="category" type="text" style="width: 40px;" onkeyup="seriesController.filter('category');">
                                     </th>
-                                    <th onclick="sortBy('club');">
+                                    <th onclick="seriesController.sortBy('club');">
                                         <span class="i18n">Club</span><br />
-                                        <input id="club" type="text" style="width: 40px;" onkeyup="filter('club');">
+                                        <input id="club" type="text" style="width: 40px;" onkeyup="seriesController.filter('club');">
                                     </th>
                                     <th style="width: 40px; text-align: right;"></th>
                                 </tr>
@@ -156,7 +156,7 @@
                             </tbody>
                         </table>
 
-                        <p><a href="javascript:addAthlete();"><span class="i18n">Add athlete</span></a></p>
+                        <p><a href="javascript:seriesController.addAthlete();"><span class="i18n">Add athlete</span></a></p>
                     </div>
 
                 </div>

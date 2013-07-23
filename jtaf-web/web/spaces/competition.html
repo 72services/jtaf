@@ -7,13 +7,13 @@
         <script src="../util/util.js"></script>
         <script src="competition.js"></script>
     </head>
-    <body onload="loadData();">
+    <body onload="competitionController.loadData();">
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
             <h1><span class="i18n">Edit Competition</span></h1>
 
-            <form action="javascript:save();">
+            <form action="javascript:competitionController.save();">
 
                 <table class="input">
                     <tr>
@@ -32,7 +32,7 @@
 
                 <p>
                     <input type="submit" value="Save" />&nbsp;
-                    <a href="javascript:back();"><span class="i18n">Back</span></a>
+                    <a href="javascript:competitionController.back();"><span class="i18n">Back</span></a>
                 </p>
 
             </form>

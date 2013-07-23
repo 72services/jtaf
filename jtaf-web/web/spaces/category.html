@@ -7,13 +7,13 @@
         <script src="../util/util.js"></script>
         <script src="category.js"></script>
     </head>
-    <body onload="loadData();">
+    <body onload="categoryController.loadData();">
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
             <h1><span class="i18n">Edit Category</span></h1>
 
-            <form action="javascript:save();">
+            <form action="javascript:categoryController.save();">
 
                 <table class="input">
                     <tr>
@@ -54,7 +54,7 @@
 
                 <p>
                     <input type="submit" value="Save" />&nbsp;
-                    <a href="javascript:back();">Back</a>
+                    <a href="javascript:categoryController.back();">Back</a>
                 </p>
 
             </form>
