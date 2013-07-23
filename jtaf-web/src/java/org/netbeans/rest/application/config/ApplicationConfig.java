@@ -29,6 +29,7 @@ public class ApplicationConfig extends Application {
         resources.add(ch.jtaf.boundry.UserResource.class);
         resources.add(ch.jtaf.boundry.UserSpaceResource.class);
         // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
         return resources;
     }
 }
