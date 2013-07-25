@@ -158,7 +158,6 @@ function Util() {
         if (lang !== undefined) {
             lang = lang.substring(0, 2);
         }
-
         if (lang !== "en") {
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "/jtaf/i18n/messages_" + lang + ".json", false);
