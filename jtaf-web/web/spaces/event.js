@@ -19,7 +19,7 @@ function EventController() {
                 util.i18n();
             });
         }
-    }
+    };
 
     this.save = function() {
         fillEvent();
@@ -27,11 +27,11 @@ function EventController() {
             parseAndFill(response);
             info("Event saved");
         }, jtafEvent);
-    }
+    };
 
     this.back = function() {
         window.location = "series.html?id=" + series_id;
-    }
+    };
 
     function parseAndFill(response) {
         jtafEvent = JSON.parse(response);

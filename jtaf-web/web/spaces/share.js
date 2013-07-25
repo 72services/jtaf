@@ -22,7 +22,7 @@ function ShareController() {
             createSharesTableBody();
             util.i18();
         });
-    }
+    };
 
     this.addShare = function() {
         var index = userSpaces.length;
@@ -33,7 +33,7 @@ function ShareController() {
         userSpaces[index] = userSpace;
         createRow(table, userSpace, index);
         document.getElementById("userinput").focus();
-    }
+    };
 
     this.deleteUserSpace = function(id) {
         if (util.confirm(util.translate("Are you sure?"))) {
@@ -42,7 +42,7 @@ function ShareController() {
                 util.info("Share deleted");
             });
         }
-    }
+    };
 
     this.save = function(index) {
         var userSpace = userSpaces[index];
@@ -57,7 +57,7 @@ function ShareController() {
             loadData();
             util.info("Share saved");
         }, userSpace);
-    }
+    };
 
     function createSharesTableBody() {
         var table = document.getElementById("shares_table");

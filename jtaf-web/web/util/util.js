@@ -39,7 +39,7 @@ function Util() {
             }
         };
         xhr.send();
-    }
+    };
 
     this.xhrGetSync = function(url, func) {
         var xhr = new XMLHttpRequest();
@@ -53,7 +53,7 @@ function Util() {
             }
         };
         xhr.send();
-    }
+    };
 
     this.xhrDelete = function(url, func) {
         var xhr = new XMLHttpRequest();
@@ -66,7 +66,7 @@ function Util() {
             }
         };
         xhr.send();
-    }
+    };
 
     this.xhrPost = function(url, func, body) {
         var xhr = new XMLHttpRequest();
@@ -80,7 +80,7 @@ function Util() {
         };
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(JSON.stringify(body));
-    }
+    };
 
     this.createComparator = function(property) {
         return function(a, b) {
@@ -92,7 +92,7 @@ function Util() {
                 return 0;
             }
         };
-    }
+    };
 
     this.i18n = function() {
         document.title = this.translate(document.title);
@@ -106,7 +106,7 @@ function Util() {
         for (var i = 0; i < elements.length; ++i) {
             elements[i].value = this.translate(elements[i].value);
         }
-    }
+    };
 
     this.translate = function(field) {
         if (i18messages === undefined) {
@@ -119,7 +119,7 @@ function Util() {
             }
         }
         return field;
-    }
+    };
 
     this.info = function(message) {
         var div = document.createElement("div");
@@ -127,7 +127,7 @@ function Util() {
         div.innerHTML = "<b>INFO</b><br />" + this.translate(message);
         document.body.appendChild(div);
         window.setTimeout("fade(document.getElementById('info'))", 5000);
-    }
+    };
 
     this.error = function(message) {
         var div = document.createElement("div");
@@ -135,7 +135,7 @@ function Util() {
         div.innerHTML = "<b>ERROR</b><br />" + this.translate(message);
         document.body.appendChild(div);
         window.setTimeout("fade(document.getElementById('error''))", 5000);
-    }
+    };
 
     function fade(element) {
         var opacity = 1;
@@ -154,17 +154,20 @@ function Util() {
         var lang = window.navigator.language;
         if (lang === undefined) {
             lang = window.navigator.browserLanguage;
-            if (lang !== undefined) {
-                lang = lang.substring(0, 2);
-            }
         }
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/jtaf/i18n/messages_" + lang + ".json", false);
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                i18messages = JSON.parse(xhr.response);
-            }
-        };
-        xhr.send();
+        if (lang !== undefined) {
+            lang = lang.substring(0, 2);
+        }
+
+        if (lang !== "en") {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/jtaf/i18n/messages_" + lang + ".json", false);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    i18messages = JSON.parse(xhr.response);
+                }
+            };
+            xhr.send();
+        }
     }
 }

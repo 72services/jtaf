@@ -23,7 +23,7 @@ function RegisterController() {
         else {
             error("Passwords do not match!");
         }
-    }
+    };
 
     function fillUser() {
         user = new Object();

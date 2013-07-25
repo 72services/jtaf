@@ -25,7 +25,7 @@ function CategoryController() {
                 util.i18n();
             });
         }
-    }
+    };
 
     this.save = function() {
         fillCategory();
@@ -33,13 +33,13 @@ function CategoryController() {
             parseAndFill(response);
             util.info("Category saved");
         }, category);
-    }
+    };
 
 
     this.back = function() {
         window.location = "series.html?id=" + series_id;
-    }
-
+    };
+    
     function parseAndFill(response) {
         category = JSON.parse(response);
         fillForm();

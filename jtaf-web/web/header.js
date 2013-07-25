@@ -51,14 +51,14 @@ function Header() {
         var element = document.getElementById("navigation_" + index);
         sessionStorage.setItem("navigation_active", element.id);
         element.className = "navigation_active";
-    }
+    };
 
     this.activateLink = function(id) {
         deactivateLinks();
         var element = document.getElementById(id);
         sessionStorage.setItem("navigation_active", id);
         element.className = "navigation_active";
-    }
+    };
 
     function deactivateLinks() {
         var elements = document.getElementsByName("navigation_element");

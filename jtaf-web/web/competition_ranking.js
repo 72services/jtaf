@@ -13,12 +13,12 @@ function CompetitionsRankingController() {
                 i18n();
             });
         }
-    }
+    };
 
     this.openAsPdf = function() {
         var newtab = window.open();
         newtab.location = "/jtaf/res/reports/competitionranking?competitionid=" + ranking.competition.id;
-    }
+    };
 
     function parseAndFill(response) {
         ranking = JSON.parse(response);

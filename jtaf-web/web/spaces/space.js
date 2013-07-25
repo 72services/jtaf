@@ -20,7 +20,7 @@ function SpaceController() {
                 util.i18n();
             });
         }
-    }
+    };
 
     this.deleteSeries = function(id) {
         if (util.confirm(util.translate("Are you sure?"))) {
@@ -29,7 +29,7 @@ function SpaceController() {
                 util.info("Serie deleted");
             });
         }
-    }
+    };
 
     this.copySeries = function(id) {
         if (util.confirm(util.translate("Are you sure?"))) {
@@ -38,8 +38,7 @@ function SpaceController() {
                 util.info("Series copied");
             });
         }
-
-    }
+    };
 
     this.deleteClub = function(id) {
         if (util.confirm(util.translate("Are you sure?"))) {
@@ -48,15 +47,15 @@ function SpaceController() {
                 util.info("Club deleted");
             });
         }
-    }
+    };
 
     this.addSeries = function() {
         window.location = "series.html?space_id=" + space.id;
-    }
+    };
 
     this.addClub = function() {
         window.location = "club.html?space_id=" + space.id;
-    }
+    };
 
     this.save = function() {
         fillSpace();
@@ -64,7 +63,7 @@ function SpaceController() {
             parseAndFillSpace(response);
             util.info("Space saved");
         }, space);
-    }
+    };
 
     function fillSpace() {
         space.name = document.getElementById("space_name").value;

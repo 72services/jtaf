@@ -5,22 +5,21 @@ function ProfileController() {
 
     var user;
 
-    function loadData() {
+    this.loadData = function() {
         util.xhrGet("/jtaf/res/users/current", function(response) {
             parseAndFill(response);
             util.i18();
         });
-    }
+    };
 
-    function save() {
+    this.save = function() {
         fillUser();
         util.xhrPost("/jtaf/res/users/", function(response) {
             parseAndFill(response);
             util.info("Profile saved");
             window.location.reload();
         }, user);
-    }
-
+    };
 
     function parseAndFill(response) {
         user = JSON.parse(response);

@@ -24,7 +24,7 @@ function Athlete() {
                 util.i18n();
             });
         }
-    }
+    };
 
     this.save = function () {
         fillAthlete();
@@ -32,11 +32,11 @@ function Athlete() {
             parseAndFill(response);
             util.info("Athlete saved");
         }, athlete);
-    }
+    };
 
     this.back = function() {
         window.location = "series.html?id=" + series_id;
-    }
+    };
 
     function fillClubSelect() {
         util.xhrGet("/jtaf/res/clubs?space_id=" + space_id, function(response) {

@@ -25,7 +25,7 @@ function ResultsController() {
         document.getElementById("search_term").focus();
 
         util.i18n();
-    }
+    };
 
     this.search = function() {
         clear();
@@ -43,7 +43,7 @@ function ResultsController() {
                 parseAndFillAthletes(response);
             });
         }
-    }
+    };
 
     this.save = function() {
         fillAthlete();
@@ -51,7 +51,7 @@ function ResultsController() {
             parseAndFill(response);
             info("Athlete saved");
         }, athlete);
-    }
+    };
 
     function hideOutput() {
         document.getElementById("input_form").className = "invisible";

@@ -19,11 +19,11 @@ function CompetitionController() {
                 util.i18n();
             });
         }
-    }
+    };
 
     this.back = function() {
         window.location = "series.html?id=" + series_id;
-    }
+    };
 
     this.save = function() {
         fillCompetition();
@@ -31,7 +31,7 @@ function CompetitionController() {
             parseAndFill(response);
             util.info("Competition saved");
         }, competition);
-    }
+    };
 
     function parseAndFill(response) {
         competition = JSON.parse(response);

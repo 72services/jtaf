@@ -36,10 +36,10 @@ function SeriesController() {
             });
         }
         var active_tab = localStorage.getItem("active_tab");
-        if (active_tab != null) {
+        if (active_tab !== undefined && active_tab !== null) {
             util.switchTo(active_tab);
         }
-    }
+    };
 
     this.save = function() {
         fillSeries();
@@ -47,23 +47,23 @@ function SeriesController() {
             parseAndFillSeries(response);
             util.info("Series saved");
         }, series);
-    }
+    };
 
     this.addCompetition = function() {
         window.location = "competition.html?series_id=" + series_id;
-    }
+    };
 
     this.addEvent = function() {
         window.location = "event.html?series_id=" + series_id;
-    }
+    };
 
     this.addCategory = function() {
         window.location = "category.html?series_id=" + series_id;
-    }
+    };
 
     this.addAthlete = function() {
         window.location = "athlete.html?series_id=" + series_id + "&space_id=" + space_id;
-    }
+    };
 
     this.filter = function(property) {
         var filteredAthletes = new Array();
@@ -88,7 +88,7 @@ function SeriesController() {
         } else {
             fillAthletesTable(athletes);
         }
-    }
+    };
 
     this.sortBy = function(property) {
         if (event.srcElement.type === undefined) {
@@ -99,7 +99,7 @@ function SeriesController() {
             ascending = !ascending;
             fillAthletesTable(athletes);
         }
-    }
+    };
 
     this.deleteCompetition = function(id) {
         if (util.confirm(util.transalte("Are you sure?"))) {
@@ -108,7 +108,7 @@ function SeriesController() {
                 util.info("Competition deleted");
             });
         }
-    }
+    };
 
     this.deleteEvent = function(id) {
         if (util.confirm(util.translate("Are you sure?"))) {
@@ -117,7 +117,7 @@ function SeriesController() {
                 util.info("Event deleted");
             });
         }
-    }
+    };
 
     this.deleteAthlete = function(id) {
         if (util.confirm(util.translate("Are you sure?"))) {
@@ -135,7 +135,7 @@ function SeriesController() {
                 util.info("Category deleted");
             });
         }
-    }
+    };
 
     this.switchTo = function(div) {
         var els = document.getElementsByClassName("visible");
@@ -151,12 +151,12 @@ function SeriesController() {
 
         document.getElementById("a_" + div).className = "tab_active";
         localStorage.setItem("active_tab", div);
-    }
+    };
 
     this.back = function() {
         localStorage.removeItem("active_tab");
         window.location = "index.html";
-    }
+    };
 
     function parseAndFillSeries(response) {
         series = JSON.parse(response);

@@ -11,7 +11,7 @@ function ClubController() {
         var id = util.searchMap.id;
         if (id === undefined) {
             club = new Object();
-            document.getElementById("club_abbreviation").focus
+            document.getElementById("club_abbreviation").focus;
             util.i18n();
         } else {
             util.xhrGet("/jtaf/res/clubs/" + id, function(response) {
@@ -19,7 +19,7 @@ function ClubController() {
                 util.i18n();
             });
         }
-    }
+    };
 
     this.save = function() {
         fillClub();
@@ -27,11 +27,11 @@ function ClubController() {
             parseAndFill(response);
             info("Club saved");
         }, club);
-    }
+    };
 
     this.back = function() {
         window.location = "space.html?id=" + space_id;
-    }
+    };
 
     function parseAndFill(response) {
         club = JSON.parse(response);

@@ -4,10 +4,10 @@ function ConfirmController() {
     var util = new Util();
     var confirmation_id;
 
-    function loadData() {
+    this.loadData = function() {
         confirmation_id = util.searchMap.confirmation_id;
         document.getElementById("confirmation_id").value = confirmation_id;
-    }
+    };
 
     this.confirm = function() {
         var xhr = new XMLHttpRequest();
@@ -23,6 +23,6 @@ function ConfirmController() {
         };
         xhr.setRequestHeader("Content-Type", "text/plain");
         xhr.send(confirmation_id);
-    }
+    };
 
 }

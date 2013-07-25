@@ -16,7 +16,7 @@ function MySpacesController() {
             user = JSON.parse(response);
             util.i18n();
         });
-    }
+    };
 
     this.deleteSpace = function(id) {
         if (util.confirm(util.transalte("Are you sure?"))) {
@@ -25,7 +25,7 @@ function MySpacesController() {
                 util.info("Space deleted");
             });
         }
-    }
+    };
 
     function createSpacesTableBody() {
         var table = document.getElementById("spaces_table");

@@ -20,12 +20,12 @@ function IndexController() {
             userSpaces = JSON.parse(response);
             fillSpaces();
         });
-    }
+    };
 
     this.openSeriesRankingPdf = function(id) {
         var newtab = window.open();
         newtab.location = "/jtaf/res/reports/seriesranking?seriesid=" + id;
-    }
+    };
 
     function getCurrentUser() {
         var xhr = new XMLHttpRequest();
