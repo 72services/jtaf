@@ -42,6 +42,7 @@ public class ReportBase {
     class HeaderFooter extends PdfPageEventHelper {
 
         public static final float HEADER_FONT = 16f;
+        public static final float HEADER_FONT_SMALL = 12f;
         private final PdfPTable header;
 
         public HeaderFooter(String left, String middle, String right) {
@@ -80,6 +81,7 @@ public class ReportBase {
             PdfPCell cell = new PdfPCell(
                     new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA_BOLD, HEADER_FONT)));
             cell.setBorder(0);
+            cell.setVerticalAlignment(PdfPCell.ALIGN_BOTTOM);
             table.addCell(cell);
         }
 
@@ -88,14 +90,16 @@ public class ReportBase {
                     new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA_BOLD, HEADER_FONT)));
             cell.setBorder(0);
             cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            cell.setVerticalAlignment(PdfPCell.ALIGN_BOTTOM);
             table.addCell(cell);
         }
 
         private void addHeaderCellAlignRight(PdfPTable table, String text) {
             PdfPCell cell = new PdfPCell(
-                    new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA_BOLD, HEADER_FONT)));
+                    new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA_BOLD, HEADER_FONT_SMALL)));
             cell.setBorder(0);
             cell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+            cell.setVerticalAlignment(PdfPCell.ALIGN_BOTTOM);
             table.addCell(cell);
         }
     }
