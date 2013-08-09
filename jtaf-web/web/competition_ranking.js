@@ -10,7 +10,7 @@ function CompetitionsRankingController() {
         } else {
             util.xhrGet("/jtaf/res/rankings/competition/" + id, function(response) {
                 parseAndFill(response);
-                i18n();
+                util.i18n();
             });
         }
     };

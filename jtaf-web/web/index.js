@@ -62,7 +62,7 @@ function IndexController() {
                     li_series.appendChild(series_name);
 
                     var a_ranking = document.createElement("a");
-                    a_ranking.href = "javascript:index.openSeriesRankingPdf(" + series.id + ");";
+                    a_ranking.href = "javascript:indexController.openSeriesRankingPdf(" + series.id + ");";
                     a_ranking.innerHTML = '<span class="i18n">Ranking</span>';
                     li_series.appendChild(a_ranking);
 
