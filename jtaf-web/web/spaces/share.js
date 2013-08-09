@@ -36,7 +36,7 @@ function ShareController() {
     };
 
     this.deleteUserSpace = function(id) {
-        if (util.confirm(util.translate("Are you sure?"))) {
+        if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/userspaces/" + id, function() {
                 loadData();
                 util.info("Share deleted");

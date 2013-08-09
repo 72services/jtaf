@@ -47,6 +47,9 @@
     "Login": "Anmelden",
     "My spaces": "Meine Spaces",
     "Name": "Name",
+    "No athletes found": "Keine Teilnehmer gefunden",
+    "No categories found": "Keine Kategorien gefunden",
+    "No events found": "Keine Disziplinen gefunden",
     "No clubs found": "Keine Vereine gefunden",
     "No series found": "Keine Serien gefunden",
     "Password": "Passwort",
@@ -64,5 +67,5 @@
     "Track and Field Administration": "Leichtathletik Event Verwaltung",
     "Type": "Typ",
     "Year": "Jahrgang",
-    "order by club": "Nach Verein sortiert"
+    "(order by club)": "(Nach Verein sortiert)"
 }

@@ -62,7 +62,7 @@ function Util() {
             if (xhr.status === 204) {
                 func(xhr.response);
             } else {
-                this.error(xhr.status);
+                error(xhr.status);
             }
         };
         xhr.send();
@@ -75,7 +75,7 @@ function Util() {
             if (xhr.status === 200 || xhr.status === 204) {
                 func(xhr.response);
             } else {
-                this.error(xhr.status);
+                error(xhr.status);
             }
         };
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -129,14 +129,6 @@ function Util() {
         window.setTimeout("fade(document.getElementById('info'))", 5000);
     };
 
-    this.error = function(message) {
-        var div = document.createElement("div");
-        div.setAttribute("id", "error");
-        div.innerHTML = "<b>ERROR</b><br />" + this.translate(message);
-        document.body.appendChild(div);
-        window.setTimeout("fade(document.getElementById('error''))", 5000);
-    };
-
     function fade(element) {
         var opacity = 1;
         var timer = setInterval(function() {
@@ -170,3 +162,14 @@ function Util() {
         }
     }
 }
+
+var util = new Util();
+
+error = function(message) {
+    var div = document.createElement("div");
+    div.setAttribute("id", "error");
+    div.innerHTML = "<b>ERROR</b><br />" + util.translate(message);
+    document.body.appendChild(div);
+    window.setTimeout("fade(document.getElementById('error''))", 5000);
+};
+

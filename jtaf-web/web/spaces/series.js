@@ -37,7 +37,7 @@ function SeriesController() {
         }
         var active_tab = localStorage.getItem("active_tab");
         if (active_tab !== undefined && active_tab !== null) {
-            util.switchTo(active_tab);
+            this.switchTo(active_tab);
         }
     };
 
@@ -102,7 +102,7 @@ function SeriesController() {
     };
 
     this.deleteCompetition = function(id) {
-        if (util.confirm(util.transalte("Are you sure?"))) {
+        if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/competitions/" + id, function() {
                 loadData();
                 util.info("Competition deleted");
@@ -111,7 +111,7 @@ function SeriesController() {
     };
 
     this.deleteEvent = function(id) {
-        if (util.confirm(util.translate("Are you sure?"))) {
+        if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/events/" + id, function() {
                 loadData();
                 util.info("Event deleted");
@@ -120,7 +120,7 @@ function SeriesController() {
     };
 
     this.deleteAthlete = function(id) {
-        if (util.confirm(util.translate("Are you sure?"))) {
+        if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/athletes/" + id, function() {
                 loadData();
                 util.info("Athlete deleted");
@@ -129,7 +129,7 @@ function SeriesController() {
     }
 
     this.deleteCategory = function(id) {
-        if (util.confirm(util.translate("Are you sure?"))) {
+        if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/categories/" + id, function() {
                 loadData();
                 util.info("Category deleted");
@@ -196,11 +196,11 @@ function SeriesController() {
                 var sheet = document.createElement("a");
                 sheet.setAttribute("href", "/jtaf/res/reports/sheet?competitionid=" + competition.id);
                 sheet.setAttribute("target", "_blank");
-                sheet.appendChild(document.createTextNode("Sheets"));
+                sheet.appendChild(document.createTextNode(util.translate("Sheets")));
                 var sheetOrderByClub = document.createElement("a");
                 sheetOrderByClub.setAttribute("href", "/jtaf/res/reports/sheet?orderby=club&competitionid=" + competition.id);
                 sheetOrderByClub.setAttribute("target", "_blank");
-                sheetOrderByClub.appendChild(document.createTextNode("(order by club)"));
+                sheetOrderByClub.appendChild(document.createTextNode(util.translate("(order by club)")));
                 var del = document.createElement("a");
                 del.setAttribute("href", "#");
                 del.setAttribute("onclick", "seriesController.deleteCompetition(" +
@@ -228,7 +228,7 @@ function SeriesController() {
         if (categories === undefined || categories.length === 0) {
             var row = table.insertRow(0);
             var cellName = row.insertCell(0);
-            cellName.innerHTML = "No categories found";
+            cellName.innerHTML = util.translate("No categories found");
             cellName.setAttribute("colspan", 6);
         }
         else {
@@ -288,7 +288,7 @@ function SeriesController() {
         if (events === undefined || events.length === 0) {
             var row = table.insertRow(0);
             var cellName = row.insertCell(0);
-            cellName.innerHTML = "No events found";
+            cellName.innerHTML = util.translate("No events found");
             cellName.setAttribute("colspan", 8);
         }
         else {
@@ -342,7 +342,7 @@ function SeriesController() {
             table.innerHTML = "";
             var row = table.insertRow(0);
             var cellName = row.insertCell(0);
-            cellName.innerHTML = "No athletes found";
+            cellName.innerHTML = util.translate("No athletes found");
             cellName.setAttribute("colspan", 8);
         }
         else {

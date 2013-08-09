@@ -202,7 +202,7 @@ function ResultsController() {
         if (athletes === undefined || athletes.length === 0) {
             var row = table.insertRow(0);
             var cellName = row.insertCell(0);
-            cellName.innerHTML = "No athletes found";
+            cellName.innerHTML = util.translate("No athletes found");
             cellName.setAttribute("colspan", 7);
         } else {
             var i = 0;

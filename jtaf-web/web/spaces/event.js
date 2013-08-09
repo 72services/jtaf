@@ -1,6 +1,7 @@
 var eventController = new EventController();
 
 function EventController() {
+    var util = new Util();
 
     var jtafEvent;
     var series_id;
@@ -23,9 +24,9 @@ function EventController() {
 
     this.save = function() {
         fillEvent();
-        xhrPost("/jtaf/res/events/", function(response) {
+        util.xhrPost("/jtaf/res/events/", function(response) {
             parseAndFill(response);
-            info("Event saved");
+            util.info("Event saved");
         }, jtafEvent);
     };
 
