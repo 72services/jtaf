@@ -13,14 +13,14 @@ function CategoryController() {
             events = JSON.parse(response);
         });
 
-        var id = searchMap.id;
+        var id = util.searchMap.id;
         if (id === undefined) {
             category = new Object();
             fillEventsTable();
             document.getElementById("category_abbr").focus();
             util.i18n();
         } else {
-            util.xhrGet("/jtaf/res/categories/" + series_id, function(response) {
+            util.xhrGet("/jtaf/res/categories/" + id, function(response) {
                 parseAndFill(response);
                 util.i18n();
             });

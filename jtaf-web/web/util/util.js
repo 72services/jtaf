@@ -35,7 +35,7 @@ function Util() {
                 func(xhr.response);
             } else {
                 var util = new Util();
-                util.error(xhr.status);
+                error(xhr.status);
             }
         };
         xhr.send();
@@ -49,7 +49,7 @@ function Util() {
                 func(xhr.response);
             } else {
                 var util = new Util();
-                util.error(xhr.status);
+                error(xhr.status);
             }
         };
         xhr.send();
