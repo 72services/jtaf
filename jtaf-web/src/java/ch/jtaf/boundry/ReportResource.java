@@ -56,6 +56,22 @@ public class ReportResource {
     }
 
     @GET
+    @Path("export.csv")
+    @Produces({"text/comma-separated-values"})
+    public String exportAsCsv(@QueryParam("competitionid") Long competitionid) {
+        if (competitionid == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        } else {
+            String csv = service.createCompetitionRankingAsCsv(competitionid);
+            if (csv == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                return csv;
+            }
+        }
+    }
+
+    @GET
     @Path("seriesranking")
     @Produces({"application/pdf"})
     public byte[] getSeriesRanking(@QueryParam("seriesid") Long seriesid) {

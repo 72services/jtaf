@@ -35,7 +35,7 @@ function IndexController() {
                 user = JSON.parse(xhr.response);
             } else if (xhr.status === 204) {
             } else {
-                util.error(xhr.status);
+                error(xhr.status);
             }
         };
         xhr.send();

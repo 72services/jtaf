@@ -37,6 +37,19 @@ public class ApplicationConfig extends Application {
         // Following code can be used to customize Jersey JSON provider:
         // Following code can be used to customize Jersey JSON provider:
         // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
+        // Following code can be used to customize Jersey JSON provider:
         return resources;
     }
 }

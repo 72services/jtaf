@@ -1,5 +1,6 @@
 package ch.jtaf.control;
 
+import ch.jtaf.control.report.CompetitionCsvExport;
 import ch.jtaf.control.report.CompetitionRanking;
 import ch.jtaf.control.report.SeriesRanking;
 import ch.jtaf.control.report.Sheet;
@@ -71,5 +72,14 @@ public class ReportService extends AbstractService {
 
         Sheet sheet = new Sheet(template, series.getLogo());
         return sheet.create();
+    }
+
+    public String createCompetitionRankingAsCsv(Long competitionId) {
+        CompetitionRankingData ranking = rankingService.getCompetitionRanking(competitionId);
+        if (ranking == null) {
+            return null;
+        }
+        CompetitionCsvExport export = new CompetitionCsvExport(ranking);
+        return export.create();
     }
 }
