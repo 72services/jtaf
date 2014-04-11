@@ -1,6 +1,5 @@
 package ch.jtaf.control;
 
-import ch.jtaf.control.util.Sha256Helper;
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Category;
 import ch.jtaf.entity.Club;
@@ -23,8 +22,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -37,10 +34,9 @@ import javax.persistence.TypedQuery;
 
 @Interceptors({TraceInterceptor.class})
 @Stateless
-@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class DataService extends AbstractService {
 
-    @Resource(mappedName = "mail/jtaf")
+    @Resource(mappedName = "java:jboss/mail/Default")
     private Session mailSession;
 
     public List<Series> getSeriesList(Long spaceId) {
@@ -94,7 +90,6 @@ public class DataService extends AbstractService {
         return q.getResultList();
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Athlete saveAthlete(Athlete a) {
         Category c = this.getCategoryWithGenderAndAge(a.getSeries_id(), a.getGender(), a.getYear());
         if (c == null) {
@@ -142,7 +137,6 @@ public class DataService extends AbstractService {
         return (Long) query.getSingleResult();
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Series copySeries(Long id) {
         Series series = em.find(Series.class, id);
         Series copy = new Series();
@@ -247,12 +241,11 @@ public class DataService extends AbstractService {
         return q.getResultList();
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public SecurityUser saveUser(SecurityUser user) {
         if (user.getConfirmationId() == null) {
             if (em.find(SecurityUser.class, user.getEmail()) == null) {
-                user.setSecret(Sha256Helper.digest(user.getSecret()));
-                user.setConfirmationId(Sha256Helper.digest(user.getEmail() + user.getLastName() + user.getFirstName()));
+//                user.setSecret(Sha256Helper.digest(user.getSecret()));
+//                user.setConfirmationId(Sha256Helper.digest(user.getEmail() + user.getLastName() + user.getFirstName()));
 
                 SecurityGroup group = new SecurityGroup();
                 group.setEmail(user.getEmail());
@@ -285,7 +278,6 @@ public class DataService extends AbstractService {
         }
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void confirmUser(String confirmationId) {
         TypedQuery<SecurityUser> q = em.createNamedQuery("SecurityUser.findByConfirmationId", SecurityUser.class);
         q.setParameter("confirmationId", confirmationId);
@@ -300,7 +292,6 @@ public class DataService extends AbstractService {
         return q.getResultList();
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void deleteSpace(Space s) {
         List<UserSpace> userSpaces = getUserSpacesBySpaceId(s.getId());
         for (UserSpace userSpace : userSpaces) {
