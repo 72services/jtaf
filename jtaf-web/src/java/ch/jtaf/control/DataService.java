@@ -16,12 +16,12 @@ import ch.jtaf.interceptor.TraceInterceptor;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -36,6 +36,7 @@ import javax.mail.internet.MimeMessage;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.jboss.crypto.CryptoUtil;
+import org.jboss.logging.Logger;
 
 @Interceptors({TraceInterceptor.class})
 @Stateless
@@ -139,7 +140,7 @@ public class DataService extends AbstractService {
     private Long getNumberOfAthletes(Competition c) {
         String queryString = "select count(distinct a) from Athlete a join a.results r "
                 + "where r.competition = :competition";
-        TypedQuery query = em.createQuery(queryString,Long.class);
+        TypedQuery query = em.createQuery(queryString, Long.class);
         query.setParameter("competition", c);
         return (Long) query.getSingleResult();
     }
@@ -249,13 +250,15 @@ public class DataService extends AbstractService {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public SecurityUser saveUser(SecurityUser user) {
+    public SecurityUser saveUser(SecurityUser user) throws NoSuchAlgorithmException {
         if (user.getConfirmationId() == null) {
             if (em.find(SecurityUser.class, user.getEmail()) == null) {
                 String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, user.getSecret());
                 user.setSecret(passwordHash);
-                user.setConfirmationId(
-                        CryptoUtil.createPasswordHash("MD5", null, null, null, user.getEmail() + user.getLastName() + user.getFirstName()));
+                int hashCode = user.getEmail().hashCode() + user.getLastName().hashCode() + user.getFirstName().hashCode();
+                String string = Integer.toString(hashCode * -1);
+                Logger.getLogger(DataService.class).debug(string);
+                user.setConfirmationId(string);
 
                 SecurityGroup group = new SecurityGroup();
                 group.setEmail(user.getEmail());
@@ -278,13 +281,13 @@ public class DataService extends AbstractService {
             msg.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(user.getEmail(), user.getFirstName() + " " + user.getLastName()));
             msg.setSubject("JTAF Registration");
-            msg.setText("Please confirm your registration: https://" + InetAddress.getLocalHost().getHostName()
-                    + ":8181/jtaf/confirm.html?confirmation_id="
+            msg.setText("Please confirm your registration: http://" + InetAddress.getLocalHost().getHostName()
+                    + ":8080/jtaf/confirm.html?confirmation_id="
                     + user.getConfirmationId());
             msg.saveChanges();
             Transport.send(msg);
         } catch (UnsupportedEncodingException | MessagingException | UnknownHostException ex) {
-            Logger.getLogger(DataService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataService.class).error(ex.getMessage(), ex);
         }
     }
 

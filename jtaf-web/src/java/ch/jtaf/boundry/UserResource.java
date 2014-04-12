@@ -35,7 +35,7 @@ public class UserResource extends BaseResource {
     public SecurityUser save(SecurityUser user) {
         try {
             return dataService.saveUser(user);
-        } catch (IllegalStateException e) {
+        } catch (Exception e) {
             throw new WebApplicationException(Response.Status.PRECONDITION_FAILED);
         }
     }

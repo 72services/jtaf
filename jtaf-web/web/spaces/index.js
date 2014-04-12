@@ -34,7 +34,7 @@ function MySpacesController() {
         if (spaces === undefined || spaces.length === 0) {
             var row = table.insertRow(0);
             var cell = row.insertCell(0);
-            cell.innerHTML = "No spaces found";
+            cell.innerHTML = uti.translate("No spaces found");
             cell.setAttribute("colspan", 2);
         }
         else {
