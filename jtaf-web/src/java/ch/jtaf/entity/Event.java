@@ -19,6 +19,7 @@ public class Event {
     @GeneratedValue
     private Long id;
     private String name;
+    private String longName;
     private String type;
     private String gender;
     private double a;
@@ -88,6 +89,14 @@ public class Event {
 
     public void setSeries_id(Long series_id) {
         this.series_id = series_id;
+    }
+
+    public String getLongName() {
+        return longName;
+    }
+
+    public void setLongName(String longName) {
+        this.longName = longName;
     }
 
     @Override

@@ -160,12 +160,12 @@ public class Sheet extends ReportBase {
 
         for (Event event : athlete.getCategory().getEvents()) {
             if (event.getType().equals(Event.JUMP_THROW)) {
-                addInfoCell(table, event.getName());
+                addInfoCell(table, event.getLongName());
                 addInfoCellWithBorder(table, "");
                 addInfoCellWithBorder(table, "");
                 addInfoCellWithBorder(table, "");
             } else {
-                addInfoCellWithColspan(table, event.getName(), 3);
+                addInfoCellWithColspan(table, event.getLongName(), 3);
                 addInfoCellWithBorder(table, "");
             }
         }

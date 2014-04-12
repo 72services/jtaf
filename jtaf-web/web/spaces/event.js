@@ -42,6 +42,7 @@ function EventController() {
     function fillForm() {
         document.getElementById("event_id").value = jtafEvent.id;
         document.getElementById("event_name").value = jtafEvent.name;
+        document.getElementById("event_longname").value = jtafEvent.longName;
         var index = 0;
         switch (jtafEvent.type) {
             case "run_long":
@@ -66,6 +67,7 @@ function EventController() {
 
     function fillEvent() {
         jtafEvent.name = document.getElementById("event_name").value;
+        jtafEvent.longName = document.getElementById("event_longname").value;
         jtafEvent.type = document.getElementById("event_type").value;
         if (document.getElementById("event_gender_m").checked) {
             jtafEvent.gender = "m";
