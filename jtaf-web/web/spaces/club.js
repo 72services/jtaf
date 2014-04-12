@@ -7,6 +7,8 @@ function ClubController() {
     var space_id;
 
     this.loadData = function() {
+        util.showMessage();
+
         space_id = util.searchMap.space_id;
         var id = util.searchMap.id;
         if (id === undefined) {
@@ -25,7 +27,7 @@ function ClubController() {
         fillClub();
         util.xhrPost("/jtaf/res/clubs/", function(response) {
             parseAndFill(response);
-            info("Club saved");
+            window.location = "space.html?id=" + space_id + "&message=" + "Club saved";
         }, club);
     };
 

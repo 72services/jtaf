@@ -5,6 +5,8 @@ function CompetitionsRankingController() {
     var ranking;
 
     this.loadData = function() {
+        util.showMessage();
+
         var id = util.searchMap.id;
         if (id === undefined) {
         } else {

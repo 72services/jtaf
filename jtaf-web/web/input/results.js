@@ -10,6 +10,8 @@ function ResultsController() {
     var space_id;
 
     this.loadData = function() {
+        util.showMessage();
+        
         space_id = util.searchMap.space_id;
         var id = util.searchMap.id;
 

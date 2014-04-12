@@ -8,6 +8,8 @@ function ShareController() {
     var userSpaces;
 
     this.loadData = function() {
+        util.showMessage();
+        
         var id = util.searchMap.space_id;
         util.xhrGet("/jtaf/res/users/current", function(response) {
             user = JSON.parse(response);

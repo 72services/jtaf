@@ -8,6 +8,8 @@ function IndexController() {
     var user;
 
     this.loadData = function() {
+        util.showMessage();
+        
         header.activateLink("navigation_0");
         getCurrentUser();
 

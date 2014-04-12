@@ -6,6 +6,8 @@ function ProfileController() {
     var user;
 
     this.loadData = function() {
+        util.showMessage();
+        
         util.xhrGet("/jtaf/res/users/current", function(response) {
             parseAndFill(response);
             util.i18n();

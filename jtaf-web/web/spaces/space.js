@@ -6,6 +6,8 @@ function SpaceController() {
     var space;
 
     this.loadData = function() {
+        util.showMessage();
+        
         var id = util.searchMap.id;
 
         if (id === undefined) {

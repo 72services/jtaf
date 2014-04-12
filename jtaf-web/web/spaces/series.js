@@ -10,6 +10,8 @@ function SeriesController() {
     var series_id;
 
     this.loadData = function() {
+        util.showMessage();
+
         space_id = util.searchMap.space_id;
         series_id = util.searchMap.id;
 
@@ -50,15 +52,15 @@ function SeriesController() {
     };
 
     this.addCompetition = function() {
-        window.location = "competition.html?series_id=" + series_id;
+        window.location = "competition.html?series_id=" + series_id + "&space_id=" + space_id;
     };
 
     this.addEvent = function() {
-        window.location = "event.html?series_id=" + series_id;
+        window.location = "event.html?series_id=" + series_id + "&space_id=" + space_id;
     };
 
     this.addCategory = function() {
-        window.location = "category.html?series_id=" + series_id;
+        window.location = "category.html?series_id=" + series_id + "&space_id=" + space_id;
     };
 
     this.addAthlete = function() {
@@ -184,7 +186,7 @@ function SeriesController() {
             var i = 0;
             series.competitions.forEach(function(competition) {
                 var row = table.insertRow(i);
-                var onclickEdit = "window.location = 'competition.html?id=" + competition.id + "&series_id=" + series_id + "'";
+                var onclickEdit = "window.location = 'competition.html?id=" + competition.id + "&series_id=" + series_id + "&space_id=" + space_id + "'";
                 var cellName = row.insertCell(0);
                 cellName.className = "edit";
                 cellName.innerHTML = competition.name;
@@ -235,7 +237,7 @@ function SeriesController() {
             var i = 0;
             categories.forEach(function(category) {
                 var row = table.insertRow(i);
-                var onclickEdit = "window.location = 'category.html?id=" + category.id + "&series_id=" + series_id + "'";
+                var onclickEdit = "window.location = 'category.html?id=" + category.id + "&series_id=" + series_id + "&space_id=" + space_id + "'";
                 var cellAbbr = row.insertCell(0);
                 cellAbbr.className = "edit";
                 cellAbbr.innerHTML = category.abbreviation;
@@ -295,7 +297,7 @@ function SeriesController() {
             var i = 0;
             events.forEach(function(event) {
                 var row = table.insertRow(i);
-                var onclickEdit = "window.location = 'event.html?id=" + event.id + "&series_id=" + series_id + "'";
+                var onclickEdit = "window.location = 'event.html?id=" + event.id + "&series_id=" + series_id + "&space_id=" + space_id + "'";
                 var cellName = row.insertCell(0);
                 cellName.className = "edit";
                 cellName.innerHTML = event.name;

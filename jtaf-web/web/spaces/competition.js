@@ -5,9 +5,14 @@ function CompetitionController() {
 
     var competition;
     var series_id;
+    var space_id;
 
     this.loadData = function() {
+        util.showMessage();
+
         series_id = util.searchMap.series_id;
+        space_id = util.searchMap.space_id;
+        
         var id = util.searchMap.id;
         if (id === undefined) {
             competition = new Object();
@@ -22,14 +27,14 @@ function CompetitionController() {
     };
 
     this.back = function() {
-        window.location = "series.html?id=" + series_id;
+        window.location = "series.html?id=" + series_id + "&space_id=" + space_id;
     };
 
     this.save = function() {
         fillCompetition();
         util.xhrPost("/jtaf/res/competitions/", function(response) {
             parseAndFill(response);
-            util.info("Competition saved");
+            window.location = "series.html?id=" + series_id + "&space_id=" + space_id + "&message=" + "Competition saved";
         }, competition);
     };
 

@@ -6,9 +6,14 @@ function CategoryController() {
     var category;
     var events;
     var series_id;
+    var space_id;
 
     this.loadData = function() {
+        util.showMessage();
+
         series_id = util.searchMap.series_id;
+        space_id = util.searchMap.space_id;
+        
         util.xhrGetSync("/jtaf/res/events?series_id=" + series_id, function(response) {
             events = JSON.parse(response);
         });
@@ -31,15 +36,16 @@ function CategoryController() {
         fillCategory();
         util.xhrPost("/jtaf/res/categories/", function(response) {
             parseAndFill(response);
-            util.info("Category saved");
+            window.location = "series.html?id=" + series_id + "&space_id=" + space_id + "&message=" + "Category saved";
+
         }, category);
     };
 
 
     this.back = function() {
-        window.location = "series.html?id=" + series_id;
+        window.location = "series.html?id=" + series_id + "&space_id=" + space_id;
     };
-    
+
     function parseAndFill(response) {
         category = JSON.parse(response);
         fillForm();

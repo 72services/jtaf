@@ -9,6 +9,8 @@ function Athlete() {
     var space_id;
 
     this.loadData = function() {
+        util.showMessage();
+
         var id = util.searchMap.id;
         series_id = util.searchMap.series_id;
         space_id = util.searchMap.space_id;
@@ -26,16 +28,16 @@ function Athlete() {
         }
     };
 
-    this.save = function () {
+    this.save = function() {
         fillAthlete();
         util.xhrPost("/jtaf/res/athletes/", function(response) {
             parseAndFill(response);
-            util.info("Athlete saved");
+            window.location = "series.html?id=" + series_id + "&space_id=" + space_id + "&message=" + "Athlete saved";
         }, athlete);
     };
 
     this.back = function() {
-        window.location = "series.html?id=" + series_id;
+        window.location = "series.html?id=" + series_id + "&space_id=" + space_id;
     };
 
     function fillClubSelect() {

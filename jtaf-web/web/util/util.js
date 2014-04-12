@@ -129,6 +129,12 @@ function Util() {
         window.setTimeout("fade(document.getElementById('info'))", 5000);
     };
 
+    this.showMessage = function() {
+        if (this.searchMap.message) {
+            this.info(this.translate(this.searchMap.message));
+        }
+    };
+
     function fade(element) {
         var opacity = 1;
         var timer = setInterval(function() {

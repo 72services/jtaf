@@ -5,9 +5,13 @@ function EventController() {
 
     var jtafEvent;
     var series_id;
+    var space_id;
 
     this.loadData = function() {
+        util.showMessage();
+
         series_id = util.searchMap.series_id;
+        space_id = util.searchMap.space_id;
 
         var id = util.searchMap.id;
         if (id === undefined) {
@@ -26,12 +30,12 @@ function EventController() {
         fillEvent();
         util.xhrPost("/jtaf/res/events/", function(response) {
             parseAndFill(response);
-            util.info("Event saved");
+            window.location = "series.html?id=" + series_id + "&space_id=" + space_id + "&message=" + "Event saved";
         }, jtafEvent);
     };
 
     this.back = function() {
-        window.location = "series.html?id=" + series_id;
+        window.location = "series.html?id=" + series_id + "&space_id=" + space_id
     };
 
     function parseAndFill(response) {

@@ -7,6 +7,8 @@ function MySpacesController() {
     var user;
 
     this.loadData = function() {
+        util.showMessage();
+        
         util.xhrGet("/jtaf/res/spaces?my=true", function(response) {
             spaces = JSON.parse(response);
             createSpacesTableBody();

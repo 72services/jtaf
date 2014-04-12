@@ -5,6 +5,8 @@ function ConfirmController() {
     var confirmation_id;
 
     this.loadData = function() {
+        util.showMessage();
+        
         confirmation_id = util.searchMap.confirmation_id;
         document.getElementById("confirmation_id").value = confirmation_id;
     };
