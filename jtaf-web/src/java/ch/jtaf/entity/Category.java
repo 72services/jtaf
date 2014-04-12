@@ -3,6 +3,7 @@ package ch.jtaf.entity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -26,7 +27,7 @@ public class Category {
     private int yearTo;
     private String gender;
     private Long series_id;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @OrderColumn(name = "position")
     private List<Event> events = new ArrayList<>();
 

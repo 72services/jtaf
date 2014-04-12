@@ -90,7 +90,7 @@ function SpaceController() {
         if (space.series === undefined || space.series.length === 0) {
             var row = table.insertRow(0);
             var cell = row.insertCell(0);
-            cell.innerHTML = translate("No series found");
+            cell.innerHTML = util.translate("No series found");
             cell.setAttribute("colspan", 2);
         }
         else {
@@ -145,7 +145,7 @@ function SpaceController() {
         if (space.clubs === undefined || space.clubs.length === 0) {
             var row = table.insertRow(0);
             var cell = row.insertCell(0);
-            cell.innerHTML = translate("No clubs found");
+            cell.innerHTML = util.translate("No clubs found");
             cell.setAttribute("colspan", 3);
         }
         else {

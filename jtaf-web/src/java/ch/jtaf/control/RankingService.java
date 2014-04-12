@@ -18,11 +18,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import javax.persistence.TypedQuery;
 
 @Interceptors({TraceInterceptor.class})
 @Stateless
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class RankingService extends AbstractService {
 
     public CompetitionRankingData getCompetitionRanking(Long competitionid) {

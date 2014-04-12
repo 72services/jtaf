@@ -8,7 +8,7 @@ function ProfileController() {
     this.loadData = function() {
         util.xhrGet("/jtaf/res/users/current", function(response) {
             parseAndFill(response);
-            util.i18();
+            util.i18n();
         });
     };
 

@@ -151,8 +151,8 @@ function ResultsController() {
                 var points = document.createElement("input");
                 points.id = "points" + i;
                 points.setAttribute("type", "text");
-                points.setAttribute("readonly");
-                points.setAttribute("disabled");
+                points.setAttribute("readonly", "true");
+                points.setAttribute("disabled", "true");
                 points.setAttribute("style", "width: 100px");
                 cellPoints.appendChild(points);
                 if (athlete.results[i] !== undefined) {

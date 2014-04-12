@@ -155,7 +155,7 @@ function SeriesController() {
 
     this.back = function() {
         localStorage.removeItem("active_tab");
-        window.location = "index.html";
+        window.location = "space.html?id=" + space_id;
     };
 
     function parseAndFillSeries(response) {

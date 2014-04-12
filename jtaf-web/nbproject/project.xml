@@ -21,6 +21,10 @@
                 <library dirs="200">
                     <file>${file.reference.bcpkix-jdk15on-148.jar}</file>
                 </library>
+                <library dirs="200">
+                    <file>${file.reference.picketbox-4.0.19.SP2-redhat-1.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
             </web-module-libraries>
             <web-module-additional-libraries/>
             <source-roots>

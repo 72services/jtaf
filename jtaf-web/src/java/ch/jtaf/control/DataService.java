@@ -17,11 +17,15 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -31,9 +35,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import org.jboss.crypto.CryptoUtil;
 
 @Interceptors({TraceInterceptor.class})
 @Stateless
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class DataService extends AbstractService {
 
     @Resource(mappedName = "java:jboss/mail/Default")
@@ -90,6 +96,7 @@ public class DataService extends AbstractService {
         return q.getResultList();
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Athlete saveAthlete(Athlete a) {
         Category c = this.getCategoryWithGenderAndAge(a.getSeries_id(), a.getGender(), a.getYear());
         if (c == null) {
@@ -132,7 +139,7 @@ public class DataService extends AbstractService {
     private Long getNumberOfAthletes(Competition c) {
         String queryString = "select count(distinct a) from Athlete a join a.results r "
                 + "where r.competition = :competition";
-        TypedQuery query = em.createQuery(queryString, Athlete.class);
+        TypedQuery query = em.createQuery(queryString,Long.class);
         query.setParameter("competition", c);
         return (Long) query.getSingleResult();
     }
@@ -222,7 +229,7 @@ public class DataService extends AbstractService {
         TypedQuery<Space> q = em.createNamedQuery("Space.findAll", Space.class);
         List<Space> spaces = q.getResultList();
         for (Space space : spaces) {
-            List<Series> series = new ArrayList<>();
+            Set<Series> series = new HashSet<>();
             for (Series s : space.getSeries()) {
                 series.add(getSeries(s.getId()));
             }
@@ -241,11 +248,14 @@ public class DataService extends AbstractService {
         return q.getResultList();
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public SecurityUser saveUser(SecurityUser user) {
         if (user.getConfirmationId() == null) {
             if (em.find(SecurityUser.class, user.getEmail()) == null) {
-//                user.setSecret(Sha256Helper.digest(user.getSecret()));
-//                user.setConfirmationId(Sha256Helper.digest(user.getEmail() + user.getLastName() + user.getFirstName()));
+                String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, user.getSecret());
+                user.setSecret(passwordHash);
+                user.setConfirmationId(
+                        CryptoUtil.createPasswordHash("MD5", null, null, null, user.getEmail() + user.getLastName() + user.getFirstName()));
 
                 SecurityGroup group = new SecurityGroup();
                 group.setEmail(user.getEmail());
@@ -278,6 +288,7 @@ public class DataService extends AbstractService {
         }
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void confirmUser(String confirmationId) {
         TypedQuery<SecurityUser> q = em.createNamedQuery("SecurityUser.findByConfirmationId", SecurityUser.class);
         q.setParameter("confirmationId", confirmationId);
@@ -292,6 +303,7 @@ public class DataService extends AbstractService {
         return q.getResultList();
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void deleteSpace(Space s) {
         List<UserSpace> userSpaces = getUserSpacesBySpaceId(s.getId());
         for (UserSpace userSpace : userSpaces) {

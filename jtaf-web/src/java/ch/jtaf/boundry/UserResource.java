@@ -4,6 +4,8 @@ import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.security.Principal;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -18,6 +20,7 @@ import javax.ws.rs.core.Response;
 @Consumes({"application/json"})
 @Interceptors({TraceInterceptor.class})
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class UserResource extends BaseResource {
 
     @GET
@@ -25,9 +28,6 @@ public class UserResource extends BaseResource {
     public SecurityUser getCurrentUser() {
         Principal principal = sessionContext.getCallerPrincipal();
         SecurityUser user = dataService.get(SecurityUser.class, principal.getName());
-        if (user != null) {
-            user.setSecret(null);
-        }
         return user;
     }
 

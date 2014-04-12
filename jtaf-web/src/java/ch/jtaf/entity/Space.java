@@ -1,8 +1,9 @@
 package ch.jtaf.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,12 +26,12 @@ public class Space {
     @GeneratedValue
     private Long id;
     private String name;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "space_id", insertable = false, updatable = false)
-    private List<Series> series = new ArrayList<>();
-    @OneToMany
+    private Set<Series> series = new HashSet<>();
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "space_id", insertable = false, updatable = false)
-    private List<Club> clubs = new ArrayList<>();
+    private Set<Club> clubs = new HashSet<>();
     @Transient
     private String owner;
 
@@ -50,19 +51,19 @@ public class Space {
         this.name = name;
     }
 
-    public List<Series> getSeries() {
+    public Set<Series> getSeries() {
         return series;
     }
 
-    public void setSeries(List<Series> series) {
+    public void setSeries(Set<Series> series) {
         this.series = series;
     }
 
-    public List<Club> getClubs() {
+    public Set<Club> getClubs() {
         return clubs;
     }
 
-    public void setClubs(List<Club> clubs) {
+    public void setClubs(Set<Club> clubs) {
         this.clubs = clubs;
     }
 
