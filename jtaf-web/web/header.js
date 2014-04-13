@@ -60,6 +60,12 @@ function Header() {
         element.className = "navigation_active";
     };
 
+    this.logout = function() {
+        util.xhrGet("/jtaf/res/users/logout", function() {
+            window.location = "index.html";
+        });
+    };
+
     function deactivateLinks() {
         var elements = document.getElementsByName("navigation_element");
         for (var i in elements) {
@@ -78,6 +84,19 @@ function Header() {
                 profile.innerHTML = user.firstName + " " + user.lastName;
                 profile.style.color = "white";
                 div.appendChild(profile);
+
+                var spacer = document.createElement("span");
+                spacer.innerHTML = " | ";
+                spacer.style.color = 'white';
+                div.appendChild(spacer);
+
+                var logout = document.createElement("a");
+                logout.href = "#";
+                logout.innerHTML = "Logout";
+                logout.style.color = 'white';
+                logout.setAttribute("onclick", "header.logout();");
+                div.appendChild(logout);
+
             } else if (xhr.status === 204) {
                 var login = document.createElement("a");
                 login.href = "/jtaf/spaces/index.html";
