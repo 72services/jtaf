@@ -41,6 +41,16 @@ public class UserResource extends BaseResource {
     }
 
     @POST
+    @Path("changepassword")
+    public SecurityUser changePassword(SecurityUser user) {
+        try {
+            return dataService.changePassword(user);
+        } catch (Exception e) {
+            throw new WebApplicationException(Response.Status.PRECONDITION_FAILED);
+        }
+    }
+
+    @POST
     @Path("confirm")
     @Consumes({"text/plain"})
     public void save(String confirmationId) {

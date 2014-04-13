@@ -274,6 +274,14 @@ public class DataService extends AbstractService {
         return user;
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public SecurityUser changePassword(SecurityUser user) throws NoSuchAlgorithmException {
+        String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, user.getSecret());
+        user.setSecret(passwordHash);
+        user = em.merge(user);
+        return user;
+    }
+
     private void sendMail(SecurityUser user) {
         try {
             Message msg = new MimeMessage(mailSession);
