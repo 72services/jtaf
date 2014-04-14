@@ -7,8 +7,6 @@ import ch.jtaf.entity.UserSpaceRole;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.security.Principal;
 import java.util.List;
-import javax.annotation.Resource;
-import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -29,7 +27,7 @@ import javax.ws.rs.core.Response;
 @Consumes({"application/json"})
 @Interceptors({TraceInterceptor.class})
 @Stateless
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class SpaceResource extends BaseResource {
 
     @GET

@@ -23,7 +23,7 @@ import javax.ws.rs.core.Response;
 @Consumes({"application/json"})
 @Interceptors({TraceInterceptor.class})
 @Stateless
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class CategoryResource extends BaseResource {
 
     @GET

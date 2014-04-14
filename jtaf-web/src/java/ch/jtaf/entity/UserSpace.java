@@ -1,5 +1,6 @@
 package ch.jtaf.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class UserSpace {
     private UserSpaceRole role;
     @ManyToOne
     private SecurityUser user;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Space space;
 
     public Long getId() {
