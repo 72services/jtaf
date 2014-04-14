@@ -11,8 +11,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "category")
 @NamedQueries({
     @NamedQuery(name = "Category.findAll", query = "select c from Category c where c.series_id = :series_id order by c.abbreviation"),
     @NamedQuery(name = "Category.findBySeriesAndYearAndGender", query = "select c from Category c where c.series_id = :series_id and c.gender = :gender and :year between c.yearFrom and c.yearTo")

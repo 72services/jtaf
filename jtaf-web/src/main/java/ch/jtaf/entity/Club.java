@@ -5,8 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "club")
 @NamedQueries({
     @NamedQuery(name = "Club.findAll", query = "select c from Club c where c.space_id = :space_id order by c.name")
 })

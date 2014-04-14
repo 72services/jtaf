@@ -6,9 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
+@Table(name = "competition")
 @NamedQueries({
     @NamedQuery(name = "Competition.findAll", query = "select c from Competition c where c.series_id = :series_id order by c.competitionDate")
 })

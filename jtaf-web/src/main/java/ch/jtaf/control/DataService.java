@@ -14,8 +14,6 @@ import ch.jtaf.entity.UserSpace;
 import ch.jtaf.entity.UserSpaceRole;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -290,10 +288,10 @@ public class DataService extends AbstractService {
             msg.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(user.getEmail(), user.getFirstName() + " " + user.getLastName()));
             msg.setSubject("JTAF Registration");
-            msg.setText("Please confirm your registration: " 
-                    + request.getLocalAddr() 
-                    + request.getLocalPort() 
-                    + request.getContextPath() 
+            msg.setText("Please confirm your registration: "
+                    + request.getLocalAddr()
+                    + request.getLocalPort()
+                    + request.getContextPath()
                     + "/confirm.html?confirmation_id="
                     + user.getConfirmationId());
             msg.saveChanges();
@@ -330,7 +328,7 @@ public class DataService extends AbstractService {
     }
 
     public Object getUserSpaceByUserAndSeries(String email, Long series_id) {
-        Query q = em.createNamedQuery("UserSpace.findByUserAndSeries");
+        Query q = em.createNativeQuery("SELECT u.* FROM userspace u JOIN series s ON s.space_id = u.space_id WHERE u.user_email = ? AND s.id = ?");
         q.setParameter(1, email);
         q.setParameter(2, series_id);
         return q.getSingleResult();

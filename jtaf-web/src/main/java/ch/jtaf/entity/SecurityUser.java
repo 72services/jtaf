@@ -4,8 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "securityuser")
 @NamedQueries({
     @NamedQuery(name = "SecurityUser.findByConfirmationId",
             query = "select u from SecurityUser u where u.confirmationId = :confirmationId")

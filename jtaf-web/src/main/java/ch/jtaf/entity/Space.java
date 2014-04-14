@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "TSPACE")
+@Table(name = "tspace")
 @NamedQueries({
     @NamedQuery(name = "Space.findAll", query = "select s from Space s order by s.name"),
     @NamedQuery(name = "Space.findByUser",

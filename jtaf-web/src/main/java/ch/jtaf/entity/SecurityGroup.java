@@ -2,8 +2,10 @@ package ch.jtaf.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "securitygroup")
 public class SecurityGroup {
 
     @Id
