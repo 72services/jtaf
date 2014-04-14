@@ -28,16 +28,14 @@ import org.jboss.logging.Logger;
 public class UserResource extends BaseResource {
 
     private static final Logger LOGGER = Logger.getLogger(UserResource.class);
-    
+
     @Context
     private HttpServletRequest request;
 
     @GET
     @Path("current")
     public SecurityUser getCurrentUser() {
-        Principal principal = sessionContext.getCallerPrincipal();
-        SecurityUser user = dataService.get(SecurityUser.class, principal.getName());
-        return user;
+        return dataService.get(SecurityUser.class, sessionContext.getCallerPrincipal().getName());
     }
 
     @POST

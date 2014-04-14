@@ -113,11 +113,9 @@ public class SeriesResource extends BaseResource {
             }
             os.flush();
             return os.toByteArray();
-
         } catch (IOException e) {
-            Logger.getLogger(SeriesResource.class
-            ).error(e.getMessage(), e);
-            throw new RuntimeException(e);
+            Logger.getLogger(SeriesResource.class).error(e.getMessage(), e);
+            return new byte[0];
         }
     }
 }

@@ -33,8 +33,7 @@ public class RankingResource {
         CompetitionRankingData data = service.getCompetitionRanking(competitionid);
         if (data == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
-        else {
+        } else {
             return data;
         }
     }
