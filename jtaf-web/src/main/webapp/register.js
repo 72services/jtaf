@@ -1,27 +1,30 @@
 var registerController = new RegisterController();
 
 function RegisterController() {
+    var util = new Util();
+    
     var user;
 
     this.save = function() {
         if (checkPassword()) {
             fillUser();
+            util.info("Registration in progress...");
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "/jtaf/res/users", true);
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    info("Thanks for registering!<br/>Please check your mailbox.");
+                    util.info("Thanks for registering!<br/>Please check your mailbox.");
                 } else if (xhr.status === 412) {
-                    error("User already exists");
+                    util.error("User already exists");
                 } else {
-                    error(xhr.status);
+                    util.error(xhr.status);
                 }
             };
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(JSON.stringify(user));
         }
         else {
-            error("Passwords do not match!");
+            util.error("Passwords do not match!");
         }
     };
 

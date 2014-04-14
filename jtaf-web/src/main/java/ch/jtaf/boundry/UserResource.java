@@ -29,9 +29,6 @@ public class UserResource extends BaseResource {
 
     private static final Logger LOGGER = Logger.getLogger(UserResource.class);
 
-    @Context
-    private HttpServletRequest request;
-
     @GET
     @Path("current")
     public SecurityUser getCurrentUser() {
@@ -39,7 +36,7 @@ public class UserResource extends BaseResource {
     }
 
     @POST
-    public SecurityUser save(SecurityUser user) {
+    public SecurityUser save(@Context HttpServletRequest request, SecurityUser user) {
         try {
             return dataService.saveUser(user, request);
         } catch (NoSuchAlgorithmException e) {

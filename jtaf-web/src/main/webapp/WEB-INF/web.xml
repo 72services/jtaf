@@ -10,8 +10,8 @@
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <url-pattern>/res/*</url-pattern>
     </servlet-mapping>         
-         
-        <!--
+       
+    <!--
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Force SSL for entire site</web-resource-name>
@@ -21,8 +21,8 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-        -->
-        
+    -->
+    
     <security-constraint>
         <display-name>Spaces</display-name>
         <web-resource-collection>

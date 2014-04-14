@@ -289,7 +289,9 @@ public class DataService extends AbstractService {
                     new InternetAddress(user.getEmail(), user.getFirstName() + " " + user.getLastName()));
             msg.setSubject("JTAF Registration");
             msg.setText("Please confirm your registration: "
+                    + "https://"
                     + request.getLocalAddr()
+                    + ":"
                     + request.getLocalPort()
                     + request.getContextPath()
                     + "/confirm.html?confirmation_id="
