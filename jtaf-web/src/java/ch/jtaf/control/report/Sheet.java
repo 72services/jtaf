@@ -45,9 +45,10 @@ public class Sheet extends ReportBase {
         this.logo = logo;
     }
 
-    public Sheet(Competition competition, List<Athlete> athletes) {
+    public Sheet(Competition competition, List<Athlete> athletes, byte [] logo) {
         this.competition = competition;
         this.athletes = athletes;
+        this.logo = logo;
     }
 
     public byte[] create() {
@@ -89,7 +90,7 @@ public class Sheet extends ReportBase {
     private void createLogo() throws BadElementException, DocumentException, MalformedURLException, IOException {
         if (logo != null) {
             Image image = Image.getInstance(logo);
-            image.setAbsolutePosition(cmToPixel(1f), cmToPixel(19f));
+            image.setAbsolutePosition(cmToPixel(1f), cmToPixel(18f));
             image.scaleAbsolute(120, 100);
             document.add(image);
         }
