@@ -25,6 +25,9 @@ import javax.ws.rs.core.Response;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class UserResource extends BaseResource {
 
+    @Context
+    private HttpServletRequest request;
+
     @GET
     @Path("current")
     public SecurityUser getCurrentUser() {
@@ -36,7 +39,7 @@ public class UserResource extends BaseResource {
     @POST
     public SecurityUser save(SecurityUser user) {
         try {
-            return dataService.saveUser(user);
+            return dataService.saveUser(user, request);
         } catch (Exception e) {
             throw new WebApplicationException(Response.Status.PRECONDITION_FAILED);
         }

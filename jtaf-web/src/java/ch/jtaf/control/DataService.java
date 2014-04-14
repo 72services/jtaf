@@ -34,6 +34,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpServletRequest;
 import org.jboss.crypto.CryptoUtil;
 import org.jboss.logging.Logger;
 
@@ -250,7 +251,7 @@ public class DataService extends AbstractService {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public SecurityUser saveUser(SecurityUser user) throws NoSuchAlgorithmException {
+    public SecurityUser saveUser(SecurityUser user, HttpServletRequest request) throws NoSuchAlgorithmException {
         if (user.getConfirmationId() == null) {
             if (em.find(SecurityUser.class, user.getEmail()) == null) {
                 String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, user.getSecret());
@@ -270,7 +271,7 @@ public class DataService extends AbstractService {
             }
         }
         user = em.merge(user);
-        sendMail(user);
+        sendMail(user, request);
         return user;
     }
 
@@ -282,19 +283,22 @@ public class DataService extends AbstractService {
         return user;
     }
 
-    private void sendMail(SecurityUser user) {
+    private void sendMail(SecurityUser user, HttpServletRequest request) {
         try {
             Message msg = new MimeMessage(mailSession);
             msg.setFrom(new InternetAddress("noreply@jtaf.ch", "JTAF - Track and Field"));
             msg.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(user.getEmail(), user.getFirstName() + " " + user.getLastName()));
             msg.setSubject("JTAF Registration");
-            msg.setText("Please confirm your registration: http://" + InetAddress.getLocalHost().getHostName()
-                    + ":8080/jtaf/confirm.html?confirmation_id="
+            msg.setText("Please confirm your registration: " 
+                    + request.getLocalAddr() 
+                    + request.getLocalPort() 
+                    + request.getContextPath() 
+                    + "/confirm.html?confirmation_id="
                     + user.getConfirmationId());
             msg.saveChanges();
             Transport.send(msg);
-        } catch (UnsupportedEncodingException | MessagingException | UnknownHostException ex) {
+        } catch (UnsupportedEncodingException | MessagingException ex) {
             Logger.getLogger(DataService.class).error(ex.getMessage(), ex);
         }
     }
