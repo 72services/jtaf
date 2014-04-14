@@ -3,8 +3,8 @@ function Util() {
     var i18messages;
 
     this.searchMap = new (function(sSearch) {
-        var rNull = /^\s*$/, rBool = /^(true|false)$/i;
         function buildValue(sValue) {
+            var rNull = /^\s*$/, rBool = /^(true|false)$/i;
             if (rNull.test(sValue)) {
                 return null;
             }
@@ -34,7 +34,6 @@ function Util() {
             if (xhr.status === 200 || xhr.status === 204) {
                 func(xhr.response);
             } else {
-                var util = new Util();
                 error(xhr.status);
             }
         };
@@ -48,7 +47,6 @@ function Util() {
             if (xhr.status === 200) {
                 func(xhr.response);
             } else {
-                var util = new Util();
                 error(xhr.status);
             }
         };

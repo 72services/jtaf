@@ -2,7 +2,11 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.entity.Series;
 import ch.jtaf.interceptor.TraceInterceptor;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -17,6 +21,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import org.jboss.logging.Logger;
+import org.jboss.resteasy.plugins.providers.multipart.InputPart;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 @Path("series")
 @Produces({"application/json"})
@@ -39,7 +46,10 @@ public class SeriesResource extends BaseResource {
     @POST
     public Series save(Series series) {
         if (isUserGrantedForSpace(series.getSpace_id())) {
-            return dataService.save(series);
+            Series fromDb = dataService.get(Series.class, series.getId());
+            series.setLogo(fromDb.getLogo());
+            dataService.save(series);
+            return dataService.getSeries(series.getId());
         } else {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
@@ -76,6 +86,38 @@ public class SeriesResource extends BaseResource {
             dataService.delete(s);
         } else {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
+        }
+    }
+
+    @POST
+    @Path("/upload/{id}")
+    @Consumes("multipart/form-data")
+    public void uploadFile(MultipartFormDataInput input, @PathParam("id") Long id) throws IOException {
+
+        Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+        List<InputPart> inputParts = uploadForm.get("series_logo");
+
+        InputStream inputStream = inputParts.get(0).getBody(InputStream.class, null);
+        byte[] bytes = getBytesFromInputStream(inputStream);
+
+        Series series = dataService.get(Series.class, id);
+        series.setLogo(bytes);
+        dataService.save(series);
+    }
+
+    public static byte[] getBytesFromInputStream(InputStream is) {
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream();) {
+            byte[] buffer = new byte[0xFFFF];
+            for (int len; (len = is.read(buffer)) != -1;) {
+                os.write(buffer, 0, len);
+            }
+            os.flush();
+            return os.toByteArray();
+
+        } catch (IOException e) {
+            Logger.getLogger(SeriesResource.class
+            ).error(e.getMessage(), e);
+            throw new RuntimeException(e);
         }
     }
 }

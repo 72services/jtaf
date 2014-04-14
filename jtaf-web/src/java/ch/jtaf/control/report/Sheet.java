@@ -91,7 +91,7 @@ public class Sheet extends ReportBase {
         if (logo != null) {
             Image image = Image.getInstance(logo);
             image.setAbsolutePosition(cmToPixel(1f), cmToPixel(18f));
-            image.scaleAbsolute(120, 100);
+            image.scaleAbsolute(120, 60);
             document.add(image);
         }
     }

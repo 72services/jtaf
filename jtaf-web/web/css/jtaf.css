@@ -168,7 +168,7 @@ a.tab_active {
     font-weight: bold;
 }
 
-input[type="submit"], input[type="reset"], button {
+input[type="submit"], input[type="reset"], input[type="button"], button {
     border: 1px solid #a8a8a8;
     background: #F5F5F5;
     color: #4f4f4f;

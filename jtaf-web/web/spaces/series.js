@@ -51,6 +51,27 @@ function SeriesController() {
         }, series);
     };
 
+    this.uploadLogo = function() {
+        var iframe = document.createElement("iframe");
+        iframe.name = "myTarget";
+        iframe.addEventListener("load", function() {
+        });
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
+
+        var form = document.getElementById("logo_upload");
+        form.target = iframe.name;
+        form.setAttribute("action", "/jtaf/res/series/upload/" + series_id);
+        form.submit();
+    };
+
+    this.refreshSeries = function() {
+        util.xhrGet("/jtaf/res/series/" + series_id, function(response) {
+            series = JSON.parse(response);
+            util.info("Logo updated");
+        });
+    };
+
     this.addCompetition = function() {
         window.location = "competition.html?series_id=" + series_id + "&space_id=" + space_id;
     };

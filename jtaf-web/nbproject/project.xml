@@ -23,7 +23,12 @@
                 </library>
                 <library dirs="200">
                     <file>${file.reference.picketbox-4.0.19.SP4-redhat-1.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.resteasy-multipart-provider-2.3.7.Final-redhat-2.jar}</file>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.resteasy-jaxrs-2.3.7.Final-redhat-2.jar}</file>
                 </library>
             </web-module-libraries>
             <web-module-additional-libraries/>
