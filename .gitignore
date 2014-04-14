@@ -4,5 +4,4 @@
 *.war
 *.ear
 /jtaf-web/nbproject/private/
-/jtaf-web/build/
-/jtaf-web/dist/
+/jtaf-web/target/

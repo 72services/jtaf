@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<jboss-web>
-  <context-root>/jtaf</context-root>
-  <security-domain>java:/jaas/jtaf</security-domain>
-</jboss-web>
