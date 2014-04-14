@@ -9,6 +9,8 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import org.jboss.logging.Logger;
 
 public class CompetitionRanking extends Ranking {
 
@@ -38,8 +40,8 @@ public class CompetitionRanking extends Ranking {
             }
 
             return ba;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (DocumentException | IOException e) {
+            Logger.getLogger(CompetitionRanking.class).error(e.getMessage(), e);
             return new byte[0];
         }
     }

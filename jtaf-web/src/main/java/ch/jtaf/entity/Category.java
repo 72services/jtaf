@@ -112,7 +112,7 @@ public class Category {
             return false;
         }
         final Category other = (Category) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+        if (!this.id.equals(other.id) && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
         return true;

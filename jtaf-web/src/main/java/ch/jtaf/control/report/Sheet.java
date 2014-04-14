@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.jboss.logging.Logger;
 
 public class Sheet extends ReportBase {
 
@@ -29,7 +30,7 @@ public class Sheet extends ReportBase {
     private PdfWriter pdfWriter;
     private final Competition competition;
     private final List<Athlete> athletes;
-    private byte[] logo;
+    private final byte[] logo;
 
     public Sheet(Athlete athlete, byte[] logo) {
         this.competition = null;
@@ -81,8 +82,8 @@ public class Sheet extends ReportBase {
             baos.close();
 
             return ba;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (DocumentException | IOException e) {
+            Logger.getLogger(Sheet.class).error(e.getMessage(), e);
             return new byte[0];
         }
     }

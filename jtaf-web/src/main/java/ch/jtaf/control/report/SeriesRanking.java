@@ -10,7 +10,9 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Date;
+import org.jboss.logging.Logger;
 
 public class SeriesRanking extends Ranking {
 
@@ -41,8 +43,8 @@ public class SeriesRanking extends Ranking {
             baos.close();
 
             return ba;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (DocumentException | IOException e) {
+            Logger.getLogger(SeriesRanking.class).error(e.getMessage(), e);
             return new byte[0];
         }
     }

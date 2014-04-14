@@ -2,6 +2,7 @@ package ch.jtaf.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SeriesRankingCategoryData implements Comparable<SeriesRankingCategoryData> {
 
@@ -22,6 +23,28 @@ public class SeriesRankingCategoryData implements Comparable<SeriesRankingCatego
 
     public void setAthletes(List<Athlete> athletes) {
         this.athletes = athletes;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.category);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SeriesRankingCategoryData other = (SeriesRankingCategoryData) obj;
+        if (!Objects.equals(this.category, other.category)) {
+            return false;
+        }
+        return true;
     }
 
     @Override

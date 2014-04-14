@@ -2,6 +2,7 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.interceptor.TraceInterceptor;
+import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import org.jboss.logging.Logger;
 
 @Path("users")
 @Produces({"application/json"})
@@ -25,6 +27,8 @@ import javax.ws.rs.core.Response;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class UserResource extends BaseResource {
 
+    private static final Logger LOGGER = Logger.getLogger(UserResource.class);
+    
     @Context
     private HttpServletRequest request;
 
@@ -40,7 +44,8 @@ public class UserResource extends BaseResource {
     public SecurityUser save(SecurityUser user) {
         try {
             return dataService.saveUser(user, request);
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new WebApplicationException(Response.Status.PRECONDITION_FAILED);
         }
     }
@@ -50,7 +55,8 @@ public class UserResource extends BaseResource {
     public SecurityUser changePassword(SecurityUser user) {
         try {
             return dataService.changePassword(user);
-        } catch (Exception e) {
+        } catch (NoSuchAlgorithmException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new WebApplicationException(Response.Status.PRECONDITION_FAILED);
         }
     }
