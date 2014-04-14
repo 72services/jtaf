@@ -186,12 +186,12 @@ input[type="text"], input[type="date"], input[type="number"], input[type="passwo
 
 input#search_term {
     width: 500px;
-    padding: 15px;
+    padding: 10px;
     margin: 0px;
 }
 
 input[type="submit"]#search {
-    padding: 16px;
+    padding: 11px;
     font-weight: bold;
 }
 

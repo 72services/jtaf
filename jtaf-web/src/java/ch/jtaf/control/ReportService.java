@@ -41,7 +41,7 @@ public class ReportService extends AbstractService {
             query.setParameter("series_id", competition.getSeries_id());
             List<Athlete> athletes = query.getResultList();
 
-            Sheet sheet = new Sheet(competition, athletes);
+            Sheet sheet = new Sheet(competition, athletes, rankingService.get(Series.class, competition.getSeries_id()).getLogo());
             return sheet.create();
         }
     }
