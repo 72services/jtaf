@@ -11,7 +11,7 @@ function ResultsController() {
 
     this.loadData = function() {
         util.showMessage();
-        
+
         space_id = util.searchMap.space_id;
         var id = util.searchMap.id;
 
@@ -42,8 +42,8 @@ function ResultsController() {
         } else {
             util.xhrGet("/jtaf/res/athletes/search?series_id=" + competition.series_id +
                     "&query=" + searchterm, function(response) {
-                parseAndFillAthletes(response);
-            });
+                        parseAndFillAthletes(response);
+                    });
         }
     };
 
@@ -62,18 +62,27 @@ function ResultsController() {
         });
     };
 
+    this.clearResults = function() {
+        if (confirm(util.translate("Are you sure?"))) {
+            athlete.results = [];
+            this.save();
+        }
+    };
+
     this.calculatePoints = function(i) {
         var ev = athlete.category.events[i];
         var result = document.getElementById("result" + i).value;
         var points = 0;
-        if (ev.type === "run") {
-            points = ev.a * Math.pow((ev.b - result * 100) / 100, ev.c);
-        } else if (ev.type === "run_long") {
-            var parts = result.split(".");
-            var time = parts[0] * 6000 + parts[1] * 100;
-            points = ev.a * Math.pow((ev.b - time) / 100, ev.c);
-        } else if (ev.type === "jump_throw") {
-            points = ev.a * Math.pow((result * 100 - ev.b) / 100, ev.c);
+        if (result > 0) {
+            if (ev.type === "run") {
+                points = ev.a * Math.pow((ev.b - result * 100) / 100, ev.c);
+            } else if (ev.type === "run_long") {
+                var parts = result.split(".");
+                var time = parts[0] * 6000 + parts[1] * 100;
+                points = ev.a * Math.pow((ev.b - time) / 100, ev.c);
+            } else if (ev.type === "jump_throw") {
+                points = ev.a * Math.pow((result * 100 - ev.b) / 100, ev.c);
+            }
         }
         points = Math.round(points);
         if (isNaN(points) || points < 0) {
@@ -90,6 +99,9 @@ function ResultsController() {
 
     function fillClubSelect() {
         var select = document.getElementById("athlete_club");
+        while (select.firstChild) {
+            select.removeChild(select.firstChild);
+        }
         for (var i in clubs) {
             var club = clubs[i];
             var option = document.createElement("option");
@@ -177,17 +189,6 @@ function ResultsController() {
             athlete.gender = "f";
         }
         athlete.series_id = competition.series_id;
-    }
-
-    function deleteAthlete(id) {
-        xhrDelete("/jtaf/res/athletes/" + id, function() {
-            loadData();
-            info("Athlete deleted");
-        });
-    }
-
-    function addAthlete() {
-        clear();
     }
 
     function clear() {

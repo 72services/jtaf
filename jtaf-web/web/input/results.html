@@ -84,7 +84,7 @@
 
                     <p>
                         <input type="submit" value="Save" />&nbsp;
-                        <a href="#" onclick="addAthlete();"><span class="i18n">Add athlete</span></a>&nbsp;
+                        <a href="#" onclick="clear();"><span class="i18n">Add athlete</span></a>&nbsp;
                         <a href="../index.html"><span class="i18n">Back</span></a>
                     </p>
 
@@ -95,7 +95,8 @@
                         <table id="athlete_events" class="results"></table>
 
                         <p>
-                            <input type="submit" value="Save" />
+                            <input type="submit" value="Save" />&nbsp;
+                            <a href="#" onclick="resultsController.clearResults();"><span class="i18n">Clear results</span></a>&nbsp;
                         </p>
                     </div>
 

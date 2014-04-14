@@ -9,7 +9,7 @@ function IndexController() {
 
     this.loadData = function() {
         util.showMessage();
-        
+
         header.activateLink("navigation_0");
         getCurrentUser();
 
@@ -87,7 +87,7 @@ function IndexController() {
                         cell1.innerHTML = competition.competitionDate;
                         var cell2 = row.insertCell(2);
                         cell2.style.textAlign = "right";
-                        cell2.innerHTML = '<span class="i18n">Athletes: </span>' + competition.numberOfAthletes;
+                        cell2.innerHTML = '<span class="i18n">Athletes ' + competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes + '</span>';
 
                         var cell3 = row.insertCell(3);
                         cell3.style.textAlign = "right";

@@ -84,7 +84,8 @@ public class DataService extends AbstractService {
         q.setParameter("series_id", seriesId);
         List<Competition> cs = q.getResultList();
         for (Competition c : cs) {
-            c.setNumberOfAthletes(getNumberOfAthletes(c).intValue());
+            c.setNumberOfAthletes(getAthletes(s.getId()).size());
+            c.setNumberOfAthletesWithResults(getNumberOfAthletes(c).intValue());
         }
         s.setCompetitions(cs);
         return s;

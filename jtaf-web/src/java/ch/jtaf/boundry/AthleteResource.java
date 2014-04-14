@@ -2,6 +2,7 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.interceptor.TraceInterceptor;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;

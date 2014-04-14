@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 14. Apr 2014 um 11:16
+-- Erstellungszeit: 14. Apr 2014 um 12:36
 -- Server Version: 5.6.16
 -- PHP-Version: 5.5.9
 
@@ -190,7 +190,7 @@ INSERT INTO `category_event` (`Category_id`, `events_id`, `position`) VALUES
 (37, 13, 0),
 (37, 14, 3),
 (37, 15, 1),
-(37, 16, 2),
+(37, 135, 2),
 (38, 13, 0),
 (38, 14, 3),
 (38, 15, 1),
@@ -206,15 +206,15 @@ INSERT INTO `category_event` (`Category_id`, `events_id`, `position`) VALUES
 (41, 19, 0),
 (41, 20, 3),
 (41, 21, 1),
-(41, 22, 2),
+(41, 136, 2),
 (42, 19, 0),
 (42, 20, 3),
 (42, 21, 1),
-(42, 22, 2),
+(42, 136, 2),
 (43, 19, 0),
 (43, 20, 3),
 (43, 21, 1),
-(43, 22, 2),
+(43, 136, 2),
 (44, 19, 0),
 (44, 20, 3),
 (44, 21, 1),
@@ -303,14 +303,16 @@ INSERT INTO `event` (`id`, `a`, `b`, `c`, `gender`, `name`, `series_id`, `type`,
 (13, 10.54596, 1778, 2.1, 'm', '80', 10, 'run', '80 m'),
 (14, 0.086375, 18833, 2.1, 'm', '600', 10, 'run_long', '600 m'),
 (15, 180.85908, 190, 1, 'm', 'weit', 10, 'jump_throw', 'Weitsprung'),
-(16, 82.491673, 178, 0.9, 'm', 'kugel', 10, 'jump_throw', 'Kugel'),
-(17, 18, 800, 0.9, 'm', 'ball', 10, 'jump_throw', 'Ballweitwurf'),
+(16, 82.491673, 178, 0.9, 'm', 'kugel 4', 10, 'jump_throw', 'Kugel 4 kg'),
+(17, 18, 800, 0.9, 'm', 'ball', 10, 'jump_throw', 'Ball 80 g'),
 (18, 19.742424, 1417, 2.1, 'f', '60', 10, 'run', '60 m'),
 (19, 11.754907, 1803, 2.1, 'f', '80', 10, 'run', '80 m'),
 (20, 0.089752, 19543, 2.1, 'f', '600', 10, 'run_long', '600 m'),
 (21, 220.628792, 180, 1, 'f', 'weit', 10, 'jump_throw', 'Weitsprung'),
-(22, 83.435373, 130, 0.9, 'f', 'kugel', 10, 'jump_throw', 'Kugelstossen'),
-(23, 22, 500, 0.9, 'f', 'ball', 10, 'jump_throw', 'Ballweitwurf');
+(22, 83.435373, 130, 0.9, 'f', 'kugel 4', 10, 'jump_throw', 'Kugel 4 kg'),
+(23, 22, 500, 0.9, 'f', 'ball', 10, 'jump_throw', 'Ball 80 g'),
+(135, 82.491673, 178, 0.9, 'm', 'kugel 3', 10, 'jump_throw', 'Kugel 3 kg'),
+(136, 83.435373, 130, 0.9, 'f', 'kugel 3', 10, 'jump_throw', 'Kugel 3 kg');
 
 -- --------------------------------------------------------
 
@@ -327,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(125);
+(137);
 
 -- --------------------------------------------------------
 
