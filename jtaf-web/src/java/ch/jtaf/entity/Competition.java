@@ -21,6 +21,8 @@ public class Competition {
     private Date competitionDate;
     private Long series_id;
     @Transient
+    private int numberOfAthletesWithResults;
+    @Transient
     private int numberOfAthletes;
 
     public Date getCompetitionDate() {
@@ -61,6 +63,14 @@ public class Competition {
 
     public void setNumberOfAthletes(int numberOfAthletes) {
         this.numberOfAthletes = numberOfAthletes;
+    }
+
+    public int getNumberOfAthletesWithResults() {
+        return numberOfAthletesWithResults;
+    }
+
+    public void setNumberOfAthletesWithResults(int numberOfAthletesWithResults) {
+        this.numberOfAthletesWithResults = numberOfAthletesWithResults;
     }
 
     @Override
