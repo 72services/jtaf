@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>My spaces</title>
+        <link rel="stylesheet" type="text/css" href="../css/jtaf.css">
+        <script src="../util/util.js"></script>
+        <script src="index.js"></script>
+    </head>
+    <body onload="mySpacesController.loadData();">
+        <script src="/jtaf/header.js"></script>
+
+        <div id="main">
+            <h1><span class="i18n">Edit Spaces</span></h1>
+
+            <table class="list">
+                <thead>
+                    <tr>
+                        <th><span class="i18n">Name</span></th>
+                        <th style="width:80px; text-align: right;"></th>
+                    </tr>
+                </thead>
+                <tbody id="spaces_table">
+                    <tr>
+                        <td><span class="i18n">Loading space</span></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><a href="space.html"><span class="i18n">Add space</span></a></p>
+
+        </div>
+
+        <script src="/jtaf/footer.js"></script>
+    </body>
+</html>

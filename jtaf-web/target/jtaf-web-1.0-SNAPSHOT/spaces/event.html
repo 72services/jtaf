@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Edit event</title>
+        <link rel="stylesheet" href="../css/jtaf.css">
+        <script src="../util/util.js"></script>
+        <script src="event.js"></script>
+    </head>
+    <body onload="eventController.loadData();">
+        <script src="/jtaf/header.js"></script>
+
+        <div id="main">
+            <h1><span class="i18n">Edit Event</span></h1>
+
+            <form action="javascript:eventController.save();">
+
+                <table class="input">
+                    <tr>
+                        <td><span class="i18n">Id</span></td>
+                        <td><input type="text" id="event_id" readonly disabled /></td>
+                    </tr>
+                    <tr>
+                        <td><span class="i18n">Name</span></td>
+                        <td><input type="text" id="event_name" required /></td>
+                    </tr>
+                    <tr>
+                        <td><span class="i18n">Long name</span></td>
+                        <td><input type="text" id="event_longname" required /></td>
+                    </tr>
+                    <tr>
+                        <td><span class="i18n">Type</span></td>
+                        <td>
+                            <select id="event_type">
+                                <option value="run">run</option>
+                                <option value="run_long">run_long</option>
+                                <option value="jump_throw">jump_throw</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="i18n">Gender</span></td>
+                        <td>
+                            <input id="event_gender_m" type="radio" name="event_gender" value="m">m
+                            <input id="event_gender_f" type="radio" name="event_gender" value="f">f
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>A</td>
+                        <td><input type="text" id="event_a" required /></td>
+                    </tr>
+                    <tr>
+                        <td>B</td>
+                        <td><input type="text" id="event_b" required /></td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                        <td><input type="text" id="event_c" required /></td>
+                    </tr>
+                </table>
+
+                <p>
+                    <input type="submit" value="Save" />&nbsp;
+                    <a href="javascript:eventController.back();"><span class="i18n">Back</span></a>
+                </p>
+
+            </form>
+        </div>
+
+        <script src="/jtaf/footer.js"></script>
+    </body>
+</html>
