@@ -1,7 +1,7 @@
 body {
-    // background-image: url(/jtaf/images/background.jpg);
+    background-image: url(/jtaf/images/track.jpg);
     background-position: top;
-    background-repeat: no-repeat;
+    background-repeat: repeat-y;
     margin: 0px;
     font-family: Segoe UI, Arial, Helvetica, sans-serif;
     font-size: 13px;
