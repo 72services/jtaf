@@ -7,7 +7,7 @@ public class CryptoUtilTest {
 
     @Test
     public void hashPassword() {
-        String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, "password");
+        String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, "linus");
         System.out.println(passwordHash);
     }
 }

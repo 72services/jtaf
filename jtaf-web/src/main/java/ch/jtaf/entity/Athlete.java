@@ -16,7 +16,7 @@ import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "athelete")
+@Table(name = "athlete")
 @NamedQueries({
     @NamedQuery(name = "Athlete.findBySeriesOrderByClub",
             query = "select distinct a from Athlete a where a.series_id = :series_id order by a.club.abbreviation, a.id"),
