@@ -94,7 +94,7 @@ function SeriesController() {
 
     this.sortBy = function(property) {
         if (event.srcElement.type === undefined) {
-            athletes.sort(createComparator(property));
+            athletes.sort(util.createComparator(property));
             if (ascending) {
                 athletes.reverse();
             }
