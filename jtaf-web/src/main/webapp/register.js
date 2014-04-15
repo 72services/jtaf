@@ -1,5 +1,4 @@
 var registerController = new RegisterController();
-window.onload = registerController.loadData();
 
 function RegisterController() {
     var util = new Util();

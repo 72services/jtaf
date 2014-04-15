@@ -1,5 +1,4 @@
 var categoryController = new CategoryController();
-window.onload = categoryController.loadData();
 
 function CategoryController() {
     var util = new Util();

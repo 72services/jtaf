@@ -1,5 +1,4 @@
 var indexController = new IndexController();
-window.onload = indexController.loadData();
 
 function IndexController() {
     var util = new Util();

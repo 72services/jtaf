@@ -1,5 +1,4 @@
 var passwordController = new PasswordController();
-window.onload = passwordController.loadData();
 
 function PasswordController() {
     var util = new Util();

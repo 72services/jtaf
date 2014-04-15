@@ -1,5 +1,4 @@
 var resultsController = new ResultsController();
-window.onload = resultsController.loadData();
 
 function ResultsController() {
     var util = new Util();
