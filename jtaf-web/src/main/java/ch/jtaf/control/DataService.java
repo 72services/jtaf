@@ -283,17 +283,18 @@ public class DataService extends AbstractService {
 
     private void sendMail(SecurityUser user, HttpServletRequest request) {
         try {
+            String confirmationUrl = System.getProperty("jtaf.confirmation.url");
+            if (confirmationUrl == null) {
+                throw new ConfigurationException("jtaf.confirmation.url");
+            }
+
             Message msg = new MimeMessage(mailSession);
             msg.setFrom(new InternetAddress("noreply@jtaf.ch", "JTAF - Track and Field"));
             msg.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(user.getEmail(), user.getFirstName() + " " + user.getLastName()));
             msg.setSubject("JTAF Registration");
             msg.setText("Please confirm your registration: "
-                    + "https://"
-                    + request.getLocalAddr()
-                    + ":"
-                    + request.getLocalPort()
-                    + request.getContextPath()
+                    + confirmationUrl
                     + "/confirm.html?confirmation_id="
                     + user.getConfirmationId());
             msg.saveChanges();
