@@ -1,14 +1,13 @@
 var registerController = new RegisterController();
-
-window.onload = function() {
-    var util = new Util();
-    util.i18n();
-};
+window.onload = registerController.loadData();
 
 function RegisterController() {
     var util = new Util();
-
     var user;
+
+    this.loadData = function() {
+        util.i18n();
+    };
 
     this.save = function() {
         if (checkPassword()) {

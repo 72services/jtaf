@@ -1,5 +1,4 @@
 var indexController = new IndexController();
-
 window.onload = indexController.loadData();
 
 function IndexController() {
@@ -39,7 +38,7 @@ function IndexController() {
                 user = JSON.parse(xhr.response);
             } else if (xhr.status === 204) {
             } else {
-                error(xhr.status);
+                util.error(xhr.status);
             }
         };
         xhr.send();

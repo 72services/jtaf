@@ -1,5 +1,4 @@
 var shareController = new ShareController();
-
 window.onload = shareController.loadData();
 
 function ShareController() {

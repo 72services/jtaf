@@ -1,5 +1,4 @@
 var profileController = new ProfileController();
-
 window.onload = profileController.loadData();
 
 function ProfileController() {

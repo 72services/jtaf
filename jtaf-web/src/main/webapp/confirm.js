@@ -1,5 +1,4 @@
 var confirmController = new ConfirmController();
-
 window.onload = confirmController.loadData();
 
 function ConfirmController() {

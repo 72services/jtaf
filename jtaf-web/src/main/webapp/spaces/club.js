@@ -1,5 +1,4 @@
 var clubController = new ClubController();
-
 window.onload = clubController.loadData();
 
 function ClubController() {

@@ -1,5 +1,4 @@
 var competitionController = new CompetitionController();
-
 window.onload = competitionController.loadData();
 
 function CompetitionController() {
