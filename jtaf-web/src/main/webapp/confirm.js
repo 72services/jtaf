@@ -1,5 +1,7 @@
 var confirmController = new ConfirmController();
 
+window.onload = confirmController.loadData();
+
 function ConfirmController() {
     var util = new Util();
     var confirmation_id;

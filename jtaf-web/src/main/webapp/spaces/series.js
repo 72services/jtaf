@@ -1,5 +1,7 @@
 var seriesController = new SeriesController();
 
+window.onload = seriesController.loadData();
+
 function SeriesController() {
     var util = new Util();
 

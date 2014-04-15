@@ -1,5 +1,7 @@
 var competitionRankingController = new CompetitionsRankingController();
 
+window.onload = competitionRankingController.loadData();
+
 function CompetitionsRankingController() {
     var util = new Util();
     var ranking;

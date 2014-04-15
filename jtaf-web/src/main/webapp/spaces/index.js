@@ -1,5 +1,7 @@
 var mySpacesController = new MySpacesController();
 
+window.onload = mySpacesController.loadData();
+
 function MySpacesController() {
     var util = new Util();
 

@@ -1,8 +1,13 @@
 var registerController = new RegisterController();
 
+window.onload = function() {
+    var util = new Util();
+    util.i18n();
+};
+
 function RegisterController() {
     var util = new Util();
-    
+
     var user;
 
     this.save = function() {

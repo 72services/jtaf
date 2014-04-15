@@ -1,5 +1,7 @@
 var eventController = new EventController();
 
+window.onload = eventController.loadData();
+
 function EventController() {
     var util = new Util();
 

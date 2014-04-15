@@ -1,5 +1,7 @@
 var spaceController = new SpaceController();
 
+window.onload = spaceController.loadData();
+
 function SpaceController() {
     var util = new Util();
 

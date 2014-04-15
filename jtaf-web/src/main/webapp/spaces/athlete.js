@@ -1,5 +1,7 @@
 var athlete = new Athlete();
 
+window.onload = athlete.loadData();
+
 function Athlete() {
     var util = new Util();
 
