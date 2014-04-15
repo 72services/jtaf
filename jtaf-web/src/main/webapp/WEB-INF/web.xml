@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <web-app version="3.0"
          xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -10,19 +9,7 @@
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <url-pattern>/res/*</url-pattern>
     </servlet-mapping>         
-       
-    <!--
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Force SSL for entire site</web-resource-name>
-            <url-pattern>/*</url-pattern>
-        </web-resource-collection>
-        <user-data-constraint>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-    -->
-    
+
     <security-constraint>
         <display-name>Spaces</display-name>
         <web-resource-collection>
@@ -32,6 +19,9 @@
         <auth-constraint>
             <role-name>user</role-name>
         </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
     </security-constraint>
     
     <security-constraint>
@@ -43,6 +33,9 @@
         <auth-constraint>
             <role-name>user</role-name>
         </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
     </security-constraint>
 
     <security-constraint>
@@ -54,6 +47,9 @@
         <auth-constraint>
             <role-name>user</role-name>
         </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
     </security-constraint>
 
     <security-constraint>
@@ -80,6 +76,9 @@
         <auth-constraint>
             <role-name>user</role-name>
         </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
     </security-constraint>
 
     <login-config>
