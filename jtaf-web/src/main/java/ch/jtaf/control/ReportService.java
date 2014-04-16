@@ -2,12 +2,14 @@ package ch.jtaf.control;
 
 import ch.jtaf.control.report.CompetitionCsvExport;
 import ch.jtaf.control.report.CompetitionRanking;
+import ch.jtaf.control.report.EventsRanking;
 import ch.jtaf.control.report.SeriesRanking;
 import ch.jtaf.control.report.Sheet;
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Category;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.entity.CompetitionRankingData;
+import ch.jtaf.entity.EventsRankingData;
 import ch.jtaf.entity.Series;
 import ch.jtaf.entity.SeriesRankingData;
 import ch.jtaf.interceptor.TraceInterceptor;
@@ -81,5 +83,14 @@ public class ReportService extends AbstractService {
         }
         CompetitionCsvExport export = new CompetitionCsvExport(ranking);
         return export.create();
+    }
+
+    public byte[] createEventsRanking(Long competitionId) {
+        EventsRankingData ranking = rankingService.getEventsRanking(competitionId);
+        if (ranking == null) {
+            return null;
+        }
+        EventsRanking report = new EventsRanking(ranking);
+        return report.create();
     }
 }

@@ -29,6 +29,10 @@ function CompetitionsRankingController() {
         newtab.location = "/jtaf/res/reports/export.csv?competitionid=" + ranking.competition.id;
     };
 
+    this.createEventsRanking = function() {
+        var newtab = window.open();
+        newtab.location = "/jtaf/res/reports/eventsranking?competitionid=" + ranking.competition.id;
+    };
 
     function parseAndFill(response) {
         ranking = JSON.parse(response);

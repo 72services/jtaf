@@ -3,10 +3,14 @@ package ch.jtaf.control;
 import ch.jtaf.control.util.AthleteCompetitionResultComparator;
 import ch.jtaf.control.util.AthleteSeriesResultComparator;
 import ch.jtaf.entity.Athlete;
+import ch.jtaf.entity.AthleteWithEventTO;
 import ch.jtaf.entity.Category;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.entity.CompetitionRankingData;
 import ch.jtaf.entity.CompetitionRankingCategoryData;
+import ch.jtaf.entity.Event;
+import ch.jtaf.entity.EventsRankingData;
+import ch.jtaf.entity.EventsRankingEventData;
 import ch.jtaf.entity.Result;
 import ch.jtaf.entity.Series;
 import ch.jtaf.entity.SeriesRankingCategoryData;
@@ -55,7 +59,7 @@ public class RankingService extends AbstractService {
             Category c = entry.getKey();
             c.setEvents(null);
             rc.setCategory(c);
-            rc.setAthletes(filterAndSort(competition, entry.getValue()));
+            rc.setAthletes(filterAndSortByTotalPoints(competition, entry.getValue()));
             ranking.getCategories().add(rc);
         }
         Collections.sort(ranking.getCategories());
@@ -99,7 +103,45 @@ public class RankingService extends AbstractService {
         return ranking;
     }
 
-    private List<Athlete> filterAndSort(Competition competition, List<Athlete> list) {
+    public EventsRankingData getEventsRanking(Long competitionid) {
+        Competition competition = em.find(Competition.class, competitionid);
+        if (competition == null) {
+            return null;
+        }
+
+        TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findByCompetition", Athlete.class);
+        q.setParameter("competitionid", competitionid);
+        List<Athlete> list = q.getResultList();
+
+        EventsRankingData ranking = new EventsRankingData();
+        ranking.setCompetition(competition);
+
+        Map<Event, List<AthleteWithEventTO>> map = new HashMap<>();
+        for (Athlete a : list) {
+            for (Result r : a.getResults()) {
+                if (r.getCompetition().getId().equals(competitionid)) {
+                    List<AthleteWithEventTO> as = map.get(r.getEvent());
+                    if (as == null) {
+                        as = new ArrayList<>();
+                    }
+                    as.add(new AthleteWithEventTO(a, r.getEvent(), r));
+                    map.put(r.getEvent(), as);
+                }
+            }
+        }
+        for (Map.Entry<Event, List<AthleteWithEventTO>> entry : map.entrySet()) {
+            EventsRankingEventData re = new EventsRankingEventData();
+            Event e = entry.getKey();
+            re.setEvent(e);
+            Collections.sort(entry.getValue());
+            re.setAthletes(entry.getValue());
+            ranking.getEvents().add(re);
+        }
+        Collections.sort(ranking.getEvents());
+        return ranking;
+    }
+
+    private List<Athlete> filterAndSortByTotalPoints(Competition competition, List<Athlete> list) {
         for (Athlete a : list) {
             a.setCategory(null);
 

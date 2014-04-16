@@ -51,7 +51,7 @@ function ResultsController() {
         fillAthlete();
         util.xhrPost("/jtaf/res/athletes/", function(response) {
             parseAndFill(response);
-            info("Athlete saved");
+            util.info("Athlete saved");
         }, athlete);
     };
 
