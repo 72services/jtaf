@@ -1,7 +1,7 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.control.RankingService;
-import ch.jtaf.entity.CompetitionRankingData;
+import ch.jtaf.data.CompetitionRankingData;
 import ch.jtaf.interceptor.TraceInterceptor;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

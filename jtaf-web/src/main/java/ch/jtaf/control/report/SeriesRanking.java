@@ -2,8 +2,8 @@ package ch.jtaf.control.report;
 
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Competition;
-import ch.jtaf.entity.SeriesRankingCategoryData;
-import ch.jtaf.entity.SeriesRankingData;
+import ch.jtaf.data.SeriesRankingCategoryData;
+import ch.jtaf.data.SeriesRankingData;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;

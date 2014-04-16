@@ -1,7 +1,7 @@
 package ch.jtaf.control.report;
 
 import ch.jtaf.entity.Athlete;
-import ch.jtaf.entity.CompetitionRankingCategoryData;
+import ch.jtaf.data.CompetitionRankingCategoryData;
 import ch.jtaf.entity.Result;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -16,9 +16,9 @@ public class CompetitionRanking extends Ranking {
 
     private Document document;
     private PdfWriter pdfWriter;
-    private final ch.jtaf.entity.CompetitionRankingData ranking;
+    private final ch.jtaf.data.CompetitionRankingData ranking;
 
-    public CompetitionRanking(ch.jtaf.entity.CompetitionRankingData ranking) {
+    public CompetitionRanking(ch.jtaf.data.CompetitionRankingData ranking) {
         this.ranking = ranking;
     }
 

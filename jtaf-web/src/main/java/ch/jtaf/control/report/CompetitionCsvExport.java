@@ -1,8 +1,8 @@
 package ch.jtaf.control.report;
 
 import ch.jtaf.entity.Athlete;
-import ch.jtaf.entity.CompetitionRankingCategoryData;
-import ch.jtaf.entity.CompetitionRankingData;
+import ch.jtaf.data.CompetitionRankingCategoryData;
+import ch.jtaf.data.CompetitionRankingData;
 
 public class CompetitionCsvExport {
 

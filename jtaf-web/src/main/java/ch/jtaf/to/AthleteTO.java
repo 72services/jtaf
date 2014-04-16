@@ -1,4 +1,4 @@
-package ch.jtaf.entity;
+package ch.jtaf.to;
 
 public class AthleteTO {
 

@@ -1,4 +1,8 @@
-package ch.jtaf.entity;
+package ch.jtaf.to;
+
+import ch.jtaf.entity.Athlete;
+import ch.jtaf.entity.Event;
+import ch.jtaf.entity.Result;
 
 public class AthleteWithEventTO implements Comparable<AthleteWithEventTO> {
 

@@ -1,7 +1,7 @@
 package ch.jtaf.control;
 
 import ch.jtaf.entity.Athlete;
-import ch.jtaf.entity.AthleteTO;
+import ch.jtaf.to.AthleteTO;
 import ch.jtaf.entity.Category;
 import ch.jtaf.entity.Club;
 import ch.jtaf.entity.Competition;
@@ -84,8 +84,8 @@ public class DataService extends AbstractService {
         q.setParameter("series_id", seriesId);
         List<Competition> cs = q.getResultList();
         for (Competition c : cs) {
-            c.setNumberOfAthletes(getAthletes(s.getId()).size());
-            c.setNumberOfAthletesWithResults(getNumberOfAthletes(c).intValue());
+            c.setNumberOfAthletes(getNumberOfAthletes(s.getId()).intValue());
+            c.setNumberOfAthletesWithResults(getNumberOfAthletesWithResults(c).intValue());
         }
         s.setCompetitions(cs);
         return s;
@@ -137,11 +137,18 @@ public class DataService extends AbstractService {
         return query.getResultList();
     }
 
-    private Long getNumberOfAthletes(Competition c) {
+    private Long getNumberOfAthletesWithResults(Competition c) {
         String queryString = "select count(distinct a) from Athlete a join a.results r "
                 + "where r.competition = :competition";
         TypedQuery query = em.createQuery(queryString, Long.class);
         query.setParameter("competition", c);
+        return (Long) query.getSingleResult();
+    }
+
+    private Long getNumberOfAthletes(Long seriesId) {
+        String queryString = "select count(distinct a) from Athlete a where a.series_id = :series_id";
+        TypedQuery query = em.createQuery(queryString, Long.class);
+        query.setParameter("series_id", seriesId);
         return (Long) query.getSingleResult();
     }
 
@@ -251,7 +258,7 @@ public class DataService extends AbstractService {
 
     public List<AthleteTO> getAthleteTOs(Long seriesId) {
         TypedQuery<AthleteTO> q = em.createQuery("SELECT NEW "
-                + "ch.jtaf.entity.AthleteTO(a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, a.category.abbreviation, a.club.abbreviation) "
+                + "ch.jtaf.to.AthleteTO(a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, a.category.abbreviation, a.club.abbreviation) "
                 + "FROM Athlete a WHERE a.series_id = :series_id", AthleteTO.class);
         q.setParameter("series_id", seriesId);
         return q.getResultList();
