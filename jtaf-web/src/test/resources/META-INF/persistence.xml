@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <persistence-unit name="jtaf-test" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>ch.jtaf.entity.Athlete</class>
+        <class>ch.jtaf.entity.Category</class>
+        <class>ch.jtaf.entity.Club</class>
+        <class>ch.jtaf.entity.Competition</class>
+        <class>ch.jtaf.entity.Event</class>
+        <class>ch.jtaf.entity.Result</class>
+        <class>ch.jtaf.entity.SecurityGroup</class>
+        <class>ch.jtaf.entity.SecurityUser</class>
+        <class>ch.jtaf.entity.Series</class>
+        <class>ch.jtaf.entity.Space</class>
+        <class>ch.jtaf.entity.UserSpace</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jtaf"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+        </properties>
+    </persistence-unit>
+</persistence>

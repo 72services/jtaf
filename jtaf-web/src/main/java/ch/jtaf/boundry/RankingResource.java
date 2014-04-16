@@ -1,6 +1,6 @@
 package ch.jtaf.boundry;
 
-import ch.jtaf.control.RankingService;
+import ch.jtaf.control.ReportService;
 import ch.jtaf.data.CompetitionRankingData;
 import ch.jtaf.interceptor.TraceInterceptor;
 import javax.ejb.EJB;
@@ -25,7 +25,7 @@ import javax.ws.rs.core.Response;
 public class RankingResource {
 
     @EJB
-    private RankingService service;
+    private ReportService service;
 
     @GET
     @Path("competition/{competitionid}")

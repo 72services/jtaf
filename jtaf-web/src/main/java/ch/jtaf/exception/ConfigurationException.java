@@ -1,4 +1,4 @@
-package ch.jtaf.control;
+package ch.jtaf.exception;
 
 public class ConfigurationException extends RuntimeException {
 

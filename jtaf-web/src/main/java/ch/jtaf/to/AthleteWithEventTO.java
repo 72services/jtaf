@@ -3,6 +3,7 @@ package ch.jtaf.to;
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Event;
 import ch.jtaf.entity.Result;
+import java.util.Objects;
 
 public class AthleteWithEventTO implements Comparable<AthleteWithEventTO> {
 
@@ -26,6 +27,36 @@ public class AthleteWithEventTO implements Comparable<AthleteWithEventTO> {
 
     public Result getResult() {
         return result;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.athlete);
+        hash = 97 * hash + Objects.hashCode(this.event);
+        hash = 97 * hash + Objects.hashCode(this.result);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AthleteWithEventTO other = (AthleteWithEventTO) obj;
+        if (!Objects.equals(this.athlete, other.athlete)) {
+            return false;
+        }
+        if (!Objects.equals(this.event, other.event)) {
+            return false;
+        }
+        if (!Objects.equals(this.result, other.result)) {
+            return false;
+        }
+        return true;
     }
 
     @Override

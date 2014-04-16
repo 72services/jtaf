@@ -1,4 +1,4 @@
-package ch.jtaf.security.test;
+package ch.jtaf.security;
 
 import org.jboss.crypto.CryptoUtil;
 import org.junit.Test;

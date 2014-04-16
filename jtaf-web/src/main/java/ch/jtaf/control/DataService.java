@@ -1,5 +1,6 @@
 package ch.jtaf.control;
 
+import ch.jtaf.exception.ConfigurationException;
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.to.AthleteTO;
 import ch.jtaf.entity.Category;
@@ -33,7 +34,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.servlet.http.HttpServletRequest;
 import org.jboss.crypto.CryptoUtil;
 import org.jboss.logging.Logger;
 
@@ -218,7 +218,7 @@ public class DataService extends AbstractService {
         List<Athlete> athletes = q.getResultList();
         for (Athlete athlete : athletes) {
             Athlete copy = new Athlete();
-            copy.setCategory(getCategoryWithGenderAndAge(series.getId(), athlete.getGender(), athlete.getYear()));
+            copy.setCategory(getCategoryWithGenderAndAge(orig.getId(), athlete.getGender(), athlete.getYear()));
             copy.setClub(athlete.getClub());
             copy.setFirstName(athlete.getFirstName());
             copy.setGender(athlete.getGender());
@@ -265,7 +265,7 @@ public class DataService extends AbstractService {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public SecurityUser saveUser(SecurityUser user, HttpServletRequest request) throws NoSuchAlgorithmException {
+    public SecurityUser saveUser(SecurityUser user) throws NoSuchAlgorithmException {
         if (user.getConfirmationId() == null) {
             if (em.find(SecurityUser.class, user.getEmail()) == null) {
                 String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, user.getSecret());
@@ -285,7 +285,7 @@ public class DataService extends AbstractService {
             }
         }
         user = em.merge(user);
-        sendMail(user, request);
+        sendMail(user);
         return user;
     }
 
@@ -297,7 +297,7 @@ public class DataService extends AbstractService {
         return user;
     }
 
-    private void sendMail(SecurityUser user, HttpServletRequest request) {
+    private void sendMail(SecurityUser user) {
         try {
             String confirmationUrl = System.getProperty("jtaf.confirmation.url");
             if (confirmationUrl == null) {
