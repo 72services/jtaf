@@ -25,7 +25,7 @@ import javax.ws.rs.core.Response;
 public class RankingResource {
 
     @EJB
-    private ReportService service;
+    protected ReportService service;
 
     @GET
     @Path("competition/{competitionid}")

@@ -1,6 +1,6 @@
-package ch.jtaf.control;
+package ch.jtaf.boundry;
 
-import ch.jtaf.data.CompetitionRankingData;
+import ch.jtaf.control.ReportService;
 import static ch.jtaf.test.util.TestData.CATEGORY_ID;
 import static ch.jtaf.test.util.TestData.COMPETITION_ID;
 import static ch.jtaf.test.util.TestData.SERIES_ID;
@@ -8,24 +8,26 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.junit.AfterClass;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
-public class ReportServiceTest {
+public class ReportResourceTest {
 
+    private static ReportResource rr;
+    private static ReportService rs;
     private static EntityManagerFactory emf;
     private static EntityManager em;
-    private static ReportService rs;
 
     @BeforeClass
     public static void beforeClass() {
         emf = Persistence.createEntityManagerFactory("jtaf-test");
         em = emf.createEntityManager();
-
         rs = new ReportService();
         rs.em = em;
+        rr = new ReportResource();
+        rr.service = rs;
     }
 
     @AfterClass
@@ -44,48 +46,8 @@ public class ReportServiceTest {
     }
 
     @Test
-    public void testCreateSheets() throws Exception {
-        byte[] report = rs.createSheets(COMPETITION_ID, null);
-
-        assertNotNull(report);
-        assertTrue(report.length > 0);
-    }
-
-    @Test
-    public void testCreateCompetitionRanking() throws Exception {
-        byte[] report = rs.createCompetitionRanking(COMPETITION_ID);
-
-        assertNotNull(report);
-        assertTrue(report.length > 0);
-    }
-
-    @Test
-    public void testCreateSeriesRanking() throws Exception {
-        byte[] report = rs.createSeriesRanking(SERIES_ID);
-
-        assertNotNull(report);
-        assertTrue(report.length > 0);
-    }
-
-    @Test
-    public void testCreateEmptySheets() throws Exception {
-        byte[] report = rs.createEmptySheets(CATEGORY_ID);
-
-        assertNotNull(report);
-        assertTrue(report.length > 0);
-    }
-
-    @Test
-    public void testCreateCompetitionRankingAsCsv() throws Exception {
-        String report = rs.createCompetitionRankingAsCsv(COMPETITION_ID);
-
-        assertNotNull(report);
-        assertFalse(report.isEmpty());
-    }
-
-    @Test
-    public void testCreateEventsRanking() throws Exception {
-        byte[] report = rs.createEventsRanking(COMPETITION_ID);
+    public void testGetSheets() throws Exception {
+        byte[] report = rr.getSheets(COMPETITION_ID, CATEGORY_ID, null);
 
         assertNotNull(report);
         assertTrue(report.length > 0);
@@ -93,9 +55,34 @@ public class ReportServiceTest {
 
     @Test
     public void testGetCompetitionRanking() throws Exception {
-        CompetitionRankingData competitionRanking = rs.getCompetitionRanking(COMPETITION_ID);
+        byte[] report = rr.getCompetitionRanking(COMPETITION_ID);
 
-        assertNotNull(competitionRanking);
+        assertNotNull(report);
+        assertTrue(report.length > 0);
+    }
+
+    @Test
+    public void testGetEventsRanking() throws Exception {
+        byte[] report = rr.getEventsRanking(COMPETITION_ID);
+
+        assertNotNull(report);
+        assertTrue(report.length > 0);
+    }
+
+    @Test
+    public void testExportAsCsv() throws Exception {
+        String report = rr.exportAsCsv(COMPETITION_ID);
+
+        assertNotNull(report);
+        assertFalse(report.isEmpty());
+    }
+
+    @Test
+    public void testGetSeriesRanking() throws Exception {
+        byte[] report = rr.getSeriesRanking(SERIES_ID);
+
+        assertNotNull(report);
+        assertTrue(report.length > 0);
     }
 
 }

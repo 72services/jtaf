@@ -105,7 +105,7 @@ public class SeriesResource extends BaseResource {
         dataService.save(series);
     }
 
-    public static byte[] getBytesFromInputStream(InputStream is) {
+    private static byte[] getBytesFromInputStream(InputStream is) {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream();) {
             byte[] buffer = new byte[0xFFFF];
             for (int len; (len = is.read(buffer)) != -1;) {

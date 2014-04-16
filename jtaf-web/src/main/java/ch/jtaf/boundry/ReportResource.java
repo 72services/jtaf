@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 public class ReportResource {
 
     @EJB
-    private ReportService service;
+    protected ReportService service;
 
     @GET
     @Path("sheet")

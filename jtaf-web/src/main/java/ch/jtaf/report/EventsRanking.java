@@ -1,7 +1,7 @@
-package ch.jtaf.control.report;
+package ch.jtaf.report;
 
 import ch.jtaf.to.AthleteWithEventTO;
-import ch.jtaf.entity.EventsRankingData;
+import ch.jtaf.data.EventsRankingData;
 import ch.jtaf.data.EventsRankingEventData;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;

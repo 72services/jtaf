@@ -19,6 +19,7 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/jtaf"/>
             <property name="javax.persistence.jdbc.user" value="root"/>
             <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="hibernate.connection.autocommit" value="false"/>
         </properties>
     </persistence-unit>
 </persistence>

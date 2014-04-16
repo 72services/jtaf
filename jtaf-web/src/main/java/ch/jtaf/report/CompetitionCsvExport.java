@@ -1,4 +1,4 @@
-package ch.jtaf.control.report;
+package ch.jtaf.report;
 
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.data.CompetitionRankingCategoryData;

@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 public class AbstractService {
 
     @PersistenceContext
-    protected EntityManager em;
+    public EntityManager em;
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public <T> T get(Class<T> clazz, Long id) {

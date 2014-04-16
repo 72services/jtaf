@@ -1,12 +1,12 @@
 package ch.jtaf.control;
 
-import ch.jtaf.control.report.CompetitionCsvExport;
-import ch.jtaf.control.report.CompetitionRanking;
-import ch.jtaf.control.report.EventsRanking;
-import ch.jtaf.control.report.SeriesRanking;
-import ch.jtaf.control.report.Sheet;
-import ch.jtaf.control.util.AthleteCompetitionResultComparator;
-import ch.jtaf.control.util.AthleteSeriesResultComparator;
+import ch.jtaf.report.CompetitionCsvExport;
+import ch.jtaf.report.CompetitionRanking;
+import ch.jtaf.report.EventsRanking;
+import ch.jtaf.report.SeriesRanking;
+import ch.jtaf.report.Sheet;
+import ch.jtaf.comperator.AthleteCompetitionResultComparator;
+import ch.jtaf.comperator.AthleteSeriesResultComparator;
 import ch.jtaf.data.CompetitionRankingCategoryData;
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Category;
@@ -14,7 +14,7 @@ import ch.jtaf.entity.Competition;
 import ch.jtaf.data.CompetitionRankingData;
 import ch.jtaf.data.EventsRankingEventData;
 import ch.jtaf.data.SeriesRankingCategoryData;
-import ch.jtaf.entity.EventsRankingData;
+import ch.jtaf.data.EventsRankingData;
 import ch.jtaf.entity.Series;
 import ch.jtaf.data.SeriesRankingData;
 import ch.jtaf.entity.Event;

@@ -1,9 +1,8 @@
-package ch.jtaf.control.report;
+package ch.jtaf.report;
 
 import ch.jtaf.entity.Athlete;
-import ch.jtaf.entity.Competition;
-import ch.jtaf.data.SeriesRankingCategoryData;
-import ch.jtaf.data.SeriesRankingData;
+import ch.jtaf.data.CompetitionRankingCategoryData;
+import ch.jtaf.entity.Result;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
@@ -11,46 +10,44 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Date;
 import org.jboss.logging.Logger;
 
-public class SeriesRanking extends Ranking {
+public class CompetitionRanking extends Ranking {
 
     private Document document;
     private PdfWriter pdfWriter;
-    private final SeriesRankingData ranking;
+    private final ch.jtaf.data.CompetitionRankingData ranking;
 
-    public SeriesRanking(SeriesRankingData ranking) {
+    public CompetitionRanking(ch.jtaf.data.CompetitionRankingData ranking) {
         this.ranking = ranking;
     }
 
     public byte[] create() {
         try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            document = new Document(PageSize.A4);
-            pdfWriter = PdfWriter.getInstance(document, baos);
-            pdfWriter.setPageEvent(new HeaderFooter(
-                    "Series ranking", ranking.getSeries().getName(),
-                    sdf.format(new Date())));
-            document.open();
-
-            createRanking();
-
-            document.close();
-            pdfWriter.flush();
-
-            byte[] ba = baos.toByteArray();
-            baos.close();
+            byte[] ba;
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                float border = cmToPixel(1.5f);
+                document = new Document(PageSize.A4, border, border, border, border);
+                pdfWriter = PdfWriter.getInstance(document, baos);
+                pdfWriter.setPageEvent(new HeaderFooter(
+                        "Ranking", ranking.getCompetition().getName(),
+                        sdf.format(ranking.getCompetition().getCompetitionDate())));
+                document.open();
+                createRanking();
+                document.close();
+                pdfWriter.flush();
+                ba = baos.toByteArray();
+            }
 
             return ba;
         } catch (DocumentException | IOException e) {
-            Logger.getLogger(SeriesRanking.class).error(e.getMessage(), e);
+            Logger.getLogger(CompetitionRanking.class).error(e.getMessage(), e);
             return new byte[0];
         }
     }
 
     private void createRanking() throws DocumentException {
-        for (SeriesRankingCategoryData category : ranking.getCategories()) {
+        for (CompetitionRankingCategoryData category : ranking.getCategories()) {
             PdfPTable table = new PdfPTable(new float[]{2f, 10f, 10f, 2f, 5f, 5f});
             table.setWidthPercentage(100);
             table.setSpacingBefore(cmToPixel(1f));
@@ -66,7 +63,7 @@ public class SeriesRanking extends Ranking {
         }
     }
 
-    private void createCategoryTitle(PdfPTable table, SeriesRankingCategoryData category) {
+    private void createCategoryTitle(PdfPTable table, CompetitionRankingCategoryData category) {
         addCategoryTitleCellWithColspan(table, category.getCategory().getAbbreviation(), 1);
         addCategoryTitleCellWithColspan(table, category.getCategory().getName() + " "
                 + category.getCategory().getYearFrom() + " - " + category.getCategory().getYearTo(), 5);
@@ -80,15 +77,19 @@ public class SeriesRanking extends Ranking {
         addCell(table, athlete.getFirstName());
         addCell(table, athlete.getYear() + "");
         addCell(table, athlete.getClub() == null ? "" : athlete.getClub().getAbbreviation());
-        addCellAlignRight(table, athlete.getSeriesPoints(ranking.getSeries()) + "");
+        addCellAlignRight(table, athlete.getTotalPoints(ranking.getCompetition()) + "");
 
         StringBuilder sb = new StringBuilder();
-        for (Competition competition : ranking.getSeries().getCompetitions()) {
-            sb.append(competition.getName());
+        for (Result result : athlete.getResults()) {
+            sb.append(result.getEvent().getName());
             sb.append(": ");
-            sb.append(athlete.getTotalPoints(competition));
+            sb.append(result.getResult());
+            sb.append(" (");
+            sb.append(result.getPoints());
+            sb.append(") ");
         }
         addCell(table, "");
         addResultsCell(table, sb.toString());
     }
+
 }

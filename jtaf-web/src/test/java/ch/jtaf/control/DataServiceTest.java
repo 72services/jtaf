@@ -5,9 +5,13 @@ import ch.jtaf.entity.Category;
 import ch.jtaf.entity.Club;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.entity.Event;
+import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.entity.Series;
 import ch.jtaf.entity.Space;
 import ch.jtaf.entity.UserSpace;
+import ch.jtaf.exception.ConfigurationException;
+import static ch.jtaf.test.util.TestData.SERIES_ID;
+import static ch.jtaf.test.util.TestData.SPACE_ID;
 import ch.jtaf.to.AthleteTO;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -21,8 +25,6 @@ import org.junit.BeforeClass;
 
 public class DataServiceTest {
 
-    private static final long SPACE_ID = 7l;
-    private static final long SERIES_ID = 10l;
     private static final String EMAIL = "simon@martinelli.ch";
 
     private static DataService ds;
@@ -204,12 +206,23 @@ public class DataServiceTest {
     @Test
     public void exportSeries() throws Exception {
         Series series = ds.getSeries(SERIES_ID);
-        
+
         assertNotNull(series);
-        
+
         Series export = ds.exportSeries(series);
 
         assertNotNull(export);
+    }
+
+    @Test(expected = ConfigurationException.class)
+    public void saveUser() throws Exception {
+        SecurityUser user = ds.get(SecurityUser.class, EMAIL);
+
+        assertNotNull(user);
+
+        SecurityUser savedUser = ds.saveUser(user);
+
+        assertNotNull(savedUser);
     }
 
 }
