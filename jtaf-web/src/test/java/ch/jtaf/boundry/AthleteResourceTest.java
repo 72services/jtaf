@@ -77,7 +77,7 @@ public class AthleteResourceTest {
 
     @Test
     public void testSearch() throws Exception {
-        List<Athlete> list = ar.search(SERIES_ID, "Martinelli");
+        List<Athlete> list = ar.search(SERIES_ID, "Grimm");
 
         assertNotNull(list);
         assertTrue(list.size() > 0);

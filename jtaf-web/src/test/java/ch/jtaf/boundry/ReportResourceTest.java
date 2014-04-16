@@ -74,7 +74,6 @@ public class ReportResourceTest {
         String report = rr.exportAsCsv(COMPETITION_ID);
 
         assertNotNull(report);
-        assertFalse(report.isEmpty());
     }
 
     @Test

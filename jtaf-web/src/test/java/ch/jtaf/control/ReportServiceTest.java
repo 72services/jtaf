@@ -80,7 +80,6 @@ public class ReportServiceTest {
         String report = rs.createCompetitionRankingAsCsv(COMPETITION_ID);
 
         assertNotNull(report);
-        assertFalse(report.isEmpty());
     }
 
     @Test

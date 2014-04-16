@@ -121,7 +121,7 @@ public class DataServiceTest {
 
     @Test
     public void testSearchAthletes() throws Exception {
-        List<Athlete> list = ds.searchAthletes(SERIES_ID, "Martinelli");
+        List<Athlete> list = ds.searchAthletes(SERIES_ID, "Grimm");
 
         assertNotNull(list);
         assertTrue(list.size() > 0);
