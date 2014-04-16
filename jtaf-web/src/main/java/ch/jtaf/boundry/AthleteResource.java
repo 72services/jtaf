@@ -1,6 +1,7 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.entity.Athlete;
+import ch.jtaf.entity.AthleteTO;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +29,8 @@ import javax.ws.rs.core.Response;
 public class AthleteResource extends BaseResource {
 
     @GET
-    public List<Athlete> list(@QueryParam("series_id") Long seriesId) {
-        return dataService.getAthletes(seriesId);
+    public List<AthleteTO> list(@QueryParam("series_id") Long seriesId) {
+        return dataService.getAthleteTOs(seriesId);
     }
 
     @POST

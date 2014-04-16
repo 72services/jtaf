@@ -1,6 +1,7 @@
 package ch.jtaf.control;
 
 import ch.jtaf.entity.Athlete;
+import ch.jtaf.entity.AthleteTO;
 import ch.jtaf.entity.Category;
 import ch.jtaf.entity.Club;
 import ch.jtaf.entity.Competition;
@@ -244,6 +245,14 @@ public class DataService extends AbstractService {
 
     public List<Athlete> getAthletes(Long seriesId) {
         TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
+        q.setParameter("series_id", seriesId);
+        return q.getResultList();
+    }
+
+    public List<AthleteTO> getAthleteTOs(Long seriesId) {
+        TypedQuery<AthleteTO> q = em.createQuery("SELECT NEW "
+                + "ch.jtaf.entity.AthleteTO(a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, a.category.abbreviation, a.club.abbreviation) "
+                + "FROM Athlete a WHERE a.series_id = :series_id", AthleteTO.class);
         q.setParameter("series_id", seriesId);
         return q.getResultList();
     }

@@ -94,13 +94,9 @@ function SeriesController() {
         if (searchString !== "") {
             var j = 0;
             athletes.forEach(function(athlete) {
-                var valueToCompare = null;
-                if (property === "category") {
-                    valueToCompare = athlete.category.abbreviation;
-                } else if (property === "club") {
-                    valueToCompare = athlete.club.abbreviation;
-                } else {
-                    valueToCompare = athlete[property];
+                var valueToCompare = athlete[property];
+                if (property === 'yearOfBirth') {
+                    valueToCompare = "" + valueToCompare;
                 }
                 if (valueToCompare !== null && valueToCompare.toLowerCase().indexOf(searchString.toLowerCase()) !== -1) {
                     filteredAthletes[j] = athlete;
@@ -111,7 +107,8 @@ function SeriesController() {
         } else {
             fillAthletesTable(athletes);
         }
-    };
+    }
+    ;
 
     this.sortBy = function(property) {
         if (event.srcElement.type === undefined) {
@@ -395,7 +392,7 @@ function SeriesController() {
             cellFirstName.setAttribute("onclick", onclickEdit);
             var cellYear = row.insertCell(3);
             cellYear.className = "edit";
-            cellYear.innerHTML = athlete.year;
+            cellYear.innerHTML = athlete.yearOfBirth;
             cellYear.setAttribute("onclick", onclickEdit);
             var cellGender = row.insertCell(4);
             cellGender.className = "edit";
@@ -403,13 +400,11 @@ function SeriesController() {
             cellGender.setAttribute("onclick", onclickEdit);
             var cellCategory = row.insertCell(5);
             cellCategory.className = "edit";
-            cellCategory.innerHTML = athlete.category !== null
-                    ? athlete.category.abbreviation : "";
+            cellCategory.innerHTML = athlete.category;
             cellCategory.setAttribute("onclick", onclickEdit);
             var cellClub = row.insertCell(6);
             cellClub.className = "edit";
-            cellClub.innerHTML = athlete.club !== null
-                    ? athlete.club.abbreviation : "";
+            cellClub.innerHTML = athlete.club;
             cellClub.setAttribute("onclick", onclickEdit);
 
             var del = document.createElement("a");

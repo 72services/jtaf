@@ -143,20 +143,21 @@
                                     <span class="i18n">First name</span><br />
                                     <input id="firstName" type="text" style="width: 80px;" onkeyup="seriesController.filter('firstName');">
                                 </th>
-                                <th onclick="seriesController.sortBy('year');">
+                                <th onclick="seriesController.sortBy('yearOfBirth');">
                                     <span class="i18n">Year</span>
+                                    <input id="yearOfBirth" type="text" style="width: 40px;" onkeyup="seriesController.filter('yearOfBirth');">
                                 </th>
                                 <th onclick="seriesController.sortBy('gender');">
                                     <span class="i18n">Gender</span>
                                     <br />
                                     <input id="gender" type="text" style="width: 40px;" onkeyup="seriesController.filter('gender');">
                                 </th>
-                                <th onclick="seriesController.sortBy('category.abbreviation');">
+                                <th onclick="seriesController.sortBy('category');">
                                     <span class="i18n">Category</span>
                                     <br />
                                     <input id="category" type="text" style="width: 40px;" onkeyup="seriesController.filter('category');">
                                 </th>
-                                <th onclick="seriesController.sortBy('club.abbreviation');">
+                                <th onclick="seriesController.sortBy('club');">
                                     <span class="i18n">Club</span><br />
                                     <input id="club" type="text" style="width: 40px;" onkeyup="seriesController.filter('club');">
                                 </th>
