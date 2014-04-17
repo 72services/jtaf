@@ -32,7 +32,7 @@ function Util() {
         xhr.open("GET", url, true);
         xhr.onload = function() {
             if (xhr.status === 200 || xhr.status === 204) {
-                func(xhr.response);
+                func(xhr.responseText);
             } else {
                 this.error(xhr.status);
             }
@@ -45,7 +45,7 @@ function Util() {
         xhr.open("GET", url, false);
         xhr.onload = function() {
             if (xhr.status === 200) {
-                func(xhr.response);
+                func(xhr.responseText);
             } else {
                 this.error(xhr.status);
             }
@@ -58,7 +58,7 @@ function Util() {
         xhr.open("DELETE", url, true);
         xhr.onload = function() {
             if (xhr.status === 204) {
-                func(xhr.response);
+                func(xhr.responseText);
             } else {
                 this.error(xhr.status);
             }
@@ -71,7 +71,7 @@ function Util() {
         xhr.open("POST", url, true);
         xhr.onload = function() {
             if (xhr.status === 200 || xhr.status === 204) {
-                func(xhr.response);
+                func(xhr.responseText);
             } else {
                 this.error(xhr.status);
             }
@@ -167,7 +167,7 @@ function Util() {
             xhr.open("GET", "/jtaf/i18n/messages_" + lang + ".json", false);
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    i18messages = JSON.parse(xhr.response);
+                    i18messages = JSON.parse(xhr.responseText);
                 }
             };
             xhr.send();

@@ -158,7 +158,9 @@ function SeriesController() {
     this.switchTo = function(div) {
         var els = document.getElementsByClassName("visible");
         for (var i in els) {
-            els[i].className = "invisible";
+            if (els[i] !== undefined) {
+                els[i].className = "invisible";
+            }
         }
         document.getElementById(div).className = "visible";
 

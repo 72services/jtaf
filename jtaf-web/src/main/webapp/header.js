@@ -76,7 +76,7 @@ function Header() {
         xhr.open("GET", "/jtaf/res/users/current", true);
         xhr.onload = function() {
             if (xhr.status === 200) {
-                var user = JSON.parse(xhr.response);
+                var user = JSON.parse(xhr.responseText);
                 var profile = document.createElement("a");
                 profile.href = "/jtaf/user/profile.html";
                 profile.innerHTML = user.firstName + " " + user.lastName;
@@ -114,7 +114,7 @@ function Header() {
                 div.appendChild(register);
 
             } else {
-                error(xhr.status);
+                util.error(xhr.status);
             }
             util.i18n();
         };
