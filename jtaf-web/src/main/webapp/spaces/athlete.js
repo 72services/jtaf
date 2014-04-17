@@ -105,5 +105,3 @@ function Athlete() {
     }
 
 }
-
-var athlete = new Athlete();

@@ -84,5 +84,3 @@ function EventController() {
     }
 
 }
-
-var eventController = new EventController();

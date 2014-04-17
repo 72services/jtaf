@@ -26,5 +26,3 @@ function ConfirmController() {
     };
 
 }
-
-var confirmController = new ConfirmController();

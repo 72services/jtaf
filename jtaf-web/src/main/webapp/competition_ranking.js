@@ -158,5 +158,3 @@ function CompetitionsRankingController() {
     }
 
 }
-
-var competitionRankingController = new CompetitionsRankingController();

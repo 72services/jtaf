@@ -52,5 +52,3 @@ function ClubController() {
     }
 
 }
-
-var clubController = new ClubController();

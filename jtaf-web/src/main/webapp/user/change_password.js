@@ -43,5 +43,3 @@ function PasswordController() {
 
 
 }
-
-var passwordController = new PasswordController();

@@ -180,5 +180,3 @@ function SpaceController() {
     }
 
 }
-
-var spaceController = new SpaceController();

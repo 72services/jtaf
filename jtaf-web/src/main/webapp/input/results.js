@@ -253,5 +253,3 @@ function ResultsController() {
     }
 
 }
-
-var resultsController = new ResultsController();

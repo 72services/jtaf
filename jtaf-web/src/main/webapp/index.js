@@ -124,5 +124,3 @@ function IndexController() {
     }
 
 }
-
-var indexController = new IndexController();

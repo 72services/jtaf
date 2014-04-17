@@ -130,5 +130,3 @@ function ShareController() {
     }
 
 }
-
-var shareController = new ShareController();

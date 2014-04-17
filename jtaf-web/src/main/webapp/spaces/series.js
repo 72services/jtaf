@@ -425,5 +425,3 @@ function SeriesController() {
     }
 
 }
-
-var seriesController = new SeriesController();

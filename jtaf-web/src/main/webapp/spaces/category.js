@@ -124,5 +124,3 @@ function CategoryController() {
     }
 
 }
-
-var categoryController = new CategoryController();

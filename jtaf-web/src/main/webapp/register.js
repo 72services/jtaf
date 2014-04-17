@@ -44,5 +44,3 @@ function RegisterController() {
     }
 
 }
-
-var registerController = new RegisterController();

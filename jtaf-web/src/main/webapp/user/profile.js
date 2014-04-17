@@ -39,5 +39,3 @@ function ProfileController() {
     }
 
 }
-
-var profileController = new ProfileController();

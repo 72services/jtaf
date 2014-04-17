@@ -55,5 +55,3 @@ function CompetitionController() {
     }
 
 }
-
-var competitionController = new CompetitionController();

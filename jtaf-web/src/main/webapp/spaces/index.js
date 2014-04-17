@@ -73,5 +73,3 @@ function MySpacesController() {
     }
 
 }
-
-var mySpacesController = new MySpacesController();
