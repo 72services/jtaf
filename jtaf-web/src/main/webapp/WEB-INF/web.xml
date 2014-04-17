@@ -19,9 +19,11 @@
         <auth-constraint>
             <role-name>user</role-name>
         </auth-constraint>
+        <!--
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
+        -->
     </security-constraint>
     
     <security-constraint>
@@ -33,9 +35,11 @@
         <auth-constraint>
             <role-name>user</role-name>
         </auth-constraint>
+        <!--
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
+        -->
     </security-constraint>
 
     <security-constraint>
@@ -47,9 +51,11 @@
         <auth-constraint>
             <role-name>user</role-name>
         </auth-constraint>
+        <!--
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
+        -->
     </security-constraint>
 
     <security-constraint>
@@ -76,9 +82,11 @@
         <auth-constraint>
             <role-name>user</role-name>
         </auth-constraint>
+        <!--
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
+        -->
     </security-constraint>
 
     <login-config>
