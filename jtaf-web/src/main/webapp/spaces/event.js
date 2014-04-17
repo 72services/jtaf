@@ -1,5 +1,3 @@
-var eventController = new EventController();
-
 function EventController() {
     var util = new Util();
 
@@ -86,3 +84,5 @@ function EventController() {
     }
 
 }
+
+var eventController = new EventController();

@@ -1,5 +1,3 @@
-var confirmController = new ConfirmController();
-
 function ConfirmController() {
     var util = new Util();
     var confirmation_id;
@@ -28,3 +26,5 @@ function ConfirmController() {
     };
 
 }
+
+var confirmController = new ConfirmController();

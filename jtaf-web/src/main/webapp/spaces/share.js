@@ -1,5 +1,3 @@
-var shareController = new ShareController();
-
 function ShareController() {
     var util = new Util();
 
@@ -132,3 +130,5 @@ function ShareController() {
     }
 
 }
+
+var shareController = new ShareController();

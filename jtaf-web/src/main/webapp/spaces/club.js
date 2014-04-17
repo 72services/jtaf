@@ -1,5 +1,3 @@
-var clubController = new ClubController();
-
 function ClubController() {
     var util = new Util();
 
@@ -54,3 +52,5 @@ function ClubController() {
     }
 
 }
+
+var clubController = new ClubController();

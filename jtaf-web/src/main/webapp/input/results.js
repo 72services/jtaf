@@ -1,5 +1,3 @@
-var resultsController = new ResultsController();
-
 function ResultsController() {
     var util = new Util();
 
@@ -255,3 +253,5 @@ function ResultsController() {
     }
 
 }
+
+var resultsController = new ResultsController();

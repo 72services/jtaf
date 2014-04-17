@@ -1,5 +1,3 @@
-var indexController = new IndexController();
-
 function IndexController() {
     var util = new Util();
 
@@ -126,3 +124,5 @@ function IndexController() {
     }
 
 }
+
+var indexController = new IndexController();

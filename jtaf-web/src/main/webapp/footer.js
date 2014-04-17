@@ -1,5 +1,3 @@
-var footer = new Footer();
-
 function Footer() {
 
     var footer = document.createElement("div");
@@ -10,3 +8,5 @@ function Footer() {
     document.body.appendChild(footer);
 
 }
+
+var footer = new Footer();

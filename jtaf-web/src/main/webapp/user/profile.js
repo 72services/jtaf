@@ -1,5 +1,3 @@
-var profileController = new ProfileController();
-
 function ProfileController() {
     var util = new Util();
 
@@ -41,3 +39,5 @@ function ProfileController() {
     }
 
 }
+
+var profileController = new ProfileController();

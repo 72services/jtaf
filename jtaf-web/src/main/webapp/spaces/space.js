@@ -1,5 +1,3 @@
-var spaceController = new SpaceController();
-
 function SpaceController() {
     var util = new Util();
 
@@ -182,3 +180,5 @@ function SpaceController() {
     }
 
 }
+
+var spaceController = new SpaceController();

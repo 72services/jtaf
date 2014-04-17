@@ -1,5 +1,3 @@
-var athlete = new Athlete();
-
 function Athlete() {
     var util = new Util();
 
@@ -107,3 +105,5 @@ function Athlete() {
     }
 
 }
+
+var athlete = new Athlete();

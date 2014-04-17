@@ -1,5 +1,3 @@
-var registerController = new RegisterController();
-
 function RegisterController() {
     var util = new Util();
     var user;
@@ -46,3 +44,5 @@ function RegisterController() {
     }
 
 }
+
+var registerController = new RegisterController();

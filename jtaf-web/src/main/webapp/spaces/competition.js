@@ -1,5 +1,3 @@
-var competitionController = new CompetitionController();
-
 function CompetitionController() {
     var util = new Util();
 
@@ -57,3 +55,5 @@ function CompetitionController() {
     }
 
 }
+
+var competitionController = new CompetitionController();

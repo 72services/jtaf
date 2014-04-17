@@ -1,5 +1,3 @@
-var passwordController = new PasswordController();
-
 function PasswordController() {
     var util = new Util();
 
@@ -45,3 +43,5 @@ function PasswordController() {
 
 
 }
+
+var passwordController = new PasswordController();

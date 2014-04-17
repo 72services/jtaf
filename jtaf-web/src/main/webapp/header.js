@@ -1,5 +1,3 @@
-var header = new Header();
-
 function Header() {
     var util = new Util();
 
@@ -123,3 +121,5 @@ function Header() {
         xhr.send();
     }
 }
+
+var header = new Header();

@@ -1,5 +1,3 @@
-var seriesController = new SeriesController();
-
 function SeriesController() {
     var util = new Util();
 
@@ -427,3 +425,5 @@ function SeriesController() {
     }
 
 }
+
+var seriesController = new SeriesController();

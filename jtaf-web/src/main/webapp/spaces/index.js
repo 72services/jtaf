@@ -1,5 +1,3 @@
-var mySpacesController = new MySpacesController();
-
 function MySpacesController() {
     var util = new Util();
 
@@ -75,3 +73,5 @@ function MySpacesController() {
     }
 
 }
+
+var mySpacesController = new MySpacesController();

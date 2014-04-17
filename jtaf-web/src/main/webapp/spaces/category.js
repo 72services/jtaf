@@ -1,5 +1,3 @@
-var categoryController = new CategoryController();
-
 function CategoryController() {
     var util = new Util();
 
@@ -126,3 +124,5 @@ function CategoryController() {
     }
 
 }
+
+var categoryController = new CategoryController();
