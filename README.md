@@ -26,7 +26,7 @@ First these events were accomplished by hand, starting from 1997 with Excel and 
 
 Now JTAF will be developed using HTML5 and will be SaaS! http://en.wikipedia.org/wiki/Software_as_a_service
 
-## Demo
+## Start using it, now!
 https://jtaf-simas.rhcloud.com/jtaf/
 
 ###License
