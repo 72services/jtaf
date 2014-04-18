@@ -20,7 +20,7 @@ It would be a pleasure if you send me a short email, if you use JTAF at your com
 The Turnverein Erlach http://www.tverlach.ch is organizing competitions for children and youth for years.
 
 First these events were accomplished by hand, starting from 1997 with Excel and starting from 1999 with an Access solution.
-In 2005 JTAF was created in Java usig the Eclipse rich client platform and was made open source.
+In 2005 JTAF was created in Java using the Eclipse rich client platform and was made open source.
 
 Finally starting in fall 2013 JTAF is reengineered using HTML5 and REST. 
 
