@@ -56,6 +56,16 @@ public class SeriesResource extends BaseResource {
     }
 
     @POST
+    @Path("/recalculateCategories")
+    public void recalculateCategories(Series series) {
+        if (isUserGrantedForSpace(series.getSpace_id())) {
+            dataService.recalculateCategories(series.getId());
+        } else {
+            throw new WebApplicationException(Response.Status.FORBIDDEN);
+        }
+    }
+    
+    @POST
     @Path("{id}")
     public void copy(@PathParam("id") Long id, @QueryParam("function") String function) {
         dataService.copySeries(id);

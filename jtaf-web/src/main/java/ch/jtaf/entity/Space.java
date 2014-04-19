@@ -16,9 +16,9 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "tspace")
 @NamedQueries({
-    @NamedQuery(name = "Space.findAll", query = "select s from Space s order by s.name"),
+    @NamedQuery(name = "Space.findAll", query = "select s from Space s order by s.id desc"),
     @NamedQuery(name = "Space.findByUser",
-            query = "select u.space from UserSpace u where u.user.email = :email")
+            query = "select u.space from UserSpace u where u.user.email = :email order by u.id desc")
 })
 public class Space {
 

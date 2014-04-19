@@ -38,10 +38,9 @@ function ResultsController() {
                 parseAndFill(response);
             });
         } else {
-            util.xhrGet("/jtaf/res/athletes/search?series_id=" + competition.series_id +
-                    "&query=" + searchterm, function(response) {
-                        parseAndFillAthletes(response);
-                    });
+            util.xhrGet("/jtaf/res/athletes/search?series_id=" + competition.series_id + "&query=" + searchterm, function(response) {
+                parseAndFillAthletes(response);
+            });
         }
     };
 
@@ -50,6 +49,8 @@ function ResultsController() {
         util.xhrPost("/jtaf/res/athletes/", function(response) {
             parseAndFill(response);
             util.info("Athlete saved");
+            document.getElementById("search_term").focus();
+            document.getElementById("search_term").select();
         }, athlete);
     };
 
@@ -202,53 +203,60 @@ function ResultsController() {
     }
 
     function parseAndFillAthletes(response) {
-        document.getElementById("athlete_list").className = "";
-
         athletes = JSON.parse(response);
-        var table = document.getElementById("athlete_table");
-        table.innerHTML = "";
-        if (athletes === undefined || athletes.length === 0) {
-            var row = table.insertRow(0);
-            var cellName = row.insertCell(0);
-            cellName.innerHTML = util.translate("No athletes found");
-            cellName.setAttribute("colspan", 7);
-        } else {
-            var i = 0;
-            athletes.forEach(function(athlete) {
-                var row = table.insertRow(i);
-                var onclickEdit = "resultsController.selectAthlete(" + athlete.id + ")";
-                var cellId = row.insertCell(0);
-                cellId.className = "edit";
-                cellId.innerHTML = athlete.id;
-                cellId.setAttribute("onclick", onclickEdit);
-                var cellLastName = row.insertCell(1);
-                cellLastName.className = "edit";
-                cellLastName.innerHTML = athlete.lastName;
-                cellLastName.setAttribute("onclick", onclickEdit);
-                var cellFirstName = row.insertCell(2);
-                cellFirstName.className = "edit";
-                cellFirstName.innerHTML = athlete.firstName;
-                cellFirstName.setAttribute("onclick", onclickEdit);
-                var cellYear = row.insertCell(3);
-                cellYear.className = "edit";
-                cellYear.innerHTML = athlete.year;
-                cellYear.setAttribute("onclick", onclickEdit);
-                var cellGender = row.insertCell(4);
-                cellGender.className = "edit";
-                cellGender.innerHTML = athlete.gender;
-                cellGender.setAttribute("onclick", onclickEdit);
-                var cellCategory = row.insertCell(5);
-                cellCategory.className = "edit";
-                cellCategory.innerHTML = athlete.category !== null
-                        ? athlete.category.abbreviation : "";
-                cellCategory.setAttribute("onclick", onclickEdit);
-                var cellClub = row.insertCell(6);
-                cellClub.className = "edit";
-                cellClub.innerHTML = athlete.club !== undefined
-                        ? athlete.club.name : "";
-                cellClub.setAttribute("onclick", onclickEdit);
-                i++;
-            });
+        if (athletes.length === 1) {
+            athlete = athletes[0];
+            fillForm();
+        }
+        else {
+            document.getElementById("athlete_list").className = "";
+
+            var table = document.getElementById("athlete_table");
+            table.innerHTML = "";
+            if (athletes === undefined || athletes.length === 0) {
+                var row = table.insertRow(0);
+                var cellName = row.insertCell(0);
+                cellName.innerHTML = util.translate("No athletes found");
+                cellName.setAttribute("colspan", 7);
+            } else {
+                var i = 0;
+                athletes.forEach(function(athlete) {
+                    var row = table.insertRow(i);
+                    var onclickEdit = "resultsController.selectAthlete(" + athlete.id + ")";
+                    var cellId = row.insertCell(0);
+                    cellId.className = "edit";
+                    cellId.innerHTML = athlete.id;
+                    cellId.setAttribute("onclick", onclickEdit);
+                    var cellLastName = row.insertCell(1);
+                    cellLastName.className = "edit";
+                    cellLastName.innerHTML = athlete.lastName;
+                    cellLastName.setAttribute("onclick", onclickEdit);
+                    var cellFirstName = row.insertCell(2);
+                    cellFirstName.className = "edit";
+                    cellFirstName.innerHTML = athlete.firstName;
+                    cellFirstName.setAttribute("onclick", onclickEdit);
+                    var cellYear = row.insertCell(3);
+                    cellYear.className = "edit";
+                    cellYear.innerHTML = athlete.year;
+                    cellYear.setAttribute("onclick", onclickEdit);
+                    var cellGender = row.insertCell(4);
+                    cellGender.className = "edit";
+                    cellGender.innerHTML = athlete.gender;
+                    cellGender.setAttribute("onclick", onclickEdit);
+                    var cellCategory = row.insertCell(5);
+                    cellCategory.className = "edit";
+                    cellCategory.innerHTML = athlete.category !== null
+                            ? athlete.category.abbreviation : "";
+                    cellCategory.setAttribute("onclick", onclickEdit);
+                    var cellClub = row.insertCell(6);
+                    cellClub.className = "edit";
+                    cellClub.innerHTML = athlete.club !== undefined
+                            ? athlete.club.name : "";
+                    cellClub.setAttribute("onclick", onclickEdit);
+                    i++;
+                });
+                document.getElementById("search_term").focus();
+            }
         }
     }
 

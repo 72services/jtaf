@@ -5,7 +5,7 @@ import ch.jtaf.entity.Event;
 import ch.jtaf.entity.Result;
 import java.util.Objects;
 
-public class AthleteWithEventTO implements Comparable<AthleteWithEventTO> {
+public class AthleteWithEventTO {
 
     private final Athlete athlete;
     private final Event event;
@@ -57,19 +57,6 @@ public class AthleteWithEventTO implements Comparable<AthleteWithEventTO> {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public int compareTo(AthleteWithEventTO o) {
-        int res = this.getAthlete().getId().compareTo(o.getAthlete().getId());
-        if (res != 0) {
-            return res;
-        }
-        res = this.getEvent().getId().compareTo(o.getEvent().getId());
-        if (res != 0) {
-            return res;
-        }
-        return Integer.compare(this.getResult().getPoints(), o.getResult().getPoints());
     }
 
 }

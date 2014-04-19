@@ -113,6 +113,16 @@ public class DataService extends AbstractService {
         }
         return this.save(a);
     }
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public void recalculateCategories(Long seriesId) {
+        TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
+        q.setParameter("series_id", seriesId);
+        List<Athlete> athletes = q.getResultList();
+        for (Athlete athlete : athletes) {
+            athlete.setCategory(getCategoryWithGenderAndAge(seriesId, athlete.getGender(), athlete.getYear()));
+        }
+    }
 
     private Category getCategoryWithGenderAndAge(Long seriesId, String gender, int year) {
         TypedQuery<Category> q = em.createNamedQuery("Category.findBySeriesAndYearAndGender", Category.class);
@@ -125,8 +135,8 @@ public class DataService extends AbstractService {
     public List<Athlete> searchAthletes(Long seriesId, String searchterm) {
         String queryString = "select a from Athlete a "
                 + "where a.series_id = :series_id and "
-                + "lower(a.lastName) like :searchterm "
-                + "or lower(a.firstName) like :searchterm";
+                + "(lower(a.lastName) like :searchterm "
+                + "or lower(a.firstName) like :searchterm)";
         TypedQuery<Athlete> query = em.createQuery(queryString, Athlete.class);
         query.setParameter("series_id", seriesId);
         if (searchterm != null) {
@@ -152,6 +162,7 @@ public class DataService extends AbstractService {
         return (Long) query.getSingleResult();
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Series copySeries(Long id) {
         Series series = em.find(Series.class, id);
         Series copy = new Series();

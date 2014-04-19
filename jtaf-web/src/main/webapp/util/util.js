@@ -34,7 +34,7 @@ function Util() {
             if (xhr.status === 200 || xhr.status === 204) {
                 func(xhr.responseText);
             } else {
-                this.error(xhr.status);
+                util.error(xhr.status);
             }
         };
         xhr.send();
@@ -47,7 +47,7 @@ function Util() {
             if (xhr.status === 200) {
                 func(xhr.responseText);
             } else {
-                this.error(xhr.status);
+                util.error(xhr.status);
             }
         };
         xhr.send();
@@ -60,7 +60,7 @@ function Util() {
             if (xhr.status === 204) {
                 func(xhr.responseText);
             } else {
-                this.error(xhr.status);
+                util.error(xhr.status);
             }
         };
         xhr.send();
@@ -73,7 +73,7 @@ function Util() {
             if (xhr.status === 200 || xhr.status === 204) {
                 func(xhr.responseText);
             } else {
-                this.error(xhr.status);
+                util.error(xhr.status);
             }
         };
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -124,7 +124,7 @@ function Util() {
         div.setAttribute("id", "info");
         div.innerHTML = "<b>INFO</b><br />" + this.translate(message);
         document.body.appendChild(div);
-        window.setTimeout("fade(document.getElementById('info'))", 5000);
+        window.setTimeout("util.fade(document.getElementById('info'))", 5000);
     };
 
     this.error = function(message) {
@@ -132,7 +132,7 @@ function Util() {
         div.setAttribute("id", "error");
         div.innerHTML = "<b>ERROR</b><br />" + this.translate(message);
         document.body.appendChild(div);
-        window.setTimeout("fade(document.getElementById('error''))", 5000);
+        window.setTimeout("util.fade(document.getElementById('error''))", 5000);
     };
 
     this.showMessage = function() {
@@ -174,3 +174,5 @@ function Util() {
         }
     }
 }
+
+var util = new Util();

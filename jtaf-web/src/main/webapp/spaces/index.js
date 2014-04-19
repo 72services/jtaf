@@ -21,7 +21,7 @@ function MySpacesController() {
     this.deleteSpace = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/spaces/" + id, function() {
-                loadData();
+                mySpacesController.loadData();
                 util.info("Space deleted");
             });
         }

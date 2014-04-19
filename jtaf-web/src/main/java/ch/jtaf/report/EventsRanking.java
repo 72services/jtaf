@@ -65,7 +65,9 @@ public class EventsRanking extends Ranking {
 
     private void createEventTitle(PdfPTable table, EventsRankingEventData event) {
         addCategoryTitleCellWithColspan(table, event.getEvent().getName(), 2);
-        addCategoryTitleCellWithColspan(table, event.getEvent().getLongName(), 5);
+        addCategoryTitleCellWithColspan(table, event.getEvent().getLongName(), 3);
+        addCategoryTitleCellWithColspan(table, event.getEvent().getGender(), 2);
+
 
         addCategoryTitleCellWithColspan(table, " ", 7);
     }

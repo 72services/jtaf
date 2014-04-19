@@ -23,6 +23,7 @@ import ch.jtaf.interceptor.TraceInterceptor;
 import ch.jtaf.to.AthleteWithEventTO;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -204,7 +205,18 @@ public class ReportService extends AbstractService {
             EventsRankingEventData re = new EventsRankingEventData();
             Event e = entry.getKey();
             re.setEvent(e);
-            Collections.sort(entry.getValue());
+            Collections.sort(entry.getValue(), new Comparator<AthleteWithEventTO>() {
+
+                @Override
+                public int compare(AthleteWithEventTO o1, AthleteWithEventTO o2) {
+                    if (o1.getEvent().getType().equals(Event.JUMP_THROW)) {
+                        return o2.getResult().getResult().compareTo(o1.getResult().getResult());
+                    } else {
+                        return o1.getResult().getResult().compareTo(o2.getResult().getResult());
+                    }
+                }
+
+            });
             re.setAthletes(entry.getValue());
             ranking.getEvents().add(re);
         }

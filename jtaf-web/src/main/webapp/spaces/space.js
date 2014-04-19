@@ -25,7 +25,7 @@ function SpaceController() {
     this.deleteSeries = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             xhrDelete("/jtaf/res/series/" + id, function() {
-                loadData();
+                spaceController.loadData();
                 util.info("Serie deleted");
             });
         }
@@ -34,7 +34,7 @@ function SpaceController() {
     this.copySeries = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrPost("/jtaf/res/series/" + id + "?function=copy", function() {
-                loadData();
+                spaceController.loadData();
                 util.info("Series copied");
             });
         }
@@ -43,7 +43,7 @@ function SpaceController() {
     this.deleteClub = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/clubs/" + id, function() {
-                loadData();
+                spaceController.loadData();
                 util.info("Club deleted");
             });
         }

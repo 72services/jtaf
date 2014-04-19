@@ -30,7 +30,9 @@
                         </tr>
                     </table>
                     <p>
-                        <input type="submit" value="Save" />&nbsp;<a href="javascript:seriesController.back();"><span class="i18n">Back</span></a>
+                        <input type="submit" value="Save" />&nbsp;
+                        <a href="javascript:seriesController.recalculateCategories();"><span class="i18n">Recalculate categories</span></a>&nbsp;
+                        <a href="javascript:seriesController.back();"><span class="i18n">Back</span></a>
                     </p>
                 </form>
             </div>
@@ -86,6 +88,7 @@
                         <thead>
                             <tr>
                                 <th><span class="i18n">Name</span></th>
+                                <th><span class="i18n">Long name</span></th>
                                 <th><span class="i18n">Type</span></th>
                                 <th><span class="i18n">Gender</span></th>
                                 <th>A</th>

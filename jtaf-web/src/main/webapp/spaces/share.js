@@ -38,7 +38,7 @@ function ShareController() {
     this.deleteUserSpace = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/userspaces/" + id, function() {
-                loadData();
+                shareController.loadData();
                 util.info("Share deleted");
             });
         }
@@ -54,7 +54,7 @@ function ShareController() {
         userSpace.role = select.options[select.selectedIndex].value;
 
         util.xhrPost("/jtaf/res/userspaces/", function() {
-            loadData();
+            shareController.loadData();
             util.info("Share saved");
         }, userSpace);
     };

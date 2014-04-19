@@ -214,7 +214,7 @@ public class DataServiceTest {
         assertNotNull(export);
     }
 
-    @Test(expected = ConfigurationException.class)
+    @Test(expected = IllegalStateException.class)
     public void saveUser() throws Exception {
         SecurityUser user = ds.get(SecurityUser.class, EMAIL);
 

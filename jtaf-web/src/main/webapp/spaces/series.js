@@ -122,7 +122,7 @@ function SeriesController() {
     this.deleteCompetition = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/competitions/" + id, function() {
-                loadData();
+                seriesController.loadData();
                 util.info("Competition deleted");
             });
         }
@@ -131,7 +131,7 @@ function SeriesController() {
     this.deleteEvent = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/events/" + id, function() {
-                loadData();
+                seriesController.loadData();
                 util.info("Event deleted");
             });
         }
@@ -140,16 +140,16 @@ function SeriesController() {
     this.deleteAthlete = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/athletes/" + id, function() {
-                loadData();
+                seriesController.loadData();
                 util.info("Athlete deleted");
             });
         }
-    }
+    };
 
     this.deleteCategory = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/categories/" + id, function() {
-                loadData();
+                seriesController.loadData();
                 util.info("Category deleted");
             });
         }
@@ -176,6 +176,15 @@ function SeriesController() {
     this.back = function() {
         localStorage.removeItem("active_tab");
         window.location = "space.html?id=" + space_id;
+    };
+
+    this.recalculateCategories = function() {
+        if (confirm(util.translate("All results of this series will be deleted!\nAre you sure?"))) {
+            util.xhrPost("/jtaf/res/series/recalculateCategories", function(response) {
+                seriesController.loadData();
+                util.info("Categories recalulated for all athletes");
+            }, series);
+        }
     };
 
     function parseAndFillSeries(response) {
@@ -320,23 +329,27 @@ function SeriesController() {
                 cellName.className = "edit";
                 cellName.innerHTML = event.name;
                 cellName.setAttribute("onclick", onclickEdit);
-                var cellType = row.insertCell(1);
+                var cellLongName = row.insertCell(1);
+                cellLongName.className = "edit";
+                cellLongName.innerHTML = event.longName;
+                cellLongName.setAttribute("onclick", onclickEdit);
+                var cellType = row.insertCell(2);
                 cellType.className = "edit";
                 cellType.innerHTML = event.type;
                 cellType.setAttribute("onclick", onclickEdit);
-                var cellGender = row.insertCell(2);
+                var cellGender = row.insertCell(3);
                 cellGender.className = "edit";
                 cellGender.innerHTML = event.gender;
                 cellGender.setAttribute("onclick", onclickEdit);
-                var cellA = row.insertCell(3);
+                var cellA = row.insertCell(4);
                 cellA.className = "edit";
                 cellA.innerHTML = event.a;
                 cellA.setAttribute("onclick", onclickEdit);
-                var cellB = row.insertCell(4);
+                var cellB = row.insertCell(5);
                 cellB.className = "edit";
                 cellB.innerHTML = event.b;
                 cellB.setAttribute("onclick", onclickEdit);
-                var cellC = row.insertCell(5);
+                var cellC = row.insertCell(6);
                 cellC.className = "edit";
                 cellC.innerHTML = event.c;
                 cellC.setAttribute("onclick", onclickEdit);
@@ -347,7 +360,7 @@ function SeriesController() {
                 delSpan.className = "i18n";
                 delSpan.innerHTML = "Delete";
                 del.appendChild(delSpan);
-                var cellFunction = row.insertCell(6);
+                var cellFunction = row.insertCell(7);
                 cellFunction.setAttribute("style", "text-align: right;");
                 cellFunction.appendChild(del);
                 i++;
