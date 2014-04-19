@@ -220,7 +220,17 @@ public class ReportService extends AbstractService {
             re.setAthletes(entry.getValue());
             ranking.getEvents().add(re);
         }
-        Collections.sort(ranking.getEvents());
+        Collections.sort(ranking.getEvents(), new Comparator<EventsRankingEventData>() {
+
+            @Override
+            public int compare(EventsRankingEventData o1, EventsRankingEventData o2) {
+                if (o1.getEvent().getName().equals(o2.getEvent().getName())) {
+                    return o2.getEvent().getGender().compareTo(o1.getEvent().getGender());
+                } else {
+                    return o1.getEvent().getName().compareTo(o2.getEvent().getName());
+                }
+            }
+        });
         return ranking;
     }
 

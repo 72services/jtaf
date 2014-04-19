@@ -1,6 +1,5 @@
 package ch.jtaf.data;
 
-import ch.jtaf.data.EventsRankingEventData;
 import ch.jtaf.entity.Competition;
 import java.util.ArrayList;
 import java.util.List;
