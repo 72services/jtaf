@@ -203,6 +203,16 @@ function ResultsController() {
         } else {
             athlete.gender = "f";
         }
+        var select = document.getElementById("athlete_club");
+        var id = select.options[select.selectedIndex].value;
+        if (id !== null) {
+            clubs.forEach(function(club) {
+                if (club.id === parseInt(id)) {
+                    athlete.club = club;
+                    return;
+                }
+            });
+        }
         athlete.series_id = competition.series_id;
     }
 
