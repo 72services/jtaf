@@ -46,12 +46,17 @@ function ResultsController() {
 
     this.save = function() {
         fillAthlete();
-        util.xhrPost("/jtaf/res/athletes/", function(response) {
-            parseAndFill(response);
-            util.info("Athlete saved");
-            document.getElementById("search_term").focus();
-            document.getElementById("search_term").select();
-        }, athlete);
+        if (athlete.club === undefined || athlete.club === null) {
+            util.error("Club must be choosen.");
+        }
+        else {
+            util.xhrPost("/jtaf/res/athletes/", function(response) {
+                parseAndFill(response);
+                util.info("Athlete saved");
+                document.getElementById("search_term").focus();
+                document.getElementById("search_term").select();
+            }, athlete);
+        }
     };
 
     this.selectAthlete = function(id) {
@@ -91,6 +96,12 @@ function ResultsController() {
         document.getElementById("points" + i).value = points;
     };
 
+
+    this.addAthlete = function() {
+        clear();
+        document.getElementById("input_form").className = "";
+    };
+
     function hideOutput() {
         document.getElementById("input_form").className = "invisible";
         document.getElementById("athlete_list").className = "invisible";
@@ -101,13 +112,18 @@ function ResultsController() {
         while (select.firstChild) {
             select.removeChild(select.firstChild);
         }
+
+        var option = document.createElement("option");
+        option.innerHTML = "";
+        select.appendChild(option);
+
         for (var i in clubs) {
             var club = clubs[i];
-            var option = document.createElement("option");
+            option = document.createElement("option");
             option.value = club.id;
             option.innerHTML = club.abbreviation;
             select.appendChild(option);
-            if (athlete.club !== undefined && athlete.club !== undefined &&
+            if (athlete.club !== undefined && athlete.club !== null &&
                     athlete.club.id === club.id) {
                 option.selected = true;
             }
@@ -133,7 +149,7 @@ function ResultsController() {
             document.getElementById("athlete_gender_m").checked = false;
             document.getElementById("athlete_gender_f").checked = false;
         }
-        if (athlete.category !== undefined) {
+        if (athlete.category !== undefined && athlete.category !== null) {
             document.getElementById("athlete_category").value = athlete.category.abbreviation;
             document.getElementById("results").setAttribute("style", "visibility: visible;");
             fillEventsTable();
@@ -196,7 +212,7 @@ function ResultsController() {
             document.body.removeChild(error_div);
         }
         athletes = null;
-        athlete = {lastName: "", firstName: ""};
+        athlete = {id: null, lastName: "", firstName: "", gender: null, club: null, category: null};
         var table = document.getElementById("athlete_events");
         table.innerHTML = "";
         fillForm();

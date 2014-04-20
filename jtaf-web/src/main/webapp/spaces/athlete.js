@@ -28,10 +28,15 @@ function Athlete() {
 
     this.save = function() {
         fillAthlete();
-        util.xhrPost("/jtaf/res/athletes/", function(response) {
-            parseAndFill(response);
-            window.location = "series.html?id=" + series_id + "&space_id=" + space_id + "&message=" + "Athlete saved";
-        }, athlete);
+        if (athlete.club === undefined || athlete.club === null) {
+            util.error("Club must be choosen.");
+        }
+        else {
+            util.xhrPost("/jtaf/res/athletes/", function(response) {
+                parseAndFill(response);
+                window.location = "series.html?id=" + series_id + "&space_id=" + space_id + "&message=" + "Athlete saved";
+            }, athlete);
+        }
     };
 
     this.back = function() {

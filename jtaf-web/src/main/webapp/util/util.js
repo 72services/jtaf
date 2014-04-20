@@ -124,7 +124,7 @@ function Util() {
         div.setAttribute("id", "info");
         div.innerHTML = "<b>INFO</b><br />" + this.translate(message);
         document.body.appendChild(div);
-        window.setTimeout("util.fade(document.getElementById('info'))", 5000);
+        window.setTimeout("fade(document.getElementById('info'))", 5000);
     };
 
     this.error = function(message) {
@@ -132,7 +132,7 @@ function Util() {
         div.setAttribute("id", "error");
         div.innerHTML = "<b>ERROR</b><br />" + this.translate(message);
         document.body.appendChild(div);
-        window.setTimeout("util.fade(document.getElementById('error''))", 5000);
+        window.setTimeout("fade(document.getElementById('error''))", 5000);
     };
 
     this.showMessage = function() {
@@ -140,19 +140,6 @@ function Util() {
             this.info(this.translate(this.searchMap.message));
         }
     };
-
-    function fade(element) {
-        var opacity = 1;
-        var timer = setInterval(function() {
-            if (opacity <= 0.1) {
-                clearInterval(timer);
-                element.style.display = "none";
-            }
-            element.style.opacity = opacity;
-            element.style.filter = "alpha(opacity=" + opacity * 100 + ")";
-            opacity -= opacity * 0.1;
-        }, 50);
-    }
 
     function loadMessages() {
         var lang = window.navigator.language;
@@ -175,4 +162,15 @@ function Util() {
     }
 }
 
-var util = new Util();
+function fade(element) {
+    var opacity = 1;
+    var timer = setInterval(function() {
+        if (opacity <= 0.1) {
+            clearInterval(timer);
+            element.style.display = "none";
+        }
+        element.style.opacity = opacity;
+        element.style.filter = "alpha(opacity=" + opacity * 100 + ")";
+        opacity -= opacity * 0.1;
+    }, 50);
+}
