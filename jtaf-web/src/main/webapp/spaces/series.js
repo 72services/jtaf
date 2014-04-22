@@ -53,6 +53,7 @@ function SeriesController() {
         var iframe = document.createElement("iframe");
         iframe.name = "myTarget";
         iframe.addEventListener("load", function() {
+            util.info("Logo replaced");
         });
         iframe.style.display = "none";
         document.body.appendChild(iframe);

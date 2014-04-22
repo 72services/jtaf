@@ -46,7 +46,7 @@ public class Sheet extends ReportBase {
         this.logo = logo;
     }
 
-    public Sheet(Competition competition, List<Athlete> athletes, byte [] logo) {
+    public Sheet(Competition competition, List<Athlete> athletes, byte[] logo) {
         this.competition = competition;
         this.athletes = athletes;
         this.logo = logo;
@@ -92,7 +92,7 @@ public class Sheet extends ReportBase {
         if (logo != null) {
             Image image = Image.getInstance(logo);
             image.setAbsolutePosition(cmToPixel(1f), cmToPixel(18f));
-            image.scaleAbsolute(120, 60);
+            image.scaleToFit(120, 60);
             document.add(image);
         }
     }
@@ -149,8 +149,8 @@ public class Sheet extends ReportBase {
         table.setSpacingBefore(cmToPixel(0.5f));
         table.setSpacingAfter(cmToPixel(0.5f));
 
-        addCompetitionCell(table, competition == null ? "" : 
-                competition.getName() + " " + sdf.format(competition.getCompetitionDate()));
+        addCompetitionCell(table, competition == null ? ""
+                : competition.getName() + " " + sdf.format(competition.getCompetitionDate()));
 
         document.add(table);
     }
