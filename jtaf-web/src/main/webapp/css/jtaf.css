@@ -129,6 +129,19 @@ div#error {
     border-color: tomato;
 }
 
+div#loading {
+    background: url(/jtaf/images/loading.gif) no-repeat center center;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    position: fixed;
+    display: none;
+    opacity: 0.7;
+    background-color: #fff;
+    z-index: 99;
+}
+
 a.navigation_inactive {
     padding-top: 17px;
     padding-bottom: 17px;

@@ -140,6 +140,14 @@ function Util() {
             this.info(this.translate(this.searchMap.message));
         }
     };
+    
+    this.showLoading = function() {
+        document.getElementById("loading").style.display = "block";
+    };
+
+    this.hideLoading = function() {
+        document.getElementById("loading").style.display = "none";
+    };
 
     function loadMessages() {
         var lang = window.navigator.language;

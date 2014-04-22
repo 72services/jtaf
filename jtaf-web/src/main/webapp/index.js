@@ -7,6 +7,7 @@ function IndexController() {
 
     this.loadData = function() {
         util.showMessage();
+        util.showLoading();
 
         header.activateLink("navigation_0");
         getCurrentUser();
@@ -15,6 +16,7 @@ function IndexController() {
             spaces = JSON.parse(response);
             fillSpaces();
             util.i18n();
+            util.hideLoading();
         });
         util.xhrGet("/jtaf/res/userspaces/current", function(response) {
             userSpaces = JSON.parse(response);

@@ -4,6 +4,7 @@ function CompetitionsRankingController() {
 
     this.loadData = function() {
         util.showMessage();
+        util.showLoading();
 
         var id = util.searchMap.id;
         if (id === undefined) {
@@ -11,6 +12,7 @@ function CompetitionsRankingController() {
             util.xhrGet("/jtaf/res/rankings/competition/" + id, function(response) {
                 parseAndFill(response);
                 util.i18n();
+                util.hideLoading();
             });
         }
     };

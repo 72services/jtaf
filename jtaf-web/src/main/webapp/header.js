@@ -1,6 +1,10 @@
 function Header() {
     var util = new Util();
 
+    var divLoading = document.createElement("div");
+    divLoading.id = "loading";
+    document.body.appendChild(divLoading);
+    
     var divHeader = document.createElement("div");
     divHeader.id = "header";
 
