@@ -1,15 +1,12 @@
 package ch.jtaf.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -26,12 +23,10 @@ public class Space {
     @GeneratedValue
     private Long id;
     private String name;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "space_id", insertable = false, updatable = false)
-    private Set<Series> series = new HashSet<>();
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "space_id", insertable = false, updatable = false)
-    private Set<Club> clubs = new HashSet<>();
+    @Transient
+    private List<Series> series = new ArrayList<>();
+    @Transient
+    private List<Club> clubs = new ArrayList<>();
     @Transient
     private String owner;
 
@@ -51,19 +46,19 @@ public class Space {
         this.name = name;
     }
 
-    public Set<Series> getSeries() {
+    public List<Series> getSeries() {
         return series;
     }
 
-    public void setSeries(Set<Series> series) {
+    public void setSeries(List<Series> series) {
         this.series = series;
     }
 
-    public Set<Club> getClubs() {
+    public List<Club> getClubs() {
         return clubs;
     }
 
-    public void setClubs(Set<Club> clubs) {
+    public void setClubs(List<Club> clubs) {
         this.clubs = clubs;
     }
 

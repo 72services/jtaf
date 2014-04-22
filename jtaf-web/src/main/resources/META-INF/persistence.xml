@@ -5,9 +5,6 @@
     
     <persistence-unit name="jtaf" transaction-type="JTA">
         <jta-data-source>java:jboss/datasources/MysqlDS</jta-data-source>    
-        <properties>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-        </properties>
     </persistence-unit>
 
 </persistence>

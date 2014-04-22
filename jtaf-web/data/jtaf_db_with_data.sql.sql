@@ -1,10 +1,5 @@
 CREATE DATABASE  IF NOT EXISTS `jtaf` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `jtaf`;
--- MySQL dump 10.13  Distrib 5.6.13, for osx10.6 (i386)
---
--- Host: 127.0.0.1    Database: jtaf
--- ------------------------------------------------------
--- Server version	5.6.17
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -34,10 +29,10 @@ CREATE TABLE `athlete` (
   `category_id` bigint(20) DEFAULT NULL,
   `club_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_l67v7hlm0w8m4i7maynveecd` (`category_id`),
-  KEY `FK_4n2rh646l89g91vhffa0h77i1` (`club_id`),
-  CONSTRAINT `FK_4n2rh646l89g91vhffa0h77i1` FOREIGN KEY (`club_id`) REFERENCES `club` (`id`),
-  CONSTRAINT `FK_l67v7hlm0w8m4i7maynveecd` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
+  KEY `fk_athlete_category` (`category_id`),
+  KEY `fk_athlete_club` (`club_id`),
+  CONSTRAINT `fk_athlete_club` FOREIGN KEY (`club_id`) REFERENCES `club` (`id`),
+  CONSTRAINT `fk_athlete_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -92,11 +87,11 @@ CREATE TABLE `category_event` (
   `events_id` bigint(20) NOT NULL,
   `position` int(11) NOT NULL,
   PRIMARY KEY (`Category_id`,`events_id`),
-  UNIQUE KEY `Category_id` (`Category_id`,`events_id`),
-  KEY `FK_grfopgithc30iceeqadfeuo9q` (`events_id`),
-  KEY `FK_8y01rg6kyjeave3ouubms8hiw` (`Category_id`),
-  CONSTRAINT `FK_8y01rg6kyjeave3ouubms8hiw` FOREIGN KEY (`Category_id`) REFERENCES `category` (`id`),
-  CONSTRAINT `FK_grfopgithc30iceeqadfeuo9q` FOREIGN KEY (`events_id`) REFERENCES `event` (`id`)
+  UNIQUE KEY `Category_id` (`category_id`,`events_id`),
+  KEY `fk_category_event_event` (`events_id`),
+  KEY `fk_category_event_category` (`category_id`),
+  CONSTRAINT `fk_category_event_category` FOREIGN KEY (`Category_id`) REFERENCES `category` (`id`),
+  CONSTRAINT `fk_category_event_event` FOREIGN KEY (`events_id`) REFERENCES `event` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -123,8 +118,8 @@ CREATE TABLE `club` (
   `name` varchar(255) DEFAULT NULL,
   `space_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_2al9oeijtauda42fspy13xj9q` (`space_id`),
-  CONSTRAINT `FK_2al9oeijtauda42fspy13xj9q` FOREIGN KEY (`space_id`) REFERENCES `tspace` (`id`)
+  KEY `fk_club_tspace` (`space_id`),
+  CONSTRAINT `fk_club_tspace` FOREIGN KEY (`space_id`) REFERENCES `tspace` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -233,12 +228,12 @@ CREATE TABLE `result` (
   `athlete_id` bigint(20) DEFAULT NULL,
   `postition` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_fgsnqjp4kjtcw7pqqprhoe0w5` (`competition_id`),
-  KEY `FK_a8ybbjrmfoskysuvhucm3b6n` (`event_id`),
-  KEY `FK_ieu66eh4d6imsavwjwtgnekhy` (`athlete_id`),
-  CONSTRAINT `FK_a8ybbjrmfoskysuvhucm3b6n` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
-  CONSTRAINT `FK_fgsnqjp4kjtcw7pqqprhoe0w5` FOREIGN KEY (`competition_id`) REFERENCES `competition` (`id`),
-  CONSTRAINT `FK_ieu66eh4d6imsavwjwtgnekhy` FOREIGN KEY (`athlete_id`) REFERENCES `athlete` (`id`)
+  KEY `fk_result_competition` (`competition_id`),
+  KEY `fk_result_event` (`event_id`),
+  KEY `fk_result_athlete` (`athlete_id`),
+  CONSTRAINT `fk_result_event` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
+  CONSTRAINT `fk_result_competition` FOREIGN KEY (`competition_id`) REFERENCES `competition` (`id`),
+  CONSTRAINT `fk_result_athlete` FOREIGN KEY (`athlete_id`) REFERENCES `athlete` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -317,8 +312,8 @@ CREATE TABLE `series` (
   `name` varchar(255) DEFAULT NULL,
   `space_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_l5ok6a2py2dkxp6kwnq9411jm` (`space_id`),
-  CONSTRAINT `FK_l5ok6a2py2dkxp6kwnq9411jm` FOREIGN KEY (`space_id`) REFERENCES `tspace` (`id`)
+  KEY `fk_series_space` (`space_id`),
+  CONSTRAINT `fk_series_space` FOREIGN KEY (`space_id`) REFERENCES `tspace` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -369,10 +364,10 @@ CREATE TABLE `userspace` (
   `space_id` bigint(20) DEFAULT NULL,
   `user_email` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_500db1b1ipsocfsyn57mg44x1` (`space_id`),
-  KEY `FK_dojpg9l7q2rgfaob1jj1odj14` (`user_email`),
-  CONSTRAINT `FK_500db1b1ipsocfsyn57mg44x1` FOREIGN KEY (`space_id`) REFERENCES `tspace` (`id`),
-  CONSTRAINT `FK_dojpg9l7q2rgfaob1jj1odj14` FOREIGN KEY (`user_email`) REFERENCES `securityuser` (`email`)
+  KEY `fk_userspace_tspace` (`space_id`),
+  KEY `fk_userspace_securityuser` (`user_email`),
+  CONSTRAINT `fk_userspace_tspace` FOREIGN KEY (`space_id`) REFERENCES `tspace` (`id`),
+  CONSTRAINT `fk_userspace_securityuser` FOREIGN KEY (`user_email`) REFERENCES `securityuser` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -394,5 +389,3 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2014-04-19 18:59:05

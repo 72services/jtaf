@@ -18,9 +18,7 @@ import ch.jtaf.interceptor.TraceInterceptor;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -113,7 +111,7 @@ public class DataService extends AbstractService {
         }
         return this.save(a);
     }
-    
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void recalculateCategories(Long seriesId) {
         TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
@@ -248,17 +246,17 @@ public class DataService extends AbstractService {
         TypedQuery<Space> q = em.createNamedQuery("Space.findAll", Space.class);
         List<Space> spaces = q.getResultList();
         for (Space space : spaces) {
-            Set<Series> series = new HashSet<>();
-            for (Series s : space.getSeries()) {
-                series.add(getSeries(s.getId()));
-            }
-            space.setSeries(series);
+            space.setSeries(getSeriesWithCompetitions(space.getId()));
+            space.setClubs(getClubs(space.getId()));
         }
         return spaces;
     }
 
     public Space getSpace(Long id) {
-        return em.find(Space.class, id);
+        Space space = em.find(Space.class, id);
+        space.setSeries(getSeriesList(space.getId()));
+        space.setClubs(getClubs(space.getId()));
+        return space;
     }
 
     public List<Athlete> getAthletes(Long seriesId) {
@@ -354,6 +352,12 @@ public class DataService extends AbstractService {
             em.remove(userSpace);
         }
         s = em.merge(s);
+        for (Series series : getSeriesList(s.getId())) {
+            em.remove(series);
+        }
+        for (Club club : getClubs(s.getId())) {
+            em.remove(club);
+        }
         em.remove(s);
     }
 
@@ -378,6 +382,8 @@ public class DataService extends AbstractService {
         for (Space space : list) {
             UserSpace userSpace = getUserSpacesOwnerBySpaceId(space.getId());
             space.setOwner(userSpace.getUser().getEmail());
+            space.setSeries(getSeriesList(space.getId()));
+            space.setClubs(getClubs(space.getId()));
         }
         return list;
     }
