@@ -3,5 +3,6 @@
 # Package Files #
 *.war
 *.ear
+*.bak
 /jtaf-web/nbproject/private/
 /jtaf-web/target/

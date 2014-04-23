@@ -21,18 +21,20 @@ DROP TABLE IF EXISTS `athlete`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `athlete` (
   `id` bigint(20) NOT NULL auto_increment,
-  `firstName` varchar(255) DEFAULT NULL,
-  `gender` varchar(255) DEFAULT NULL,
-  `lastName` varchar(255) DEFAULT NULL,
-  `series_id` bigint(20) DEFAULT NULL,
+  `firstName` varchar(255) NOT NULL,
+  `gender` varchar(255) NOT NULL,
+  `lastName` varchar(255) NOT NULL,
+  `series_id` bigint(20) NOT NULL,
   `yearofbirth` int(11) NOT NULL,
-  `category_id` bigint(20) DEFAULT NULL,
+  `category_id` bigint(20) NOT NULL,
   `club_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_athlete_category` (`category_id`),
   KEY `fk_athlete_club` (`club_id`),
+  KEY `fk_athlete_series` (`series_id`),
   CONSTRAINT `fk_athlete_club` FOREIGN KEY (`club_id`) REFERENCES `club` (`id`),
-  CONSTRAINT `fk_athlete_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
+  CONSTRAINT `fk_athlete_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
+  CONSTRAINT `fk_athlete_series` FOREIGN KEY (`series_id`) REFERENCES `series` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,13 +57,15 @@ DROP TABLE IF EXISTS `category`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `category` (
   `id` bigint(20) NOT NULL auto_increment,
-  `abbreviation` varchar(255) DEFAULT NULL,
-  `gender` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `series_id` bigint(20) DEFAULT NULL,
+  `abbreviation` varchar(255) NOT NULL,
+  `gender` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `series_id` bigint(20) NOT NULL,
   `yearfrom` int(11) NOT NULL,
   `yearto` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `fk_category_series` (`series_id`),
+  CONSTRAINT `fk_category_series` FOREIGN KEY (`series_id`) REFERENCES `series` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -83,7 +87,7 @@ DROP TABLE IF EXISTS `category_event`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `category_event` (
-  `category_id` bigint(20) NOT NULL auto_increment,
+  `category_id` bigint(20) NOT NULL,
   `event_id` bigint(20) NOT NULL,
   `position` int(11) NOT NULL,
   PRIMARY KEY (`category_id`,`event_id`),
@@ -114,9 +118,9 @@ DROP TABLE IF EXISTS `club`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `club` (
   `id` bigint(20) NOT NULL auto_increment,
-  `abbreviation` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `space_id` bigint(20) DEFAULT NULL,
+  `abbreviation` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `space_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_club_tspace` (`space_id`),
   CONSTRAINT `fk_club_tspace` FOREIGN KEY (`space_id`) REFERENCES `tspace` (`id`)
@@ -142,9 +146,9 @@ DROP TABLE IF EXISTS `competition`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `competition` (
   `id` bigint(20) NOT NULL auto_increment,
-  `competitiondate` date DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `series_id` bigint(20) DEFAULT NULL,
+  `competitiondate` date NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `series_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_competition_series` (`series_id`),
   CONSTRAINT `fk_competition_series` FOREIGN KEY (`series_id`) REFERENCES `series` (`id`)
@@ -173,11 +177,11 @@ CREATE TABLE `event` (
   `a` double NOT NULL,
   `b` double NOT NULL,
   `c` double NOT NULL,
-  `gender` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `series_id` bigint(20) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `longname` varchar(255) DEFAULT NULL,
+  `gender` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `series_id` bigint(20) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `longname` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_event_series` (`series_id`),
   CONSTRAINT `fk_event_series` FOREIGN KEY (`series_id`) REFERENCES `series` (`id`)
@@ -238,11 +242,11 @@ DROP TABLE IF EXISTS `result`;
 CREATE TABLE `result` (
   `id` bigint(20) NOT NULL auto_increment,
   `points` int(11) NOT NULL,
-  `result` varchar(255) DEFAULT NULL,
-  `competition_id` bigint(20) DEFAULT NULL,
-  `event_id` bigint(20) DEFAULT NULL,
-  `athlete_id` bigint(20) DEFAULT NULL,
-  `postition` int(11) DEFAULT NULL,
+  `result` varchar(255) NOT NULL,
+  `competition_id` bigint(20) NOT NULL,
+  `event_id` bigint(20) NOT NULL,
+  `athlete_id` bigint(20) NOT NULL,
+  `postition` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_result_competition` (`competition_id`),
   KEY `fk_result_event` (`event_id`),
@@ -272,7 +276,7 @@ DROP TABLE IF EXISTS `securitygroup`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `securitygroup` (
   `email` varchar(255) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -296,11 +300,11 @@ DROP TABLE IF EXISTS `securityuser`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `securityuser` (
   `email` varchar(255) NOT NULL,
-  `confirmationId` varchar(255) DEFAULT NULL,
-  `confirmed` tinyint(1) NOT NULL,
-  `firstName` varchar(255) DEFAULT NULL,
-  `lastName` varchar(255) DEFAULT NULL,
-  `secret` varchar(255) DEFAULT NULL,
+  `confirmationId` varchar(255) NOT NULL,
+  `confirmed` tinyint(1) DEFAULT 0,
+  `firstName` varchar(255) NOT NULL,
+  `lastName` varchar(255) NOT NULL,
+  `secret` varchar(255) NOT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -311,7 +315,7 @@ CREATE TABLE `securityuser` (
 
 LOCK TABLES `securityuser` WRITE;
 /*!40000 ALTER TABLE `securityuser` DISABLE KEYS */;
-INSERT INTO `securityuser` VALUES ('simon@martinelli.ch',NULL,1,'Simon','Martinelli','009g5j/5XBby/F8XR9u/Wg==');
+INSERT INTO `securityuser` VALUES ('simon@martinelli.ch',1,1,'Simon','Martinelli','009g5j/5XBby/F8XR9u/Wg==');
 /*!40000 ALTER TABLE `securityuser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,8 +329,8 @@ DROP TABLE IF EXISTS `series`;
 CREATE TABLE `series` (
   `id` bigint(20) NOT NULL auto_increment,
   `logo` longblob,
-  `name` varchar(255) DEFAULT NULL,
-  `space_id` bigint(20) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `space_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_series_space` (`space_id`),
   CONSTRAINT `fk_series_space` FOREIGN KEY (`space_id`) REFERENCES `tspace` (`id`)
@@ -352,7 +356,7 @@ DROP TABLE IF EXISTS `tspace`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tspace` (
   `id` bigint(20) NOT NULL auto_increment,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -376,9 +380,9 @@ DROP TABLE IF EXISTS `userspace`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `userspace` (
   `id` bigint(20) NOT NULL auto_increment,
-  `role` int(11) DEFAULT NULL,
-  `space_id` bigint(20) DEFAULT NULL,
-  `user_email` varchar(255) DEFAULT NULL,
+  `role` varchar(255) NOT NULL,
+  `space_id` bigint(20) NOT NULL,
+  `user_email` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_userspace_tspace` (`space_id`),
   KEY `fk_userspace_securityuser` (`user_email`),
@@ -393,7 +397,7 @@ CREATE TABLE `userspace` (
 
 LOCK TABLES `userspace` WRITE;
 /*!40000 ALTER TABLE `userspace` DISABLE KEYS */;
-INSERT INTO `userspace` VALUES (8,0,7,'simon@martinelli.ch');
+INSERT INTO `userspace` VALUES (8,'OWNER',7,'simon@martinelli.ch');
 /*!40000 ALTER TABLE `userspace` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
