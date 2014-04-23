@@ -33,6 +33,14 @@ function Header() {
     spaces.innerHTML = "MY SPACES";
     divNavigation.appendChild(spaces);
 
+    var about = document.createElement("a");
+    about.id = "navigation_2";
+    about.className = "navigation_inactive";
+    about.name = "navigation_element";
+    about.href = "http://www.jtaf.ch";
+    about.innerHTML = "ABOUT";
+    divNavigation.appendChild(about);
+
     divHeader.appendChild(divUserinfo);
     divHeader.appendChild(divNavigation);
 
