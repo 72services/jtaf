@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `jtaf` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE IF NOT EXISTS `jtaf` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `jtaf`;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -20,12 +20,12 @@ DROP TABLE IF EXISTS `athlete`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `athlete` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL auto_increment,
   `firstName` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
   `lastName` varchar(255) DEFAULT NULL,
   `series_id` bigint(20) DEFAULT NULL,
-  `yearOfBirth` int(11) NOT NULL,
+  `yearofbirth` int(11) NOT NULL,
   `category_id` bigint(20) DEFAULT NULL,
   `club_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -54,13 +54,13 @@ DROP TABLE IF EXISTS `category`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `category` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL auto_increment,
   `abbreviation` varchar(255) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `series_id` bigint(20) DEFAULT NULL,
-  `yearFrom` int(11) NOT NULL,
-  `yearTo` int(11) NOT NULL,
+  `yearfrom` int(11) NOT NULL,
+  `yearto` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -83,15 +83,15 @@ DROP TABLE IF EXISTS `category_event`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `category_event` (
-  `Category_id` bigint(20) NOT NULL,
-  `events_id` bigint(20) NOT NULL,
+  `category_id` bigint(20) NOT NULL auto_increment,
+  `event_id` bigint(20) NOT NULL,
   `position` int(11) NOT NULL,
-  PRIMARY KEY (`Category_id`,`events_id`),
-  UNIQUE KEY `Category_id` (`category_id`,`events_id`),
-  KEY `fk_category_event_event` (`events_id`),
+  PRIMARY KEY (`category_id`,`event_id`),
+  UNIQUE KEY `ux_category_event` (`category_id`,`event_id`),
+  KEY `fk_category_event_event` (`event_id`),
   KEY `fk_category_event_category` (`category_id`),
-  CONSTRAINT `fk_category_event_category` FOREIGN KEY (`Category_id`) REFERENCES `category` (`id`),
-  CONSTRAINT `fk_category_event_event` FOREIGN KEY (`events_id`) REFERENCES `event` (`id`)
+  CONSTRAINT `fk_category_event_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
+  CONSTRAINT `fk_category_event_event` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -113,7 +113,7 @@ DROP TABLE IF EXISTS `club`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `club` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL auto_increment,
   `abbreviation` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `space_id` bigint(20) DEFAULT NULL,
@@ -141,11 +141,13 @@ DROP TABLE IF EXISTS `competition`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `competition` (
-  `id` bigint(20) NOT NULL,
-  `competitionDate` date DEFAULT NULL,
+  `id` bigint(20) NOT NULL auto_increment,
+  `competitiondate` date DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `series_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `fk_competition_series` (`series_id`),
+  CONSTRAINT `fk_competition_series` FOREIGN KEY (`series_id`) REFERENCES `series` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -167,7 +169,7 @@ DROP TABLE IF EXISTS `event`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `event` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL auto_increment,
   `a` double NOT NULL,
   `b` double NOT NULL,
   `c` double NOT NULL,
@@ -175,8 +177,10 @@ CREATE TABLE `event` (
   `name` varchar(255) DEFAULT NULL,
   `series_id` bigint(20) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
-  `longName` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `longname` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_event_series` (`series_id`),
+  CONSTRAINT `fk_event_series` FOREIGN KEY (`series_id`) REFERENCES `series` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -186,30 +190,42 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
-INSERT INTO `event` VALUES (12,17.686955,1397,2.1,'m','60',10,'run','60 m'),(13,10.54596,1778,2.1,'m','80',10,'run','80 m'),(14,0.086375,18833,2.1,'m','600',10,'run_long','600 m'),(15,180.85908,190,1,'m','weit',10,'jump_throw','Weitsprung'),(16,82.491673,178,0.9,'m','kugel 4',10,'jump_throw','Kugel 4 kg'),(17,18,800,0.9,'m','ball',10,'jump_throw','Ball 80 g'),(18,19.742424,1417,2.1,'f','60',10,'run','60 m'),(19,11.754907,1803,2.1,'f','80',10,'run','80 m'),(20,0.089752,19543,2.1,'f','600',10,'run_long','600 m'),(21,220.628792,180,1,'f','weit',10,'jump_throw','Weitsprung'),(22,83.435373,130,0.9,'f','kugel 4',10,'jump_throw','Kugel 4 kg'),(23,22,500,0.9,'f','ball',10,'jump_throw','Ball 80 g'),(135,82.491673,178,0.9,'m','kugel 3',10,'jump_throw','Kugel 3 kg'),(136,83.435373,130,0.9,'f','kugel 3',10,'jump_throw','Kugel 3 kg'),(138,17.686955,1397,2.1,'m','60',137,'run','60 m'),(139,19.742424,1417,2.1,'f','60',137,'run','60 m'),(140,0.086375,18833,2.1,'m','600',137,'run_long','600 m'),(141,0.089752,19543,2.1,'f','600',137,'run_long','600 m'),(142,10.54596,1778,2.1,'m','80',137,'run','80 m'),(143,11.754907,1803,2.1,'f','80',137,'run','80 m'),(144,18,800,0.9,'m','ball',137,'jump_throw','Ball'),(145,22,500,0.9,'f','ball',137,'jump_throw','Ball'),(146,82.491673,178,0.9,'m','kugel 3',137,'jump_throw','Kugel 3 kg'),(147,83.435373,130,0.9,'f','kugel 3',137,'jump_throw','Kugel 3 kg'),(148,82.491673,178,0.9,'m','kugel 4',137,'jump_throw','Kugel 4 kg'),(149,83.435373,130,0.9,'f','kugel 4',137,'jump_throw','Kugel 4 kg'),(150,180.85908,190,1,'m','weit',137,'jump_throw','Weitsprung'),(151,220.628792,180,1,'f','weit',137,'jump_throw','Weitsprung'),(363,0.086375,19833,2.1,'m','600+20',137,'run_long','600 m'),(364,0.089752,20543,2.1,'f','600+20',137,'run_long','600 m'),(409,0.086375,21833,2.1,'m','600+40',137,'run_long','600 m'),(410,0.089752,22543,2.1,'f','600+40',137,'run_long','600 m'),(411,180.85908,130,1,'m','weit-60',137,'jump_throw','Weitsprung'),(412,220.628792,120,1,'f','weit-60',137,'jump_throw','Weitsprung');
+INSERT INTO `event` VALUES 
+(12,17.686955,1397,2.1,'m','60',10,'RUN','60 m'),
+(13,10.54596,1778,2.1,'m','80',10,'RUN','80 m'),
+(14,0.086375,18833,2.1,'m','600',10,'RUN_LONG','600 m'),
+(15,180.85908,190,1,'m','weit',10,'JUMP_THROW','Weitsprung'),
+(16,82.491673,178,0.9,'m','kugel 4',10,'JUMP_THROW','Kugel 4 kg'),
+(17,18,800,0.9,'m','ball',10,'JUMP_THROW','Ball 80 g'),
+(18,19.742424,1417,2.1,'f','60',10,'RUN','60 m'),
+(19,11.754907,1803,2.1,'f','80',10,'RUN','80 m'),
+(20,0.089752,19543,2.1,'f','600',10,'RUN_LONG','600 m'),
+(21,220.628792,180,1,'f','weit',10,'JUMP_THROW','Weitsprung'),
+(22,83.435373,130,0.9,'f','kugel 4',10,'JUMP_THROW','Kugel 4 kg'),
+(23,22,500,0.9,'f','ball',10,'JUMP_THROW','Ball 80 g'),
+(135,82.491673,178,0.9,'m','kugel 3',10,'JUMP_THROW','Kugel 3 kg'),
+(136,83.435373,130,0.9,'f','kugel 3',10,'JUMP_THROW','Kugel 3 kg'),
+(138,17.686955,1397,2.1,'m','60',137,'RUN','60 m'),
+(139,19.742424,1417,2.1,'f','60',137,'RUN','60 m'),
+(140,0.086375,18833,2.1,'m','600',137,'RUN_LONG','600 m'),
+(141,0.089752,19543,2.1,'f','600',137,'RUN_LONG','600 m'),
+(142,10.54596,1778,2.1,'m','80',137,'RUN','80 m'),
+(143,11.754907,1803,2.1,'f','80',137,'RUN','80 m'),
+(144,18,800,0.9,'m','ball',137,'JUMP_THROW','Ball'),
+(145,22,500,0.9,'f','ball',137,'JUMP_THROW','Ball'),
+(146,82.491673,178,0.9,'m','kugel 3',137,'JUMP_THROW','Kugel 3 kg'),
+(147,83.435373,130,0.9,'f','kugel 3',137,'JUMP_THROW','Kugel 3 kg'),
+(148,82.491673,178,0.9,'m','kugel 4',137,'JUMP_THROW','Kugel 4 kg'),
+(149,83.435373,130,0.9,'f','kugel 4',137,'JUMP_THROW','Kugel 4 kg'),
+(150,180.85908,190,1,'m','weit',137,'JUMP_THROW','Weitsprung'),
+(151,220.628792,180,1,'f','weit',137,'JUMP_THROW','Weitsprung')
+,(363,0.086375,19833,2.1,'m','600+20',137,'RUN_LONG','600 m'),
+(364,0.089752,20543,2.1,'f','600+20',137,'RUN_LONG','600 m'),
+(409,0.086375,21833,2.1,'m','600+40',137,'RUN_LONG','600 m'),
+(410,0.089752,22543,2.1,'f','600+40',137,'RUN_LONG','600 m'),
+(411,180.85908,130,1,'m','weit-60',137,'JUMP_THROW','Weitsprung'),
+(412,220.628792,120,1,'f','weit-60',137,'JUMP_THROW','Weitsprung');
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `hibernate_sequence`
---
-
-DROP TABLE IF EXISTS `hibernate_sequence`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `hibernate_sequence` (
-  `next_val` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `hibernate_sequence`
---
-
-LOCK TABLES `hibernate_sequence` WRITE;
-/*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (629);
-/*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -220,7 +236,7 @@ DROP TABLE IF EXISTS `result`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `result` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL auto_increment,
   `points` int(11) NOT NULL,
   `result` varchar(255) DEFAULT NULL,
   `competition_id` bigint(20) DEFAULT NULL,
@@ -307,7 +323,7 @@ DROP TABLE IF EXISTS `series`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `series` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL auto_increment,
   `logo` longblob,
   `name` varchar(255) DEFAULT NULL,
   `space_id` bigint(20) DEFAULT NULL,
@@ -335,7 +351,7 @@ DROP TABLE IF EXISTS `tspace`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tspace` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL auto_increment,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -359,7 +375,7 @@ DROP TABLE IF EXISTS `userspace`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `userspace` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL auto_increment,
   `role` int(11) DEFAULT NULL,
   `space_id` bigint(20) DEFAULT NULL,
   `user_email` varchar(255) DEFAULT NULL,

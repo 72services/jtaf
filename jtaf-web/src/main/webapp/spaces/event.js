@@ -47,10 +47,10 @@ function EventController() {
         document.getElementById("event_longname").value = jtafEvent.longName;
         var index = 0;
         switch (jtafEvent.type) {
-            case "run_long":
+            case "RUN_LONG":
                 index = 1;
                 break;
-            case "jump_throw":
+            case "JUMP_THROW":
                 index = 2;
                 break;
         }

@@ -3,6 +3,7 @@ package ch.jtaf.report;
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.entity.Event;
+import ch.jtaf.entity.EventType;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -161,7 +162,7 @@ public class Sheet extends ReportBase {
         table.setSpacingBefore(cmToPixel(1f));
 
         for (Event event : athlete.getCategory().getEvents()) {
-            if (event.getType().equals(Event.JUMP_THROW)) {
+            if (event.getType().equals(EventType.JUMP_THROW)) {
                 addInfoCell(table, event.getLongName());
                 addInfoCellWithBorder(table, "");
                 addInfoCellWithBorder(table, "");

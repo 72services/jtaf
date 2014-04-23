@@ -1,7 +1,10 @@
 package ch.jtaf.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -14,15 +17,13 @@ import javax.persistence.Table;
 })
 public class Event {
 
-    public static final String JUMP_THROW = "jump_throw";
-    public static final String RUN = "run";
-    public static final String RUN_LONG = "run_long";
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String longName;
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private EventType type;
     private String gender;
     private double a;
     private double b;
@@ -45,11 +46,11 @@ public class Event {
         this.name = name;
     }
 
-    public String getType() {
+    public EventType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(EventType type) {
         this.type = type;
     }
 

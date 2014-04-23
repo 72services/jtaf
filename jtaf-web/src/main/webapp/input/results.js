@@ -78,13 +78,13 @@ function ResultsController() {
         var result = document.getElementById("result" + i).value;
         var points = 0;
         if (result > 0) {
-            if (ev.type === "run") {
+            if (ev.type === "RUN") {
                 points = ev.a * Math.pow((ev.b - result * 100) / 100, ev.c);
-            } else if (ev.type === "run_long") {
+            } else if (ev.type === "RUN_LONG") {
                 var parts = result.split(".");
                 var time = parts[0] * 6000 + parts[1] * 100;
                 points = ev.a * Math.pow((ev.b - time) / 100, ev.c);
-            } else if (ev.type === "jump_throw") {
+            } else if (ev.type === "JUMP_THROW") {
                 points = ev.a * Math.pow((result * 100 - ev.b) / 100, ev.c);
             }
         }

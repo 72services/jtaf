@@ -18,6 +18,7 @@ import ch.jtaf.data.EventsRankingData;
 import ch.jtaf.entity.Series;
 import ch.jtaf.data.SeriesRankingData;
 import ch.jtaf.entity.Event;
+import ch.jtaf.entity.EventType;
 import ch.jtaf.entity.Result;
 import ch.jtaf.interceptor.TraceInterceptor;
 import ch.jtaf.to.AthleteWithEventTO;
@@ -27,7 +28,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -209,7 +209,7 @@ public class ReportService extends AbstractService {
 
                 @Override
                 public int compare(AthleteWithEventTO o1, AthleteWithEventTO o2) {
-                    if (o1.getEvent().getType().equals(Event.JUMP_THROW)) {
+                    if (o1.getEvent().getType().equals(EventType.JUMP_THROW)) {
                         return o2.getResult().getResult().compareTo(o1.getResult().getResult());
                     } else {
                         return o1.getResult().getResult().compareTo(o2.getResult().getResult());
