@@ -4,7 +4,11 @@ function Header() {
     var divLoading = document.createElement("div");
     divLoading.id = "loading";
     document.body.appendChild(divLoading);
-    
+
+    var divLoadingImage = document.createElement("div");
+    divLoadingImage.id = "loadingImage";
+    divLoading.appendChild(divLoadingImage);
+
     var divHeader = document.createElement("div");
     divHeader.id = "header";
 
