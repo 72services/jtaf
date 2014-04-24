@@ -51,6 +51,7 @@ public class EventsRanking extends Ranking {
             PdfPTable table = new PdfPTable(new float[]{2f, 10f, 10f, 2f, 2f, 5f, 5f});
             table.setWidthPercentage(100);
             table.setSpacingBefore(cmToPixel(1f));
+            table.setKeepTogether(true);
 
             createEventTitle(table, event);
 

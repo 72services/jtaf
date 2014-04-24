@@ -1,7 +1,8 @@
 package ch.jtaf.report;
 
-import ch.jtaf.entity.Athlete;
 import ch.jtaf.data.CompetitionRankingCategoryData;
+import ch.jtaf.data.CompetitionRankingData;
+import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Result;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -16,9 +17,9 @@ public class CompetitionRanking extends Ranking {
 
     private Document document;
     private PdfWriter pdfWriter;
-    private final ch.jtaf.data.CompetitionRankingData ranking;
+    private final CompetitionRankingData ranking;
 
-    public CompetitionRanking(ch.jtaf.data.CompetitionRankingData ranking) {
+    public CompetitionRanking(CompetitionRankingData ranking) {
         this.ranking = ranking;
     }
 
@@ -48,19 +49,30 @@ public class CompetitionRanking extends Ranking {
 
     private void createRanking() throws DocumentException {
         for (CompetitionRankingCategoryData category : ranking.getCategories()) {
-            PdfPTable table = new PdfPTable(new float[]{2f, 10f, 10f, 2f, 5f, 5f});
-            table.setWidthPercentage(100);
-            table.setSpacingBefore(cmToPixel(1f));
-
+            PdfPTable table = createAthletesTable();
             createCategoryTitle(table, category);
 
             int position = 1;
             for (Athlete athlete : category.getAthletes()) {
                 createAthleteRow(table, position, athlete);
                 position++;
+                numberOfRows += 1;
+                if (numberOfRows > 24) {
+                    document.add(table);
+                    table = createAthletesTable();
+                    document.newPage();
+                }
             }
             document.add(table);
+            numberOfRows += 3;
         }
+    }
+
+    private PdfPTable createAthletesTable() {
+        PdfPTable table = new PdfPTable(new float[]{2f, 10f, 10f, 2f, 5f, 5f});
+        table.setWidthPercentage(100);
+        table.setSpacingBefore(cmToPixel(1f));
+        return table;
     }
 
     private void createCategoryTitle(PdfPTable table, CompetitionRankingCategoryData category) {

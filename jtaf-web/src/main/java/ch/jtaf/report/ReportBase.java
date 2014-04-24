@@ -19,6 +19,7 @@ public class ReportBase {
     protected static final float CM_PER_INCH = 2.54f;
     protected static final float DPI = 72f;
     protected SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd.MM.yyyy");
+    protected int numberOfRows;
 
     protected float cmToPixel(Float cm) {
         return (cm / CM_PER_INCH) * DPI;
@@ -59,6 +60,7 @@ public class ReportBase {
         public void onStartPage(PdfWriter writer, Document document) {
             try {
                 document.add(header);
+                numberOfRows = 0;
             } catch (DocumentException ex) {
                 Logger.getLogger(CompetitionRanking.class.getName()).log(Level.SEVERE, null, ex);
             }

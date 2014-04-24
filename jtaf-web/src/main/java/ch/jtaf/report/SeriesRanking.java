@@ -51,19 +51,30 @@ public class SeriesRanking extends Ranking {
 
     private void createRanking() throws DocumentException {
         for (SeriesRankingCategoryData category : ranking.getCategories()) {
-            PdfPTable table = new PdfPTable(new float[]{2f, 10f, 10f, 2f, 5f, 5f});
-            table.setWidthPercentage(100);
-            table.setSpacingBefore(cmToPixel(1f));
-
+            PdfPTable table = createAthletesTable();
             createCategoryTitle(table, category);
 
             int position = 1;
             for (Athlete athlete : category.getAthletes()) {
                 createAthleteRow(table, position, athlete);
                 position++;
+                numberOfRows += 1;
+                if (numberOfRows > 24) {
+                    document.add(table);
+                    table = createAthletesTable();
+                    document.newPage();
+                }
             }
             document.add(table);
+            numberOfRows += 3;
         }
+    }
+
+    private PdfPTable createAthletesTable() {
+        PdfPTable table = new PdfPTable(new float[]{2f, 10f, 10f, 2f, 5f, 5f});
+        table.setWidthPercentage(100);
+        table.setSpacingBefore(cmToPixel(1f));
+        return table;
     }
 
     private void createCategoryTitle(PdfPTable table, SeriesRankingCategoryData category) {
