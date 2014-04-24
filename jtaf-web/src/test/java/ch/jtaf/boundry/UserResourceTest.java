@@ -27,7 +27,6 @@ public class UserResourceTest {
         ds.em = em;
         ur = new UserResource();
         ur.dataService = ds;
-        ur.sessionContext = new TestSessionContext();
     }
 
     @AfterClass
@@ -43,6 +42,7 @@ public class UserResourceTest {
     @Before
     public void before() {
         em.clear();
+        ur.sessionContext = new TestSessionContext();
     }
 
     @Test

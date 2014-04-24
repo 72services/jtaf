@@ -78,6 +78,9 @@ public class DataService extends AbstractService {
 
     public Series getSeries(Long seriesId) {
         Series s = em.find(Series.class, seriesId);
+        if (s == null) {
+            return null;
+        }
         TypedQuery<Competition> q = em.createNamedQuery("Competition.findAll", Competition.class);
         q.setParameter("series_id", seriesId);
         List<Competition> cs = q.getResultList();
@@ -254,6 +257,9 @@ public class DataService extends AbstractService {
 
     public Space getSpace(Long id) {
         Space space = em.find(Space.class, id);
+        if (space == null) {
+            return null;
+        }
         space.setSeries(getSeriesList(space.getId()));
         space.setClubs(getClubs(space.getId()));
         return space;

@@ -5,10 +5,12 @@ import ch.jtaf.entity.Club;
 import static ch.jtaf.test.util.TestData.CLUB_ID;
 import static ch.jtaf.test.util.TestData.SPACE_ID;
 import ch.jtaf.test.util.TestSessionContext;
+import ch.jtaf.test.util.UnallowedTestSessionContext;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.ws.rs.WebApplicationException;
 import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -30,7 +32,6 @@ public class ClubResourceTest {
         ds.em = em;
         cr = new ClubResource();
         cr.dataService = ds;
-        cr.sessionContext = new TestSessionContext();
     }
 
     @AfterClass
@@ -46,6 +47,7 @@ public class ClubResourceTest {
     @Before
     public void before() {
         em.clear();
+        cr.sessionContext = new TestSessionContext();
     }
 
     @Test
@@ -59,12 +61,19 @@ public class ClubResourceTest {
     @Test
     public void testSave() throws Exception {
         Club c = ds.get(Club.class, CLUB_ID);
-
         assertNotNull(c);
 
         Club save = cr.save(c);
-
         assertNotNull(save);
+    }
+
+    @Test(expected = WebApplicationException.class)
+    public void testSaveUnallowed() throws Exception {
+        Club c = ds.get(Club.class, CLUB_ID);
+        assertNotNull(c);
+
+        cr.sessionContext = new UnallowedTestSessionContext();
+        cr.save(c);
     }
 
     @Test
@@ -74,8 +83,14 @@ public class ClubResourceTest {
         assertNotNull(c);
     }
 
-    @Test
+    @Test(expected = WebApplicationException.class)
+    public void testGetNotFound() throws Exception {
+        cr.get(0l);
+    }
+
+    @Test(expected = WebApplicationException.class)
     public void testDelete() throws Exception {
+        cr.sessionContext = new UnallowedTestSessionContext();
         cr.delete(CLUB_ID);
     }
 

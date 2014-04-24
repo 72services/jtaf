@@ -78,7 +78,13 @@ public class ReportService extends AbstractService {
 
     public byte[] createEmptySheets(Long categoryid) {
         Category category = em.find(Category.class, categoryid);
+        if (category == null) {
+            throw new IllegalArgumentException();
+        }
         Series series = em.find(Series.class, category.getSeries_id());
+        if (series == null) {
+            throw new IllegalArgumentException();
+        }
         Athlete template = new Athlete();
         template.setCategory(category);
 

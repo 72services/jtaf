@@ -5,10 +5,12 @@ import ch.jtaf.entity.Category;
 import static ch.jtaf.test.util.TestData.CATEGORY_ID;
 import static ch.jtaf.test.util.TestData.SERIES_ID;
 import ch.jtaf.test.util.TestSessionContext;
+import ch.jtaf.test.util.UnallowedTestSessionContext;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.ws.rs.WebApplicationException;
 import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -30,7 +32,6 @@ public class CategoryResourceTest {
         ds.em = em;
         cr = new CategoryResource();
         cr.dataService = ds;
-        cr.sessionContext = new TestSessionContext();
     }
 
     @AfterClass
@@ -46,6 +47,7 @@ public class CategoryResourceTest {
     @Before
     public void before() {
         em.clear();
+        cr.sessionContext = new TestSessionContext();
     }
 
     @Test
@@ -67,6 +69,15 @@ public class CategoryResourceTest {
         assertNotNull(save);
     }
 
+    @Test(expected = WebApplicationException.class)
+    public void testSaveUnallowed() throws Exception {
+        Category c = ds.get(Category.class, CATEGORY_ID);
+        assertNotNull(c);
+
+        cr.sessionContext = new UnallowedTestSessionContext();
+        cr.save(c);
+    }
+
     @Test
     public void testGet() throws Exception {
         Category c = cr.get(CATEGORY_ID);
@@ -74,9 +85,20 @@ public class CategoryResourceTest {
         assertNotNull(c);
     }
 
+    @Test(expected = WebApplicationException.class)
+    public void testGetNotfound() throws Exception {
+        cr.sessionContext = new UnallowedTestSessionContext();
+        cr.get(0l);
+    }
+
     @Test
     public void testDelete() throws Exception {
         cr.delete(CATEGORY_ID);
     }
 
+    @Test(expected = WebApplicationException.class)
+    public void testDeleteUnallowed() throws Exception {
+        cr.sessionContext = new UnallowedTestSessionContext();
+        cr.delete(CATEGORY_ID);
+    }
 }

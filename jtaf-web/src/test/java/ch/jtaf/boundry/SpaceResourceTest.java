@@ -4,10 +4,12 @@ import ch.jtaf.control.DataService;
 import ch.jtaf.entity.Space;
 import static ch.jtaf.test.util.TestData.SPACE_ID;
 import ch.jtaf.test.util.TestSessionContext;
+import ch.jtaf.test.util.UnallowedTestSessionContext;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.ws.rs.WebApplicationException;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -15,7 +17,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class SpaceResourceTest {
-    
+
     private static SpaceResource sr;
     private static DataService ds;
     private static EntityManagerFactory emf;
@@ -29,7 +31,6 @@ public class SpaceResourceTest {
         ds.em = em;
         sr = new SpaceResource();
         sr.dataService = ds;
-        sr.sessionContext = new TestSessionContext();
     }
 
     @AfterClass
@@ -45,6 +46,7 @@ public class SpaceResourceTest {
     @Before
     public void before() {
         em.clear();
+        sr.sessionContext = new TestSessionContext();
     }
 
     @Test
@@ -58,19 +60,30 @@ public class SpaceResourceTest {
     @Test
     public void testSave() throws Exception {
         Space s = ds.get(Space.class, SPACE_ID);
-
         assertNotNull(s);
 
         Space save = sr.save(s);
-
         assertNotNull(save);
+    }
+
+    @Test(expected = WebApplicationException.class)
+    public void testSaveUnallowed() throws Exception {
+        Space s = ds.get(Space.class, SPACE_ID);
+        assertNotNull(s);
+
+        sr.sessionContext = new UnallowedTestSessionContext();
+        sr.save(s);
     }
 
     @Test
     public void testGet() throws Exception {
         Space s = sr.get(SPACE_ID);
-
         assertNotNull(s);
+    }
+
+    @Test(expected = WebApplicationException.class)
+    public void testGetNotFound() throws Exception {
+        sr.get(0l);
     }
 
     @Test
@@ -78,4 +91,9 @@ public class SpaceResourceTest {
         sr.delete(SPACE_ID);
     }
 
+    @Test(expected = WebApplicationException.class)
+    public void testDeleteUnallowed() throws Exception {
+        sr.sessionContext = new UnallowedTestSessionContext();
+        sr.delete(SPACE_ID);
+    }
 }

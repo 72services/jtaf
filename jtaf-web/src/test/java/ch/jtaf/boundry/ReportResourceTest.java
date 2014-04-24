@@ -7,6 +7,7 @@ import static ch.jtaf.test.util.TestData.SERIES_ID;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.ws.rs.WebApplicationException;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -53,6 +54,11 @@ public class ReportResourceTest {
         assertTrue(report.length > 0);
     }
 
+    @Test(expected = WebApplicationException.class)
+    public void testGetSheetsNotFound() throws Exception {
+        rr.getSheets(0l, 0l, null);
+    }
+
     @Test
     public void testGetCompetitionRanking() throws Exception {
         byte[] report = rr.getCompetitionRanking(COMPETITION_ID);
@@ -67,6 +73,11 @@ public class ReportResourceTest {
 
         assertNotNull(report);
         assertTrue(report.length > 0);
+    }
+
+    @Test(expected = WebApplicationException.class)
+    public void testGetEventsRankingNull() throws Exception {
+        rr.getEventsRanking(null);
     }
 
     @Test
@@ -84,4 +95,8 @@ public class ReportResourceTest {
         assertTrue(report.length > 0);
     }
 
+    @Test(expected = WebApplicationException.class)
+    public void testGetSeriesRankingNull() throws Exception {
+        rr.getSeriesRanking(null);
+    }
 }

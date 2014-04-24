@@ -5,10 +5,12 @@ import ch.jtaf.entity.Event;
 import static ch.jtaf.test.util.TestData.EVENT_ID;
 import static ch.jtaf.test.util.TestData.SERIES_ID;
 import ch.jtaf.test.util.TestSessionContext;
+import ch.jtaf.test.util.UnallowedTestSessionContext;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.ws.rs.WebApplicationException;
 import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -16,7 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 public class EventResourceTest {
-    
+
     private static EventResource er;
     private static DataService ds;
     private static EntityManagerFactory emf;
@@ -30,7 +32,6 @@ public class EventResourceTest {
         ds.em = em;
         er = new EventResource();
         er.dataService = ds;
-        er.sessionContext = new TestSessionContext();
     }
 
     @AfterClass
@@ -46,6 +47,7 @@ public class EventResourceTest {
     @Before
     public void before() {
         em.clear();
+        er.sessionContext = new TestSessionContext();
     }
 
     @Test
@@ -59,19 +61,30 @@ public class EventResourceTest {
     @Test
     public void testSave() throws Exception {
         Event c = ds.get(Event.class, EVENT_ID);
-
         assertNotNull(c);
 
         Event save = er.save(c);
-
         assertNotNull(save);
+    }
+
+    @Test(expected = WebApplicationException.class)
+    public void testSaveUnallowed() throws Exception {
+        Event c = ds.get(Event.class, EVENT_ID);
+        assertNotNull(c);
+
+        er.sessionContext = new UnallowedTestSessionContext();
+        er.save(c);
     }
 
     @Test
     public void testGet() throws Exception {
         Event c = er.get(EVENT_ID);
-
         assertNotNull(c);
+    }
+
+    @Test(expected = WebApplicationException.class)
+    public void testGetNotFound() throws Exception {
+        er.get(0l);
     }
 
     @Test
@@ -79,4 +92,9 @@ public class EventResourceTest {
         er.delete(EVENT_ID);
     }
 
+    @Test(expected = WebApplicationException.class)
+    public void testDeleteUnallowed() throws Exception {
+        er.sessionContext = new UnallowedTestSessionContext();
+        er.delete(EVENT_ID);
+    }
 }

@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import org.jboss.logging.Logger;
 
 @Path("reports")
 @Interceptors({TraceInterceptor.class})
@@ -28,17 +29,22 @@ public class ReportResource {
     @Produces({"application/pdf"})
     public byte[] getSheets(@QueryParam("competitionid") Long competitionid,
             @QueryParam("categoryid") Long categoryid, @QueryParam("orderby") String order) {
-        byte[] report = null;
-        if (competitionid != null) {
-            report = service.createSheets(competitionid, order);
-        }
-        if (categoryid != null) {
-            report = service.createEmptySheets(categoryid);
-        }
-        if (report == null) {
+        try {
+            byte[] report = null;
+            if (competitionid != null) {
+                report = service.createSheets(competitionid, order);
+            }
+            if (categoryid != null) {
+                report = service.createEmptySheets(categoryid);
+            }
+            if (report == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                return report;
+            }
+        } catch (IllegalArgumentException e) {
+            Logger.getLogger(ReportResource.class).error(e.getMessage(), e);
             throw new WebApplicationException(Response.Status.NOT_FOUND);
-        } else {
-            return report;
         }
     }
 
