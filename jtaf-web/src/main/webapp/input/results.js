@@ -107,6 +107,7 @@ function ResultsController() {
     this.addAthlete = function() {
         clear();
         document.getElementById("input_form").className = "";
+        document.getElementById("athlete_list").className = "invisible";
     };
 
     function hideOutput() {
