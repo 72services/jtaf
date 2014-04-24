@@ -92,7 +92,7 @@ public class CompetitionRanking extends Ranking {
         addCellAlignRight(table, athlete.getTotalPoints(ranking.getCompetition()) + "");
 
         StringBuilder sb = new StringBuilder();
-        for (Result result : athlete.getResults()) {
+        for (Result result : athlete.getResults(ranking.getCompetition())) {
             sb.append(result.getEvent().getName());
             sb.append(": ");
             sb.append(result.getResult());

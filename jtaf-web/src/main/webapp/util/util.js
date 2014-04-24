@@ -34,6 +34,7 @@ function Util() {
             if (xhr.status === 200 || xhr.status === 204) {
                 func(xhr.responseText);
             } else {
+                var util = new Util();
                 util.error(xhr.status);
             }
         };
@@ -47,6 +48,7 @@ function Util() {
             if (xhr.status === 200) {
                 func(xhr.responseText);
             } else {
+                var util = new Util();
                 util.error(xhr.status);
             }
         };
@@ -60,6 +62,7 @@ function Util() {
             if (xhr.status === 204) {
                 func(xhr.responseText);
             } else {
+                var util = new Util();
                 util.error(xhr.status);
             }
         };
@@ -73,6 +76,7 @@ function Util() {
             if (xhr.status === 200 || xhr.status === 204) {
                 func(xhr.responseText);
             } else {
+                var util = new Util();
                 util.error(xhr.status);
             }
         };

@@ -17,10 +17,12 @@ public class Result {
     private Long id;
     private String result;
     private int points;
+    private Long athlete_id;
     @ManyToOne
     private Event event;
     @ManyToOne
     private Competition competition;
+    private int position;
 
     public Long getId() {
         return id;
@@ -60,6 +62,22 @@ public class Result {
 
     public void setCompetition(Competition competition) {
         this.competition = competition;
+    }
+
+    public Long getAthlete_id() {
+        return athlete_id;
+    }
+
+    public void setAthlete_id(Long athlete_id) {
+        this.athlete_id = athlete_id;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     @Override

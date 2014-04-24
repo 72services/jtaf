@@ -246,7 +246,7 @@ CREATE TABLE `result` (
   `competition_id` bigint(20) NOT NULL,
   `event_id` bigint(20) NOT NULL,
   `athlete_id` bigint(20) NOT NULL,
-  `postition` int(11) NOT NULL,
+  `position` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_result_competition` (`competition_id`),
   KEY `fk_result_event` (`event_id`),

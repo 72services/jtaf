@@ -253,9 +253,7 @@ public class ReportService extends AbstractService {
     private List<Athlete> filterAndSort(Series series, List<Athlete> list) {
         List<Athlete> filtered = new ArrayList<>();
         for (Athlete athlete : list) {
-            int soll = athlete.getCategory().getEvents().size() * series.getCompetitions().size();
-            int ist = athlete.getResults().size();
-            if (ist == soll) {
+            if (athlete.getCategory().getEvents().size() * series.getCompetitions().size() == athlete.getResults().size()) {
                 athlete.setCategory(null);
                 List<Result> rs = new ArrayList<>();
                 for (Result r : athlete.getResults()) {

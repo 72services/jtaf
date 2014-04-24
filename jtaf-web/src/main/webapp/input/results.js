@@ -15,7 +15,7 @@ function ResultsController() {
 
         util.xhrGet("/jtaf/res/competitions/" + id, function(response) {
             competition = JSON.parse(response);
-            document.getElementById("title").innerHTML = competition.name;
+            document.getElementById("title").innerHTML = competition.name + " " + competition.competitionDate;
         });
 
         util.xhrGetSync("/jtaf/res/clubs?space_id=" + space_id, function(response) {
@@ -92,7 +92,14 @@ function ResultsController() {
         if (isNaN(points) || points < 0) {
             points = 0;
         }
-        athlete.results[i] = {result: result, points: points, event: ev, competition: competition};
+        athlete.results[i] = {
+            result: result,
+            points: points,
+            event: ev,
+            competition: competition,
+            athlete_id: athlete.id,
+            position: i
+        };
         document.getElementById("points" + i).value = points;
     };
 
@@ -184,10 +191,12 @@ function ResultsController() {
                 points.setAttribute("disabled", "true");
                 points.setAttribute("style", "width: 100px");
                 cellPoints.appendChild(points);
-                if (athlete.results[i] !== undefined) {
-                    result.value = athlete.results[i].result;
-                    points.value = athlete.results[i].points;
-                }
+                athlete.results.forEach(function(aresult) {
+                    if (aresult.event.id === aevent.id && aresult.competition.id === competition.id) {
+                        result.value = aresult.result;
+                        points.value = aresult.points;
+                    }
+                });
                 i++;
             });
             document.getElementById("result0").focus();

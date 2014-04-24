@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 @Entity
@@ -41,9 +41,9 @@ public class Athlete {
     @ManyToOne
     private Club club;
     private Long series_id;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @OrderColumn(name = "postition")
-    @JoinColumn(name = "athlete_id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OrderBy("position")
+    @JoinColumn(name = "athlete_id", insertable = false, updatable = false)
     private List<Result> results = new ArrayList<>();
 
     public Long getId() {
@@ -148,6 +148,16 @@ public class Athlete {
         // Ignore. This method is only for JSON serialization
     }
 
+    public List<Result> getResults(Competition competition) {
+        List<Result> list = new ArrayList<>();
+        for (Result result : results) {
+            if (result.getCompetition().equals(competition)) {
+                list.add(result);
+            }
+        }
+        return list;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -174,4 +184,5 @@ public class Athlete {
     public String toString() {
         return "Athlete{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", yearOfBirth=" + yearOfBirth + ", gender=" + gender + ", series_id=" + series_id + '}';
     }
+
 }
