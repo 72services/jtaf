@@ -5,10 +5,12 @@ import ch.jtaf.entity.UserSpace;
 import static ch.jtaf.test.util.TestData.SPACE_ID;
 import static ch.jtaf.test.util.TestData.USERSPACE_ID;
 import ch.jtaf.test.util.TestSessionContext;
+import ch.jtaf.test.util.UnallowedTestSessionContext;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.ws.rs.WebApplicationException;
 import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -30,7 +32,6 @@ public class UserSpaceResourceTest {
         ds.em = em;
         ur = new UserSpaceResource();
         ur.dataService = ds;
-        ur.sessionContext = new TestSessionContext();
     }
 
     @AfterClass
@@ -46,6 +47,7 @@ public class UserSpaceResourceTest {
     @Before
     public void before() {
         em.clear();
+        ur.sessionContext = new TestSessionContext();
     }
 
     @Test
@@ -64,21 +66,32 @@ public class UserSpaceResourceTest {
         assertTrue(list.size() > 0);
     }
 
-     @Test
+    @Test
     public void testSave() throws Exception {
         UserSpace u = ds.get(UserSpace.class, USERSPACE_ID);
-
         assertNotNull(u);
 
         UserSpace save = ur.save(u);
-
         assertNotNull(save);
     }
 
+    @Test(expected = WebApplicationException.class)
+    public void testSaveUnallowed() throws Exception {
+        UserSpace u = ds.get(UserSpace.class, USERSPACE_ID);
+        assertNotNull(u);
+
+        ur.sessionContext = new UnallowedTestSessionContext();
+        ur.save(u);
+    }
 
     @Test
     public void testDelete() throws Exception {
         ur.delete(USERSPACE_ID);
     }
 
+    @Test(expected = WebApplicationException.class)
+    public void testDeleteUnallowed() throws Exception {
+        ur.sessionContext = new UnallowedTestSessionContext();
+        ur.delete(USERSPACE_ID);
+    }
 }

@@ -5,11 +5,13 @@ import ch.jtaf.control.DataService;
 import ch.jtaf.entity.Athlete;
 import static ch.jtaf.test.util.TestData.ATHLETE_ID;
 import static ch.jtaf.test.util.TestData.SERIES_ID;
+import ch.jtaf.test.util.UnallowedTestSessionContext;
 import ch.jtaf.to.AthleteTO;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.ws.rs.WebApplicationException;
 import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -31,7 +33,6 @@ public class AthleteResourceTest {
         ds.em = em;
         ar = new AthleteResource();
         ar.dataService = ds;
-        ar.sessionContext = new TestSessionContext();
     }
 
     @AfterClass
@@ -47,6 +48,7 @@ public class AthleteResourceTest {
     @Before
     public void before() {
         em.clear();
+        ar.sessionContext = new TestSessionContext();
     }
 
     @Test
@@ -68,11 +70,25 @@ public class AthleteResourceTest {
         assertNotNull(save);
     }
 
+    @Test(expected = WebApplicationException.class)
+    public void testSaveUnallowed() throws Exception {
+        Athlete athlete = ds.get(Athlete.class, ATHLETE_ID);
+        assertNotNull(athlete);
+
+        ar.sessionContext = new UnallowedTestSessionContext();
+        ar.save(athlete);
+    }
+
     @Test
     public void testGet() throws Exception {
         Athlete athlete = ar.get(ATHLETE_ID);
 
         assertNotNull(athlete);
+    }
+
+    @Test(expected = WebApplicationException.class)
+    public void testGetNotFound() throws Exception {
+        ar.get(0l);
     }
 
     @Test
@@ -88,4 +104,9 @@ public class AthleteResourceTest {
         ar.delete(ATHLETE_ID);
     }
 
+    @Test(expected = WebApplicationException.class)
+    public void testDeleteUnallowd() throws Exception {
+        ar.sessionContext = new UnallowedTestSessionContext();
+        ar.delete(ATHLETE_ID);
+    }
 }

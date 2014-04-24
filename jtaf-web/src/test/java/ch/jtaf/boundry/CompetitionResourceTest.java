@@ -5,10 +5,12 @@ import ch.jtaf.entity.Competition;
 import static ch.jtaf.test.util.TestData.COMPETITION_ID;
 import static ch.jtaf.test.util.TestData.SERIES_ID;
 import ch.jtaf.test.util.TestSessionContext;
+import ch.jtaf.test.util.UnallowedTestSessionContext;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.ws.rs.WebApplicationException;
 import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -16,7 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 public class CompetitionResourceTest {
-    
+
     private static CompetitionResource cr;
     private static DataService ds;
     private static EntityManagerFactory emf;
@@ -30,7 +32,6 @@ public class CompetitionResourceTest {
         ds.em = em;
         cr = new CompetitionResource();
         cr.dataService = ds;
-        cr.sessionContext = new TestSessionContext();
     }
 
     @AfterClass
@@ -46,6 +47,7 @@ public class CompetitionResourceTest {
     @Before
     public void before() {
         em.clear();
+        cr.sessionContext = new TestSessionContext();
     }
 
     @Test
@@ -59,12 +61,19 @@ public class CompetitionResourceTest {
     @Test
     public void testSave() throws Exception {
         Competition c = ds.get(Competition.class, COMPETITION_ID);
-
         assertNotNull(c);
 
         Competition save = cr.save(c);
-
         assertNotNull(save);
+    }
+
+    @Test(expected = WebApplicationException.class)
+    public void testSaveUnallowed() throws Exception {
+        Competition c = ds.get(Competition.class, COMPETITION_ID);
+        assertNotNull(c);
+
+        cr.sessionContext = new UnallowedTestSessionContext();
+        cr.save(c);
     }
 
     @Test
@@ -74,9 +83,19 @@ public class CompetitionResourceTest {
         assertNotNull(c);
     }
 
+    @Test(expected = WebApplicationException.class)
+    public void testGetNotFound() throws Exception {
+        cr.get(0l);
+    }
+
     @Test
     public void testDelete() throws Exception {
         cr.delete(COMPETITION_ID);
     }
 
+    @Test(expected = WebApplicationException.class)
+    public void testDeleteUnallowed() throws Exception {
+        cr.sessionContext = new UnallowedTestSessionContext();
+        cr.delete(COMPETITION_ID);
+    }
 }

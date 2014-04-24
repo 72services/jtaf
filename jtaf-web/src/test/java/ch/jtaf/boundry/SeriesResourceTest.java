@@ -5,10 +5,12 @@ import ch.jtaf.entity.Series;
 import static ch.jtaf.test.util.TestData.SERIES_ID;
 import static ch.jtaf.test.util.TestData.SPACE_ID;
 import ch.jtaf.test.util.TestSessionContext;
+import ch.jtaf.test.util.UnallowedTestSessionContext;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.ws.rs.WebApplicationException;
 import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -30,7 +32,6 @@ public class SeriesResourceTest {
         ds.em = em;
         sr = new SeriesResource();
         sr.dataService = ds;
-        sr.sessionContext = new TestSessionContext();
     }
 
     @AfterClass
@@ -46,6 +47,7 @@ public class SeriesResourceTest {
     @Before
     public void before() {
         em.clear();
+        sr.sessionContext = new TestSessionContext();
     }
 
     @Test
@@ -59,12 +61,19 @@ public class SeriesResourceTest {
     @Test
     public void testSave() throws Exception {
         Series s = ds.get(Series.class, SERIES_ID);
-
         assertNotNull(s);
 
         Series save = sr.save(s);
-
         assertNotNull(save);
+    }
+
+    @Test(expected = WebApplicationException.class)
+    public void testSaveUnallowed() throws Exception {
+        Series s = ds.get(Series.class, SERIES_ID);
+        assertNotNull(s);
+
+        sr.sessionContext = new UnallowedTestSessionContext();
+        sr.save(s);
     }
 
     @Test
@@ -75,8 +84,12 @@ public class SeriesResourceTest {
     @Test
     public void testGet() throws Exception {
         Series s = sr.get(SERIES_ID, null);
-
         assertNotNull(s);
+    }
+
+    @Test(expected = WebApplicationException.class)
+    public void testGetNotFound() throws Exception {
+        sr.get(0l, null);
     }
 
     @Test
@@ -84,4 +97,9 @@ public class SeriesResourceTest {
         sr.delete(SERIES_ID);
     }
 
+    @Test(expected = WebApplicationException.class)
+    public void testDeleteUnallowed() throws Exception {
+        sr.sessionContext = new UnallowedTestSessionContext();
+        sr.delete(SERIES_ID);
+    }
 }
