@@ -34,7 +34,7 @@ public class Category {
     private int yearTo;
     private String gender;
     private Long series_id;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderColumn(name = "position")
     @JoinTable(
             name = "category_event",
