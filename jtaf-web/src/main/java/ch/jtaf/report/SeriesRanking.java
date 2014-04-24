@@ -26,22 +26,19 @@ public class SeriesRanking extends Ranking {
 
     public byte[] create() {
         try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            document = new Document(PageSize.A4);
-            pdfWriter = PdfWriter.getInstance(document, baos);
-            pdfWriter.setPageEvent(new HeaderFooter(
-                    "Series ranking", ranking.getSeries().getName(),
-                    sdf.format(new Date())));
-            document.open();
-
-            createRanking();
-
-            document.close();
-            pdfWriter.flush();
-
-            byte[] ba = baos.toByteArray();
-            baos.close();
-
+            byte[] ba;
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                document = new Document(PageSize.A4);
+                pdfWriter = PdfWriter.getInstance(document, baos);
+                pdfWriter.setPageEvent(new HeaderFooter(
+                        "Series ranking", ranking.getSeries().getName(),
+                        sdf.format(new Date())));
+                document.open();
+                createRanking();
+                document.close();
+                pdfWriter.flush();
+                ba = baos.toByteArray();
+            }
             return ba;
         } catch (DocumentException | IOException e) {
             Logger.getLogger(SeriesRanking.class).error(e.getMessage(), e);

@@ -1,16 +1,15 @@
-function CompetitionsRankingController() {
+function SeriesRankingController() {
     var util = new Util();
     var ranking;
-    var competition_id;
 
     this.loadData = function() {
         util.showMessage();
         util.showLoading();
 
-        competition_id = util.searchMap.id;
-        if (competition_id === undefined) {
+        var id = util.searchMap.id;
+        if (id === undefined) {
         } else {
-            util.xhrGet("/jtaf/res/rankings/competition/" + competition_id, function(response) {
+            util.xhrGet("/jtaf/res/rankings/series/" + id, function(response) {
                 parseAndFill(response);
                 util.i18n();
                 util.hideLoading();
@@ -20,18 +19,7 @@ function CompetitionsRankingController() {
 
     this.openAsPdf = function() {
         var newtab = window.open();
-        newtab.location = "/jtaf/res/reports/competitionranking?competitionid=" + ranking.competition.id;
-    };
-
-
-    this.openAsCsv = function() {
-        var newtab = window.open();
-        newtab.location = "/jtaf/res/reports/export.csv?competitionid=" + ranking.competition.id;
-    };
-
-    this.createEventsRanking = function() {
-        var newtab = window.open();
-        newtab.location = "/jtaf/res/reports/eventsranking?competitionid=" + ranking.competition.id;
+        newtab.location = "/jtaf/res/reports/seriesranking?seriesid=" + ranking.series.id;
     };
 
     function parseAndFill(response) {
@@ -42,20 +30,14 @@ function CompetitionsRankingController() {
         var row = table.insertRow(0);
         var left = row.insertCell(0);
         var hleft = document.createElement("h1");
-        hleft.innerHTML = '<span class="i18n">Ranking</span>';
+        hleft.innerHTML = '<span class="i18n">Series ranking</span>';
         left.appendChild(hleft);
 
         var middle = row.insertCell(1);
         middle.style.textAlign = "center";
         var hmiddle = document.createElement("h1");
-        hmiddle.innerHTML = ranking.competition.name;
+        hmiddle.innerHTML = ranking.series.name;
         middle.appendChild(hmiddle);
-
-        var right = row.insertCell(2);
-        right.style.textAlign = "right;";
-        var hright = document.createElement("h1");
-        hright.innerHTML = ranking.competition.competitionDate;
-        right.appendChild(hright);
 
         document.getElementById("title").appendChild(table);
 
@@ -136,9 +118,7 @@ function CompetitionsRankingController() {
     function calculateTotalPoints(athlete) {
         var total = 0;
         athlete.results.forEach(function(result) {
-            if (result.competition.id === competition_id) {
-                total += result.points;
-            }
+            total += result.points;
         });
         return total;
     }
@@ -146,11 +126,20 @@ function CompetitionsRankingController() {
     function createResultRow(athlete) {
         var text = "";
         var first = true;
-        athlete.results.forEach(function(result) {
+
+        ranking.series.competitions.forEach(function(competition) {
             if (!first) {
                 text += "&nbsp;&nbsp;";
             }
-            text += result.event.name + ": " + result.result + " (" + result.points + ")";
+            text += competition.name + ": ";
+
+            var total = 0;
+            athlete.results.forEach(function(result) {
+                if (result.competition.id === competition.id) {
+                    total += result.points;
+                }
+            });
+            text += total;
             first = false;
         });
         return text;

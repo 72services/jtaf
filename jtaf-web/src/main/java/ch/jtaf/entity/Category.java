@@ -2,6 +2,7 @@ package ch.jtaf.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -110,8 +111,8 @@ public class Category {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 19 * hash + (this.id != null ? this.id.hashCode() : 0);
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -124,7 +125,7 @@ public class Category {
             return false;
         }
         final Category other = (Category) obj;
-        if (!this.id.equals(other.id) && (this.id == null || !this.id.equals(other.id))) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;

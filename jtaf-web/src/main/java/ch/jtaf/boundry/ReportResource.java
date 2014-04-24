@@ -61,7 +61,6 @@ public class ReportResource {
     @GET
     @Path("eventsranking")
     @Produces({"application/pdf"})
-
     public byte[] getEventsRanking(@QueryParam("competitionid") Long competitionid) {
         if (competitionid == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);

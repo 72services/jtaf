@@ -138,7 +138,7 @@ public class ReportService extends AbstractService {
         return ranking;
     }
 
-    private SeriesRankingData getSeriesRanking(Long seriesId) {
+    public SeriesRankingData getSeriesRanking(Long seriesId) {
         Series series = em.find(Series.class, seriesId);
         if (series == null) {
             return null;

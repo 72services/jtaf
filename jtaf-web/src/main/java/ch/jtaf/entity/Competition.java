@@ -1,6 +1,7 @@
 package ch.jtaf.entity;
 
 import java.sql.Date;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -78,8 +79,8 @@ public class Competition {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 61 * hash + (this.id != null ? this.id.hashCode() : 0);
+        int hash = 3;
+        hash = 71 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -92,7 +93,7 @@ public class Competition {
             return false;
         }
         final Competition other = (Competition) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;

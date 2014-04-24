@@ -2,6 +2,7 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.control.ReportService;
 import ch.jtaf.data.CompetitionRankingData;
+import ch.jtaf.data.SeriesRankingData;
 import ch.jtaf.interceptor.TraceInterceptor;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -31,6 +32,17 @@ public class RankingResource {
     @Path("competition/{competitionid}")
     public CompetitionRankingData getCompetitionRanking(@PathParam("competitionid") Long competitionid) {
         CompetitionRankingData data = service.getCompetitionRanking(competitionid);
+        if (data == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } else {
+            return data;
+        }
+    }
+
+    @GET
+    @Path("series/{seriesid}")
+    public SeriesRankingData getSeriesRanking(@PathParam("seriesid") Long seriesid) {
+        SeriesRankingData data = service.getSeriesRanking(seriesid);
         if (data == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {

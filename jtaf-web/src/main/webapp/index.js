@@ -22,11 +22,6 @@ function IndexController() {
         });
     };
 
-    this.openSeriesRankingPdf = function(id) {
-        var newtab = window.open();
-        newtab.location = "/jtaf/res/reports/seriesranking?seriesid=" + id;
-    };
-
     function getCurrentUser() {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "/jtaf/res/users/current", true);
@@ -62,7 +57,7 @@ function IndexController() {
                     li_series.appendChild(series_name);
 
                     var a_ranking = document.createElement("a");
-                    a_ranking.href = "javascript:indexController.openSeriesRankingPdf(" + series.id + ");";
+                    a_ranking.href = "series_ranking.html?id=" + series.id;
                     a_ranking.innerHTML = '<span class="i18n">Ranking</span>';
                     li_series.appendChild(a_ranking);
 
