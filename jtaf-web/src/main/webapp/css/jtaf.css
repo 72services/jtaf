@@ -130,7 +130,6 @@ div#error {
 }
 
 div#loading {
-    background: url(/jtaf/images/loading.gif) no-repeat center center;
     width: 100%;
     height: 100%;
     top: 0px;
@@ -140,6 +139,16 @@ div#loading {
     opacity: 0.7;
     background-color: #fff;
     z-index: 99;
+}
+
+div#loadingImage {
+    background: url(/jtaf/images/loading.gif) no-repeat center top;
+    width: 100%;
+    height: 100%;
+    top: 300px;
+    left: 0px;
+    position: fixed;
+    z-index: 100;
 }
 
 a.navigation_inactive {
