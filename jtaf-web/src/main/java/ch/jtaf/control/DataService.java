@@ -189,6 +189,7 @@ public class DataService extends AbstractService {
             copy.setC(event.getC());
             copy.setGender(event.getGender());
             copy.setName(event.getName());
+            copy.setLongName(event.getLongName());
             copy.setSeries_id(series.getId());
             copy.setType(event.getType());
             em.persist(copy);

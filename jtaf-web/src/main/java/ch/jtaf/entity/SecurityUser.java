@@ -1,6 +1,7 @@
 package ch.jtaf.entity;
 
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -18,7 +19,9 @@ public class SecurityUser {
     @Id
     private String email;
     private String secret;
+    @Column(name = "firstname")
     private String firstName;
+    @Column(name = "lastname")
     private String lastName;
     private String confirmationId;
     private boolean confirmed;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,9 @@ public class Category {
     private Long id;
     private String abbreviation;
     private String name;
+    @Column(name = "yearfrom")
     private int yearFrom;
+    @Column(name = "yearto")
     private int yearTo;
     private String gender;
     private Long series_id;
