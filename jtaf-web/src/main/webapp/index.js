@@ -27,7 +27,7 @@ function IndexController() {
         xhr.open("GET", "/jtaf/res/users/current", true);
         xhr.onload = function() {
             if (xhr.status === 200) {
-                user = JSON.parse(xhr.response);
+                user = JSON.parse(xhr.responseText);
             } else if (xhr.status === 204) {
             } else {
                 util.error(xhr.status);

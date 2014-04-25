@@ -247,15 +247,28 @@ public class ReportService extends AbstractService {
     private List<Athlete> getAthletesWithCompetionResults(Long competitionid) {
         Query q = em.createNativeQuery("select distinct a.* from athlete a join result r on a.id = r.athlete_id and r.competition_id = ?", Athlete.class);
         q.setParameter(1, competitionid);
-        List<Athlete> list = q.getResultList();
-        for (Athlete a : list) {
-            TypedQuery<Result> tq = em.createNamedQuery("Result.findByAthleteAndCompetition", Result.class);
-            tq.setParameter("athleteId", a.getId());
-            tq.setParameter("competitionId", competitionid);
-            List<Result> results = tq.getResultList();
-            a.setResults(results);
+        List<Athlete> as = q.getResultList();
+
+        TypedQuery<Result> tq = em.createNamedQuery("Result.findByCompetition", Result.class);
+        tq.setParameter("competitionId", competitionid);
+        List<Result> results = tq.getResultList();
+        Map<Long, List<Result>> map = new HashMap<>();
+        for (Result r : results) {
+            List<Result> entry = map.get(r.getAthlete_id());
+            if (entry != null) {
+                entry.add(r);
+            }
+            else {
+                List<Result> list = new ArrayList<>();
+                list.add(r);
+                map.put(r.getAthlete_id(),list);
+            }
         }
-        return list;
+
+        for (Athlete a : as) {
+            a.setResults(map.get(a.getId()));
+        }
+        return as;
     }
 
     private List<Athlete> filterAndSortByTotalPoints(Competition competition, List<Athlete> list) {

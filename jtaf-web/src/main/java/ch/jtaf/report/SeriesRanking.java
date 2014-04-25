@@ -95,6 +95,7 @@ public class SeriesRanking extends Ranking {
             sb.append(competition.getName());
             sb.append(": ");
             sb.append(athlete.getTotalPoints(competition));
+            sb.append(" ");
         }
         addCell(table, "");
         addResultsCell(table, sb.toString());

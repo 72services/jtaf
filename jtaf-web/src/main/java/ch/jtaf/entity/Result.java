@@ -13,7 +13,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "result")
 @NamedQueries({
-    @NamedQuery(name = "Result.findByAthleteAndCompetition", query = "select r from Result r where r.athlete_id = :athleteId and r.competition.id = :competitionId order by position"),
+    @NamedQuery(name = "Result.findByCompetition", query = "select r from Result r where r.competition.id = :competitionId order by r.athlete_id, r.position"),
+    @NamedQuery(name = "Result.findByAthleteAndCompetition", query = "select r from Result r where r.athlete_id = :athleteId and r.competition.id = :competitionId order by r.position"),
     @NamedQuery(name = "Result.findByAthleteAndSeries", query = "select r from Result r where r.athlete_id = :athleteId and r.competition.series_id = :seriesId order by r.competition.id, r.position"),})
 public class Result {
 

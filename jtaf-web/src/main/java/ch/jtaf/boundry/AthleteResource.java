@@ -38,7 +38,7 @@ public class AthleteResource extends BaseResource {
             Athlete savedAthlete = dataService.saveAthlete(a);
             if (competitionId != null) {
                 dataService.saveResults(competitionId, a.getId(), a.getResults());
-                return dataService.getAthlete(a.getId(), competitionId);
+                return dataService.getAthlete(savedAthlete.getId(), competitionId);
             } else {
                 return savedAthlete;
             }

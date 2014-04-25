@@ -54,14 +54,11 @@ public class Sheet extends ReportBase {
     }
 
     public byte[] create() {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             float oneCm = cmToPixel(1f);
             document = new Document(PageSize.A5, oneCm, oneCm, cmToPixel(3.5f), oneCm);
             pdfWriter = PdfWriter.getInstance(document, baos);
-
             document.open();
-
             boolean first = true;
             for (Athlete athlete : athletes) {
                 if (!first) {
@@ -74,15 +71,9 @@ public class Sheet extends ReportBase {
                 createEventTable(athlete);
                 first = false;
             }
-
             document.close();
-
             pdfWriter.flush();
-
-            byte[] ba = baos.toByteArray();
-            baos.close();
-
-            return ba;
+            return baos.toByteArray();
         } catch (DocumentException | IOException e) {
             Logger.getLogger(Sheet.class).error(e.getMessage(), e);
             return new byte[0];
@@ -115,6 +106,9 @@ public class Sheet extends ReportBase {
         if (athlete.getId() != null) {
             addInfoCell(table, athlete.getId() == null ? "Id" : athlete.getId().toString());
             addCell(table, "");
+        } else {
+            addCell(table, " ");
+            addCell(table, " ");
         }
         if (athlete.getLastName() == null) {
             addInfoCellWithBorder(table, "Last name");
