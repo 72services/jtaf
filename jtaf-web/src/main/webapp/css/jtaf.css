@@ -251,8 +251,26 @@ table.list_sortable th {
     cursor: pointer;
 }
 
-table.list, table.input, table.list_sortable tr:nth-child(even) { background: #f0f0f0; }
-table.list, table.input, table.list_sortable tr:nth-child(odd) { background: #fafafa; }
+table.list tr:nth-child(even) { 
+    background: #f0f0f0; 
+}
+table.list tr:nth-child(odd) { 
+    background: #fafafa; 
+}
+
+table.inputtr:nth-child(even) { 
+    background: #f0f0f0; 
+}
+table.input tr:nth-child(odd) { 
+    background: #fafafa; 
+}
+
+table.list_sortable tr:nth-child(even) { 
+    background: #f0f0f0; 
+}
+table.list_sortable tr:nth-child(odd) { 
+    background: #fafafa; 
+}
 
 td.small {
     font-size: 11px;
