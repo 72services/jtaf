@@ -24,7 +24,7 @@ function SpaceController() {
 
     this.deleteSeries = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
-            xhrDelete("/jtaf/res/series/" + id, function() {
+            util.xhrDelete("/jtaf/res/series/" + id, function() {
                 spaceController.loadData();
                 util.info("Serie deleted");
             });

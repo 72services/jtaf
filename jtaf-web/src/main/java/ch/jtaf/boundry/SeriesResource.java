@@ -93,7 +93,7 @@ public class SeriesResource extends BaseResource {
         if (s == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else if (isUserGrantedForSpace(s.getSpace_id())) {
-            dataService.delete(s);
+            dataService.deleteSeries(s);
         } else {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
