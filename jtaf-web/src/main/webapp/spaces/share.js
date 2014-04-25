@@ -20,7 +20,7 @@ function ShareController() {
         util.xhrGet("/jtaf/res/userspaces?space_id=" + id, function(response) {
             userSpaces = JSON.parse(response);
             createSharesTableBody();
-            util.i18();
+            util.i18n();
         });
     };
 
@@ -92,10 +92,10 @@ function ShareController() {
         var cellRole = row.insertCell(1);
 
         var select = document.createElement("select");
-        select.setAttribute("onchange", "save(" + i + ")");
+        select.setAttribute("onchange", "shareController.save(" + i + ")");
         if (user.email === userSpace.user.email) {
-            select.setAttribute("readonly");
-            select.setAttribute("disabled");
+            select.setAttribute("readonly", "true");
+            select.setAttribute("disabled", "true");
         }
         select.id = "select_" + i;
         var optionInput = document.createElement("option");
