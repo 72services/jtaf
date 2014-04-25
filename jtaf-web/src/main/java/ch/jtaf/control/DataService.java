@@ -16,9 +16,14 @@ import ch.jtaf.entity.UserSpace;
 import ch.jtaf.entity.UserSpaceRole;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -156,12 +161,10 @@ public class DataService extends AbstractService {
         return list;
     }
 
-    private Long getNumberOfAthletesWithResults(Competition c) {
-        //TODO
-//        Query q = em.createNativeQuery("select count(distinct a.id) from athlete a join result r on a.id = r.athlete_id and r.competition_id = ?", Athlete.class);
-//        q.setParameter(1, c.getId());
-//        return (Long) q.getSingleResult();
-        return 0l;
+    private BigInteger getNumberOfAthletesWithResults(Competition c) {
+        Query q = em.createNativeQuery("select count(distinct a.id) from athlete a join result r on a.id = r.athlete_id and r.competition_id = ?");
+        q.setParameter(1, c.getId());
+        return (BigInteger) q.getSingleResult();
     }
 
     private Long getNumberOfAthletes(Long seriesId) {
