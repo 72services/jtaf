@@ -10,6 +10,7 @@ import ch.jtaf.entity.Series;
 import ch.jtaf.entity.Space;
 import ch.jtaf.entity.UserSpace;
 import ch.jtaf.exception.ConfigurationException;
+import static ch.jtaf.test.util.TestData.COMPETITION_ID;
 import static ch.jtaf.test.util.TestData.SERIES_ID;
 import static ch.jtaf.test.util.TestData.SPACE_ID;
 import ch.jtaf.to.AthleteTO;
@@ -121,7 +122,7 @@ public class DataServiceTest {
 
     @Test
     public void testSearchAthletes() throws Exception {
-        List<Athlete> list = ds.searchAthletes(SERIES_ID, "Grimm");
+        List<Athlete> list = ds.searchAthletes(SERIES_ID, COMPETITION_ID, "Grimm");
 
         assertNotNull(list);
         assertTrue(list.size() > 0);

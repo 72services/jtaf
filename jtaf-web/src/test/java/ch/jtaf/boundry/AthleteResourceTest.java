@@ -4,6 +4,7 @@ import ch.jtaf.test.util.TestSessionContext;
 import ch.jtaf.control.DataService;
 import ch.jtaf.entity.Athlete;
 import static ch.jtaf.test.util.TestData.ATHLETE_ID;
+import static ch.jtaf.test.util.TestData.COMPETITION_ID;
 import static ch.jtaf.test.util.TestData.SERIES_ID;
 import ch.jtaf.test.util.UnallowedTestSessionContext;
 import ch.jtaf.to.AthleteTO;
@@ -65,7 +66,7 @@ public class AthleteResourceTest {
 
         assertNotNull(athlete);
 
-        Athlete save = ar.save(athlete);
+        Athlete save = ar.save(null, athlete);
 
         assertNotNull(save);
     }
@@ -76,24 +77,24 @@ public class AthleteResourceTest {
         assertNotNull(athlete);
 
         ar.sessionContext = new UnallowedTestSessionContext();
-        ar.save(athlete);
+        ar.save(null, athlete);
     }
 
     @Test
     public void testGet() throws Exception {
-        Athlete athlete = ar.get(ATHLETE_ID);
+        Athlete athlete = ar.get(ATHLETE_ID, COMPETITION_ID);
 
         assertNotNull(athlete);
     }
 
     @Test(expected = WebApplicationException.class)
     public void testGetNotFound() throws Exception {
-        ar.get(0l);
+        ar.get(0l, COMPETITION_ID);
     }
 
     @Test
     public void testSearch() throws Exception {
-        List<Athlete> list = ar.search(SERIES_ID, "Grimm");
+        List<Athlete> list = ar.search(SERIES_ID, COMPETITION_ID, "Grimm");
 
         assertNotNull(list);
         assertTrue(list.size() > 0);

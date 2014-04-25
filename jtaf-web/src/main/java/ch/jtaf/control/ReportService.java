@@ -32,6 +32,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 @Interceptors({TraceInterceptor.class})
@@ -116,9 +117,7 @@ public class ReportService extends AbstractService {
             return null;
         }
 
-        TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findByCompetition", Athlete.class);
-        q.setParameter("competitionid", competitionid);
-        List<Athlete> list = q.getResultList();
+        List<Athlete> list = getAthletesWithCompetionResults(competitionid);
 
         CompetitionRankingData ranking = new CompetitionRankingData();
         ranking.setCompetition(competition);
@@ -152,6 +151,13 @@ public class ReportService extends AbstractService {
         TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
         q.setParameter("series_id", seriesId);
         List<Athlete> list = q.getResultList();
+        for (Athlete a : list) {
+            TypedQuery<Result> tq = em.createNamedQuery("Result.findByAthleteAndSeries", Result.class);
+            tq.setParameter("athleteId", a.getId());
+            tq.setParameter("seriesId", seriesId);
+            List<Result> results = tq.getResultList();
+            a.setResults(results);
+        }
 
         TypedQuery<Competition> qc = em.createNamedQuery("Competition.findAll", Competition.class);
         qc.setParameter("series_id", seriesId);
@@ -187,9 +193,7 @@ public class ReportService extends AbstractService {
             return null;
         }
 
-        TypedQuery<Athlete> q = em.createNamedQuery("Athlete.findByCompetition", Athlete.class);
-        q.setParameter("competitionid", competitionid);
-        List<Athlete> list = q.getResultList();
+        List<Athlete> list = getAthletesWithCompetionResults(competitionid);
 
         EventsRankingData ranking = new EventsRankingData();
         ranking.setCompetition(competition);
@@ -238,6 +242,20 @@ public class ReportService extends AbstractService {
             }
         });
         return ranking;
+    }
+
+    private List<Athlete> getAthletesWithCompetionResults(Long competitionid) {
+        Query q = em.createNativeQuery("select distinct a.* from athlete a join result r on a.id = r.athlete_id and r.competition_id = ?", Athlete.class);
+        q.setParameter(1, competitionid);
+        List<Athlete> list = q.getResultList();
+        for (Athlete a : list) {
+            TypedQuery<Result> tq = em.createNamedQuery("Result.findByAthleteAndCompetition", Result.class);
+            tq.setParameter("athleteId", a.getId());
+            tq.setParameter("competitionId", competitionid);
+            List<Result> results = tq.getResultList();
+            a.setResults(results);
+        }
+        return list;
     }
 
     private List<Athlete> filterAndSortByTotalPoints(Competition competition, List<Athlete> list) {

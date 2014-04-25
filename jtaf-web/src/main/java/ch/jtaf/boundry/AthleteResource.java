@@ -33,9 +33,15 @@ public class AthleteResource extends BaseResource {
     }
 
     @POST
-    public Athlete save(Athlete a) {
+    public Athlete save(@QueryParam("competition_id") Long competitionId, Athlete a) {
         if (isUserGrantedForSeries(a.getSeries_id())) {
-            return dataService.saveAthlete(a);
+            Athlete savedAthlete = dataService.saveAthlete(a);
+            if (competitionId != null) {
+                dataService.saveResults(competitionId, a.getId(), a.getResults());
+                return dataService.getAthlete(a.getId(), competitionId);
+            } else {
+                return savedAthlete;
+            }
         } else {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
@@ -43,8 +49,8 @@ public class AthleteResource extends BaseResource {
 
     @GET
     @Path("{id}")
-    public Athlete get(@PathParam("id") Long id) {
-        Athlete a = dataService.get(Athlete.class, id);
+    public Athlete get(@PathParam("id") Long id, @QueryParam("competition_id") Long competitionId) {
+        Athlete a = dataService.getAthlete(id, competitionId);
         if (a == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
@@ -55,8 +61,9 @@ public class AthleteResource extends BaseResource {
     @GET
     @Path("search")
     public List<Athlete> search(@QueryParam("series_id") Long seriesId,
+            @QueryParam("competition_id") Long competitionId,
             @QueryParam("query") String query) {
-        return dataService.searchAthletes(seriesId, query);
+        return dataService.searchAthletes(seriesId, competitionId, query);
     }
 
     @DELETE

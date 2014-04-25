@@ -6,10 +6,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "result")
+@NamedQueries({
+    @NamedQuery(name = "Result.findByAthleteAndCompetition", query = "select r from Result r where r.athlete_id = :athleteId and r.competition.id = :competitionId order by position"),
+    @NamedQuery(name = "Result.findByAthleteAndSeries", query = "select r from Result r where r.athlete_id = :athleteId and r.competition.series_id = :seriesId order by r.competition.id, r.position"),})
 public class Result {
 
     @Id

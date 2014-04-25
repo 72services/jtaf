@@ -3,20 +3,16 @@ package ch.jtaf.entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "athlete")
@@ -24,9 +20,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Athlete.findBySeriesOrderByClub",
             query = "select distinct a from Athlete a where a.series_id = :series_id order by a.club.abbreviation, a.id"),
     @NamedQuery(name = "Athlete.findBySeries",
-            query = "select distinct a from Athlete a where a.series_id = :series_id order by a.category.abbreviation, a.lastName, a.firstName"),
-    @NamedQuery(name = "Athlete.findByCompetition",
-            query = "select distinct a from Athlete a join a.results r where r.competition.id = :competitionid order by a.category.abbreviation, a.lastName, a.firstName")
+            query = "select distinct a from Athlete a where a.series_id = :series_id order by a.category.abbreviation, a.lastName, a.firstName")
 })
 public class Athlete {
 
@@ -45,9 +39,7 @@ public class Athlete {
     @ManyToOne
     private Club club;
     private Long series_id;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @OrderBy("position")
-    @JoinColumn(name = "athlete_id", insertable = false, updatable = false)
+    @Transient
     private List<Result> results = new ArrayList<>();
 
     public Long getId() {

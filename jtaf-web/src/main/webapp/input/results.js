@@ -34,11 +34,11 @@ function ResultsController() {
         var searchterm = document.getElementById("search_term").value;
         var number = parseInt(searchterm);
         if (number !== undefined && !isNaN(number) && typeof number === "number") {
-            util.xhrGet("/jtaf/res/athletes/" + number, function(response) {
+            util.xhrGet("/jtaf/res/athletes/" + number + "?competition_id=" + competition.id, function(response) {
                 parseAndFill(response);
             });
         } else {
-            util.xhrGet("/jtaf/res/athletes/search?series_id=" + competition.series_id + "&query=" + searchterm, function(response) {
+            util.xhrGet("/jtaf/res/athletes/search?series_id=" + competition.series_id + "&competition_id=" + competition.id + "&query=" + searchterm, function(response) {
                 parseAndFillAthletes(response);
             });
         }
@@ -50,7 +50,7 @@ function ResultsController() {
             util.error("Club must be choosen.");
         }
         else {
-            util.xhrPost("/jtaf/res/athletes/", function(response) {
+            util.xhrPost("/jtaf/res/athletes?competition_id=" + competition.id, function(response) {
                 parseAndFill(response);
                 util.info("Athlete saved");
                 document.getElementById("search_term").focus();
@@ -60,7 +60,7 @@ function ResultsController() {
     };
 
     this.selectAthlete = function(id) {
-        util.xhrGet("/jtaf/res/athletes/" + id, function(response) {
+        util.xhrGet("/jtaf/res/athletes/" + id + "?competition_id=" + competition.id, function(response) {
             document.getElementById("athlete_list").className = "invisible";
             parseAndFill(response);
         });
