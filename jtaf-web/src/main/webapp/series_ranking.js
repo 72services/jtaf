@@ -30,7 +30,7 @@ function SeriesRankingController() {
         var row = table.insertRow(0);
         var left = row.insertCell(0);
         var hleft = document.createElement("h1");
-        hleft.innerHTML = '<span class="i18n">Series ranking</span>';
+        hleft.innerHTML = '<span class="i18n">Series Ranking</span>';
         left.appendChild(hleft);
 
         var middle = row.insertCell(1);
