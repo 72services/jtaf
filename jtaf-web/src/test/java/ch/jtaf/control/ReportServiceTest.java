@@ -52,6 +52,14 @@ public class ReportServiceTest {
     }
 
     @Test
+    public void testCreateNumbers() throws Exception {
+        byte[] report = rs.createNumbers(COMPETITION_ID, null);
+
+        assertNotNull(report);
+        assertTrue(report.length > 0);
+    }
+
+    @Test
     public void testCreateCompetitionRanking() throws Exception {
         byte[] report = rs.createCompetitionRanking(COMPETITION_ID);
 

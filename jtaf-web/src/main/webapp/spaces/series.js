@@ -256,7 +256,7 @@ function SeriesController() {
                 cellFunction.appendChild(sheet);
                 cellFunction.appendChild(document.createTextNode(" "));
                 cellFunction.appendChild(sheetOrderByClub);
-                cellFunction.appendChild(document.createElement("br"));
+                cellFunction.appendChild(document.createTextNode("  "));
                 cellFunction.appendChild(numbers);
                 cellFunction.appendChild(document.createTextNode(" "));
                 cellFunction.appendChild(del);
