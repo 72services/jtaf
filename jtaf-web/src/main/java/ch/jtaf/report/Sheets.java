@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jboss.logging.Logger;
 
-public class Sheet extends ReportBase {
+public class Sheets extends ReportBase {
 
     private final static float FONT_SIZE_INFO = 8f;
     private final static float FONT_SIZE_TEXT = 16f;
@@ -33,21 +33,21 @@ public class Sheet extends ReportBase {
     private final List<Athlete> athletes;
     private final byte[] logo;
 
-    public Sheet(Athlete athlete, byte[] logo) {
+    public Sheets(Athlete athlete, byte[] logo) {
         this.competition = null;
         this.athletes = new ArrayList<>();
         this.athletes.add(athlete);
         this.logo = logo;
     }
 
-    public Sheet(Competition competition, Athlete athlete, byte[] logo) {
+    public Sheets(Competition competition, Athlete athlete, byte[] logo) {
         this.competition = competition;
         this.athletes = new ArrayList<>();
         this.athletes.add(athlete);
         this.logo = logo;
     }
 
-    public Sheet(Competition competition, List<Athlete> athletes, byte[] logo) {
+    public Sheets(Competition competition, List<Athlete> athletes, byte[] logo) {
         this.competition = competition;
         this.athletes = athletes;
         this.logo = logo;
@@ -75,7 +75,7 @@ public class Sheet extends ReportBase {
             pdfWriter.flush();
             return baos.toByteArray();
         } catch (DocumentException | IOException e) {
-            Logger.getLogger(Sheet.class).error(e.getMessage(), e);
+            Logger.getLogger(Sheets.class).error(e.getMessage(), e);
             return new byte[0];
         }
     }

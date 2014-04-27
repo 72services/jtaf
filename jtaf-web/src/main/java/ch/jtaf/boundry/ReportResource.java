@@ -25,7 +25,7 @@ public class ReportResource {
     protected ReportService service;
 
     @GET
-    @Path("sheet")
+    @Path("sheets")
     @Produces({"application/pdf"})
     public byte[] getSheets(@QueryParam("competitionid") Long competitionid,
             @QueryParam("categoryid") Long categoryid, @QueryParam("orderby") String order) {
@@ -36,6 +36,27 @@ public class ReportResource {
             }
             if (categoryid != null) {
                 report = service.createEmptySheets(categoryid);
+            }
+            if (report == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                return report;
+            }
+        } catch (IllegalArgumentException e) {
+            Logger.getLogger(ReportResource.class).error(e.getMessage(), e);
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+    }
+
+    @GET
+    @Path("numbers")
+    @Produces({"application/pdf"})
+    public byte[] getNumbers(@QueryParam("competitionid") Long competitionid,
+            @QueryParam("orderby") String order) {
+        try {
+            byte[] report = null;
+            if (competitionid != null) {
+                report = service.createNumbers(competitionid, order);
             }
             if (report == null) {
                 throw new WebApplicationException(Response.Status.NOT_FOUND);

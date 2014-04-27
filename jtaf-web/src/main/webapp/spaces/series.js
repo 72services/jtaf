@@ -215,35 +215,49 @@ function SeriesController() {
             series.competitions.forEach(function(competition) {
                 var row = table.insertRow(i);
                 var onclickEdit = "window.location = 'competition.html?id=" + competition.id + "&series_id=" + series_id + "&space_id=" + space_id + "'";
+                
                 var cellName = row.insertCell(0);
                 cellName.className = "edit";
                 cellName.innerHTML = competition.name;
                 cellName.setAttribute("onclick", onclickEdit);
+                
                 var cellDate = row.insertCell(1);
                 cellDate.className = "edit";
                 cellDate.innerHTML = competition.competitionDate;
                 cellDate.setAttribute("onclick", onclickEdit);
+                
                 var sheet = document.createElement("a");
-                sheet.setAttribute("href", "/jtaf/res/reports/sheet?competitionid=" + competition.id);
+                sheet.setAttribute("href", "/jtaf/res/reports/sheets?competitionid=" + competition.id);
                 sheet.setAttribute("target", "_blank");
                 sheet.appendChild(document.createTextNode(util.translate("Sheets")));
+                
                 var sheetOrderByClub = document.createElement("a");
-                sheetOrderByClub.setAttribute("href", "/jtaf/res/reports/sheet?orderby=club&competitionid=" + competition.id);
+                sheetOrderByClub.setAttribute("href", "/jtaf/res/reports/sheets?orderby=club&competitionid=" + competition.id);
                 sheetOrderByClub.setAttribute("target", "_blank");
                 sheetOrderByClub.appendChild(document.createTextNode(util.translate("(order by club)")));
+                
+                var numbers = document.createElement("a");
+                numbers.setAttribute("href", "/jtaf/res/reports/numbers?competitionid=" + competition.id);
+                numbers.setAttribute("target", "_blank");
+                numbers.appendChild(document.createTextNode(util.translate("Numbers")));
+                
                 var del = document.createElement("a");
                 del.setAttribute("href", "#");
                 del.setAttribute("onclick", "seriesController.deleteCompetition(" +
                         competition.id + ")");
+                
                 var delSpan = document.createElement("span");
                 delSpan.className = "i18n";
                 delSpan.innerHTML = "Delete";
                 del.appendChild(delSpan);
+                
                 var cellFunction = row.insertCell(2);
                 cellFunction.setAttribute("style", "text-align: right;");
                 cellFunction.appendChild(sheet);
                 cellFunction.appendChild(document.createTextNode(" "));
                 cellFunction.appendChild(sheetOrderByClub);
+                cellFunction.appendChild(document.createElement("br"));
+                cellFunction.appendChild(numbers);
                 cellFunction.appendChild(document.createTextNode(" "));
                 cellFunction.appendChild(del);
                 i++;

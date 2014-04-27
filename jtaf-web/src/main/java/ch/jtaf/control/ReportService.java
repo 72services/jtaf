@@ -4,7 +4,7 @@ import ch.jtaf.report.CompetitionCsvExport;
 import ch.jtaf.report.CompetitionRanking;
 import ch.jtaf.report.EventsRanking;
 import ch.jtaf.report.SeriesRanking;
-import ch.jtaf.report.Sheet;
+import ch.jtaf.report.Sheets;
 import ch.jtaf.comperator.AthleteCompetitionResultComparator;
 import ch.jtaf.comperator.AthleteSeriesResultComparator;
 import ch.jtaf.data.CompetitionRankingCategoryData;
@@ -21,6 +21,7 @@ import ch.jtaf.entity.Event;
 import ch.jtaf.entity.EventType;
 import ch.jtaf.entity.Result;
 import ch.jtaf.interceptor.TraceInterceptor;
+import ch.jtaf.report.Numbers;
 import ch.jtaf.to.AthleteWithEventTO;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,8 +55,27 @@ public class ReportService extends AbstractService {
             query.setParameter("series_id", competition.getSeries_id());
             List<Athlete> athletes = query.getResultList();
 
-            Sheet sheet = new Sheet(competition, athletes, get(Series.class, competition.getSeries_id()).getLogo());
+            Sheets sheet = new Sheets(competition, athletes, get(Series.class, competition.getSeries_id()).getLogo());
             return sheet.create();
+        }
+    }
+
+    public byte[] createNumbers(Long competitionId, String order) {
+        Competition competition = em.find(Competition.class, competitionId);
+        if (competition == null) {
+            return null;
+        } else {
+            TypedQuery<Athlete> query;
+            if (order != null && order.equals("club")) {
+                query = em.createNamedQuery("Athlete.findBySeriesOrderByClub", Athlete.class);
+            } else {
+                query = em.createNamedQuery("Athlete.findBySeries", Athlete.class);
+            }
+            query.setParameter("series_id", competition.getSeries_id());
+            List<Athlete> athletes = query.getResultList();
+
+            Numbers numbers = new Numbers(competition, athletes, null);
+            return numbers.create();
         }
     }
 
@@ -89,7 +109,7 @@ public class ReportService extends AbstractService {
         Athlete template = new Athlete();
         template.setCategory(category);
 
-        Sheet sheet = new Sheet(template, series.getLogo());
+        Sheets sheet = new Sheets(template, series.getLogo());
         return sheet.create();
     }
 
