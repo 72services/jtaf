@@ -36,9 +36,9 @@ public class UserResource extends BaseResource {
     }
 
     @POST
-    public SecurityUser save(SecurityUser user) {
+    public SecurityUser save(@Context HttpServletRequest hsr, SecurityUser user) {
         try {
-            return dataService.saveUser(user);
+            return dataService.saveUser(user, hsr.getLocale());
         } catch (NoSuchAlgorithmException e) {
             LOGGER.error(e.getMessage(), e);
             throw new WebApplicationException(Response.Status.PRECONDITION_FAILED);

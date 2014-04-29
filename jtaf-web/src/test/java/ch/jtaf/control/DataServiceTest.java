@@ -15,6 +15,7 @@ import static ch.jtaf.test.util.TestData.SERIES_ID;
 import static ch.jtaf.test.util.TestData.SPACE_ID;
 import ch.jtaf.to.AthleteTO;
 import java.util.List;
+import java.util.Locale;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -27,6 +28,7 @@ import org.junit.BeforeClass;
 public class DataServiceTest {
 
     private static final String EMAIL = "simon@martinelli.ch";
+    private static Locale locale = new Locale("DE", "ch");
 
     private static DataService ds;
     private static EntityManagerFactory emf;
@@ -221,7 +223,7 @@ public class DataServiceTest {
 
         assertNotNull(user);
 
-        SecurityUser savedUser = ds.saveUser(user);
+        SecurityUser savedUser = ds.saveUser(user, locale);
 
         assertNotNull(savedUser);
     }

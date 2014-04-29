@@ -10,6 +10,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Locale;
 import org.jboss.logging.Logger;
 
 public class EventsRanking extends Ranking {
@@ -17,9 +18,11 @@ public class EventsRanking extends Ranking {
     private Document document;
     private PdfWriter pdfWriter;
     private final EventsRankingData ranking;
+    private final Locale locale;
 
-    public EventsRanking(EventsRankingData ranking) {
+    public EventsRanking(EventsRankingData ranking, Locale locale) {
         this.ranking = ranking;
+        this.locale = locale;
     }
 
     public byte[] create() {

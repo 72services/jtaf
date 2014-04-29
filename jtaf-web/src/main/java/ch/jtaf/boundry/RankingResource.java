@@ -9,12 +9,14 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 @Path("rankings")
@@ -42,11 +44,11 @@ public class RankingResource {
     @GET
     @Path("competition/pdf/{competitionid}")
     @Produces({"application/pdf"})
-    public byte[] getCompetitionRankingAsPdf(@PathParam("competitionid") Long competitionid) {
+    public byte[] getCompetitionRankingAsPdf(@Context HttpServletRequest hsr, @PathParam("competitionid") Long competitionid) {
         if (competitionid == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         } else {
-            byte[] report = service.createCompetitionRanking(competitionid);
+            byte[] report = service.createCompetitionRanking(competitionid, hsr.getLocale());
             if (report == null) {
                 throw new WebApplicationException(Response.Status.NOT_FOUND);
             } else {
@@ -69,11 +71,11 @@ public class RankingResource {
     @GET
     @Path("series/pdf/{seriesid}")
     @Produces({"application/pdf"})
-    public byte[] getSeriesRankingAsPdf(@PathParam("seriesid") Long seriesid) {
+    public byte[] getSeriesRankingAsPdf(@Context HttpServletRequest hsr, @PathParam("seriesid") Long seriesid) {
         if (seriesid == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         } else {
-            byte[] report = service.createSeriesRanking(seriesid);
+            byte[] report = service.createSeriesRanking(seriesid, hsr.getLocale());
             if (report == null) {
                 throw new WebApplicationException(Response.Status.NOT_FOUND);
             } else {
@@ -85,11 +87,11 @@ public class RankingResource {
     @GET
     @Path("events/{competitionid}")
     @Produces({"application/pdf"})
-    public byte[] getEventsRanking(@PathParam("competitionid") Long competitionid) {
+    public byte[] getEventsRanking(@Context HttpServletRequest hsr, @PathParam("competitionid") Long competitionid) {
         if (competitionid == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         } else {
-            byte[] report = service.createEventsRanking(competitionid);
+            byte[] report = service.createEventsRanking(competitionid, hsr.getLocale());
             if (report == null) {
                 throw new WebApplicationException(Response.Status.NOT_FOUND);
             } else {

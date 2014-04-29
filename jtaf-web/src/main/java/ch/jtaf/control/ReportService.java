@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -79,21 +80,21 @@ public class ReportService extends AbstractService {
         }
     }
 
-    public byte[] createCompetitionRanking(Long competitionId) {
+    public byte[] createCompetitionRanking(Long competitionId, Locale locale) {
         CompetitionRankingData ranking = getCompetitionRanking(competitionId);
         if (ranking == null) {
             return null;
         }
-        CompetitionRanking report = new CompetitionRanking(ranking);
+        CompetitionRanking report = new CompetitionRanking(ranking, locale);
         return report.create();
     }
 
-    public byte[] createSeriesRanking(Long seriesId) {
+    public byte[] createSeriesRanking(Long seriesId, Locale locale) {
         SeriesRankingData ranking = getSeriesRanking(seriesId);
         if (ranking == null) {
             return null;
         }
-        SeriesRanking report = new SeriesRanking(ranking);
+        SeriesRanking report = new SeriesRanking(ranking, locale);
         return report.create();
     }
 
@@ -122,12 +123,12 @@ public class ReportService extends AbstractService {
         return export.create();
     }
 
-    public byte[] createEventsRanking(Long competitionId) {
+    public byte[] createEventsRanking(Long competitionId, Locale locale) {
         EventsRankingData ranking = getEventsRanking(competitionId);
         if (ranking == null) {
             return null;
         }
-        EventsRanking report = new EventsRanking(ranking);
+        EventsRanking report = new EventsRanking(ranking, locale);
         return report.create();
     }
 

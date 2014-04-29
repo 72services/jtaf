@@ -13,6 +13,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Locale;
 import org.jboss.logging.Logger;
 
 public class SeriesRanking extends Ranking {
@@ -20,9 +21,11 @@ public class SeriesRanking extends Ranking {
     private Document document;
     private PdfWriter pdfWriter;
     private final SeriesRankingData ranking;
+    private final Locale locale;
 
-    public SeriesRanking(SeriesRankingData ranking) {
+    public SeriesRanking(SeriesRankingData ranking, Locale locale) {
         this.ranking = ranking;
+        this.locale = locale;
     }
 
     public byte[] create() {
@@ -32,7 +35,7 @@ public class SeriesRanking extends Ranking {
                 document = new Document(PageSize.A4);
                 pdfWriter = PdfWriter.getInstance(document, baos);
                 pdfWriter.setPageEvent(new HeaderFooter(
-                        I18n.getInstance().getString("Series Ranking"), 
+                        I18n.getInstance().getString(locale, "Series Ranking"), 
                         ranking.getSeries().getName(),
                         sdf.format(new Date())));
                 document.open();

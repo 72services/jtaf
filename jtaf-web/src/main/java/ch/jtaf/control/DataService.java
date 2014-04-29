@@ -21,6 +21,7 @@ import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -289,7 +290,7 @@ public class DataService extends AbstractService {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public SecurityUser saveUser(SecurityUser user) throws NoSuchAlgorithmException {
+    public SecurityUser saveUser(SecurityUser user, Locale locale) throws NoSuchAlgorithmException {
         if (user.getConfirmationId() == null) {
             if (em.find(SecurityUser.class, user.getEmail()) == null) {
                 String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, user.getSecret());
@@ -309,7 +310,7 @@ public class DataService extends AbstractService {
             }
         }
         user = em.merge(user);
-        sendMail(user);
+        sendMail(user, locale);
         return user;
     }
 
@@ -321,7 +322,7 @@ public class DataService extends AbstractService {
         return user;
     }
 
-    private void sendMail(SecurityUser user) {
+    private void sendMail(SecurityUser user, Locale locale) {
         try {
             String confirmationUrl = System.getProperty("jtaf.confirmation.url");
             if (confirmationUrl == null) {
@@ -333,7 +334,7 @@ public class DataService extends AbstractService {
             msg.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(user.getEmail(), user.getFirstName() + " " + user.getLastName()));
             msg.setSubject("JTAF Registration");
-            msg.setText(I18n.getInstance().getString("Please confirm your registration: ")
+            msg.setText(I18n.getInstance().getString(locale, "Please confirm your registration: ")
                     + confirmationUrl
                     + "/confirm.html?confirmation_id="
                     + user.getConfirmationId());

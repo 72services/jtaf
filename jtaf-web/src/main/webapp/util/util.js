@@ -144,7 +144,7 @@ function Util() {
             this.info(this.translate(this.searchMap.message));
         }
     };
-    
+
     this.showLoading = function() {
         document.getElementById("loading").style.display = "block";
     };
@@ -154,23 +154,14 @@ function Util() {
     };
 
     function loadMessages() {
-        var lang = window.navigator.language;
-        if (lang === undefined) {
-            lang = window.navigator.browserLanguage;
-        }
-        if (lang !== undefined) {
-            lang = lang.substring(0, 2);
-        }
-        if (lang !== "en") {
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "/jtaf/i18n/messages_" + lang + ".json", false);
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    i18messages = JSON.parse(xhr.responseText);
-                }
-            };
-            xhr.send();
-        }
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/jtaf/res/i18n/messages", false);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                i18messages = JSON.parse(xhr.responseText);
+            }
+        };
+        xhr.send();
     }
 }
 
