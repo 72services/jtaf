@@ -7,6 +7,7 @@ import ch.jtaf.entity.Category;
 import ch.jtaf.entity.Club;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.entity.Event;
+import ch.jtaf.entity.EventType;
 import ch.jtaf.entity.Result;
 import ch.jtaf.entity.SecurityGroup;
 import ch.jtaf.entity.SecurityUser;
@@ -16,6 +17,7 @@ import ch.jtaf.entity.UserSpace;
 import ch.jtaf.entity.UserSpaceRole;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -465,5 +467,10 @@ public class DataService extends AbstractService {
         List<Result> results = tq.getResultList();
         a.setResults(results);
         return a;
+    }
+
+    public Long calculatePoints(Long eventId, String result) {
+        Event event = em.find(Event.class, eventId);
+        return event.calculatePoints(result);
     }
 }

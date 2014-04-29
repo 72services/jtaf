@@ -76,31 +76,25 @@ function ResultsController() {
     this.calculatePoints = function(i) {
         var ev = athlete.category.events[i];
         var result = document.getElementById("result" + i).value;
-        var points = 0;
-        if (result > 0) {
-            if (ev.type === "RUN") {
-                points = ev.a * Math.pow((ev.b - result * 100) / 100, ev.c);
-            } else if (ev.type === "RUN_LONG") {
-                var parts = result.split(".");
-                var time = parts[0] * 6000 + parts[1] * 100;
-                points = ev.a * Math.pow((ev.b - time) / 100, ev.c);
-            } else if (ev.type === "JUMP_THROW") {
-                points = ev.a * Math.pow((result * 100 - ev.b) / 100, ev.c);
-            }
+
+        if (result !== "") {
+            util.xhrGet("/jtaf/res/result?event_id=" + ev.id + "&result=" + result, function(response) {
+                document.getElementById("athlete_list").className = "invisible";
+                var points = response;
+                if (isNaN(points) || points < 0) {
+                    points = 0;
+                }
+                athlete.results[i] = {
+                    result: result,
+                    points: points,
+                    event: ev,
+                    competition: competition,
+                    athlete_id: athlete.id,
+                    position: i
+                };
+                document.getElementById("points" + i).value = points;
+            });
         }
-        points = Math.round(points);
-        if (isNaN(points) || points < 0) {
-            points = 0;
-        }
-        athlete.results[i] = {
-            result: result,
-            points: points,
-            event: ev,
-            competition: competition,
-            athlete_id: athlete.id,
-            position: i
-        };
-        document.getElementById("points" + i).value = points;
     };
 
 

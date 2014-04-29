@@ -131,4 +131,25 @@ public class Event {
     public String toString() {
         return "Event{" + "id=" + id + ", name=" + name + ", type=" + type + ", gender=" + gender + ", a=" + a + ", b=" + b + ", c=" + c + ", series_id=" + series_id + '}';
     }
+
+    public Long calculatePoints(String result) {
+        Double points = 0.0d;
+        if (result != null && Double.parseDouble(result) > 0) {
+            if (type.equals(EventType.RUN)) {
+                points = a * Math.pow((b - Double.parseDouble(result) * 100) / 100, c);
+            } else if (type.equals(EventType.RUN_LONG)) {
+                String[] parts = result.split("\\.");
+                Double time;
+                if (parts.length == 1) {
+                    time = Double.parseDouble(parts[0]) * 60;
+                } else {
+                    time = Double.parseDouble(parts[0]) * 60 + Double.parseDouble(parts[1]);
+                }
+                points = a * Math.pow((b - time * 100) / 100, c);
+            } else if (type.equals(EventType.JUMP_THROW)) {
+                points = a * Math.pow((Double.parseDouble(result) * 100 - b) / 100, c);
+            }
+        }
+        return Math.round(points);
+    }
 }
