@@ -35,6 +35,7 @@ public class Sheets extends AbstractReport {
     private final Competition competition;
     private final List<Athlete> athletes;
     private final byte[] logo;
+    private boolean withNumber;
 
     public Sheets(Athlete athlete, byte[] logo, Locale locale) {
         super(locale);
@@ -52,11 +53,12 @@ public class Sheets extends AbstractReport {
         this.logo = logo;
     }
 
-    public Sheets(Competition competition, List<Athlete> athletes, byte[] logo, Locale locale) {
+    public Sheets(Competition competition, List<Athlete> athletes, byte[] logo, boolean withNumber, Locale locale) {
         super(locale);
         this.competition = competition;
         this.athletes = athletes;
         this.logo = logo;
+        this.withNumber = withNumber;
     }
 
     public byte[] create() {
@@ -66,16 +68,18 @@ public class Sheets extends AbstractReport {
             pdfWriter = PdfWriter.getInstance(document, baos);
             document.open();
             boolean first = true;
+            int number = 1;
             for (Athlete athlete : athletes) {
                 if (!first) {
                     document.newPage();
                 }
                 createLogo();
                 createCategory(athlete);
-                createAthleteInfo(athlete);
+                createAthleteInfo(athlete, number);
                 createCompetitionRow();
                 createEventTable(athlete);
                 first = false;
+                number++;
             }
             document.close();
             pdfWriter.flush();
@@ -105,13 +109,18 @@ public class Sheets extends AbstractReport {
         table.writeSelectedRows(0, 1, document.leftMargin(), cmToPixel(21f), pdfWriter.getDirectContent());
     }
 
-    private void createAthleteInfo(Athlete athlete) throws DocumentException {
+    private void createAthleteInfo(Athlete athlete, int number) throws DocumentException {
         PdfPTable table = new PdfPTable(2);
         table.setWidthPercentage(100);
 
         if (athlete.getId() != null) {
-            addInfoCell(table, athlete.getId() == null ? "Id" : athlete.getId().toString());
-            addCell(table, "");
+            if (withNumber) {
+                addInfoCell(table, "" + number);
+                addInfoCell(table, athlete.getId().toString());
+            } else {
+                addInfoCell(table, athlete.getId().toString());
+                addCell(table, "");
+            }
         } else {
             addCell(table, " ");
             addCell(table, " ");
