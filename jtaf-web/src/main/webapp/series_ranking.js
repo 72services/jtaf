@@ -19,7 +19,7 @@ function SeriesRankingController() {
 
     this.openAsPdf = function() {
         var newtab = window.open();
-        newtab.location = "/jtaf/res/reports/seriesranking?seriesid=" + ranking.series.id;
+        newtab.location = "/jtaf/res/rankings/series/pdf/" + ranking.series.id;
     };
 
     function parseAndFill(response) {

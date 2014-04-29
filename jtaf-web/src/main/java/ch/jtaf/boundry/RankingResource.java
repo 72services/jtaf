@@ -40,6 +40,22 @@ public class RankingResource {
     }
 
     @GET
+    @Path("competition/pdf/{competitionid}")
+    @Produces({"application/pdf"})
+    public byte[] getCompetitionRankingAsPdf(@PathParam("competitionid") Long competitionid) {
+        if (competitionid == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        } else {
+            byte[] report = service.createCompetitionRanking(competitionid);
+            if (report == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                return report;
+            }
+        }
+    }
+
+    @GET
     @Path("series/{seriesid}")
     public SeriesRankingData getSeriesRanking(@PathParam("seriesid") Long seriesid) {
         SeriesRankingData data = service.getSeriesRanking(seriesid);
@@ -49,4 +65,37 @@ public class RankingResource {
             return data;
         }
     }
+
+    @GET
+    @Path("series/pdf/{seriesid}")
+    @Produces({"application/pdf"})
+    public byte[] getSeriesRankingAsPdf(@PathParam("seriesid") Long seriesid) {
+        if (seriesid == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        } else {
+            byte[] report = service.createSeriesRanking(seriesid);
+            if (report == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                return report;
+            }
+        }
+    }
+
+    @GET
+    @Path("events/{competitionid}")
+    @Produces({"application/pdf"})
+    public byte[] getEventsRanking(@PathParam("competitionid") Long competitionid) {
+        if (competitionid == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        } else {
+            byte[] report = service.createEventsRanking(competitionid);
+            if (report == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                return report;
+            }
+        }
+    }
+
 }

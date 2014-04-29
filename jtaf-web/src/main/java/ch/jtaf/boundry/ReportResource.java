@@ -70,38 +70,6 @@ public class ReportResource {
     }
 
     @GET
-    @Path("competitionranking")
-    @Produces({"application/pdf"})
-    public byte[] getCompetitionRanking(@QueryParam("competitionid") Long competitionid) {
-        if (competitionid == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        } else {
-            byte[] report = service.createCompetitionRanking(competitionid);
-            if (report == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
-            } else {
-                return report;
-            }
-        }
-    }
-
-    @GET
-    @Path("eventsranking")
-    @Produces({"application/pdf"})
-    public byte[] getEventsRanking(@QueryParam("competitionid") Long competitionid) {
-        if (competitionid == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        } else {
-            byte[] report = service.createEventsRanking(competitionid);
-            if (report == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
-            } else {
-                return report;
-            }
-        }
-    }
-
-    @GET
     @Path("export.csv")
     @Produces({"text/comma-separated-values"})
     public String exportAsCsv(@QueryParam("competitionid") Long competitionid) {
@@ -117,19 +85,4 @@ public class ReportResource {
         }
     }
 
-    @GET
-    @Path("seriesranking")
-    @Produces({"application/pdf"})
-    public byte[] getSeriesRanking(@QueryParam("seriesid") Long seriesid) {
-        if (seriesid == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
-        } else {
-            byte[] report = service.createSeriesRanking(seriesid);
-            if (report == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
-            } else {
-                return report;
-            }
-        }
-    }
 }

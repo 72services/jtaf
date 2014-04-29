@@ -4,6 +4,7 @@ import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.data.SeriesRankingCategoryData;
 import ch.jtaf.data.SeriesRankingData;
+import ch.jtaf.i18n.I18n;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
@@ -31,7 +32,8 @@ public class SeriesRanking extends Ranking {
                 document = new Document(PageSize.A4);
                 pdfWriter = PdfWriter.getInstance(document, baos);
                 pdfWriter.setPageEvent(new HeaderFooter(
-                        "Series ranking", ranking.getSeries().getName(),
+                        I18n.getInstance().getString("Series Ranking"), 
+                        ranking.getSeries().getName(),
                         sdf.format(new Date())));
                 document.open();
                 createRanking();

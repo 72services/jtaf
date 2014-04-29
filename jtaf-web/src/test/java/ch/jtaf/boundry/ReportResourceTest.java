@@ -68,43 +68,10 @@ public class ReportResourceTest {
     }
 
     @Test
-    public void testGetCompetitionRanking() throws Exception {
-        byte[] report = rr.getCompetitionRanking(COMPETITION_ID);
-
-        assertNotNull(report);
-        assertTrue(report.length > 0);
-    }
-
-    @Test
-    public void testGetEventsRanking() throws Exception {
-        byte[] report = rr.getEventsRanking(COMPETITION_ID);
-
-        assertNotNull(report);
-        assertTrue(report.length > 0);
-    }
-
-    @Test(expected = WebApplicationException.class)
-    public void testGetEventsRankingNull() throws Exception {
-        rr.getEventsRanking(null);
-    }
-
-    @Test
     public void testExportAsCsv() throws Exception {
         String report = rr.exportAsCsv(COMPETITION_ID);
 
         assertNotNull(report);
     }
 
-    @Test
-    public void testGetSeriesRanking() throws Exception {
-        byte[] report = rr.getSeriesRanking(SERIES_ID);
-
-        assertNotNull(report);
-        assertTrue(report.length > 0);
-    }
-
-    @Test(expected = WebApplicationException.class)
-    public void testGetSeriesRankingNull() throws Exception {
-        rr.getSeriesRanking(null);
-    }
 }

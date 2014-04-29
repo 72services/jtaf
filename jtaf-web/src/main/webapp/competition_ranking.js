@@ -20,7 +20,7 @@ function CompetitionsRankingController() {
 
     this.openAsPdf = function() {
         var newtab = window.open();
-        newtab.location = "/jtaf/res/reports/competitionranking?competitionid=" + ranking.competition.id;
+        newtab.location = "/jtaf/res/rankings/competition/pdf/" + ranking.competition.id;
     };
 
 
@@ -31,7 +31,7 @@ function CompetitionsRankingController() {
 
     this.createEventsRanking = function() {
         var newtab = window.open();
-        newtab.location = "/jtaf/res/reports/eventsranking?competitionid=" + ranking.competition.id;
+        newtab.location = "/jtaf/res/rankings/events/" + ranking.competition.id;
     };
 
     function parseAndFill(response) {
