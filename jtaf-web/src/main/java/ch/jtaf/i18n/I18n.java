@@ -42,8 +42,9 @@ public class I18n {
         }
         return instance;
     }
-    
+
     public String getString(String key) {
-        return translations.get(key);
+        String value = translations.get(key);
+        return value != null ? value : key;
     }
 }

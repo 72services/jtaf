@@ -14,6 +14,7 @@ import ch.jtaf.entity.Series;
 import ch.jtaf.entity.Space;
 import ch.jtaf.entity.UserSpace;
 import ch.jtaf.entity.UserSpaceRole;
+import ch.jtaf.i18n.I18n;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -332,7 +333,7 @@ public class DataService extends AbstractService {
             msg.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(user.getEmail(), user.getFirstName() + " " + user.getLastName()));
             msg.setSubject("JTAF Registration");
-            msg.setText("Please confirm your registration: "
+            msg.setText(I18n.getInstance().getString("Please confirm your registration: ")
                     + confirmationUrl
                     + "/confirm.html?confirmation_id="
                     + user.getConfirmationId());
