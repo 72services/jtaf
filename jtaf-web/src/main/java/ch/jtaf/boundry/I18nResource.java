@@ -13,6 +13,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import org.jboss.logging.Logger;
 
 @Path("i18n")
 @Produces({"application/json; charset=UTF-8"})
@@ -21,11 +22,12 @@ import javax.ws.rs.core.Context;
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class I18nResource extends BaseResource {
-
+    
     @GET
     @Path("messages")
     public Map<String, String> calculatePoints(@Context HttpServletRequest hsr) {
+        Logger.getLogger(I18nResource.class).debug("Locale: " + hsr.getLocale());
         return I18n.getInstance().getMessages(hsr.getLocale());
     }
-
+    
 }

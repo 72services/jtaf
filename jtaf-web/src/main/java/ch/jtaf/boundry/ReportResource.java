@@ -30,11 +30,12 @@ public class ReportResource {
     @Path("sheets")
     @Produces({"application/pdf"})
     public byte[] getSheets(@Context HttpServletRequest hsr, @QueryParam("competitionid") Long competitionid,
-            @QueryParam("categoryid") Long categoryid, @QueryParam("orderby") String order) {
+            @QueryParam("categoryid") Long categoryid, @QueryParam("orderby") String order, @QueryParam("withnumber") Boolean withNumber) {
         try {
             byte[] report = null;
             if (competitionid != null) {
-                report = service.createSheets(competitionid, order, hsr.getLocale());
+                boolean printNumber = withNumber != null && withNumber;
+                report = service.createSheets(competitionid, order, printNumber, hsr.getLocale());
             }
             if (categoryid != null) {
                 report = service.createEmptySheets(categoryid, hsr.getLocale());

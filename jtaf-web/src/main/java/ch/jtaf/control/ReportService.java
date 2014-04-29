@@ -42,7 +42,7 @@ import javax.persistence.TypedQuery;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class ReportService extends AbstractService {
 
-    public byte[] createSheets(Long competitionId, String order, Locale locale) {
+    public byte[] createSheets(Long competitionId, String order, boolean withNumber, Locale locale) {
         Competition competition = em.find(Competition.class, competitionId);
         if (competition == null) {
             return null;
@@ -56,7 +56,7 @@ public class ReportService extends AbstractService {
             query.setParameter("series_id", competition.getSeries_id());
             List<Athlete> athletes = query.getResultList();
 
-            Sheets sheet = new Sheets(competition, athletes, get(Series.class, competition.getSeries_id()).getLogo(), locale);
+            Sheets sheet = new Sheets(competition, athletes, get(Series.class, competition.getSeries_id()).getLogo(), withNumber, locale);
             return sheet.create();
         }
     }
@@ -278,11 +278,10 @@ public class ReportService extends AbstractService {
             List<Result> entry = map.get(r.getAthlete_id());
             if (entry != null) {
                 entry.add(r);
-            }
-            else {
+            } else {
                 List<Result> list = new ArrayList<>();
                 list.add(r);
-                map.put(r.getAthlete_id(),list);
+                map.put(r.getAthlete_id(), list);
             }
         }
 

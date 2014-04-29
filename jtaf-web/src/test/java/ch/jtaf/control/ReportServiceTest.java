@@ -47,7 +47,7 @@ public class ReportServiceTest {
 
     @Test
     public void testCreateSheets() throws Exception {
-        byte[] report = rs.createSheets(COMPETITION_ID, null, new Locale("de", "CH"));
+        byte[] report = rs.createSheets(COMPETITION_ID, null, false, new Locale("de", "CH"));
 
         assertNotNull(report);
         assertTrue(report.length > 0);
