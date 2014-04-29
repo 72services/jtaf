@@ -54,7 +54,7 @@ public class I18n {
         try {
             URL url = new URL(path + de);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"))) {
                 fillMap(translationsDe, in);
             }
         } catch (IOException ex) {
