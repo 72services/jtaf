@@ -1,5 +1,6 @@
 package ch.jtaf.report;
 
+import ch.jtaf.i18n.I18n;
 import ch.jtaf.to.AthleteWithEventTO;
 import ch.jtaf.vo.EventsRankingVO;
 import ch.jtaf.vo.EventsRankingEventData;
@@ -32,7 +33,8 @@ public class EventsRanking extends Ranking {
                 document = new Document(PageSize.A4, border, border, border, border);
                 pdfWriter = PdfWriter.getInstance(document, baos);
                 pdfWriter.setPageEvent(new HeaderFooter(
-                        "Event Ranking", ranking.getCompetition().getName(),
+                        I18n.getInstance().getString(locale, "Event Ranking"),
+                        ranking.getCompetition().getName(),
                         sdf.format(ranking.getCompetition().getCompetitionDate())));
                 document.open();
                 createRanking();
