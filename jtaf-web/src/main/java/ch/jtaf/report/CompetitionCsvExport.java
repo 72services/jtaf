@@ -1,20 +1,20 @@
 package ch.jtaf.report;
 
 import ch.jtaf.entity.Athlete;
-import ch.jtaf.data.CompetitionRankingCategoryData;
-import ch.jtaf.data.CompetitionRankingData;
+import ch.jtaf.vo.CompetitionRankingCategoryVO;
+import ch.jtaf.vo.CompetitionRankingVO;
 
 public class CompetitionCsvExport {
 
-    private final CompetitionRankingData ranking;
+    private final CompetitionRankingVO ranking;
 
-    public CompetitionCsvExport(CompetitionRankingData ranking) {
+    public CompetitionCsvExport(CompetitionRankingVO ranking) {
         this.ranking = ranking;
     }
 
     public String create() {
         StringBuilder sb = new StringBuilder();
-        for (CompetitionRankingCategoryData category : ranking.getCategories()) {
+        for (CompetitionRankingCategoryVO category : ranking.getCategories()) {
             int position = 1;
             for (Athlete athlete : category.getAthletes()) {
                 sb.append(position);

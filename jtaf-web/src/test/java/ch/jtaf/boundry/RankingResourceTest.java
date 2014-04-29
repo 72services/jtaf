@@ -1,7 +1,7 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.control.ReportService;
-import ch.jtaf.data.CompetitionRankingData;
+import ch.jtaf.vo.CompetitionRankingVO;
 import static ch.jtaf.test.util.TestData.COMPETITION_ID;
 import static ch.jtaf.test.util.TestData.SERIES_ID;
 import ch.jtaf.test.util.TestHttpServletRequest;
@@ -49,7 +49,7 @@ public class RankingResourceTest {
 
     @Test
     public void testGetCompetitionRanking() throws Exception {
-        CompetitionRankingData competitionRanking = rr.getCompetitionRanking(COMPETITION_ID);
+        CompetitionRankingVO competitionRanking = rr.getCompetitionRanking(COMPETITION_ID);
 
         assertNotNull(competitionRanking);
     }

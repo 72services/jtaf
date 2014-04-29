@@ -1,10 +1,10 @@
-package ch.jtaf.data;
+package ch.jtaf.vo;
 
 import ch.jtaf.entity.Competition;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventsRankingData {
+public class EventsRankingVO {
 
     private Competition competition;
     private List<EventsRankingEventData> events = new ArrayList<>();

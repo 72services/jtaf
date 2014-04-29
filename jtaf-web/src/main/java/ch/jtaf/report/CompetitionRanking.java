@@ -1,7 +1,7 @@
 package ch.jtaf.report;
 
-import ch.jtaf.data.CompetitionRankingCategoryData;
-import ch.jtaf.data.CompetitionRankingData;
+import ch.jtaf.vo.CompetitionRankingCategoryVO;
+import ch.jtaf.vo.CompetitionRankingVO;
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Result;
 import ch.jtaf.i18n.I18n;
@@ -19,12 +19,11 @@ public class CompetitionRanking extends Ranking {
 
     private Document document;
     private PdfWriter pdfWriter;
-    private final CompetitionRankingData ranking;
-    private final Locale locale;
+    private final CompetitionRankingVO ranking;
 
-    public CompetitionRanking(CompetitionRankingData ranking, Locale locale) {
+    public CompetitionRanking(CompetitionRankingVO ranking, Locale locale) {
+        super(locale);
         this.ranking = ranking;
-        this.locale = locale;
     }
 
     public byte[] create() {
@@ -53,7 +52,7 @@ public class CompetitionRanking extends Ranking {
     }
 
     private void createRanking() throws DocumentException {
-        for (CompetitionRankingCategoryData category : ranking.getCategories()) {
+        for (CompetitionRankingCategoryVO category : ranking.getCategories()) {
             PdfPTable table = createAthletesTable();
             createCategoryTitle(table, category);
 
@@ -80,7 +79,7 @@ public class CompetitionRanking extends Ranking {
         return table;
     }
 
-    private void createCategoryTitle(PdfPTable table, CompetitionRankingCategoryData category) {
+    private void createCategoryTitle(PdfPTable table, CompetitionRankingCategoryVO category) {
         addCategoryTitleCellWithColspan(table, category.getCategory().getAbbreviation(), 1);
         addCategoryTitleCellWithColspan(table, category.getCategory().getName() + " "
                 + category.getCategory().getYearFrom() + " - " + category.getCategory().getYearTo(), 5);

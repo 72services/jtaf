@@ -4,8 +4,13 @@ import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import java.util.Locale;
 
-public abstract class Ranking extends ReportBase {
+public abstract class Ranking extends AbstractReport {
+
+    protected Ranking(Locale locale) {
+        super(locale);
+    }
 
     protected void addCategoryTitleCellWithColspan(PdfPTable table, String text, int colspan) {
         PdfPCell cell = new PdfPCell(

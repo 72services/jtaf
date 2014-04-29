@@ -4,6 +4,7 @@ import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.entity.Event;
 import ch.jtaf.entity.EventType;
+import ch.jtaf.i18n.I18n;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -19,10 +20,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import org.jboss.logging.Logger;
 
-public class Sheets extends ReportBase {
+public class Sheets extends AbstractReport {
 
     private final static float FONT_SIZE_INFO = 8f;
     private final static float FONT_SIZE_TEXT = 16f;
@@ -33,21 +36,24 @@ public class Sheets extends ReportBase {
     private final List<Athlete> athletes;
     private final byte[] logo;
 
-    public Sheets(Athlete athlete, byte[] logo) {
+    public Sheets(Athlete athlete, byte[] logo, Locale locale) {
+        super(locale);
         this.competition = null;
         this.athletes = new ArrayList<>();
         this.athletes.add(athlete);
         this.logo = logo;
     }
 
-    public Sheets(Competition competition, Athlete athlete, byte[] logo) {
+    public Sheets(Competition competition, Athlete athlete, byte[] logo, Locale locale) {
+        super(locale);
         this.competition = competition;
         this.athletes = new ArrayList<>();
         this.athletes.add(athlete);
         this.logo = logo;
     }
 
-    public Sheets(Competition competition, List<Athlete> athletes, byte[] logo) {
+    public Sheets(Competition competition, List<Athlete> athletes, byte[] logo, Locale locale) {
+        super(locale);
         this.competition = competition;
         this.athletes = athletes;
         this.logo = logo;

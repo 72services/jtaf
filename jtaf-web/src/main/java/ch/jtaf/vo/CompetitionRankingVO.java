@@ -1,13 +1,13 @@
-package ch.jtaf.data;
+package ch.jtaf.vo;
 
 import ch.jtaf.entity.Competition;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompetitionRankingData {
+public class CompetitionRankingVO {
 
     private Competition competition;
-    private List<CompetitionRankingCategoryData> categories = new ArrayList<>();
+    private List<CompetitionRankingCategoryVO> categories = new ArrayList<>();
 
     public Competition getCompetition() {
         return competition;
@@ -17,11 +17,11 @@ public class CompetitionRankingData {
         this.competition = competition;
     }
 
-    public List<CompetitionRankingCategoryData> getCategories() {
+    public List<CompetitionRankingCategoryVO> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<CompetitionRankingCategoryData> categories) {
+    public void setCategories(List<CompetitionRankingCategoryVO> categories) {
         this.categories = categories;
     }
 }

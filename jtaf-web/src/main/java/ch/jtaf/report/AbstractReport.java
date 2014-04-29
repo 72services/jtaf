@@ -1,5 +1,6 @@
 package ch.jtaf.report;
 
+import ch.jtaf.i18n.I18n;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.FontFactory;
@@ -10,16 +11,22 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ReportBase {
+public abstract class AbstractReport {
 
     protected static final float DEFAULT_FONT_SIZE = 9f;
     protected static final float CM_PER_INCH = 2.54f;
     protected static final float DPI = 72f;
     protected SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd.MM.yyyy");
     protected int numberOfRows;
+    protected Locale locale;
+    
+    protected AbstractReport(Locale locale) {
+        this.locale = locale;
+    }
 
     protected float cmToPixel(Float cm) {
         return (cm / CM_PER_INCH) * DPI;
@@ -70,8 +77,22 @@ public class ReportBase {
         public void onEndPage(PdfWriter writer, Document document) {
             PdfPTable table = new PdfPTable(2);
             table.setWidthPercentage(100);
-            addCell(table, "Created by jtaf.ch");
-            addCellAlignRight(table, "Page " + document.getPageNumber());
+
+            PdfPCell cellLeft = new PdfPCell(
+                    new Phrase("JTAF - Track and Field | www.jtaf.ch",
+                            FontFactory.getFont(FontFactory.HELVETICA, DEFAULT_FONT_SIZE)));
+            cellLeft.setBorder(0);
+            cellLeft.setBorderWidthTop(1f);
+            table.addCell(cellLeft);
+
+            PdfPCell cellRight = new PdfPCell(
+                    new Phrase(I18n.getInstance().getString(locale, "Page")
+                            + " " + document.getPageNumber(),
+                            FontFactory.getFont(FontFactory.HELVETICA, DEFAULT_FONT_SIZE)));
+            cellRight.setBorder(0);
+            cellRight.setBorderWidthTop(1f);
+            cellRight.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
+            table.addCell(cellRight);
 
             Rectangle page = document.getPageSize();
             table.setTotalWidth(page.getWidth() - document.leftMargin() - document.rightMargin());

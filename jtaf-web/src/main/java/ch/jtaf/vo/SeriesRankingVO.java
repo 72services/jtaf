@@ -1,13 +1,13 @@
-package ch.jtaf.data;
+package ch.jtaf.vo;
 
 import ch.jtaf.entity.Series;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SeriesRankingData {
+public class SeriesRankingVO {
 
     private Series series;
-    private List<SeriesRankingCategoryData> categories = new ArrayList<>();
+    private List<SeriesRankingCategoryVO> categories = new ArrayList<>();
 
     public Series getSeries() {
         return series;
@@ -17,11 +17,11 @@ public class SeriesRankingData {
         this.series = series;
     }
 
-    public List<SeriesRankingCategoryData> getCategories() {
+    public List<SeriesRankingCategoryVO> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<SeriesRankingCategoryData> categories) {
+    public void setCategories(List<SeriesRankingCategoryVO> categories) {
         this.categories = categories;
     }
 }

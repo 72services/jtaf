@@ -2,8 +2,8 @@ package ch.jtaf.report;
 
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Competition;
-import ch.jtaf.data.SeriesRankingCategoryData;
-import ch.jtaf.data.SeriesRankingData;
+import ch.jtaf.vo.SeriesRankingCategoryVO;
+import ch.jtaf.vo.SeriesRankingVO;
 import ch.jtaf.i18n.I18n;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -20,12 +20,11 @@ public class SeriesRanking extends Ranking {
 
     private Document document;
     private PdfWriter pdfWriter;
-    private final SeriesRankingData ranking;
-    private final Locale locale;
+    private final SeriesRankingVO ranking;
 
-    public SeriesRanking(SeriesRankingData ranking, Locale locale) {
+    public SeriesRanking(SeriesRankingVO ranking, Locale locale) {
+        super(locale);
         this.ranking = ranking;
-        this.locale = locale;
     }
 
     public byte[] create() {
@@ -35,7 +34,7 @@ public class SeriesRanking extends Ranking {
                 document = new Document(PageSize.A4);
                 pdfWriter = PdfWriter.getInstance(document, baos);
                 pdfWriter.setPageEvent(new HeaderFooter(
-                        I18n.getInstance().getString(locale, "Series Ranking"), 
+                        I18n.getInstance().getString(locale, "Series Ranking"),
                         ranking.getSeries().getName(),
                         sdf.format(new Date())));
                 document.open();
@@ -52,7 +51,7 @@ public class SeriesRanking extends Ranking {
     }
 
     private void createRanking() throws DocumentException {
-        for (SeriesRankingCategoryData category : ranking.getCategories()) {
+        for (SeriesRankingCategoryVO category : ranking.getCategories()) {
             PdfPTable table = createAthletesTable();
             createCategoryTitle(table, category);
 
@@ -79,7 +78,7 @@ public class SeriesRanking extends Ranking {
         return table;
     }
 
-    private void createCategoryTitle(PdfPTable table, SeriesRankingCategoryData category) {
+    private void createCategoryTitle(PdfPTable table, SeriesRankingCategoryVO category) {
         addCategoryTitleCellWithColspan(table, category.getCategory().getAbbreviation(), 1);
         addCategoryTitleCellWithColspan(table, category.getCategory().getName() + " "
                 + category.getCategory().getYearFrom() + " - " + category.getCategory().getYearTo(), 5);

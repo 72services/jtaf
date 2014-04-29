@@ -1,4 +1,4 @@
-package ch.jtaf.data;
+package ch.jtaf.vo;
 
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Category;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SeriesRankingCategoryData implements Comparable<SeriesRankingCategoryData> {
+public class SeriesRankingCategoryVO implements Comparable<SeriesRankingCategoryVO> {
 
     private Category category;
     private List<Athlete> athletes = new ArrayList<>();
@@ -42,7 +42,7 @@ public class SeriesRankingCategoryData implements Comparable<SeriesRankingCatego
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final SeriesRankingCategoryData other = (SeriesRankingCategoryData) obj;
+        final SeriesRankingCategoryVO other = (SeriesRankingCategoryVO) obj;
         if (!Objects.equals(this.category, other.category)) {
             return false;
         }
@@ -50,7 +50,7 @@ public class SeriesRankingCategoryData implements Comparable<SeriesRankingCatego
     }
 
     @Override
-    public int compareTo(SeriesRankingCategoryData o) {
+    public int compareTo(SeriesRankingCategoryVO o) {
         return this.category.getAbbreviation().compareTo(o.getCategory().getAbbreviation());
     }
 }

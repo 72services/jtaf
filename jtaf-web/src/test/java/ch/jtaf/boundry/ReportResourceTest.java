@@ -3,10 +3,12 @@ package ch.jtaf.boundry;
 import ch.jtaf.control.ReportService;
 import static ch.jtaf.test.util.TestData.CATEGORY_ID;
 import static ch.jtaf.test.util.TestData.COMPETITION_ID;
-import static ch.jtaf.test.util.TestData.SERIES_ID;
+import ch.jtaf.test.util.TestHttpServletRequest;
+import java.util.Locale;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -20,6 +22,7 @@ public class ReportResourceTest {
     private static ReportService rs;
     private static EntityManagerFactory emf;
     private static EntityManager em;
+    private static final HttpServletRequest hsr = new TestHttpServletRequest();
 
     @BeforeClass
     public static void beforeClass() {
@@ -48,7 +51,7 @@ public class ReportResourceTest {
 
     @Test
     public void testGetSheets() throws Exception {
-        byte[] report = rr.getSheets(COMPETITION_ID, CATEGORY_ID, null);
+        byte[] report = rr.getSheets(hsr, COMPETITION_ID, CATEGORY_ID, null);
 
         assertNotNull(report);
         assertTrue(report.length > 0);
@@ -56,7 +59,7 @@ public class ReportResourceTest {
 
     @Test
     public void testGetNumbers() throws Exception {
-        byte[] report = rr.getNumbers(COMPETITION_ID, null);
+        byte[] report = rr.getNumbers(hsr, COMPETITION_ID, null);
 
         assertNotNull(report);
         assertTrue(report.length > 0);
@@ -64,7 +67,7 @@ public class ReportResourceTest {
 
     @Test(expected = WebApplicationException.class)
     public void testGetSheetsNotFound() throws Exception {
-        rr.getSheets(0l, 0l, null);
+        rr.getSheets(hsr, 0l, 0l, null);
     }
 
     @Test

@@ -7,16 +7,16 @@ import ch.jtaf.report.SeriesRanking;
 import ch.jtaf.report.Sheets;
 import ch.jtaf.comperator.AthleteCompetitionResultComparator;
 import ch.jtaf.comperator.AthleteSeriesResultComparator;
-import ch.jtaf.data.CompetitionRankingCategoryData;
+import ch.jtaf.vo.CompetitionRankingCategoryVO;
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Category;
 import ch.jtaf.entity.Competition;
-import ch.jtaf.data.CompetitionRankingData;
-import ch.jtaf.data.EventsRankingEventData;
-import ch.jtaf.data.SeriesRankingCategoryData;
-import ch.jtaf.data.EventsRankingData;
+import ch.jtaf.vo.CompetitionRankingVO;
+import ch.jtaf.vo.EventsRankingEventData;
+import ch.jtaf.vo.SeriesRankingCategoryVO;
+import ch.jtaf.vo.EventsRankingVO;
 import ch.jtaf.entity.Series;
-import ch.jtaf.data.SeriesRankingData;
+import ch.jtaf.vo.SeriesRankingVO;
 import ch.jtaf.entity.Event;
 import ch.jtaf.entity.EventType;
 import ch.jtaf.entity.Result;
@@ -42,7 +42,7 @@ import javax.persistence.TypedQuery;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class ReportService extends AbstractService {
 
-    public byte[] createSheets(Long competitionId, String order) {
+    public byte[] createSheets(Long competitionId, String order, Locale locale) {
         Competition competition = em.find(Competition.class, competitionId);
         if (competition == null) {
             return null;
@@ -56,12 +56,12 @@ public class ReportService extends AbstractService {
             query.setParameter("series_id", competition.getSeries_id());
             List<Athlete> athletes = query.getResultList();
 
-            Sheets sheet = new Sheets(competition, athletes, get(Series.class, competition.getSeries_id()).getLogo());
+            Sheets sheet = new Sheets(competition, athletes, get(Series.class, competition.getSeries_id()).getLogo(), locale);
             return sheet.create();
         }
     }
 
-    public byte[] createNumbers(Long competitionId, String order) {
+    public byte[] createNumbers(Long competitionId, String order, Locale locale) {
         Competition competition = em.find(Competition.class, competitionId);
         if (competition == null) {
             return null;
@@ -75,13 +75,13 @@ public class ReportService extends AbstractService {
             query.setParameter("series_id", competition.getSeries_id());
             List<Athlete> athletes = query.getResultList();
 
-            Numbers numbers = new Numbers(competition, athletes, null);
+            Numbers numbers = new Numbers(competition, athletes, null, locale);
             return numbers.create();
         }
     }
 
     public byte[] createCompetitionRanking(Long competitionId, Locale locale) {
-        CompetitionRankingData ranking = getCompetitionRanking(competitionId);
+        CompetitionRankingVO ranking = getCompetitionRanking(competitionId);
         if (ranking == null) {
             return null;
         }
@@ -90,7 +90,7 @@ public class ReportService extends AbstractService {
     }
 
     public byte[] createSeriesRanking(Long seriesId, Locale locale) {
-        SeriesRankingData ranking = getSeriesRanking(seriesId);
+        SeriesRankingVO ranking = getSeriesRanking(seriesId);
         if (ranking == null) {
             return null;
         }
@@ -98,7 +98,7 @@ public class ReportService extends AbstractService {
         return report.create();
     }
 
-    public byte[] createEmptySheets(Long categoryid) {
+    public byte[] createEmptySheets(Long categoryid, Locale locale) {
         Category category = em.find(Category.class, categoryid);
         if (category == null) {
             throw new IllegalArgumentException();
@@ -110,12 +110,12 @@ public class ReportService extends AbstractService {
         Athlete template = new Athlete();
         template.setCategory(category);
 
-        Sheets sheet = new Sheets(template, series.getLogo());
+        Sheets sheet = new Sheets(template, series.getLogo(), locale);
         return sheet.create();
     }
 
     public String createCompetitionRankingAsCsv(Long competitionId) {
-        CompetitionRankingData ranking = getCompetitionRanking(competitionId);
+        CompetitionRankingVO ranking = getCompetitionRanking(competitionId);
         if (ranking == null) {
             return null;
         }
@@ -124,7 +124,7 @@ public class ReportService extends AbstractService {
     }
 
     public byte[] createEventsRanking(Long competitionId, Locale locale) {
-        EventsRankingData ranking = getEventsRanking(competitionId);
+        EventsRankingVO ranking = getEventsRanking(competitionId);
         if (ranking == null) {
             return null;
         }
@@ -132,7 +132,7 @@ public class ReportService extends AbstractService {
         return report.create();
     }
 
-    public CompetitionRankingData getCompetitionRanking(Long competitionid) {
+    public CompetitionRankingVO getCompetitionRanking(Long competitionid) {
         Competition competition = em.find(Competition.class, competitionid);
         if (competition == null) {
             return null;
@@ -140,7 +140,7 @@ public class ReportService extends AbstractService {
 
         List<Athlete> list = getAthletesWithCompetionResults(competitionid);
 
-        CompetitionRankingData ranking = new CompetitionRankingData();
+        CompetitionRankingVO ranking = new CompetitionRankingVO();
         ranking.setCompetition(competition);
 
         Map<Category, List<Athlete>> map = new HashMap<>();
@@ -153,7 +153,7 @@ public class ReportService extends AbstractService {
             map.put(a.getCategory(), as);
         }
         for (Map.Entry<Category, List<Athlete>> entry : map.entrySet()) {
-            CompetitionRankingCategoryData rc = new CompetitionRankingCategoryData();
+            CompetitionRankingCategoryVO rc = new CompetitionRankingCategoryVO();
             Category c = entry.getKey();
             c.setEvents(null);
             rc.setCategory(c);
@@ -164,7 +164,7 @@ public class ReportService extends AbstractService {
         return ranking;
     }
 
-    public SeriesRankingData getSeriesRanking(Long seriesId) {
+    public SeriesRankingVO getSeriesRanking(Long seriesId) {
         Series series = em.find(Series.class, seriesId);
         if (series == null) {
             return null;
@@ -185,7 +185,7 @@ public class ReportService extends AbstractService {
         List<Competition> cs = qc.getResultList();
         series.setCompetitions(cs);
 
-        SeriesRankingData ranking = new SeriesRankingData();
+        SeriesRankingVO ranking = new SeriesRankingVO();
         ranking.setSeries(series);
 
         Map<Category, List<Athlete>> map = new HashMap<>();
@@ -198,7 +198,7 @@ public class ReportService extends AbstractService {
             map.put(a.getCategory(), as);
         }
         for (Map.Entry<Category, List<Athlete>> entry : map.entrySet()) {
-            SeriesRankingCategoryData rc = new SeriesRankingCategoryData();
+            SeriesRankingCategoryVO rc = new SeriesRankingCategoryVO();
             Category c = entry.getKey();
             rc.setCategory(c);
             rc.setAthletes(filterAndSort(series, entry.getValue()));
@@ -208,7 +208,7 @@ public class ReportService extends AbstractService {
         return ranking;
     }
 
-    private EventsRankingData getEventsRanking(Long competitionid) {
+    private EventsRankingVO getEventsRanking(Long competitionid) {
         Competition competition = em.find(Competition.class, competitionid);
         if (competition == null) {
             return null;
@@ -216,7 +216,7 @@ public class ReportService extends AbstractService {
 
         List<Athlete> list = getAthletesWithCompetionResults(competitionid);
 
-        EventsRankingData ranking = new EventsRankingData();
+        EventsRankingVO ranking = new EventsRankingVO();
         ranking.setCompetition(competition);
 
         Map<Event, List<AthleteWithEventTO>> map = new HashMap<>();

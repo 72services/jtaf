@@ -13,9 +13,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import org.jboss.logging.Logger;
 
-public class Numbers extends ReportBase {
+public class Numbers extends AbstractReport {
 
     private final static float FONT_SIZE_INFO = 12f;
     private final static float FONT_SIZE_TEXT = 90f;
@@ -25,7 +26,8 @@ public class Numbers extends ReportBase {
     private final List<Athlete> athletes;
     private final byte[] logo;
 
-    public Numbers(Competition competition, List<Athlete> athletes, byte[] logo) {
+    public Numbers(Competition competition, List<Athlete> athletes, byte[] logo, Locale locale) {
+        super(locale);
         this.competition = competition;
         this.athletes = athletes;
         this.logo = logo;

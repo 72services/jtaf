@@ -1,6 +1,6 @@
 package ch.jtaf.control;
 
-import ch.jtaf.data.CompetitionRankingData;
+import ch.jtaf.vo.CompetitionRankingVO;
 import static ch.jtaf.test.util.TestData.CATEGORY_ID;
 import static ch.jtaf.test.util.TestData.COMPETITION_ID;
 import static ch.jtaf.test.util.TestData.SERIES_ID;
@@ -47,7 +47,7 @@ public class ReportServiceTest {
 
     @Test
     public void testCreateSheets() throws Exception {
-        byte[] report = rs.createSheets(COMPETITION_ID, null);
+        byte[] report = rs.createSheets(COMPETITION_ID, null, new Locale("de", "CH"));
 
         assertNotNull(report);
         assertTrue(report.length > 0);
@@ -55,7 +55,7 @@ public class ReportServiceTest {
 
     @Test
     public void testCreateNumbers() throws Exception {
-        byte[] report = rs.createNumbers(COMPETITION_ID, null);
+        byte[] report = rs.createNumbers(COMPETITION_ID, null, new Locale("de", "CH"));
 
         assertNotNull(report);
         assertTrue(report.length > 0);
@@ -79,7 +79,7 @@ public class ReportServiceTest {
 
     @Test
     public void testCreateEmptySheets() throws Exception {
-        byte[] report = rs.createEmptySheets(CATEGORY_ID);
+        byte[] report = rs.createEmptySheets(CATEGORY_ID, new Locale("de", "CH"));
 
         assertNotNull(report);
         assertTrue(report.length > 0);
@@ -102,7 +102,7 @@ public class ReportServiceTest {
 
     @Test
     public void testGetCompetitionRanking() throws Exception {
-        CompetitionRankingData competitionRanking = rs.getCompetitionRanking(COMPETITION_ID);
+        CompetitionRankingVO competitionRanking = rs.getCompetitionRanking(COMPETITION_ID);
 
         assertNotNull(competitionRanking);
     }

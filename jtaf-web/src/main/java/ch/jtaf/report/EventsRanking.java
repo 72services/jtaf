@@ -1,8 +1,8 @@
 package ch.jtaf.report;
 
 import ch.jtaf.to.AthleteWithEventTO;
-import ch.jtaf.data.EventsRankingData;
-import ch.jtaf.data.EventsRankingEventData;
+import ch.jtaf.vo.EventsRankingVO;
+import ch.jtaf.vo.EventsRankingEventData;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
@@ -17,12 +17,11 @@ public class EventsRanking extends Ranking {
 
     private Document document;
     private PdfWriter pdfWriter;
-    private final EventsRankingData ranking;
-    private final Locale locale;
+    private final EventsRankingVO ranking;
 
-    public EventsRanking(EventsRankingData ranking, Locale locale) {
+    public EventsRanking(EventsRankingVO ranking, Locale locale) {
+        super(locale);
         this.ranking = ranking;
-        this.locale = locale;
     }
 
     public byte[] create() {

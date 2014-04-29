@@ -1,8 +1,8 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.control.ReportService;
-import ch.jtaf.data.CompetitionRankingData;
-import ch.jtaf.data.SeriesRankingData;
+import ch.jtaf.vo.CompetitionRankingVO;
+import ch.jtaf.vo.SeriesRankingVO;
 import ch.jtaf.interceptor.TraceInterceptor;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -32,8 +32,8 @@ public class RankingResource {
 
     @GET
     @Path("competition/{competitionid}")
-    public CompetitionRankingData getCompetitionRanking(@PathParam("competitionid") Long competitionid) {
-        CompetitionRankingData data = service.getCompetitionRanking(competitionid);
+    public CompetitionRankingVO getCompetitionRanking(@PathParam("competitionid") Long competitionid) {
+        CompetitionRankingVO data = service.getCompetitionRanking(competitionid);
         if (data == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
@@ -59,8 +59,8 @@ public class RankingResource {
 
     @GET
     @Path("series/{seriesid}")
-    public SeriesRankingData getSeriesRanking(@PathParam("seriesid") Long seriesid) {
-        SeriesRankingData data = service.getSeriesRanking(seriesid);
+    public SeriesRankingVO getSeriesRanking(@PathParam("seriesid") Long seriesid) {
+        SeriesRankingVO data = service.getSeriesRanking(seriesid);
         if (data == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {

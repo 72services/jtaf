@@ -7,11 +7,13 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
@@ -27,15 +29,15 @@ public class ReportResource {
     @GET
     @Path("sheets")
     @Produces({"application/pdf"})
-    public byte[] getSheets(@QueryParam("competitionid") Long competitionid,
+    public byte[] getSheets(@Context HttpServletRequest hsr, @QueryParam("competitionid") Long competitionid,
             @QueryParam("categoryid") Long categoryid, @QueryParam("orderby") String order) {
         try {
             byte[] report = null;
             if (competitionid != null) {
-                report = service.createSheets(competitionid, order);
+                report = service.createSheets(competitionid, order, hsr.getLocale());
             }
             if (categoryid != null) {
-                report = service.createEmptySheets(categoryid);
+                report = service.createEmptySheets(categoryid, hsr.getLocale());
             }
             if (report == null) {
                 throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -51,12 +53,12 @@ public class ReportResource {
     @GET
     @Path("numbers")
     @Produces({"application/pdf"})
-    public byte[] getNumbers(@QueryParam("competitionid") Long competitionid,
+    public byte[] getNumbers(@Context HttpServletRequest hsr, @QueryParam("competitionid") Long competitionid,
             @QueryParam("orderby") String order) {
         try {
             byte[] report = null;
             if (competitionid != null) {
-                report = service.createNumbers(competitionid, order);
+                report = service.createNumbers(competitionid, order, hsr.getLocale());
             }
             if (report == null) {
                 throw new WebApplicationException(Response.Status.NOT_FOUND);

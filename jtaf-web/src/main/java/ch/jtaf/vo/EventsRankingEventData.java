@@ -1,4 +1,4 @@
-package ch.jtaf.data;
+package ch.jtaf.vo;
 
 import ch.jtaf.entity.Event;
 import ch.jtaf.to.AthleteWithEventTO;
