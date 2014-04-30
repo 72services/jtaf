@@ -19,6 +19,7 @@ import ch.jtaf.interceptor.TraceInterceptor;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -333,16 +334,32 @@ public class DataService extends AbstractService {
             msg.setFrom(new InternetAddress("noreply@jtaf.ch", "JTAF - Track and Field"));
             msg.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(user.getEmail(), user.getFirstName() + " " + user.getLastName()));
-            msg.setSubject("JTAF Registration");
-            msg.setText(I18n.getInstance().getString(locale, "Please confirm your registration: ")
-                    + confirmationUrl
-                    + "/confirm.html?confirmation_id="
-                    + user.getConfirmationId());
+            msg.setSubject("JTAF - Track and Field | Registration");
+            msg.setText(createMessageBody(locale, confirmationUrl, user));
             msg.saveChanges();
             Transport.send(msg);
         } catch (UnsupportedEncodingException | MessagingException ex) {
             Logger.getLogger(DataService.class).error(ex.getMessage(), ex);
         }
+    }
+
+    private static String createMessageBody(Locale locale, String confirmationUrl, SecurityUser user) {
+        StringBuilder sb = new StringBuilder();
+        MessageFormat mf = new MessageFormat(I18n.getInstance().getString(locale, "Dear {0},"));
+        sb.append(mf.format(new String[]{user.getFirstName() + " " + user.getLastName()}));
+        sb.append("\n\n");
+        sb.append(I18n.getInstance().getString(locale, "Please confirm your registration."));
+        sb.append("\n");
+        sb.append(confirmationUrl);
+        sb.append("confirm.html?confirmation_id=");
+        sb.append(user.getConfirmationId());
+        sb.append("\n\n");
+        sb.append("JTAF - Track And Field");
+        sb.append("\n");
+        sb.append("www.jtaf.ch");
+
+        Logger.getLogger(DataService.class).debug(sb.toString());
+        return sb.toString();
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
