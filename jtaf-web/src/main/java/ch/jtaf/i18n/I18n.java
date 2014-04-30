@@ -18,7 +18,8 @@ public class I18n {
     private static I18n instance;
     private final Map<String, String> translationsDe = new HashMap<>();
     private final String path;
-    private final static String de = "i18n/messages_de.json";
+    private final static String MESSAGES_DE = "i18n/messages_de.json";
+    private static final String DE = "DE";
 
     private I18n() {
         this.path = System.getProperty("jtaf.confirmation.url");
@@ -33,7 +34,7 @@ public class I18n {
     }
 
     public String getString(Locale locale, String key) {
-        if (locale.getLanguage().toUpperCase().equals("DE")) {
+        if (locale.getLanguage().toUpperCase().equals(DE)) {
             String value = translationsDe.get(key);
             return value != null ? value : key;
         } else {
@@ -42,7 +43,7 @@ public class I18n {
     }
 
     public Map<String, String> getMessages(Locale locale) {
-        if (locale.getLanguage().toUpperCase().equals("DE")) {
+        if (locale.getLanguage().toUpperCase().equals(DE)) {
             return translationsDe;
         } else {
             return new HashMap<>();
@@ -51,7 +52,7 @@ public class I18n {
 
     private void fillDe() {
         try {
-            URL url = new URL(path + de);
+            URL url = new URL(path + MESSAGES_DE);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"))) {
                 fillMap(translationsDe, in);
