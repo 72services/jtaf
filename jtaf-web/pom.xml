@@ -24,11 +24,29 @@
     
     <developers>
         <developer>
-            <email>sm@simas.ch</email>
             <name>Simon Martinelli</name>
+            <email>sm@simas.ch</email>
             <organization>simas GmbH</organization>
+            <organizationUrl>http://www.simas.ch</organizationUrl>
+            <timezone>Europe/Zurich</timezone>
+            <roles>
+                <role>Project Lead</role>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
         </developer>
     </developers>
+
+    <contributors>
+        <contributor>
+            <name>Adrian Moser</name>
+            <roles>
+                <role>Busines Analyst</role>
+                <role>Tester</role>
+            </roles>
+            <timezone>Europe/Zurich</timezone>
+        </contributor>
+    </contributors>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
