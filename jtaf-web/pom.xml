@@ -14,9 +14,13 @@
             <name>Apache License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
             <distribution>repo</distribution>
-            <comments>A business-friendly OSS license</comments>
         </license>
     </licenses>
+    
+    <organization>
+        <name>simas GmbH</name>
+        <url>http://www.simas.ch</url>
+    </organization>
     
     <developers>
         <developer>
