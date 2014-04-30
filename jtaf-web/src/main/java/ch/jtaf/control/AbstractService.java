@@ -22,7 +22,6 @@ public class AbstractService {
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public <T> void delete(T t) {
-        t = em.merge(t);
-        em.remove(t);
+        em.remove(em.merge(t));
     }
 }

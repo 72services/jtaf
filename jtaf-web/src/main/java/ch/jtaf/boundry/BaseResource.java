@@ -1,6 +1,7 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
+import ch.jtaf.entity.UserSpace;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,11 +16,11 @@ public class BaseResource {
     @EJB
     protected DataService dataService;
 
-    protected boolean isUserGrantedForSeries(Long series_id) {
+    protected boolean isUserGrantedForSeries(Long seriesId) {
         Principal principal = sessionContext.getCallerPrincipal();
         try {
-            dataService.getUserSpaceByUserAndSeries(principal.getName(), series_id);
-            return true;
+            Object userSpaceByUserAndSeries = dataService.getUserSpaceByUserAndSeries(principal.getName(), seriesId);
+            return userSpaceByUserAndSeries != null;
         } catch (Exception e) {
             Logger.getLogger(BaseResource.class.getName()).log(Level.WARNING, e.getMessage(), e);
             return false;
@@ -29,8 +30,8 @@ public class BaseResource {
     protected boolean isUserGrantedForSpace(Long space_id) {
         Principal principal = sessionContext.getCallerPrincipal();
         try {
-            dataService.getUserSpaceByUserAndSpace(principal.getName(), space_id);
-            return true;
+            UserSpace userSpaceByUserAndSpace = dataService.getUserSpaceByUserAndSpace(principal.getName(), space_id);
+            return userSpaceByUserAndSpace != null;
         } catch (Exception e) {
             Logger.getLogger(BaseResource.class.getName()).log(Level.WARNING, e.getMessage(), e);
             return false;
