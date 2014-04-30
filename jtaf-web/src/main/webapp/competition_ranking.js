@@ -38,7 +38,7 @@ function CompetitionsRankingController() {
         ranking = JSON.parse(response);
 
         var table = document.createElement("table");
-        table.style.width = "100%;";
+        table.setAttribute("style", "width: 100%");
         var row = table.insertRow(0);
         var left = row.insertCell(0);
         var hleft = document.createElement("h1");
@@ -52,9 +52,10 @@ function CompetitionsRankingController() {
         middle.appendChild(hmiddle);
 
         var right = row.insertCell(2);
-        right.style.textAlign = "right;";
+        right.style.textAlign = "right";
         var hright = document.createElement("h1");
-        hright.innerHTML = ranking.competition.competitionDate;
+        var d = ranking.competition.competitionDate;
+        hright.innerHTML = d.substring(8, 10) + "." + d.substring(5, 7) + "." + d.substring(0, 4);
         right.appendChild(hright);
 
         document.getElementById("title").appendChild(table);
@@ -107,7 +108,7 @@ function CompetitionsRankingController() {
                 row.appendChild(cell);
 
                 cell = document.createElement("td");
-                cell.style.textAlign = "right;";
+                cell.style.textAlign = "right";
                 cell.innerHTML = calculateTotalPoints(athlete);
                 row.appendChild(cell);
 

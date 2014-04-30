@@ -11,6 +11,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,10 +21,10 @@ public abstract class AbstractReport {
     protected static final float DEFAULT_FONT_SIZE = 9f;
     protected static final float CM_PER_INCH = 2.54f;
     protected static final float DPI = 72f;
-    protected SimpleDateFormat sdf = new SimpleDateFormat("EEEE, dd.MM.yyyy");
+    protected SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
     protected int numberOfRows;
     protected Locale locale;
-    
+
     protected AbstractReport(Locale locale) {
         this.locale = locale;
     }
@@ -75,15 +76,23 @@ public abstract class AbstractReport {
 
         @Override
         public void onEndPage(PdfWriter writer, Document document) {
-            PdfPTable table = new PdfPTable(2);
+            PdfPTable table = new PdfPTable(3);
             table.setWidthPercentage(100);
 
             PdfPCell cellLeft = new PdfPCell(
-                    new Phrase("JTAF - Track and Field | www.jtaf.ch",
+                    new Phrase(sdf.format(new Date()),
                             FontFactory.getFont(FontFactory.HELVETICA, DEFAULT_FONT_SIZE)));
             cellLeft.setBorder(0);
             cellLeft.setBorderWidthTop(1f);
             table.addCell(cellLeft);
+
+            PdfPCell cellCenter = new PdfPCell(
+                    new Phrase("JTAF - Track and Field | www.jtaf.ch",
+                            FontFactory.getFont(FontFactory.HELVETICA, DEFAULT_FONT_SIZE)));
+            cellCenter.setBorder(0);
+            cellCenter.setBorderWidthTop(1f);
+            cellCenter.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            table.addCell(cellCenter);
 
             PdfPCell cellRight = new PdfPCell(
                     new Phrase(I18n.getInstance().getString(locale, "Page")

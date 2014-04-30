@@ -8,6 +8,8 @@
     <packaging>war</packaging>
 
     <name>JTAF - Track and Field</name>
+    <description>Manage track and field competions in a simple manner</description>
+    <url>http://www.jtaf.ch</url>
     
     <licenses>
         <license>
@@ -199,4 +201,15 @@
         </plugins>
     </build>
 
+    <scm>
+        <url>https://github.com/simasch/jtaf</url>
+        <connection>scm:git:git://github.com/simasch/jtaf.git</connection>
+        <developerConnection>scm:git:git://github.com/simasch/jtaf.git</developerConnection>    
+    </scm>
+    
+    <issueManagement>
+        <url>https://github.com/simasch/jtaf/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+        
 </project>

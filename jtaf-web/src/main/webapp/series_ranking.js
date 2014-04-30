@@ -89,7 +89,7 @@ function SeriesRankingController() {
                 row.appendChild(cell);
 
                 cell = document.createElement("td");
-                cell.style.textAlign = "right;";
+                cell.style.textAlign = "right";
                 cell.innerHTML = calculateTotalPoints(athlete);
                 row.appendChild(cell);
 
