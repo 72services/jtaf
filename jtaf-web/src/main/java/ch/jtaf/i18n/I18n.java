@@ -9,8 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.jboss.logging.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -58,7 +57,7 @@ public class I18n {
                 fillMap(translationsDe, in);
             }
         } catch (IOException ex) {
-            Logger.getLogger(I18n.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(I18n.class).error(ex.getMessage(), ex);
         }
     }
 
