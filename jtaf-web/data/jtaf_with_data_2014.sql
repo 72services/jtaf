@@ -1,5 +1,3 @@
-
-c:\Users\isceco-emas\GitHub\jtaf\jtaf-web\data>mysqldump --user=root --max_allowed_packet=1G --host=127.0.0.1 --port=3306 --default-character-set=utf8 --single-transaction=TRUE "jtaf" 
 -- MySQL dump 10.13  Distrib 5.6.16, for Win32 (x86)
 --
 -- Host: 127.0.0.1    Database: jtaf
