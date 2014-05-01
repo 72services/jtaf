@@ -252,7 +252,7 @@ function SeriesController() {
                 del.appendChild(delSpan);
                 
                 var cellFunction = row.insertCell(2);
-                cellFunction.setAttribute("style", "text-align: right;");
+                cellFunction.style.textAlign = "right";
                 cellFunction.appendChild(sheet);
                 cellFunction.appendChild(document.createTextNode(" "));
                 cellFunction.appendChild(sheetOrderByClub);
@@ -443,7 +443,7 @@ function SeriesController() {
             delSpan.innerHTML = "Delete";
             del.appendChild(delSpan);
             var cellFunction = row.insertCell(7);
-            cellFunction.setAttribute("style", "text-align: right;");
+            cellFunction.style.textAlign = "right";
             cellFunction.appendChild(del);
             i++;
         });

@@ -119,7 +119,8 @@ function ShareController() {
         cellRole.appendChild(select);
 
         var cellFunction = row.insertCell(2);
-        cellFunction.setAttribute("style", "text-align: right;");
+        cellFunction.style.textAlign = "right";
+        
         if (user.email !== userSpace.user.email) {
             var del = document.createElement("a");
             del.href = "#";

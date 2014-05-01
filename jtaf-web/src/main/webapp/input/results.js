@@ -184,7 +184,7 @@ function ResultsController() {
                 points.setAttribute("type", "text");
                 points.setAttribute("readonly", "true");
                 points.setAttribute("disabled", "true");
-                points.setAttribute("style", "width: 100px");
+                points.style.width = "100px";
                 cellPoints.appendChild(points);
                 athlete.results.forEach(function(aresult) {
                     if (aresult.event.id === aevent.id && aresult.competition.id === competition.id) {

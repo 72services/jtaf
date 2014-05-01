@@ -38,7 +38,7 @@ function CompetitionsRankingController() {
         ranking = JSON.parse(response);
 
         var table = document.createElement("table");
-        table.setAttribute("style", "width: 100%");
+        table.style.width = "100%";
         var row = table.insertRow(0);
         var left = row.insertCell(0);
         var hleft = document.createElement("h1");
@@ -82,9 +82,10 @@ function CompetitionsRankingController() {
                 row = document.createElement("tr");
 
                 cell = document.createElement("td");
-                cell.setAttribute("style", "width: 40px");
+                cell.style.width = "40px";
                 cell.innerHTML = rank + ".";
                 row.appendChild(cell);
+
                 cell = document.createElement("td");
                 cell.style.width = "200px";
                 cell.innerHTML = athlete.lastName;
