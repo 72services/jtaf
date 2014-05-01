@@ -80,7 +80,7 @@ function IndexController() {
                         cell1.innerHTML = competition.competitionDate;
                         var cell2 = row.insertCell(2);
                         cell2.style.textAlign = "right";
-                        cell2.innerHTML = '<span class="i18n">Athletes ' + competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes + '</span>';
+                        cell2.innerHTML = '<span class="i18n">Athletes</span> ' + competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes;
 
                         var cell3 = row.insertCell(3);
                         cell3.style.textAlign = "right";
