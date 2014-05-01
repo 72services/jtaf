@@ -34,7 +34,7 @@ public class I18n {
     }
 
     public String getString(Locale locale, String key) {
-        if (locale.getLanguage().toUpperCase().equals(DE)) {
+        if (locale.getLanguage().compareToIgnoreCase(DE) == 0) {
             String value = translationsDe.get(key);
             return value != null ? value : key;
         } else {
@@ -43,7 +43,7 @@ public class I18n {
     }
 
     public Map<String, String> getMessages(Locale locale) {
-        if (locale.getLanguage().toUpperCase().equals(DE)) {
+        if (locale.getLanguage().compareToIgnoreCase(DE) == 0) {
             return translationsDe;
         } else {
             return new HashMap<>();

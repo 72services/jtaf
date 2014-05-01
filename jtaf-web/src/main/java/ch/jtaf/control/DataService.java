@@ -144,11 +144,12 @@ public class DataService extends AbstractService {
                 + "or lower(a.firstName) like :searchterm)";
         TypedQuery<Athlete> query = em.createQuery(queryString, Athlete.class);
         query.setParameter("series_id", seriesId);
-        if (searchterm != null) {
-            searchterm = searchterm.toLowerCase();
+        String searchString = searchterm;
+        if (searchString != null) {
+            searchString = searchString.toLowerCase();
         }
-        searchterm += "%";
-        query.setParameter("searchterm", searchterm);
+        searchString += "%";
+        query.setParameter("searchterm", searchString);
         List<Athlete> list = query.getResultList();
         for (Athlete a : list) {
             TypedQuery<Result> tq = em.createNamedQuery("Result.findByAthleteAndCompetition", Result.class);
@@ -394,17 +395,17 @@ public class DataService extends AbstractService {
         em.remove(s);
     }
 
-    public Object getUserSpaceByUserAndSeries(String email, Long series_id) {
+    public Object getUserSpaceByUserAndSeries(String email, Long seriesId) {
         Query q = em.createNativeQuery("SELECT u.* FROM userspace u JOIN series s ON s.space_id = u.space_id WHERE u.user_email = ? AND s.id = ?");
         q.setParameter(1, email);
-        q.setParameter(2, series_id);
+        q.setParameter(2, seriesId);
         return q.getSingleResult();
     }
 
-    public UserSpace getUserSpaceByUserAndSpace(String email, Long space_id) {
+    public UserSpace getUserSpaceByUserAndSpace(String email, Long spaceId) {
         TypedQuery<UserSpace> q = em.createNamedQuery("UserSpace.findByUserAndSpace", UserSpace.class);
         q.setParameter("email", email);
-        q.setParameter("space_id", space_id);
+        q.setParameter("space_id", spaceId);
         return q.getSingleResult();
     }
 
