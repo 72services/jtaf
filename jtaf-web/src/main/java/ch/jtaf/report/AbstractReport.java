@@ -40,6 +40,13 @@ public abstract class AbstractReport {
         table.addCell(cell);
     }
 
+    protected void addCell(PdfPTable table, String text, float fontSize) {
+        PdfPCell cell = new PdfPCell(
+                new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, fontSize)));
+        cell.setBorder(0);
+        table.addCell(cell);
+    }
+
     protected void addCellAlignRight(PdfPTable table, String text) {
         PdfPCell cell = new PdfPCell(
                 new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, DEFAULT_FONT_SIZE)));

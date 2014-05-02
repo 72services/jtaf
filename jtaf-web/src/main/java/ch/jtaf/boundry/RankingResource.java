@@ -85,6 +85,22 @@ public class RankingResource {
     }
 
     @GET
+    @Path("diploma/{competitionid}")
+    @Produces({"application/pdf"})
+    public byte[] getDiploma(@Context HttpServletRequest hsr, @PathParam("competitionid") Long competitionid) {
+        if (competitionid == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        } else {
+            byte[] report = service.createDiploma(competitionid, hsr.getLocale());
+            if (report == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                return report;
+            }
+        }
+    }
+
+    @GET
     @Path("events/{competitionid}")
     @Produces({"application/pdf"})
     public byte[] getEventsRanking(@Context HttpServletRequest hsr, @PathParam("competitionid") Long competitionid) {

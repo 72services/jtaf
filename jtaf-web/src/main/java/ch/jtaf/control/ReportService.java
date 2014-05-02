@@ -21,6 +21,7 @@ import ch.jtaf.entity.Event;
 import ch.jtaf.entity.EventType;
 import ch.jtaf.entity.Result;
 import ch.jtaf.interceptor.TraceInterceptor;
+import ch.jtaf.report.Diploma;
 import ch.jtaf.report.Numbers;
 import ch.jtaf.to.AthleteWithEventTO;
 import java.util.ArrayList;
@@ -130,6 +131,15 @@ public class ReportService extends AbstractService {
         }
         EventsRanking report = new EventsRanking(ranking, locale);
         return report.create();
+    }
+
+    public byte[] createDiploma(Long competitionId, Locale locale) {
+        CompetitionRankingVO ranking = getCompetitionRanking(competitionId);
+        if (ranking == null) {
+            return null;
+        }
+        Diploma diploma = new Diploma(ranking, null, locale);
+        return diploma.create();
     }
 
     public CompetitionRankingVO getCompetitionRanking(Long competitionid) {
