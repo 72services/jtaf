@@ -35,7 +35,7 @@ public class Numbers extends AbstractReport {
 
     public byte[] create() {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            document = new Document(PageSize.A4, cmToPixel(1.5f), cmToPixel(1.7f), cmToPixel(1.1f), cmToPixel(1.3f));
+            document = new Document(PageSize.A4, cmToPixel(1.5f), cmToPixel(1.7f), cmToPixel(0.8f), cmToPixel(0f));
             pdfWriter = PdfWriter.getInstance(document, baos);
             document.open();
             int i = 0;
@@ -98,7 +98,7 @@ public class Numbers extends AbstractReport {
                         + " / " + athlete.getClub().getName(),
                         FontFactory.getFont(FontFactory.HELVETICA, FONT_SIZE_INFO)));
         cellName.setBorder(0);
-        cellName.setMinimumHeight(cmToPixel(1.5f));
+        cellName.setMinimumHeight(cmToPixel(1.8f));
         cellName.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         cellName.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         atable.addCell(cellName);

@@ -21,18 +21,19 @@ function SeriesController() {
             util.xhrGet("/jtaf/res/series/" + series_id, function(response) {
                 parseAndFillSeries(response);
                 util.i18n();
-            });
-            util.xhrGet("/jtaf/res/categories?series_id=" + series_id, function(response) {
-                parseAndFillCategories(response);
-                util.i18n();
-            });
-            util.xhrGet("/jtaf/res/events?series_id=" + series_id, function(response) {
-                parseAndFillEvents(response);
-                util.i18n();
-            });
-            util.xhrGet("/jtaf/res/athletes?series_id=" + series_id, function(response) {
-                parseAndFillAthletes(response);
-                util.i18n();
+                
+                util.xhrGet("/jtaf/res/categories?series_id=" + series_id, function(response) {
+                    parseAndFillCategories(response);
+                    util.i18n();
+                });
+                util.xhrGet("/jtaf/res/events?series_id=" + series_id, function(response) {
+                    parseAndFillEvents(response);
+                    util.i18n();
+                });
+                util.xhrGet("/jtaf/res/athletes?series_id=" + series_id, function(response) {
+                    parseAndFillAthletes(response);
+                    util.i18n();
+                });
             });
         }
         var active_tab = localStorage.getItem("active_tab");
