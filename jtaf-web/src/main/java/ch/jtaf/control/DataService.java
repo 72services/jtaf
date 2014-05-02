@@ -286,7 +286,7 @@ public class DataService extends AbstractService {
     public List<AthleteTO> getAthleteTOs(Long seriesId) {
         TypedQuery<AthleteTO> q = em.createQuery("SELECT NEW "
                 + "ch.jtaf.to.AthleteTO(a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, a.category.abbreviation, a.club.abbreviation) "
-                + "FROM Athlete a WHERE a.series_id = :series_id", AthleteTO.class);
+                + "FROM Athlete a WHERE a.series_id = :series_id order by a.lastName, a.firstName", AthleteTO.class);
         q.setParameter("series_id", seriesId);
         return q.getResultList();
     }
