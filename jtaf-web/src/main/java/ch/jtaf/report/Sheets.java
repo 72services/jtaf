@@ -33,7 +33,6 @@ public class Sheets extends AbstractReport {
     private final Competition competition;
     private final List<Athlete> athletes;
     private final byte[] logo;
-    private boolean withNumber;
 
     public Sheets(Athlete athlete, byte[] logo, Locale locale) {
         super(locale);
@@ -51,12 +50,11 @@ public class Sheets extends AbstractReport {
         this.logo = logo;
     }
 
-    public Sheets(Competition competition, List<Athlete> athletes, byte[] logo, boolean withNumber, Locale locale) {
+    public Sheets(Competition competition, List<Athlete> athletes, byte[] logo, Locale locale) {
         super(locale);
         this.competition = competition;
         this.athletes = athletes;
         this.logo = logo;
-        this.withNumber = withNumber;
     }
 
     public byte[] create() {
@@ -110,15 +108,11 @@ public class Sheets extends AbstractReport {
     private void createAthleteInfo(Athlete athlete, int number) throws DocumentException {
         PdfPTable table = new PdfPTable(2);
         table.setWidthPercentage(100);
+        table.setSpacingBefore(cmToPixel(1f));
 
         if (athlete.getId() != null) {
-            if (withNumber) {
-                addInfoCell(table, "" + number);
-                addInfoCell(table, athlete.getId().toString());
-            } else {
-                addInfoCell(table, athlete.getId().toString());
-                addCell(table, "");
-            }
+            addInfoCell(table, "" + number);
+            addCell(table, athlete.getId().toString());
         } else {
             addCell(table, " ");
             addCell(table, " ");

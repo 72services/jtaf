@@ -18,7 +18,7 @@ import javax.persistence.Transient;
 @Table(name = "athlete")
 @NamedQueries({
     @NamedQuery(name = "Athlete.findBySeriesOrderByClub",
-            query = "select distinct a from Athlete a where a.series_id = :series_id order by a.club.abbreviation, a.id"),
+            query = "select distinct a from Athlete a where a.series_id = :series_id order by a.club.abbreviation, a.category.abbreviation, a.lastName, a.firstName"),
     @NamedQuery(name = "Athlete.findBySeries",
             query = "select distinct a from Athlete a where a.series_id = :series_id order by a.category.abbreviation, a.lastName, a.firstName")
 })

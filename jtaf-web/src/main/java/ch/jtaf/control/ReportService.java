@@ -21,7 +21,7 @@ import ch.jtaf.entity.Event;
 import ch.jtaf.entity.EventType;
 import ch.jtaf.entity.Result;
 import ch.jtaf.interceptor.TraceInterceptor;
-import ch.jtaf.report.Diploma;
+import ch.jtaf.report.Diplomas;
 import ch.jtaf.report.Numbers;
 import ch.jtaf.to.AthleteWithEventTO;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ import javax.persistence.TypedQuery;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class ReportService extends AbstractService {
 
-    public byte[] createSheets(Long competitionId, String order, boolean withNumber, Locale locale) {
+    public byte[] createSheets(Long competitionId, String order, Locale locale) {
         Competition competition = em.find(Competition.class, competitionId);
         if (competition == null) {
             return null;
@@ -57,7 +57,7 @@ public class ReportService extends AbstractService {
             query.setParameter("series_id", competition.getSeries_id());
             List<Athlete> athletes = query.getResultList();
 
-            Sheets sheet = new Sheets(competition, athletes, get(Series.class, competition.getSeries_id()).getLogo(), withNumber, locale);
+            Sheets sheet = new Sheets(competition, athletes, get(Series.class, competition.getSeries_id()).getLogo(), locale);
             return sheet.create();
         }
     }
@@ -138,7 +138,7 @@ public class ReportService extends AbstractService {
         if (ranking == null) {
             return null;
         }
-        Diploma diploma = new Diploma(ranking, null, locale);
+        Diplomas diploma = new Diplomas(ranking, null, locale);
         return diploma.create();
     }
 

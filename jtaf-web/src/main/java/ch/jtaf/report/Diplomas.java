@@ -21,7 +21,7 @@ import java.net.MalformedURLException;
 import java.util.Locale;
 import org.jboss.logging.Logger;
 
-public class Diploma extends AbstractReport {
+public class Diplomas extends AbstractReport {
 
     private static final float ATHLETE_FONT_SIZE = 12f;
 
@@ -30,7 +30,7 @@ public class Diploma extends AbstractReport {
     private final byte[] logo;
     private final CompetitionRankingVO ranking;
 
-    public Diploma(CompetitionRankingVO ranking, byte[] logo, Locale locale) {
+    public Diplomas(CompetitionRankingVO ranking, byte[] logo, Locale locale) {
         super(locale);
         this.ranking = ranking;
         this.logo = logo;
@@ -60,7 +60,7 @@ public class Diploma extends AbstractReport {
             pdfWriter.flush();
             return baos.toByteArray();
         } catch (DocumentException | IOException e) {
-            Logger.getLogger(Diploma.class).error(e.getMessage(), e);
+            Logger.getLogger(Diplomas.class).error(e.getMessage(), e);
             return new byte[0];
         }
     }

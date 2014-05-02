@@ -35,10 +35,11 @@ public class Numbers extends AbstractReport {
 
     public byte[] create() {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            document = new Document(PageSize.A4, cmToPixel(1.7f), cmToPixel(1.9f), cmToPixel(1.3f), cmToPixel(1.3f));
+            document = new Document(PageSize.A4, cmToPixel(1.5f), cmToPixel(1.7f), cmToPixel(1.1f), cmToPixel(1.3f));
             pdfWriter = PdfWriter.getInstance(document, baos);
             document.open();
             int i = 0;
+            int number = 1;
             PdfPTable table = createMainTable();
             for (Athlete athlete : athletes) {
                 if (i > 9) {
@@ -47,7 +48,7 @@ public class Numbers extends AbstractReport {
                     i = 0;
                     table = createMainTable();
                 }
-                addAthleteInfo(table, athlete);
+                addAthleteInfo(table, athlete, number);
                 if (i % 2 == 0) {
                     addEmptyCell(table);
                 }
@@ -55,6 +56,7 @@ public class Numbers extends AbstractReport {
                     addEmptyRow(table);
                 }
                 i++;
+                number++;
             }
             document.add(table);
             document.close();
@@ -78,12 +80,12 @@ public class Numbers extends AbstractReport {
         table.addCell(cellEmpty);
     }
 
-    private void addAthleteInfo(PdfPTable table, Athlete athlete) {
+    private void addAthleteInfo(PdfPTable table, Athlete athlete, int number) {
         PdfPTable atable = new PdfPTable(1);
         atable.setWidthPercentage(100);
 
         PdfPCell cellId = new PdfPCell(
-                new Phrase(athlete.getId().toString(),
+                new Phrase(number + "",
                         FontFactory.getFont(FontFactory.HELVETICA, FONT_SIZE_TEXT)));
         cellId.setBorder(0);
         cellId.setMinimumHeight(cmToPixel(2.5f));
@@ -92,7 +94,8 @@ public class Numbers extends AbstractReport {
 
         PdfPCell cellName = new PdfPCell(
                 new Phrase(athlete.getLastName() + " " + athlete.getFirstName()
-                        + "\n" + athlete.getClub().getName(),
+                        + "\n" + athlete.getCategory().getAbbreviation()
+                        + " / " + athlete.getClub().getName(),
                         FontFactory.getFont(FontFactory.HELVETICA, FONT_SIZE_INFO)));
         cellName.setBorder(0);
         cellName.setMinimumHeight(cmToPixel(1.5f));
@@ -100,7 +103,10 @@ public class Numbers extends AbstractReport {
         cellName.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
         atable.addCell(cellName);
 
-        table.addCell(atable);
+        PdfPCell cellTable = new PdfPCell(atable);
+        cellTable.setBorder(0);
+        
+        table.addCell(cellTable);
     }
 
     private void addEmptyRow(PdfPTable table) {

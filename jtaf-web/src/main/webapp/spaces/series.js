@@ -240,7 +240,7 @@ function SeriesController() {
                 sheetOrderByClub.appendChild(document.createTextNode(util.translate("(order by club)")));
 
                 var numbers = document.createElement("a");
-                numbers.setAttribute("href", "/jtaf/res/reports/numbers?competitionid=" + competition.id);
+                numbers.setAttribute("href", "/jtaf/res/reports/numbers?competitionid=" + competition.id + "&orderby=club");
                 numbers.setAttribute("target", "_blank");
                 numbers.appendChild(document.createTextNode(util.translate("Numbers")));
 

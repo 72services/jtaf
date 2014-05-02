@@ -51,7 +51,7 @@ public class ReportResourceTest {
 
     @Test
     public void testGetSheets() throws Exception {
-        byte[] report = rr.getSheets(hsr, COMPETITION_ID, CATEGORY_ID, null, false);
+        byte[] report = rr.getSheets(hsr, COMPETITION_ID, CATEGORY_ID, null);
 
         assertNotNull(report);
         assertTrue(report.length > 0);
@@ -67,7 +67,7 @@ public class ReportResourceTest {
 
     @Test(expected = WebApplicationException.class)
     public void testGetSheetsNotFound() throws Exception {
-        rr.getSheets(hsr, 0l, 0l, null, false);
+        rr.getSheets(hsr, 0l, 0l, null);
     }
 
     @Test
