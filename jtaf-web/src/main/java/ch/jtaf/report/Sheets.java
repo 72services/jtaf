@@ -60,7 +60,7 @@ public class Sheets extends AbstractReport {
     public byte[] create() {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             float oneCm = cmToPixel(1f);
-            document = new Document(PageSize.A5, oneCm, oneCm, cmToPixel(3.5f), oneCm);
+            document = new Document(PageSize.A5, oneCm, oneCm, cmToPixel(4.5f), oneCm);
             pdfWriter = PdfWriter.getInstance(document, baos);
             document.open();
             boolean first = true;
@@ -89,7 +89,7 @@ public class Sheets extends AbstractReport {
     private void createLogo() throws BadElementException, DocumentException, MalformedURLException, IOException {
         if (logo != null) {
             Image image = Image.getInstance(logo);
-            image.setAbsolutePosition(cmToPixel(1f), cmToPixel(18f));
+            image.setAbsolutePosition(cmToPixel(1f), cmToPixel(17.5f));
             image.scaleToFit(120, 60);
             document.add(image);
         }
@@ -102,7 +102,7 @@ public class Sheets extends AbstractReport {
 
         Rectangle page = document.getPageSize();
         table.setTotalWidth(page.getWidth() - document.leftMargin() - document.rightMargin());
-        table.writeSelectedRows(0, 1, document.leftMargin(), cmToPixel(21f), pdfWriter.getDirectContent());
+        table.writeSelectedRows(0, 1, document.leftMargin(), cmToPixel(20.5f), pdfWriter.getDirectContent());
     }
 
     private void createAthleteInfo(Athlete athlete, int number) throws DocumentException {
