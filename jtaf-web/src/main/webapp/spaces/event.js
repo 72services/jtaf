@@ -4,12 +4,14 @@ function EventController() {
     var jtafEvent;
     var series_id;
     var space_id;
+    var readonly;
 
     this.loadData = function() {
         util.showMessage();
 
         series_id = util.searchMap.series_id;
         space_id = util.searchMap.space_id;
+        readonly = util.searchMap.readonly;
 
         var id = util.searchMap.id;
         if (id === undefined) {
@@ -65,6 +67,8 @@ function EventController() {
         document.getElementById("event_b").value = jtafEvent.b;
         document.getElementById("event_c").value = jtafEvent.c;
         document.getElementById("event_name").focus();
+        
+        document.getElementById("save").disabled = readonly;
     }
 
     function fillEvent() {

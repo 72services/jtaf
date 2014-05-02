@@ -23,6 +23,7 @@ public class Competition {
     private Long id;
     private String name;
     private Date competitionDate;
+    private boolean locked;
     private Long series_id;
     @Transient
     private int numberOfAthletesWithResults;
@@ -75,6 +76,14 @@ public class Competition {
 
     public void setNumberOfAthletesWithResults(int numberOfAthletesWithResults) {
         this.numberOfAthletesWithResults = numberOfAthletesWithResults;
+    }
+    
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 
     @Override

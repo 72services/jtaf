@@ -5,13 +5,15 @@ function CategoryController() {
     var events;
     var series_id;
     var space_id;
+    var readonly;
 
     this.loadData = function() {
         util.showMessage();
 
         series_id = util.searchMap.series_id;
         space_id = util.searchMap.space_id;
-        
+        readonly = util.searchMap.readonly;
+
         util.xhrGetSync("/jtaf/res/events?series_id=" + series_id, function(response) {
             events = JSON.parse(response);
         });
@@ -63,6 +65,8 @@ function CategoryController() {
         }
         fillEventsTable();
         document.getElementById("category_abbr").focus();
+
+        document.getElementById("save").disabled = readonly;
     }
 
     function fillEventsTable() {

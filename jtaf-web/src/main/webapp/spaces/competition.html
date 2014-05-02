@@ -25,7 +25,13 @@
                     </tr>
                     <tr>
                         <td><span class="i18n">Name</span></td>
-                        <td><input type="text" id="competition_name" required /></td>
+                        <td>
+                            <input type="text" id="competition_name" required />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="i18n">Locked</span></td>
+                        <td><input type="checkbox" id="competition_locked" /></td>
                     </tr>
                     <tr>
                         <td><span class="i18n">Date</span></td>
@@ -34,7 +40,7 @@
                 </table>
 
                 <p>
-                    <input type="submit" value="Save" />&nbsp;
+                    <input id="save" type="submit" value="Save" />&nbsp;
                     <a href="javascript:competitionController.back();"><span class="i18n">Back</span></a>
                 </p>
 

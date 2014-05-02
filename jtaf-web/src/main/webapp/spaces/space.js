@@ -1,13 +1,9 @@
 function SpaceController() {
     var util = new Util();
-
     var space;
-
     this.loadData = function() {
         util.showMessage();
-        
         var id = util.searchMap.id;
-
         if (id === undefined) {
             space = new Object();
             createSeriesTableBody();
@@ -21,7 +17,6 @@ function SpaceController() {
             });
         }
     };
-
     this.deleteSeries = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/series/" + id, function() {
@@ -30,7 +25,6 @@ function SpaceController() {
             });
         }
     };
-
     this.copySeries = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrPost("/jtaf/res/series/" + id + "?function=copy", function() {
@@ -39,7 +33,6 @@ function SpaceController() {
             });
         }
     };
-
     this.deleteClub = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/clubs/" + id, function() {
@@ -48,15 +41,12 @@ function SpaceController() {
             });
         }
     };
-
     this.addSeries = function() {
         window.location = "series.html?space_id=" + space.id;
     };
-
     this.addClub = function() {
         window.location = "club.html?space_id=" + space.id;
     };
-
     this.save = function() {
         fillSpace();
         util.xhrPost("/jtaf/res/spaces/", function(response) {
@@ -71,7 +61,6 @@ function SpaceController() {
 
     function parseAndFillSpace(response) {
         space = JSON.parse(response);
-
         fillForm();
         createSeriesTableBody();
         createClubsTableBody();
@@ -86,7 +75,6 @@ function SpaceController() {
     function createSeriesTableBody() {
         var table = document.getElementById("series_table");
         table.innerHTML = "";
-
         if (space.series === undefined || space.series.length === 0) {
             var row = table.insertRow(0);
             var cell = row.insertCell(0);
@@ -123,16 +111,23 @@ function SpaceController() {
                 delSpan.className = "i18n";
                 delSpan.innerHTML = "Delete";
                 del.appendChild(delSpan);
-
                 var cellFunction = row.insertCell(1);
                 cellFunction.style.width = "200px";
                 cellFunction.style.textAlign = "right";
-
                 cellFunction.appendChild(exporting);
                 cellFunction.appendChild(document.createTextNode(" "));
                 cellFunction.appendChild(copy);
                 cellFunction.appendChild(document.createTextNode(" "));
                 cellFunction.appendChild(del);
+                cellFunction.appendChild(document.createTextNode(" "));
+                var lock = document.createElement("img");
+                if (series.locked) {
+                    lock.src = "../images/locked.png";
+                }
+                else {
+                    lock.src = "../images/unlocked.png";
+                }
+                cellFunction.appendChild(lock);
                 i++;
             });
         }
@@ -141,7 +136,6 @@ function SpaceController() {
     function createClubsTableBody() {
         var table = document.getElementById("club_table");
         table.innerHTML = "";
-
         if (space.clubs === undefined || space.clubs.length === 0) {
             var row = table.insertRow(0);
             var cell = row.insertCell(0);
@@ -168,11 +162,9 @@ function SpaceController() {
                 delSpan.className = "i18n";
                 delSpan.innerHTML = "Delete";
                 del.appendChild(delSpan);
-
                 var cellFunction = row.insertCell(2);
                 cellFunction.style.width = "150px";
                 cellFunction.style.textAlign = "right";
-
                 cellFunction.appendChild(del);
                 i++;
             });

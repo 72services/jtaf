@@ -4,13 +4,15 @@ function CompetitionController() {
     var competition;
     var series_id;
     var space_id;
+    var readonly;
 
     this.loadData = function() {
         util.showMessage();
 
         series_id = util.searchMap.series_id;
         space_id = util.searchMap.space_id;
-        
+        readonly = util.searchMap.readonly;
+
         var id = util.searchMap.id;
         if (id === undefined) {
             competition = new Object();
@@ -36,6 +38,10 @@ function CompetitionController() {
         }, competition);
     };
 
+    this.isReadOnly = function() {
+        return readonly;
+    }
+
     function parseAndFill(response) {
         competition = JSON.parse(response);
         fillForm();
@@ -45,12 +51,16 @@ function CompetitionController() {
         document.getElementById("competition_id").value = competition.id;
         document.getElementById("competition_name").value = competition.name;
         document.getElementById("competition_date").value = competition.competitionDate;
+        document.getElementById("competition_locked").checked = competition.locked;
         document.getElementById("competition_name").focus();
+
+        document.getElementById("save").disabled = readonly;
     }
 
     function fillCompetition() {
         competition.name = document.getElementById("competition_name").value;
         competition.competitionDate = document.getElementById("competition_date").value;
+        competition.locked = document.getElementById("competition_locked").checked;
         competition.series_id = series_id;
     }
 

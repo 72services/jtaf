@@ -5,6 +5,7 @@ function Athlete() {
     var clubs;
     var series_id;
     var space_id;
+    var readonly;
 
     this.loadData = function() {
         util.showMessage();
@@ -12,6 +13,7 @@ function Athlete() {
         var id = util.searchMap.id;
         series_id = util.searchMap.series_id;
         space_id = util.searchMap.space_id;
+        readonly = util.searchMap.readonly;
 
         if (id === undefined) {
             fillClubSelect();
@@ -85,6 +87,8 @@ function Athlete() {
         }
         document.getElementById("athlete_category").value = athlete.category.abbreviation;
         fillClubSelect();
+        
+        document.getElementById("save").disabled = readonly;
     }
 
     function fillAthlete() {

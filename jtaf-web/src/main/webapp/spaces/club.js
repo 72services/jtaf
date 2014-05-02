@@ -3,12 +3,15 @@ function ClubController() {
 
     var club;
     var space_id;
+    var readonly;
 
     this.loadData = function() {
         util.showMessage();
 
         space_id = util.searchMap.space_id;
+        readonly = util.searchMap.readonly;
         var id = util.searchMap.id;
+        
         if (id === undefined) {
             club = new Object();
             document.getElementById("club_abbreviation").focus;
@@ -43,6 +46,8 @@ function ClubController() {
         document.getElementById("club_abbreviation").value = club.abbreviation;
         document.getElementById("club_name").value = club.name;
         document.getElementById("club_name").focus();
+        
+        document.getElementById("save").disabled = readonly;
     }
 
     function fillClub() {

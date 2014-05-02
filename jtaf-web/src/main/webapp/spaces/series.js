@@ -198,6 +198,7 @@ function SeriesController() {
     function fillForm() {
         document.getElementById("series_id").value = series.id;
         document.getElementById("series_name").value = series.name;
+        document.getElementById("series_locked").checked = series.locked;
         document.getElementById("series_name").focus();
     }
 
@@ -214,43 +215,45 @@ function SeriesController() {
             var i = 0;
             series.competitions.forEach(function(competition) {
                 var row = table.insertRow(i);
-                var onclickEdit = "window.location = 'competition.html?id=" + competition.id + "&series_id=" + series_id + "&space_id=" + space_id + "'";
-                
+                var onclickEdit = "window.location = 'competition.html?id="
+                        + competition.id + "&series_id=" + series_id
+                        + "&space_id=" + space_id + "&readonly=" + series.locked + "'";
+
                 var cellName = row.insertCell(0);
                 cellName.className = "edit";
                 cellName.innerHTML = competition.name;
                 cellName.setAttribute("onclick", onclickEdit);
-                
+
                 var cellDate = row.insertCell(1);
                 cellDate.className = "edit";
                 cellDate.innerHTML = competition.competitionDate;
                 cellDate.setAttribute("onclick", onclickEdit);
-                
+
                 var sheet = document.createElement("a");
                 sheet.setAttribute("href", "/jtaf/res/reports/sheets?competitionid=" + competition.id);
                 sheet.setAttribute("target", "_blank");
                 sheet.appendChild(document.createTextNode(util.translate("Sheets")));
-                
+
                 var sheetOrderByClub = document.createElement("a");
                 sheetOrderByClub.setAttribute("href", "/jtaf/res/reports/sheets?orderby=club&competitionid=" + competition.id);
                 sheetOrderByClub.setAttribute("target", "_blank");
                 sheetOrderByClub.appendChild(document.createTextNode(util.translate("(order by club)")));
-                
+
                 var numbers = document.createElement("a");
                 numbers.setAttribute("href", "/jtaf/res/reports/numbers?competitionid=" + competition.id);
                 numbers.setAttribute("target", "_blank");
                 numbers.appendChild(document.createTextNode(util.translate("Numbers")));
-                
+
                 var del = document.createElement("a");
                 del.setAttribute("href", "#");
                 del.setAttribute("onclick", "seriesController.deleteCompetition(" +
                         competition.id + ")");
-                
+
                 var delSpan = document.createElement("span");
                 delSpan.className = "i18n";
                 delSpan.innerHTML = "Delete";
                 del.appendChild(delSpan);
-                
+
                 var cellFunction = row.insertCell(2);
                 cellFunction.style.textAlign = "right";
                 cellFunction.appendChild(sheet);
@@ -258,8 +261,19 @@ function SeriesController() {
                 cellFunction.appendChild(sheetOrderByClub);
                 cellFunction.appendChild(document.createTextNode("  "));
                 cellFunction.appendChild(numbers);
+                if (!series.locked) {
+                    cellFunction.appendChild(document.createTextNode(" "));
+                    cellFunction.appendChild(del);
+                }
                 cellFunction.appendChild(document.createTextNode(" "));
-                cellFunction.appendChild(del);
+                var lock = document.createElement("img");
+                if (competition.locked) {
+                    lock.src = "../images/locked.png";
+                }
+                else {
+                    lock.src = "../images/unlocked.png";
+                }
+                cellFunction.appendChild(lock);
                 i++;
             });
         }
@@ -279,7 +293,9 @@ function SeriesController() {
             var i = 0;
             categories.forEach(function(category) {
                 var row = table.insertRow(i);
-                var onclickEdit = "window.location = 'category.html?id=" + category.id + "&series_id=" + series_id + "&space_id=" + space_id + "'";
+                var onclickEdit = "window.location = 'category.html?id="
+                        + category.id + "&series_id=" + series_id
+                        + "&space_id=" + space_id + "&readonly=" + series.locked + "'";
                 var cellAbbr = row.insertCell(0);
                 cellAbbr.className = "edit";
                 cellAbbr.innerHTML = category.abbreviation;
@@ -318,8 +334,10 @@ function SeriesController() {
                 var cellFunction = row.insertCell(5);
                 cellFunction.setAttribute("style", "width: 150px; text-align: right;");
                 cellFunction.appendChild(sheet);
-                cellFunction.appendChild(document.createTextNode(" "));
-                cellFunction.appendChild(del);
+                if (!series.locked) {
+                    cellFunction.appendChild(document.createTextNode(" "));
+                    cellFunction.appendChild(del);
+                }
                 i++;
             });
         }
@@ -339,7 +357,9 @@ function SeriesController() {
             var i = 0;
             events.forEach(function(event) {
                 var row = table.insertRow(i);
-                var onclickEdit = "window.location = 'event.html?id=" + event.id + "&series_id=" + series_id + "&space_id=" + space_id + "'";
+                var onclickEdit = "window.location = 'event.html?id="
+                        + event.id + "&series_id=" + series_id + "&space_id="
+                        + space_id + "&readonly=" + series.locked + "'";
                 var cellName = row.insertCell(0);
                 cellName.className = "edit";
                 cellName.innerHTML = event.name;
@@ -377,7 +397,9 @@ function SeriesController() {
                 del.appendChild(delSpan);
                 var cellFunction = row.insertCell(7);
                 cellFunction.setAttribute("style", "text-align: right;");
-                cellFunction.appendChild(del);
+                if (!series.locked) {
+                    cellFunction.appendChild(del);
+                }
                 i++;
             });
         }
@@ -404,8 +426,9 @@ function SeriesController() {
         var i = 0;
         athletes.forEach(function(athlete) {
             var row = table.insertRow(i);
-            var onclickEdit = "window.location = 'athlete.html?id=" + athlete.id +
-                    "&series_id=" + series_id + "&space_id=" + space_id + "'";
+            var onclickEdit = "window.location = 'athlete.html?id=" + athlete.id
+                    + "&series_id=" + series_id + "&space_id=" + space_id
+                    + "&readonly=" + series.locked + "'";
             var cellId = row.insertCell(0);
             cellId.className = "edit";
             cellId.innerHTML = athlete.id;
@@ -434,7 +457,6 @@ function SeriesController() {
             cellClub.className = "edit";
             cellClub.innerHTML = athlete.club;
             cellClub.setAttribute("onclick", onclickEdit);
-
             var del = document.createElement("a");
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "seriesController.deleteAthlete(" + athlete.id + ")");
@@ -444,13 +466,16 @@ function SeriesController() {
             del.appendChild(delSpan);
             var cellFunction = row.insertCell(7);
             cellFunction.style.textAlign = "right";
-            cellFunction.appendChild(del);
+            if (!series.locked) {
+                cellFunction.appendChild(del);
+            }
             i++;
         });
     }
 
     function fillSeries() {
         series.name = document.getElementById("series_name").value;
+        series.locked = document.getElementById("series_locked").checked;
         series.space_id = space_id;
     }
 
