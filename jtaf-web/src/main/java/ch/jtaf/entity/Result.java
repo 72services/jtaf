@@ -87,9 +87,13 @@ public class Result {
     }
 
     public Double getResultAsDouble() {
-        return Double.parseDouble(result);
+        if (result != null && !result.equals("")) {
+            return Double.parseDouble(result);
+        } else {
+            return 0.0d;
+        }
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;

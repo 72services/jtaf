@@ -116,4 +116,19 @@ public class RankingResource {
         }
     }
 
+    @GET
+    @Path("club/{seriesid}")
+    @Produces({"application/pdf"})
+    public byte[] getClubRanking(@Context HttpServletRequest hsr, @PathParam("seriesid") Long seriesId) {
+        if (seriesId == null) {
+            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+        } else {
+            byte[] report = service.createClubRanking(seriesId, hsr.getLocale());
+            if (report == null) {
+                throw new WebApplicationException(Response.Status.NOT_FOUND);
+            } else {
+                return report;
+            }
+        }
+    }
 }

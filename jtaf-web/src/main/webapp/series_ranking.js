@@ -21,6 +21,11 @@ function SeriesRankingController() {
         var newtab = window.open();
         newtab.location = "/jtaf/res/rankings/series/pdf/" + ranking.series.id;
     };
+    
+    this.createClubRanking = function() {
+        var newtab = window.open();
+        newtab.location = "/jtaf/res/rankings/club/" + ranking.series.id;
+    };
 
     function parseAndFill(response) {
         ranking = JSON.parse(response);
