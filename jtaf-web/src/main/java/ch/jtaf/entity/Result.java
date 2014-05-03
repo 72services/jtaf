@@ -86,6 +86,10 @@ public class Result {
         this.position = position;
     }
 
+    public Double getResultAsDouble() {
+        return Double.parseDouble(result);
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;

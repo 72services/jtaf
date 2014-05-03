@@ -251,9 +251,9 @@ public class ReportService extends AbstractService {
                 @Override
                 public int compare(AthleteWithEventTO o1, AthleteWithEventTO o2) {
                     if (o1.getEvent().getType().equals(EventType.JUMP_THROW)) {
-                        return o2.getResult().getResult().compareTo(o1.getResult().getResult());
+                        return o2.getResult().getResultAsDouble().compareTo(o1.getResult().getResultAsDouble());
                     } else {
-                        return o1.getResult().getResult().compareTo(o2.getResult().getResult());
+                        return o1.getResult().getResultAsDouble().compareTo(o2.getResult().getResultAsDouble());
                     }
                 }
 
