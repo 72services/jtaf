@@ -62,7 +62,7 @@ public abstract class AbstractReport {
         private final PdfPTable header;
 
         public HeaderFooter(String left, String middle, String right) {
-            header = new PdfPTable(3);
+            header = new PdfPTable(new float[]{1, 3, 1});
             header.setWidthPercentage(100);
             header.setSpacingBefore(cmToPixel(1f));
 

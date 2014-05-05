@@ -34,7 +34,7 @@ public class CompetitionRanking extends Ranking {
                 document = new Document(PageSize.A4, border, border, border, border);
                 pdfWriter = PdfWriter.getInstance(document, baos);
                 pdfWriter.setPageEvent(new HeaderFooter(
-                        I18n.getInstance().getString(locale, "Ranking"), 
+                        I18n.getInstance().getString(locale, "Ranking"),
                         ranking.getCompetition().getName(),
                         sdf.format(ranking.getCompetition().getCompetitionDate())));
                 document.open();
@@ -53,29 +53,43 @@ public class CompetitionRanking extends Ranking {
 
     private void createRanking() throws DocumentException {
         for (CompetitionRankingCategoryVO category : ranking.getCategories()) {
+            if (numberOfRows > 22) {
+                document.newPage();
+            }
             PdfPTable table = createAthletesTable();
             createCategoryTitle(table, category);
+            numberOfRows += 2;
+
+            int percentage = 0;
+            if (ranking.getCompetition().getMedalPercentage() != null
+                    && ranking.getCompetition().getMedalPercentage() > 0) {
+                percentage = ranking.getCompetition().getMedalPercentage();
+            }
+
+            int numberOfMedals = category.getAthletes().size() * (percentage / 100);
+            if (numberOfMedals < 3) {
+                numberOfMedals = 3;
+            }
 
             int position = 1;
             for (Athlete athlete : category.getAthletes()) {
-                createAthleteRow(table, position, athlete);
+                createAthleteRow(table, position, athlete, numberOfMedals);
                 position++;
                 numberOfRows += 1;
-                if (numberOfRows > 24) {
+                if (numberOfRows > 23) {
                     document.add(table);
                     table = createAthletesTable();
                     document.newPage();
                 }
             }
             document.add(table);
-            numberOfRows += 3;
         }
     }
 
     private PdfPTable createAthletesTable() {
         PdfPTable table = new PdfPTable(new float[]{2f, 10f, 10f, 2f, 5f, 5f});
         table.setWidthPercentage(100);
-        table.setSpacingBefore(cmToPixel(1f));
+        table.setSpacingBefore(cmToPixel(0.6f));
         return table;
     }
 
@@ -87,8 +101,12 @@ public class CompetitionRanking extends Ranking {
         addCategoryTitleCellWithColspan(table, " ", 6);
     }
 
-    private void createAthleteRow(PdfPTable table, int position, Athlete athlete) throws DocumentException {
-        addCell(table, position + ".");
+    private void createAthleteRow(PdfPTable table, int position, Athlete athlete, int numberOfMedals) throws DocumentException {
+        if (position <= numberOfMedals) {
+            addCell(table, "* " + position + ".");
+        } else {
+            addCell(table, position + ".");
+        }
         addCell(table, athlete.getLastName());
         addCell(table, athlete.getFirstName());
         addCell(table, athlete.getYear() + "");

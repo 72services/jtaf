@@ -52,22 +52,25 @@ public class SeriesRanking extends Ranking {
 
     private void createRanking() throws DocumentException {
         for (SeriesRankingCategoryVO category : ranking.getCategories()) {
+            if (numberOfRows > 22) {
+                document.newPage();
+            }
             PdfPTable table = createAthletesTable();
             createCategoryTitle(table, category);
+            numberOfRows += 2;
 
             int position = 1;
             for (Athlete athlete : category.getAthletes()) {
                 createAthleteRow(table, position, athlete);
                 position++;
                 numberOfRows += 1;
-                if (numberOfRows > 24) {
+                if (numberOfRows > 23) {
                     document.add(table);
-                    table = createAthletesTable();
                     document.newPage();
+                    table = createAthletesTable();
                 }
             }
             document.add(table);
-            numberOfRows += 3;
         }
     }
 
