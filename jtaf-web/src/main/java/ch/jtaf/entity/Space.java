@@ -1,6 +1,7 @@
 package ch.jtaf.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ import javax.persistence.Transient;
     @NamedQuery(name = "Space.findByUser",
             query = "select u.space from UserSpace u where u.user.email = :email order by u.space.name desc")
 })
-public class Space {
+public class Space implements Comparable<Space> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,6 +73,16 @@ public class Space {
         this.owner = owner;
     }
 
+    public Date getMostRecentDate() {
+        Date date = new Date();
+        for (Series s : series) {
+            if (s.getMostRecentDate().compareTo(date) == -1) {
+                date = s.getMostRecentDate();
+            }
+        }
+        return date;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -97,5 +108,10 @@ public class Space {
     @Override
     public String toString() {
         return "Space{" + "id=" + id + ", name=" + name + '}';
+    }
+
+    @Override
+    public int compareTo(Space o) {
+        return o.getMostRecentDate().compareTo(getMostRecentDate());
     }
 }

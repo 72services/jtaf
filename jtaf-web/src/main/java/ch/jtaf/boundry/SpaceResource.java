@@ -1,6 +1,7 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.entity.SecurityUser;
+import ch.jtaf.entity.Series;
 import ch.jtaf.entity.Space;
 import ch.jtaf.entity.UserSpace;
 import ch.jtaf.entity.UserSpaceRole;
@@ -18,7 +19,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
@@ -31,13 +31,15 @@ import javax.ws.rs.core.Response;
 public class SpaceResource extends BaseResource {
 
     @GET
-    public List<Space> list(@QueryParam("my") Boolean my) {
-        if (my != null && my) {
-            Principal principal = sessionContext.getCallerPrincipal();
-            return dataService.getMySpaces(principal.getName());
-        } else {
-            return dataService.getSpaces();
-        }
+    public List<Space> list() {
+        Principal principal = sessionContext.getCallerPrincipal();
+        return dataService.getMySpaces(principal.getName());
+    }
+
+    @GET
+    @Path("/series")
+    public List<Series> listSeries() {
+        return dataService.getAllSeries();
     }
 
     @POST

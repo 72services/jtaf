@@ -33,16 +33,11 @@ function SeriesRankingController() {
         var table = document.createElement("table");
         table.style.width = "100%";
         var row = table.insertRow(0);
+        
         var left = row.insertCell(0);
         var hleft = document.createElement("h1");
-        hleft.innerHTML = '<span class="i18n">Series Ranking</span>';
+        hleft.innerHTML = '<span class="i18n">Series Ranking</span> ' + ranking.series.name;
         left.appendChild(hleft);
-
-        var middle = row.insertCell(1);
-        middle.style.textAlign = "center";
-        var hmiddle = document.createElement("h1");
-        hmiddle.innerHTML = ranking.series.name;
-        middle.appendChild(hmiddle);
 
         document.getElementById("title").appendChild(table);
 

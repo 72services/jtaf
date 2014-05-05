@@ -22,8 +22,6 @@ import java.security.NoSuchAlgorithmException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.Resource;
@@ -260,16 +258,16 @@ public class DataService extends AbstractService {
         return em.find(aClass, name);
     }
 
-    public List<Space> getSpaces() {
+    public List<Series> getAllSeries() {
         TypedQuery<Space> q = em.createNamedQuery("Space.findAll", Space.class);
         List<Space> spaces = q.getResultList();
         for (Space space : spaces) {
             List<Series> series = getSeriesWithCompetitions(space.getId());
-            sortSeriesByCompetitionDate(series);
             space.setSeries(series);
             space.setClubs(getClubs(space.getId()));
         }
-        return spaces;
+        List<Series> flatSeries = sortByCompetitionDate(spaces);
+        return flatSeries;
     }
 
     public Space getSpace(Long id) {
@@ -497,37 +495,15 @@ public class DataService extends AbstractService {
         return event.calculatePoints(result);
     }
 
-    private void sortSeriesByCompetitionDate(List<Series> series) {
-        for (Series s : series) {
-            Collections.sort(s.getCompetitions(), new Comparator<Competition>(){
-
-                @Override
-                public int compare(Competition o1, Competition o2) {
-                    return o2.getCompetitionDate().compareTo(o1.getCompetitionDate());
-                }
-            });
+    private List<Series> sortByCompetitionDate(List<Space> spaces) {
+        List<Series> allSeries = new ArrayList<>();
+        for (Space space : spaces) {
+            for (Series series : space.getSeries()) {
+                Collections.sort(series.getCompetitions());
+            }
+            allSeries.addAll(space.getSeries());
         }
-        
-        Collections.sort(series, new Comparator<Series>() {
-
-            @Override
-            public int compare(Series o1, Series o2) {
-                Date date1 = getMostRecentDate(o1);
-                Date date2 = getMostRecentDate(o2);
-
-                return date2.compareTo(date1);
-            }
-
-            private Date getMostRecentDate(Series series) {
-                Date date = new Date();
-                for (Competition c : series.getCompetitions()) {
-                    if (c.getCompetitionDate().compareTo(date) == -1) {
-                        date = c.getCompetitionDate();
-                    }
-                }
-                return date;
-            }
-
-        });
+        Collections.sort(allSeries);
+        return allSeries;
     }
 }

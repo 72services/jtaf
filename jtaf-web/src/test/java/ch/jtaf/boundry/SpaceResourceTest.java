@@ -51,7 +51,7 @@ public class SpaceResourceTest {
 
     @Test
     public void testList() throws Exception {
-        List<Space> list = sr.list(false);
+        List<Space> list = sr.list();
 
         assertNotNull(list);
         assertTrue(list.size() > 0);

@@ -12,7 +12,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Locale;
 import org.jboss.logging.Logger;
 
@@ -36,7 +35,7 @@ public class SeriesRanking extends Ranking {
                 pdfWriter.setPageEvent(new HeaderFooter(
                         I18n.getInstance().getString(locale, "Series Ranking"),
                         ranking.getSeries().getName(),
-                        sdf.format(new Date())));
+                        ""));
                 document.open();
                 createRanking();
                 document.close();

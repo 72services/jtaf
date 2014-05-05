@@ -131,8 +131,8 @@ public class DataServiceTest {
     }
 
     @Test
-    public void testGetSpaces() throws Exception {
-        List<Space> list = ds.getSpaces();
+    public void testGetAllSeries() throws Exception {
+        List<Series> list = ds.getAllSeries();
 
         assertNotNull(list);
         assertTrue(list.size() > 0);
