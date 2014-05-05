@@ -126,7 +126,13 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.30</version>
             <scope>test</scope>
-        </dependency>        
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.8.9</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>

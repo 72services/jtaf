@@ -46,10 +46,12 @@ public class SeriesResource extends BaseResource {
     @POST
     public Series save(Series series) {
         if (isUserGrantedForSpace(series.getSpace_id())) {
-            Series fromDb = dataService.get(Series.class, series.getId());
-            series.setLogo(fromDb.getLogo());
-            dataService.save(series);
-            return dataService.getSeries(series.getId());
+            if (series.getId() != null) {
+                Series fromDb = dataService.get(Series.class, series.getId());
+                series.setLogo(fromDb.getLogo());
+            }
+            Series savedSeries = dataService.save(series);
+            return dataService.getSeries(savedSeries.getId());
         } else {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
@@ -64,7 +66,7 @@ public class SeriesResource extends BaseResource {
             throw new WebApplicationException(Response.Status.FORBIDDEN);
         }
     }
-    
+
     @POST
     @Path("{id}")
     public void copy(@PathParam("id") Long id, @QueryParam("function") String function) {

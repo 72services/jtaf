@@ -2,6 +2,7 @@ package ch.jtaf.entity;
 
 import java.sql.Date;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,10 @@ public class Competition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(name = "competitiondate")
     private Date competitionDate;
+    @Column(name = "medalpercentage")
+    private Integer medalPercentage;
     private boolean locked;
     private Long series_id;
     @Transient
@@ -77,13 +81,21 @@ public class Competition {
     public void setNumberOfAthletesWithResults(int numberOfAthletesWithResults) {
         this.numberOfAthletesWithResults = numberOfAthletesWithResults;
     }
-    
+
     public boolean isLocked() {
         return locked;
     }
 
     public void setLocked(boolean locked) {
         this.locked = locked;
+    }
+
+    public Integer getMedalPercentage() {
+        return medalPercentage;
+    }
+
+    public void setMedalPercentage(Integer medalPercentage) {
+        this.medalPercentage = medalPercentage;
     }
 
     @Override

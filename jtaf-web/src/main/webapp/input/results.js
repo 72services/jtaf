@@ -46,17 +46,11 @@ function ResultsController() {
 
     this.save = function() {
         fillAthlete();
-        if (athlete.club === undefined || athlete.club === null) {
-            util.error("Club must be choosen.");
-        }
-        else {
-            util.xhrPost("/jtaf/res/athletes?competition_id=" + competition.id, function(response) {
-                parseAndFill(response);
-                util.info("Athlete saved");
-                document.getElementById("search_term").focus();
-                document.getElementById("search_term").select();
-            }, athlete);
-        }
+        util.xhrPost("/jtaf/res/athletes?competition_id=" + competition.id, function(response) {
+            parseAndFill(response);
+            util.info("Athlete saved");
+            document.getElementById("result0").focus();
+        }, athlete);
     };
 
     this.selectAthlete = function(id) {

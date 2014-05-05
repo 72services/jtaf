@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "result")
@@ -86,6 +87,7 @@ public class Result {
         this.position = position;
     }
 
+    @JsonIgnore
     public Double getResultAsDouble() {
         if (result != null && !result.equals("")) {
             return Double.parseDouble(result);
@@ -93,7 +95,7 @@ public class Result {
             return 0.0d;
         }
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 7;
