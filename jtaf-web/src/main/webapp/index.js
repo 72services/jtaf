@@ -18,7 +18,7 @@ function IndexController() {
         });
         util.xhrGet("/jtaf/res/userspaces/current", function(response) {
             userSpaces = JSON.parse(response);
-            fillSpaces();
+            fillSeries();
         });
     };
 
@@ -105,7 +105,7 @@ function IndexController() {
 
                     if (!competition.locked && user !== undefined && user !== null && isUserGranted(user.email, series)) {
                         var a_results = document.createElement("a");
-                        a_results.href = "input/results.html?id=" + competition.id + "&space_id=" + space.id;
+                        a_results.href = "input/results.html?id=" + competition.id + "&space_id=" + series.space_id;
                         a_results.innerHTML = '<span class="i18n">Enter results</span>';
                         cell3.appendChild(a_results);
                         cell3.appendChild(document.createTextNode(" "));
