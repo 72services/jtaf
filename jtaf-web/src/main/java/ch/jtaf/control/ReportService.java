@@ -352,20 +352,8 @@ public class ReportService extends AbstractService {
         final SeriesRankingVO seriesRanking = getSeriesRanking(seriesId);
         Map<Club, ClubResultVO> pointsPerClub = new HashMap<>();
         for (SeriesRankingCategoryVO c : seriesRanking.getCategories()) {
-            List<Athlete> athletes = c.getAthletes();
-            Collections.sort(athletes, new Comparator<Athlete>() {
-                
-                @Override
-                public int compare(Athlete o1, Athlete o2) {
-                    Integer i1 = o1.getSeriesPoints(seriesRanking.getSeries());
-                    Integer i2 = o2.getSeriesPoints(seriesRanking.getSeries());
-                    return i1.compareTo(i2);
-                }
-                
-            });
-            
             int points = c.getAthletes().size();
-            for (Athlete a : athletes) {
+            for (Athlete a : c.getAthletes()) {
                 if (pointsPerClub.containsKey(a.getClub())) {
                     ClubResultVO cr = pointsPerClub.get(a.getClub());
                     cr.setPoints(cr.getPoints() + points);
