@@ -77,13 +77,18 @@ function CompetitionsRankingController() {
             row.appendChild(cell);
             table.appendChild(row);
 
+            var numberOfMedals = calculateNumberOfMedals(category);
             var rank = 1;
             category.athletes.forEach(function(athlete) {
                 row = document.createElement("tr");
 
                 cell = document.createElement("td");
                 cell.style.width = "40px";
-                cell.innerHTML = rank + ".";
+                if (rank <= numberOfMedals) {
+                    cell.innerHTML = "* " + rank + ".";
+                } else {
+                    cell.innerHTML = rank + ".";
+                }
                 row.appendChild(cell);
 
                 cell = document.createElement("td");
@@ -133,6 +138,19 @@ function CompetitionsRankingController() {
             document.getElementById("ranking").appendChild(table);
         });
 
+    }
+
+    function calculateNumberOfMedals(category) {
+        var numberOfMedals = 0;
+        if (ranking.competition.medalPercentage !== null
+                && ranking.competition.medalPercentage > 0) {
+            var percentage = ranking.competition.medalPercentage;
+            numberOfMedals = category.athletes.length * (percentage / 100);
+            if (numberOfMedals < 3) {
+                numberOfMedals = 3;
+            }
+        }
+        return numberOfMedals;
     }
 
     function calculateTotalPoints(athlete) {

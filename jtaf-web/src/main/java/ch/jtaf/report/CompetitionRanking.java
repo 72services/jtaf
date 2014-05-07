@@ -60,21 +60,10 @@ public class CompetitionRanking extends Ranking {
             createCategoryTitle(table, category);
             numberOfRows += 2;
 
-            int percentage = 0;
-            if (ranking.getCompetition().getMedalPercentage() != null
-                    && ranking.getCompetition().getMedalPercentage() > 0) {
-                percentage = ranking.getCompetition().getMedalPercentage();
-            }
-
-            int numberOfMedals = category.getAthletes().size() * (percentage / 100);
-            if (numberOfMedals < 3) {
-                numberOfMedals = 3;
-            }
-
-            int position = 1;
+            int rank = 1;
             for (Athlete athlete : category.getAthletes()) {
-                createAthleteRow(table, position, athlete, numberOfMedals);
-                position++;
+                createAthleteRow(table, rank, athlete, calculateNumberOfMedals(category));
+                rank++;
                 numberOfRows += 1;
                 if (numberOfRows > 23) {
                     document.add(table);
@@ -84,6 +73,19 @@ public class CompetitionRanking extends Ranking {
             }
             document.add(table);
         }
+    }
+
+    private int calculateNumberOfMedals(CompetitionRankingCategoryVO category) {
+        int numberOfMedals = 0;
+        if (ranking.getCompetition().getMedalPercentage() != null
+                && ranking.getCompetition().getMedalPercentage() > 0) {
+            int percentage = ranking.getCompetition().getMedalPercentage();
+            numberOfMedals = category.getAthletes().size() * (percentage / 100);
+            if (numberOfMedals < 3) {
+                numberOfMedals = 3;
+            }
+        }
+        return numberOfMedals;
     }
 
     private PdfPTable createAthletesTable() {
@@ -101,11 +103,11 @@ public class CompetitionRanking extends Ranking {
         addCategoryTitleCellWithColspan(table, " ", 6);
     }
 
-    private void createAthleteRow(PdfPTable table, int position, Athlete athlete, int numberOfMedals) throws DocumentException {
-        if (position <= numberOfMedals) {
-            addCell(table, "* " + position + ".");
+    private void createAthleteRow(PdfPTable table, int rank, Athlete athlete, int numberOfMedals) throws DocumentException {
+        if (rank <= numberOfMedals) {
+            addCell(table, "* " + rank + ".");
         } else {
-            addCell(table, position + ".");
+            addCell(table, rank + ".");
         }
         addCell(table, athlete.getLastName());
         addCell(table, athlete.getFirstName());
