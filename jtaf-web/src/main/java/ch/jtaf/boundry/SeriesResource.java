@@ -16,8 +16,6 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.imageio.ImageIO;
 import javax.interceptor.Interceptors;
-import static javax.swing.Spring.height;
-import static javax.swing.Spring.width;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -104,13 +102,16 @@ public class SeriesResource extends BaseResource {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
             try {
-                BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(s.getLogo()));
-                bufferedImage = scaleImage(bufferedImage, BufferedImage.TYPE_INT_RGB, 120, 60);
-                if (bufferedImage != null) {
-                    try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                        ImageIO.write(bufferedImage, "png", baos);
-                        byte[] ba = baos.toByteArray();
-                        return ba;
+                byte[] logo = s.getLogo();
+                if (logo != null) {
+                    BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(s.getLogo()));
+                    bufferedImage = scaleImage(bufferedImage, BufferedImage.TYPE_INT_RGB, 120, 60);
+                    if (bufferedImage != null) {
+                        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                            ImageIO.write(bufferedImage, "png", baos);
+                            byte[] ba = baos.toByteArray();
+                            return ba;
+                        }
                     }
                 }
             } catch (IOException ex) {
@@ -175,12 +176,12 @@ public class SeriesResource extends BaseResource {
             newWidth = (int) (newHeight * aspectRatio);
         }
 
-        Image scaled = image.getScaledInstance(newHeight, newHeight, Image.SCALE_SMOOTH );
+        Image scaled = image.getScaledInstance(newHeight, newHeight, Image.SCALE_SMOOTH);
         BufferedImage newImage = new BufferedImage(newHeight, newHeight, BufferedImage.TYPE_INT_RGB);
         Graphics g = newImage.getGraphics();
         g.drawImage(scaled, 0, 0, null);
         g.dispose();
-        
+
         return newImage;
     }
 }

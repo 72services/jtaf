@@ -96,8 +96,8 @@ div#tabs {
 
 div#info {
     position: fixed;
-    right: 10px;
-    top: 10px;
+    right: 0px;
+    top: 0px;
     z-index: 9999;
     width: 300px;
     height: 40px;
@@ -114,8 +114,8 @@ div#info {
 
 div#error {
     position: fixed;
-    right: 10px;
-    top: 10px;
+    right: 0px;
+    top: 0px;
     z-index: 9999;
     width: 300px;
     height: 40px;

@@ -58,6 +58,7 @@ function SeriesController() {
         iframe.name = "myTarget";
         iframe.addEventListener("load", function() {
             util.info("Logo replaced");
+            window.location.reload();
         });
         iframe.style.display = "none";
         document.body.appendChild(iframe);

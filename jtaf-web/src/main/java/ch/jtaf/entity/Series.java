@@ -13,6 +13,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "series")
@@ -110,6 +111,7 @@ public class Series implements Comparable<Series> {
         this.locked = locked;
     }
 
+    @JsonIgnore
     public Date getMostRecentDate() {
         Date date = new Date();
         for (Competition c : competitions) {

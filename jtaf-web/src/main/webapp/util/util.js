@@ -106,7 +106,12 @@ function Util() {
 
         var elements = document.getElementsByTagName("input");
         for (var i = 0; i < elements.length; ++i) {
-            elements[i].value = this.translate(elements[i].value);
+            try {
+                elements[i].value = this.translate(elements[i].value);
+            }
+            catch (err) {
+                // Do nothing. It's just I18n :-)
+            }
         }
     };
 
@@ -128,7 +133,7 @@ function Util() {
         div.setAttribute("id", "info");
         div.innerHTML = "<b>INFO</b><br />" + this.translate(message);
         document.body.appendChild(div);
-        window.setTimeout("fade(document.getElementById('info'))", 5000);
+        window.setTimeout("fade(750, document.getElementById('info'))", 5000);
     };
 
     this.error = function(message) {
@@ -136,7 +141,7 @@ function Util() {
         div.setAttribute("id", "error");
         div.innerHTML = "<b>ERROR</b><br />" + this.translate(message);
         document.body.appendChild(div);
-        window.setTimeout("fade(document.getElementById('error''))", 5000);
+        window.setTimeout("fade(750, document.getElementById('error''))", 5000);
     };
 
     this.showMessage = function() {
@@ -165,15 +170,19 @@ function Util() {
     }
 }
 
-function fade(element) {
+function fade(ms, el) {
     var opacity = 1;
-    var timer = setInterval(function() {
-        if (opacity <= 0.1) {
-            clearInterval(timer);
-            element.style.display = "none";
+    var interval = 50;
+    var gap = interval / ms;
+
+    function func() {
+        opacity -= gap;
+        el.style.opacity = opacity;
+
+        if (opacity <= 0) {
+            window.clearInterval(fading);
+            el.style.display = 'none';
         }
-        element.style.opacity = opacity;
-        element.style.filter = "alpha(opacity=" + opacity * 100 + ")";
-        opacity -= opacity * 0.1;
-    }, 50);
+    }
+    var fading = window.setInterval(func, interval);
 }
