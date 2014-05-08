@@ -22,23 +22,23 @@ import java.util.Locale;
 import org.jboss.logging.Logger;
 
 public class Diplomas extends AbstractReport {
-
+    
     private static final float ATHLETE_FONT_SIZE = 12f;
-
+    
     private Document document;
     private PdfWriter pdfWriter;
     private final byte[] logo;
     private final CompetitionRankingVO ranking;
-
+    
     public Diplomas(CompetitionRankingVO ranking, byte[] logo, Locale locale) {
         super(locale);
         this.ranking = ranking;
         this.logo = logo;
     }
-
+    
     public byte[] create() {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            document = new Document(PageSize.A5, cmToPixel(1.5f), cmToPixel(1.5f), cmToPixel(1.5f), cmToPixel(1.5f));
+            document = new Document(PageSize.A5, cmToPixel(1.5f), cmToPixel(1.5f), cmToPixel(1f), cmToPixel(1.5f));
             pdfWriter = PdfWriter.getInstance(document, baos);
             document.open();
             boolean first = true;
@@ -64,56 +64,55 @@ public class Diplomas extends AbstractReport {
             return new byte[0];
         }
     }
-
+    
     private void createLogo() throws BadElementException, DocumentException, MalformedURLException, IOException {
         if (logo != null) {
             Image image = Image.getInstance(logo);
-            image.setAbsolutePosition(cmToPixel(1f), cmToPixel(50f));
-            image.scaleToFit(cmToPixel(12f), cmToPixel(12f));
+            image.scaleToFit(cmToPixel(11f), cmToPixel(11f));
+            image.setAbsolutePosition(cmToPixel(11f) - image.getScaledWidth() + cmToPixel(1f), cmToPixel(5.5f));
             document.add(image);
         }
     }
-
+    
     private void createAthleteInfo(int rank, Athlete athlete, Category category) throws DocumentException {
-        PdfPTable table = new PdfPTable(new float[]{2f, 10f, 10f, 3f, 1f});
+        PdfPTable table = new PdfPTable(new float[]{2f, 10f, 10f, 3f, 2f});
         table.setWidthPercentage(100);
-        table.setSpacingBefore(cmToPixel(2f));
-
+        table.setSpacingBefore(cmToPixel(1.5f));
+        
         addCell(table, rank + ".", ATHLETE_FONT_SIZE);
         addCell(table, athlete.getLastName(), ATHLETE_FONT_SIZE);
         addCell(table, athlete.getFirstName(), ATHLETE_FONT_SIZE);
         addCell(table, athlete.getYear() + "", ATHLETE_FONT_SIZE);
         addCell(table, category.getAbbreviation(), ATHLETE_FONT_SIZE);
-
+        
         document.add(table);
     }
-
+    
     private void createTitle() throws DocumentException {
         PdfPTable table = new PdfPTable(1);
         table.setWidthPercentage(100);
-
+        
         PdfPCell cell = new PdfPCell(
                 new Phrase(I18n.getInstance().getString(locale, "Diploma"),
                         FontFactory.getFont(FontFactory.HELVETICA, 60f)));
         cell.setBorder(0);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-
+        
         table.addCell(cell);
         document.add(table);
     }
-
+    
     private void createCompetitionInfo() throws DocumentException {
         PdfPTable table = new PdfPTable(1);
         table.setWidthPercentage(100);
-        table.setSpacingBefore(cmToPixel(12f));
-
+        table.setSpacingBefore(cmToPixel(13f));
+        
         PdfPCell cell = new PdfPCell(
-                new Phrase(ranking.getCompetition().getName() + " "
-                        + sdf.format(ranking.getCompetition().getCompetitionDate()),
+                new Phrase(ranking.getCompetition().getName(),
                         FontFactory.getFont(FontFactory.HELVETICA, 25f)));
         cell.setBorder(0);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-
+        
         table.addCell(cell);
         document.add(table);
     }
