@@ -29,7 +29,7 @@ public class RankingResourceTest {
         rs = new ReportService();
         rs.em = em;
         rr = new RankingResource();
-        rr.service = rs;
+        rr.reportService = rs;
     }
 
     @AfterClass

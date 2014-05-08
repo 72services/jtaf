@@ -1,5 +1,6 @@
 package ch.jtaf.boundry;
 
+import ch.jtaf.control.DataService;
 import ch.jtaf.control.ReportService;
 import ch.jtaf.vo.CompetitionRankingVO;
 import ch.jtaf.vo.SeriesRankingVO;
@@ -28,12 +29,12 @@ import javax.ws.rs.core.Response;
 public class RankingResource {
 
     @EJB
-    protected ReportService service;
+    protected ReportService reportService;
 
     @GET
     @Path("competition/{competitionid}")
     public CompetitionRankingVO getCompetitionRanking(@PathParam("competitionid") Long competitionid) {
-        CompetitionRankingVO data = service.getCompetitionRanking(competitionid);
+        CompetitionRankingVO data = reportService.getCompetitionRanking(competitionid);
         if (data == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
@@ -48,7 +49,7 @@ public class RankingResource {
         if (competitionid == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         } else {
-            byte[] report = service.createCompetitionRanking(competitionid, hsr.getLocale());
+            byte[] report = reportService.createCompetitionRanking(competitionid, hsr.getLocale());
             if (report == null) {
                 throw new WebApplicationException(Response.Status.NOT_FOUND);
             } else {
@@ -60,7 +61,7 @@ public class RankingResource {
     @GET
     @Path("series/{seriesid}")
     public SeriesRankingVO getSeriesRanking(@PathParam("seriesid") Long seriesid) {
-        SeriesRankingVO data = service.getSeriesRanking(seriesid);
+        SeriesRankingVO data = reportService.getSeriesRanking(seriesid);
         if (data == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         } else {
@@ -75,7 +76,7 @@ public class RankingResource {
         if (seriesid == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         } else {
-            byte[] report = service.createSeriesRanking(seriesid, hsr.getLocale());
+            byte[] report = reportService.createSeriesRanking(seriesid, hsr.getLocale());
             if (report == null) {
                 throw new WebApplicationException(Response.Status.NOT_FOUND);
             } else {
@@ -91,7 +92,7 @@ public class RankingResource {
         if (competitionid == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         } else {
-            byte[] report = service.createDiploma(competitionid, hsr.getLocale());
+            byte[] report = reportService.createDiploma(competitionid, hsr.getLocale());
             if (report == null) {
                 throw new WebApplicationException(Response.Status.NOT_FOUND);
             } else {
@@ -107,7 +108,7 @@ public class RankingResource {
         if (competitionid == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         } else {
-            byte[] report = service.createEventsRanking(competitionid, hsr.getLocale());
+            byte[] report = reportService.createEventsRanking(competitionid, hsr.getLocale());
             if (report == null) {
                 throw new WebApplicationException(Response.Status.NOT_FOUND);
             } else {
@@ -123,7 +124,7 @@ public class RankingResource {
         if (seriesId == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         } else {
-            byte[] report = service.createClubRanking(seriesId, hsr.getLocale());
+            byte[] report = reportService.createClubRanking(seriesId, hsr.getLocale());
             if (report == null) {
                 throw new WebApplicationException(Response.Status.NOT_FOUND);
             } else {
