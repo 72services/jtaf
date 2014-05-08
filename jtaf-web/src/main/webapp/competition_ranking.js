@@ -2,6 +2,7 @@ function CompetitionsRankingController() {
     var util = new Util();
     var ranking;
     var competition_id;
+    var userSpaces;
 
     this.loadData = function() {
         util.showMessage();
@@ -16,6 +17,12 @@ function CompetitionsRankingController() {
                 util.hideLoading();
             });
         }
+        util.xhrGet("/jtaf/res/userspaces/current", function(response) {
+            userSpaces = JSON.parse(response);
+            if (userSpaces.length > 0) {
+                document.getElementById("diplomas").style.display = "inline";
+            }
+        });
     };
 
     this.openAsPdf = function() {
@@ -24,14 +31,14 @@ function CompetitionsRankingController() {
     };
 
 
-    this.openAsCsv = function() {
-        var newtab = window.open();
-        newtab.location = "/jtaf/res/reports/export.csv?competitionid=" + ranking.competition.id;
-    };
-
     this.createEventsRanking = function() {
         var newtab = window.open();
         newtab.location = "/jtaf/res/rankings/events/" + ranking.competition.id;
+    };
+
+    this.createDiplomas = function() {
+        var newtab = window.open();
+        newtab.location = "/jtaf/res/rankings/diploma/" + ranking.competition.id;
     };
 
     function parseAndFill(response) {
