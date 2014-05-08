@@ -15,8 +15,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 
 @Path("i18n")
-@Produces({"application/json; charset=UTF-8"})
-@Consumes({"application/json"})
+@Produces("application/json; charset=UTF-8")
+@Consumes("application/json")
 @Interceptors({TraceInterceptor.class})
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)

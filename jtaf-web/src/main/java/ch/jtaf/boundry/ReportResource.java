@@ -28,7 +28,7 @@ public class ReportResource {
 
     @GET
     @Path("sheets")
-    @Produces({"application/pdf"})
+    @Produces("application/pdf")
     public byte[] getSheets(@Context HttpServletRequest hsr, @QueryParam("competitionid") Long competitionid,
             @QueryParam("categoryid") Long categoryid, @QueryParam("orderby") String order) {
         try {
@@ -52,7 +52,7 @@ public class ReportResource {
 
     @GET
     @Path("numbers")
-    @Produces({"application/pdf"})
+    @Produces("application/pdf")
     public byte[] getNumbers(@Context HttpServletRequest hsr, @QueryParam("competitionid") Long competitionid,
             @QueryParam("orderby") String order) {
         try {

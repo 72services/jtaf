@@ -3,7 +3,6 @@ package ch.jtaf.boundry;
 import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.interceptor.TraceInterceptor;
 import java.security.NoSuchAlgorithmException;
-import java.security.Principal;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -20,8 +19,8 @@ import javax.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 
 @Path("users")
-@Produces({"application/json"})
-@Consumes({"application/json"})
+@Produces("application/json")
+@Consumes("application/json")
 @Interceptors({TraceInterceptor.class})
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)

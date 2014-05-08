@@ -2,14 +2,18 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.entity.Series;
 import ch.jtaf.interceptor.TraceInterceptor;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.imageio.ImageIO;
 import javax.interceptor.Interceptors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -26,8 +30,8 @@ import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 @Path("series")
-@Produces({"application/json"})
-@Consumes({"application/json"})
+@Produces("application/json")
+@Consumes("application/json")
 @Interceptors({TraceInterceptor.class})
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -85,6 +89,30 @@ public class SeriesResource extends BaseResource {
             } else {
                 return s;
             }
+        }
+    }
+
+    @GET
+    @Path("/logo/{id}")
+    @Produces("image/tif")
+    public byte[] getLogo(@PathParam("id") Long id) {
+        Series s = dataService.getSeries(id);
+        if (s == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        } else {
+            try {
+                BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(s.getLogo()));
+                if (bufferedImage != null) {
+                    try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                        ImageIO.write(bufferedImage, "png", baos);
+                        byte[] ba = baos.toByteArray();
+                        return ba;
+                    }
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(SeriesResource.class).error(ex.getMessage(), ex);
+            }
+            return new byte[0];
         }
     }
 

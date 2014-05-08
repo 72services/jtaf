@@ -20,8 +20,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 @Path("rankings")
-@Produces({"application/json"})
-@Consumes({"application/json"})
+@Produces("application/json")
+@Consumes("application/json")
 @Interceptors({TraceInterceptor.class})
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -43,7 +43,7 @@ public class RankingResource {
 
     @GET
     @Path("competition/pdf/{competitionid}")
-    @Produces({"application/pdf"})
+    @Produces("application/pdf")
     public byte[] getCompetitionRankingAsPdf(@Context HttpServletRequest hsr, @PathParam("competitionid") Long competitionid) {
         if (competitionid == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
@@ -70,7 +70,7 @@ public class RankingResource {
 
     @GET
     @Path("series/pdf/{seriesid}")
-    @Produces({"application/pdf"})
+    @Produces("application/pdf")
     public byte[] getSeriesRankingAsPdf(@Context HttpServletRequest hsr, @PathParam("seriesid") Long seriesid) {
         if (seriesid == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
@@ -86,7 +86,7 @@ public class RankingResource {
 
     @GET
     @Path("diploma/{competitionid}")
-    @Produces({"application/pdf"})
+    @Produces("application/pdf")
     public byte[] getDiploma(@Context HttpServletRequest hsr, @PathParam("competitionid") Long competitionid) {
         if (competitionid == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
@@ -102,7 +102,7 @@ public class RankingResource {
 
     @GET
     @Path("events/{competitionid}")
-    @Produces({"application/pdf"})
+    @Produces("application/pdf")
     public byte[] getEventsRanking(@Context HttpServletRequest hsr, @PathParam("competitionid") Long competitionid) {
         if (competitionid == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
@@ -118,7 +118,7 @@ public class RankingResource {
 
     @GET
     @Path("club/{seriesid}")
-    @Produces({"application/pdf"})
+    @Produces("application/pdf")
     public byte[] getClubRanking(@Context HttpServletRequest hsr, @PathParam("seriesid") Long seriesId) {
         if (seriesId == null) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);

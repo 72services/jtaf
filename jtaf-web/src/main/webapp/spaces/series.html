@@ -18,44 +18,52 @@
             <h1><span class="i18n">Edit Series</span></h1>
 
             <div>
-                <form action="javascript:seriesController.save();">
-                    <table class="input">
-                        <tr>
-                            <td><span class="i18n">Id</span></td>
-                            <td><input type="text" id="series_id" readonly disabled /></td>
-                        </tr>
-                        <tr>
-                            <td><span class="i18n">Name</span></td>
-                            <td><input type="text" id="series_name" required /></td>
-                        </tr>
-                        <tr>
-                            <td><span class="i18n">Locked</span></td>
-                            <td><input type="checkbox" id="series_locked" /></td>
-                        </tr>
-                    </table>
-                    <p>
-                        <input type="submit" value="Save" />&nbsp;
-                        <a href="javascript:seriesController.recalculateCategories();"><span class="i18n">Recalculate categories</span></a>&nbsp;
-                        <a href="javascript:seriesController.back();"><span class="i18n">Back</span></a>
-                    </p>
-                </form>
+                <table>
+                    <tr>
+                        <td>
+                            <form action="javascript:seriesController.save();">
+                                <table class="input">
+                                    <tr>
+                                        <td><span class="i18n">Id</span></td>
+                                        <td><input type="text" id="series_id" readonly disabled /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="i18n">Name</span></td>
+                                        <td><input type="text" id="series_name" required /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="i18n">Locked</span></td>
+                                        <td><input type="checkbox" id="series_locked" /></td>
+                                    </tr>
+                                </table>
+                                <p>
+                                    <input type="submit" value="Save" />&nbsp;
+                                    <a href="#" onclick="seriesController.recalculateCategories();"><span class="i18n">Recalculate categories</span></a>&nbsp;
+                                    <a href="#" onclick="seriesController.back();"><span class="i18n">Back</span></a>
+                                </p>
+                            </form>
+                        </td>
+                        <td style="vertical-align: bottom;">
+                            <form id="logo_upload"  method="POST" enctype="multipart/form-data">
+                                <table class="input">
+                                    <tr>
+                                        <td colspan="2"><img id="logoimage" src="#" alt="Logo"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="i18n">Logo</span></td>
+                                        <td><input type="file" name="series_logo" /></td>
+                                    </tr>
+                                </table>                
+                                <p>
+                                    <input type="button" value="Upload" onclick="seriesController.uploadLogo();" />
+                                </p>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
             </div>
 
-            <div style="padding-bottom: 50px;">
-                <form id="logo_upload"  method="POST" enctype="multipart/form-data">
-                    <table class="input">
-                        <tr>
-                            <td><span class="i18n">Logo</span></td>
-                            <td><input type="file" name="series_logo" /></td>
-                        </tr>
-                    </table>                
-                    <p>
-                        <input type="button" value="Upload" onclick="javascript:seriesController.uploadLogo();" />
-                    </p>
-                </form>
-            </div>
-
-            <div style="padding-bottom: 14px;">
+            <div style="padding-top: 30px; padding-bottom: 14px;">
                 <a id="a_competitions" class="tab_active" href="#" onclick="seriesController.switchTo('competitions');"><span class="i18n">Competitions</span></a>&nbsp;
                 <a id="a_events" class="tab_inactive" href="#" onclick="seriesController.switchTo('events');"><span class="i18n">Events</span></a>&nbsp;
                 <a id="a_categories" class="tab_inactive" href="#" onclick="seriesController.switchTo('categories');"><span class="i18n">Categories</span></a>&nbsp;
@@ -82,7 +90,7 @@
                         </tbody>
                     </table>
 
-                    <p><a href="javascript:seriesController.addCompetition();"><span class="i18n">Add competition</span></a></p>
+                    <p><a href="#" onclick="seriesController.addCompetition();"><span class="i18n">Add competition</span></a></p>
                 </div>
 
                 <div id="events" class="invisible">
@@ -108,7 +116,7 @@
                         </tbody>
                     </table>
 
-                    <p><a href="javascript:seriesController.addEvent();"><span class="i18n">Add event</span></a></p>
+                    <p><a href="#" onclick="seriesController.addEvent();"><span class="i18n">Add event</span></a></p>
                 </div>
 
                 <div id="categories" class="invisible">
@@ -132,12 +140,12 @@
                         </tbody>
                     </table>
 
-                    <p><a href="javascript:seriesController.addCategory();"><span class="i18n">Add category</span></a></p>
+                    <p><a href="#" onclick="seriesController.addCategory();"><span class="i18n">Add category</span></a></p>
                 </div>
 
                 <div id="athletes" class="invisible">
                     <h2><span class="i18n">Athletes</span></h2>
-                    <p><a href="javascript:seriesController.addAthlete();"><span class="i18n">Add athlete</span></a></p>
+                    <p><a href="#" onclick="seriesController.addAthlete();"><span class="i18n">Add athlete</span></a></p>
 
                     <table class="list_sortable">
                         <thead>
@@ -182,7 +190,7 @@
                         </tbody>
                     </table>
 
-                    <p><a href="javascript:seriesController.addAthlete();"><span class="i18n">Add athlete</span></a></p>
+                    <p><a href="#" onclick="seriesController.addAthlete();"><span class="i18n">Add athlete</span></a></p>
                 </div>
 
             </div>

@@ -21,7 +21,7 @@ function SeriesController() {
             util.xhrGet("/jtaf/res/series/" + series_id, function(response) {
                 parseAndFillSeries(response);
                 util.i18n();
-                
+
                 util.xhrGet("/jtaf/res/categories?series_id=" + series_id, function(response) {
                     parseAndFillCategories(response);
                     util.i18n();
@@ -36,6 +36,9 @@ function SeriesController() {
                 });
             });
         }
+        var logoimage = document.getElementById("logoimage");
+        logoimage.src = "/jtaf/res/series/logo/" + series_id;
+
         var active_tab = localStorage.getItem("active_tab");
         if (active_tab !== undefined && active_tab !== null) {
             this.switchTo(active_tab);

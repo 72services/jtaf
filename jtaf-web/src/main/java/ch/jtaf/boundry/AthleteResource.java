@@ -20,8 +20,8 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 @Path("athletes")
-@Produces({"application/json"})
-@Consumes({"application/json"})
+@Produces("application/json")
+@Consumes("application/json")
 @Interceptors({TraceInterceptor.class})
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
