@@ -2,8 +2,8 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.entity.Series;
 import ch.jtaf.interceptor.TraceInterceptor;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -16,6 +16,8 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.imageio.ImageIO;
 import javax.interceptor.Interceptors;
+import static javax.swing.Spring.height;
+import static javax.swing.Spring.width;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -173,14 +175,12 @@ public class SeriesResource extends BaseResource {
             newWidth = (int) (newHeight * aspectRatio);
         }
 
-        // Draw the scaled image
-        BufferedImage newImage = new BufferedImage(newWidth, newHeight,
-                imageType);
-        Graphics2D graphics2D = newImage.createGraphics();
-        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        graphics2D.drawImage(image, 0, 0, newWidth, newHeight, null);
-
+        Image scaled = image.getScaledInstance(newHeight, newHeight, Image.SCALE_SMOOTH );
+        BufferedImage newImage = new BufferedImage(newHeight, newHeight, BufferedImage.TYPE_INT_RGB);
+        Graphics g = newImage.getGraphics();
+        g.drawImage(scaled, 0, 0, null);
+        g.dispose();
+        
         return newImage;
     }
 }
