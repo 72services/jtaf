@@ -146,9 +146,9 @@ function CompetitionsRankingController() {
                 && ranking.competition.medalPercentage > 0) {
             var percentage = ranking.competition.medalPercentage;
             numberOfMedals = category.athletes.length * (percentage / 100);
-            if (numberOfMedals < 3) {
-                numberOfMedals = 3;
-            }
+            //if (numberOfMedals < 3) {
+            //    numberOfMedals = 3;
+            //}
         }
         return numberOfMedals;
     }

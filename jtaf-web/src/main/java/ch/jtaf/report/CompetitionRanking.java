@@ -81,9 +81,9 @@ public class CompetitionRanking extends Ranking {
                 && ranking.getCompetition().getMedalPercentage() > 0) {
             int percentage = ranking.getCompetition().getMedalPercentage();
             numberOfMedals = category.getAthletes().size() * (percentage / 100);
-            if (numberOfMedals < 3) {
-                numberOfMedals = 3;
-            }
+//            if (numberOfMedals < 3) {
+//                numberOfMedals = 3;
+//            }
         }
         return numberOfMedals;
     }

@@ -2,6 +2,8 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.entity.Series;
 import ch.jtaf.interceptor.TraceInterceptor;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -94,7 +95,7 @@ public class SeriesResource extends BaseResource {
 
     @GET
     @Path("/logo/{id}")
-    @Produces("image/tif")
+    @Produces("image/png")
     public byte[] getLogo(@PathParam("id") Long id) {
         Series s = dataService.getSeries(id);
         if (s == null) {
@@ -102,6 +103,7 @@ public class SeriesResource extends BaseResource {
         } else {
             try {
                 BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(s.getLogo()));
+                bufferedImage = scaleImage(bufferedImage, BufferedImage.TYPE_INT_RGB, 120, 60);
                 if (bufferedImage != null) {
                     try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                         ImageIO.write(bufferedImage, "png", baos);
@@ -157,5 +159,28 @@ public class SeriesResource extends BaseResource {
             Logger.getLogger(SeriesResource.class).error(e.getMessage(), e);
             return new byte[0];
         }
+    }
+
+    private BufferedImage scaleImage(BufferedImage image, int imageType, int newWidth, int newHeight) {
+        double thumbRatio = (double) newWidth / (double) newHeight;
+        int imageWidth = image.getWidth(null);
+        int imageHeight = image.getHeight(null);
+        double aspectRatio = (double) imageWidth / (double) imageHeight;
+
+        if (thumbRatio < aspectRatio) {
+            newHeight = (int) (newWidth / aspectRatio);
+        } else {
+            newWidth = (int) (newHeight * aspectRatio);
+        }
+
+        // Draw the scaled image
+        BufferedImage newImage = new BufferedImage(newWidth, newHeight,
+                imageType);
+        Graphics2D graphics2D = newImage.createGraphics();
+        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics2D.drawImage(image, 0, 0, newWidth, newHeight, null);
+
+        return newImage;
     }
 }
