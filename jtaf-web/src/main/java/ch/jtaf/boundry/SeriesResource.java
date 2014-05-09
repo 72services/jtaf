@@ -38,6 +38,8 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class SeriesResource extends BaseResource {
 
+    private Logger LOGGER = Logger.getLogger(SeriesResource.class);
+    
     @GET
     public List<Series> list(@QueryParam("space_id") Long spaceId,
             @QueryParam("withCompetitions") String withCompetitions) {
@@ -105,7 +107,7 @@ public class SeriesResource extends BaseResource {
                 byte[] logo = s.getLogo();
                 if (logo != null) {
                     BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(s.getLogo()));
-                    bufferedImage = scaleImage(bufferedImage, BufferedImage.TYPE_INT_RGB, 120, 60);
+                    bufferedImage = scaleImageByFixedHeight(bufferedImage, BufferedImage.TYPE_INT_RGB, 60);
                     if (bufferedImage != null) {
                         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                             ImageIO.write(bufferedImage, "png", baos);
@@ -164,20 +166,20 @@ public class SeriesResource extends BaseResource {
         }
     }
 
-    private BufferedImage scaleImage(BufferedImage image, int imageType, int newWidth, int newHeight) {
-        double thumbRatio = (double) newWidth / (double) newHeight;
-        int imageWidth = image.getWidth(null);
-        int imageHeight = image.getHeight(null);
-        double aspectRatio = (double) imageWidth / (double) imageHeight;
+    private BufferedImage scaleImageByFixedHeight(BufferedImage image, int imageType, int newHeight) {
+        double imageWidth = image.getWidth(null);
+        LOGGER.debug("imageWidth: " + imageWidth);
+        double imageHeight = image.getHeight(null);
+        LOGGER.debug("imageHeight: " + imageHeight);
+        
+        double ratio = imageWidth / imageHeight ;
+        LOGGER.debug("ratio: " + ratio);
+        int newWidth = (int) (ratio * newHeight);
+        LOGGER.debug("newWidth: " + newWidth);
+        LOGGER.debug("newHeight: " + newHeight);
 
-        if (thumbRatio < aspectRatio) {
-            newHeight = (int) (newWidth / aspectRatio);
-        } else {
-            newWidth = (int) (newHeight * aspectRatio);
-        }
-
-        Image scaled = image.getScaledInstance(newHeight, newHeight, Image.SCALE_SMOOTH);
-        BufferedImage newImage = new BufferedImage(newHeight, newHeight, BufferedImage.TYPE_INT_RGB);
+        Image scaled = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        BufferedImage newImage = new BufferedImage(newWidth, newHeight, imageType);
         Graphics g = newImage.getGraphics();
         g.drawImage(scaled, 0, 0, null);
         g.dispose();
