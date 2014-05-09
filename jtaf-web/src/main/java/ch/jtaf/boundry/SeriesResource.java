@@ -167,7 +167,7 @@ public class SeriesResource extends BaseResource {
     }
 
     private BufferedImage scaleImageByFixedHeight(BufferedImage image, int imageType, int newHeight) {
-        double ratio = image.getWidth(null) / image.getHeight(null);
+        double ratio = ((double)image.getWidth(null)) / ((double)image.getHeight(null));
         int newWidth = (int) (ratio * newHeight);
 
         Image scaled = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
