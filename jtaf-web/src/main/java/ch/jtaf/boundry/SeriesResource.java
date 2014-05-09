@@ -39,7 +39,7 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 public class SeriesResource extends BaseResource {
 
     private Logger LOGGER = Logger.getLogger(SeriesResource.class);
-    
+
     @GET
     public List<Series> list(@QueryParam("space_id") Long spaceId,
             @QueryParam("withCompetitions") String withCompetitions) {
@@ -167,16 +167,8 @@ public class SeriesResource extends BaseResource {
     }
 
     private BufferedImage scaleImageByFixedHeight(BufferedImage image, int imageType, int newHeight) {
-        double imageWidth = image.getWidth(null);
-        LOGGER.debug("imageWidth: " + imageWidth);
-        double imageHeight = image.getHeight(null);
-        LOGGER.debug("imageHeight: " + imageHeight);
-        
-        double ratio = imageWidth / imageHeight ;
-        LOGGER.debug("ratio: " + ratio);
+        double ratio = image.getWidth(null) / image.getHeight(null);
         int newWidth = (int) (ratio * newHeight);
-        LOGGER.debug("newWidth: " + newWidth);
-        LOGGER.debug("newHeight: " + newHeight);
 
         Image scaled = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
         BufferedImage newImage = new BufferedImage(newWidth, newHeight, imageType);
