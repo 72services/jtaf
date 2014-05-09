@@ -49,6 +49,13 @@ function IndexController() {
                 var li_series = document.createElement("li");
                 ul_series.appendChild(li_series);
 
+                if (series.logo !== null) {
+                    var series_logo = document.createElement("img");
+                    series_logo.src = "/jtaf/res/series/logo/" + series.id;
+                    series_logo.style.paddingRight = "10px";
+                    li_series.appendChild(series_logo);
+                }
+
                 var series_name = document.createElement("b");
                 series_name.className = "bigger";
                 series_name.style.paddingRight = "10px";
