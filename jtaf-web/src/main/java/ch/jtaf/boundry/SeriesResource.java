@@ -105,7 +105,7 @@ public class SeriesResource extends BaseResource {
         } else {
             try {
                 byte[] logo = s.getLogo();
-                if (logo != null) {
+                if (logo != null && logo.length > 0) {
                     BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(s.getLogo()));
                     bufferedImage = scaleImageByFixedHeight(bufferedImage, BufferedImage.TYPE_INT_RGB, 60);
                     if (bufferedImage != null) {
@@ -167,15 +167,13 @@ public class SeriesResource extends BaseResource {
     }
 
     private BufferedImage scaleImageByFixedHeight(BufferedImage image, int imageType, int newHeight) {
-        double ratio = image.getWidth(null) / image.getHeight(null);
+        double ratio = ((double) image.getWidth(null)) / ((double) image.getHeight(null));
         int newWidth = (int) (ratio * newHeight);
-
         Image scaled = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
         BufferedImage newImage = new BufferedImage(newWidth, newHeight, imageType);
         Graphics g = newImage.getGraphics();
         g.drawImage(scaled, 0, 0, null);
         g.dispose();
-
         return newImage;
     }
 }
