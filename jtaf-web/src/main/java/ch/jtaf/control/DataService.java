@@ -164,14 +164,15 @@ public class DataService extends AbstractService {
     }
 
     private BigInteger getNumberOfAthletesWithResults(Competition c) {
-        Query q = em.createNativeQuery("select count(distinct a.id) from athlete a join result r on a.id = r.athlete_id and r.competition_id = ?");
+        Query q = em.createNativeQuery("select count(distinct a.id) from athlete a "
+                + "join result r on a.id = r.athlete_id and r.competition_id = ?");
         q.setParameter(1, c.getId());
         return (BigInteger) q.getSingleResult();
     }
 
     private Long getNumberOfAthletes(Long seriesId) {
-        String queryString = "select count(distinct a) from Athlete a where a.series_id = :series_id";
-        TypedQuery query = em.createQuery(queryString, Long.class);
+        TypedQuery query = em.createQuery("select count(distinct a) from Athlete a "
+                + "where a.series_id = :series_id", Long.class);
         query.setParameter("series_id", seriesId);
         return (Long) query.getSingleResult();
     }
@@ -407,7 +408,8 @@ public class DataService extends AbstractService {
     }
 
     public Object getUserSpaceByUserAndSeries(String email, Long seriesId) {
-        Query q = em.createNativeQuery("SELECT u.* FROM userspace u JOIN series s ON s.space_id = u.space_id WHERE u.user_email = ? AND s.id = ?");
+        Query q = em.createNativeQuery("SELECT u.* FROM userspace u JOIN series s "
+                + "ON s.space_id = u.space_id WHERE u.user_email = ? AND s.id = ?");
         q.setParameter(1, email);
         q.setParameter(2, seriesId);
         return q.getSingleResult();
