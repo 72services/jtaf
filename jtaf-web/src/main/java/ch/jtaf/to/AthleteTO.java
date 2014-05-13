@@ -1,16 +1,20 @@
 package ch.jtaf.to;
 
+import java.math.BigInteger;
+
 public class AthleteTO {
 
-    private final Long id;
+    private final BigInteger id;
     private final String lastName;
     private final String firstName;
-    private final int yearOfBirth;
+    private final Integer yearOfBirth;
     private final String gender;
     private final String category;
     private final String club;
+    private final BigInteger numberOfResults;
 
-    public AthleteTO(Long id, String lastName, String firstName, int yearOfBirth, String gender, String category, String club) {
+    public AthleteTO(BigInteger id, String lastName, String firstName, Integer yearOfBirth, 
+            String gender, String category, String club, BigInteger numberOfResults) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -18,9 +22,10 @@ public class AthleteTO {
         this.gender = gender;
         this.category = category;
         this.club = club;
+        this.numberOfResults = numberOfResults;
     }
 
-    public Long getId() {
+    public BigInteger getId() {
         return id;
     }
 
@@ -32,7 +37,7 @@ public class AthleteTO {
         return firstName;
     }
 
-    public int getYearOfBirth() {
+    public Integer getYearOfBirth() {
         return yearOfBirth;
     }
 
@@ -48,4 +53,7 @@ public class AthleteTO {
         return club;
     }
 
+    public BigInteger getNumberOfResults() {
+        return numberOfResults;
+    }
 }

@@ -39,6 +39,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.jboss.crypto.CryptoUtil;
 import org.jboss.logging.Logger;
+import org.qlrm.mapper.JpaResultMapper;
 
 @Interceptors({TraceInterceptor.class})
 @Stateless
@@ -287,11 +288,18 @@ public class DataService extends AbstractService {
     }
 
     public List<AthleteTO> getAthleteTOs(Long seriesId) {
-        TypedQuery<AthleteTO> q = em.createQuery("SELECT NEW "
-                + "ch.jtaf.to.AthleteTO(a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, a.category.abbreviation, a.club.abbreviation) "
-                + "FROM Athlete a WHERE a.series_id = :series_id order by a.lastName, a.firstName", AthleteTO.class);
-        q.setParameter("series_id", seriesId);
-        return q.getResultList();
+        Query q = em.createNativeQuery("SELECT a.id as id, a.lastname as lastname, a.firstname as firstname, "
+                + "a.yearofbirth as yearofbirth , a.gender as gender, cat.abbreviation as catabr, club.abbreviation as clubabr, "
+                + "(select count(*) from result r join athlete ath on r.athlete_id = ath.id "
+                + "join competition comp on r.competition_id = comp.id and comp.series_id = ath.series_id "
+                + "where r.athlete_id = a.id) as numberofresults "
+                + "FROM athlete a JOIN category cat on a.category_id = cat.id "
+                + "JOIN club club on a.club_id = club.id WHERE a.series_id = ? "
+                + "order by a.lastname, a.firstname");
+        q.setParameter(1, seriesId);
+        JpaResultMapper jrm = new JpaResultMapper();
+        List<AthleteTO> list = jrm.list(q, AthleteTO.class);
+        return list;
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

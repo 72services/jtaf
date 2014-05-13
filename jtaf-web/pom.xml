@@ -64,6 +64,11 @@
             <scope>provided</scope>
         </dependency>        
         <dependency>
+            <groupId>ch.simas.qlrm</groupId>
+            <artifactId>qlrm</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itextpdf</artifactId>
             <version>5.4.1</version>
@@ -192,6 +197,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!--
             <plugin>
                 <groupId>org.jboss.as.plugins</groupId>
                 <artifactId>jboss-as-maven-plugin</artifactId>
@@ -205,6 +211,7 @@
                     </execution>
                 </executions>
             </plugin>        
+            -->
         </plugins>
     </build>
 

@@ -471,7 +471,7 @@ function SeriesController() {
             del.appendChild(delSpan);
             var cellFunction = row.insertCell(7);
             cellFunction.style.textAlign = "right";
-            if (!series.locked) {
+            if (!series.locked && athlete.numberOfResults == 0) {
                 cellFunction.appendChild(del);
             }
             i++;
