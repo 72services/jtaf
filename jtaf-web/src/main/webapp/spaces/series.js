@@ -465,13 +465,16 @@ function SeriesController() {
             var del = document.createElement("a");
             del.setAttribute("href", "#");
             del.setAttribute("onclick", "seriesController.deleteAthlete(" + athlete.id + ")");
+            if (athlete.numberOfResults > 0) {
+                del.style.color = "#DEDEDE";
+            }
             var delSpan = document.createElement("span");
             delSpan.className = "i18n";
             delSpan.innerHTML = "Delete";
             del.appendChild(delSpan);
             var cellFunction = row.insertCell(7);
             cellFunction.style.textAlign = "right";
-            if (!series.locked && athlete.numberOfResults == 0) {
+            if (!series.locked) {
                 cellFunction.appendChild(del);
             }
             i++;
