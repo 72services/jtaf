@@ -1,6 +1,9 @@
 function SpaceController() {
+    var self = this;
     var util = new Util();
+    
     var space;
+    
     this.loadData = function() {
         util.showMessage();
         var id = util.searchMap.id;
@@ -20,7 +23,7 @@ function SpaceController() {
     this.deleteSeries = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/series/" + id, function() {
-                spaceController.loadData();
+                self.loadData();
                 util.info("Serie deleted");
             });
         }
@@ -28,7 +31,7 @@ function SpaceController() {
     this.copySeries = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrPost("/jtaf/res/series/" + id + "?function=copy", function() {
-                spaceController.loadData();
+                self.loadData();
                 util.info("Series copied");
             });
         }
@@ -36,7 +39,7 @@ function SpaceController() {
     this.deleteClub = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/clubs/" + id, function() {
-                spaceController.loadData();
+                self.loadData();
                 util.info("Club deleted");
             });
         }

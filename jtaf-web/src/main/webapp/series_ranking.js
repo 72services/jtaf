@@ -1,5 +1,6 @@
 function SeriesRankingController() {
     var util = new Util();
+
     var ranking;
 
     this.loadData = function() {

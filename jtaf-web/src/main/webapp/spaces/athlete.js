@@ -1,4 +1,4 @@
-function Athlete() {
+function AthleteController() {
     var util = new Util();
 
     var athlete;
@@ -17,7 +17,7 @@ function Athlete() {
 
         if (id === undefined) {
             fillClubSelect();
-            athlete = new Object();
+            a = new Object();
             document.getElementById("athlete_lastName").focus();
             util.i18n();
         } else {

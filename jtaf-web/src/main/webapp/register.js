@@ -1,5 +1,6 @@
 function RegisterController() {
     var util = new Util();
+    
     var user;
 
     this.loadData = function() {

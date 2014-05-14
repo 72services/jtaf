@@ -1,4 +1,5 @@
 function SeriesController() {
+    var self = this;
     var util = new Util();
 
     var series;
@@ -128,7 +129,7 @@ function SeriesController() {
     this.deleteCompetition = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/competitions/" + id, function() {
-                seriesController.loadData();
+                self.loadData();
                 util.info("Competition deleted");
             });
         }
@@ -137,7 +138,7 @@ function SeriesController() {
     this.deleteEvent = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/events/" + id, function() {
-                seriesController.loadData();
+                self.loadData();
                 util.info("Event deleted");
             });
         }
@@ -146,7 +147,7 @@ function SeriesController() {
     this.deleteAthlete = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/athletes/" + id, function() {
-                seriesController.loadData();
+                self.loadData();
                 util.info("Athlete deleted");
             });
         }
@@ -155,7 +156,7 @@ function SeriesController() {
     this.deleteCategory = function(id) {
         if (confirm(util.translate("Are you sure?"))) {
             util.xhrDelete("/jtaf/res/categories/" + id, function() {
-                seriesController.loadData();
+                self.loadData();
                 util.info("Category deleted");
             });
         }
@@ -187,7 +188,7 @@ function SeriesController() {
     this.recalculateCategories = function() {
         if (confirm(util.translate("All results of this series will be deleted!\nAre you sure?"))) {
             util.xhrPost("/jtaf/res/series/recalculateCategories", function(response) {
-                seriesController.loadData();
+                self.loadData();
                 util.info("Categories recalulated for all athletes");
             }, series);
         }

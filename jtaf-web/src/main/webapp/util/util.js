@@ -1,5 +1,5 @@
 function Util() {
-
+    var self = this;
     var i18messages;
 
     this.searchMap = new (function(sSearch) {
@@ -34,8 +34,7 @@ function Util() {
             if (xhr.status === 200 || xhr.status === 204) {
                 func(xhr.responseText);
             } else {
-                var util = new Util();
-                util.error(xhr.status);
+                self.error(xhr.status);
             }
         };
         xhr.send();
@@ -48,8 +47,7 @@ function Util() {
             if (xhr.status === 200) {
                 func(xhr.responseText);
             } else {
-                var util = new Util();
-                util.error(xhr.status);
+                self.error(xhr.status);
             }
         };
         xhr.send();
@@ -62,8 +60,7 @@ function Util() {
             if (xhr.status === 204) {
                 func(xhr.responseText);
             } else {
-                var util = new Util();
-                util.error(xhr.status);
+                self.error(xhr.status);
             }
         };
         xhr.send();
@@ -76,8 +73,7 @@ function Util() {
             if (xhr.status === 200 || xhr.status === 204) {
                 func(xhr.responseText);
             } else {
-                var util = new Util();
-                util.error(xhr.status);
+                self.error(xhr.status);
             }
         };
         xhr.setRequestHeader("Content-Type", "application/json");

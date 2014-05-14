@@ -1,5 +1,6 @@
 function ConfirmController() {
     var util = new Util();
+    
     var confirmation_id;
 
     this.loadData = function() {

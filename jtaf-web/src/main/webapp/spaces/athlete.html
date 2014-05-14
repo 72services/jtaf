@@ -7,16 +7,16 @@
         <script src="../util/util.js"></script>
         <script src="athlete.js"></script>
         <script>
-            var athlete = new Athlete();
+            var athleteController = new AthleteController();
         </script>
     </head>
-    <body onload="athlete.loadData();">
+    <body onload="athleteController.loadData();">
         <script src="/jtaf/header.js"></script>
 
         <div id="main">
             <h1><span class="i18n">Edit Athlete</span></h1>
 
-            <form action="javascript:athlete.save();">
+            <form action="javascript:athleteController.save();">
 
                 <table class="input">
                     <tr>
@@ -56,7 +56,7 @@
 
                 <p>
                     <input id="save" type="submit" value="Save" />&nbsp;
-                    <a href="#" onclick="athlete.back();"><span class="i18n">Back</span></a>
+                    <a href="#" onclick="athleteController.back();"><span class="i18n">Back</span></a>
                 </p>
 
             </form>

@@ -21,6 +21,10 @@ function ProfileController() {
         }, user);
     };
 
+   this.back = function() {
+        window.location = "/jtaf/spaces/index.html";
+    };
+
     function parseAndFill(response) {
         user = JSON.parse(response);
         fillForm();

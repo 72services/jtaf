@@ -1,5 +1,6 @@
 function CompetitionsRankingController() {
     var util = new Util();
+    
     var ranking;
     var competition_id;
     var userSpaces;
