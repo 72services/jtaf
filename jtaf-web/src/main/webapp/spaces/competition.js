@@ -52,6 +52,7 @@ function CompetitionController() {
         document.getElementById("competition_name").value = competition.name;
         document.getElementById("competition_date").value = competition.competitionDate;
         document.getElementById("competition_medalpercentage").value = competition.medalPercentage;
+        document.getElementById("competition_alwaysthreemedals").checked = competition.alwaysThreeMedals;
         document.getElementById("competition_locked").checked = competition.locked;
         document.getElementById("competition_name").focus();
 
@@ -62,6 +63,7 @@ function CompetitionController() {
         competition.name = document.getElementById("competition_name").value;
         competition.competitionDate = document.getElementById("competition_date").value;
         competition.medalPercentage = document.getElementById("competition_medalpercentage").value;
+        competition.alwaysThreeMedals = document.getElementById("competition_alwaysthreemedals").checked;
         competition.locked = document.getElementById("competition_locked").checked;
         competition.series_id = series_id;
     }
