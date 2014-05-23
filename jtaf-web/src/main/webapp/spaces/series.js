@@ -323,7 +323,7 @@ function SeriesController() {
                 cellGender.innerHTML = category.gender;
                 cellGender.setAttribute("onclick", onclickEdit);
                 var sheet = document.createElement("a");
-                sheet.setAttribute("href", "/jtaf/res/reports/sheet?categoryid=" + category.id);
+                sheet.setAttribute("href", "/jtaf/res/reports/sheets?categoryid=" + category.id);
                 sheet.setAttribute("target", "_blank");
                 var sheetSpan = document.createElement("span");
                 sheetSpan.className = "i18n";
