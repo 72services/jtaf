@@ -63,7 +63,7 @@ public class SeriesRanking extends Ranking {
                 createAthleteRow(table, position, athlete);
                 position++;
                 numberOfRows += 1;
-                if (numberOfRows > 23) {
+                if (numberOfRows > 22) {
                     document.add(table);
                     document.newPage();
                     table = createAthletesTable();

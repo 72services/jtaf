@@ -6,6 +6,7 @@ function ResultsController() {
     var competition;
     var clubs;
     var space_id;
+    var newAthlete;
 
     this.loadData = function() {
         util.showMessage();
@@ -43,13 +44,20 @@ function ResultsController() {
             });
         }
     };
-
+        
     this.save = function() {
         fillAthlete();
         util.xhrPost("/jtaf/res/athletes?competition_id=" + competition.id, function(response) {
             parseAndFill(response);
             util.info("Athlete saved");
-            document.getElementById("result0").focus();
+            if (newAthlete) {
+                document.getElementById("result0").focus();
+            }
+            else {
+                document.getElementById("search_term").select();
+                document.getElementById("search_term").focus();
+            }
+            newAthlete = false;
         }, athlete);
     };
 
@@ -93,6 +101,7 @@ function ResultsController() {
 
 
     this.addAthlete = function() {
+        newAthlete = true;
         clear();
         document.getElementById("input_form").className = "";
         document.getElementById("athlete_list").className = "invisible";
