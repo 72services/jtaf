@@ -60,14 +60,14 @@ public class SeriesRanking extends Ranking {
 
             int position = 1;
             for (Athlete athlete : category.getAthletes()) {
-                createAthleteRow(table, position, athlete);
-                position++;
-                numberOfRows += 1;
                 if (numberOfRows > 22) {
                     document.add(table);
                     document.newPage();
                     table = createAthletesTable();
                 }
+                createAthleteRow(table, position, athlete);
+                position++;
+                numberOfRows += 1;
             }
             document.add(table);
         }

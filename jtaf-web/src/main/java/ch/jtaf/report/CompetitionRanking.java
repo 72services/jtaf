@@ -62,14 +62,14 @@ public class CompetitionRanking extends Ranking {
             
             int rank = 1;
             for (Athlete athlete : category.getAthletes()) {
-                createAthleteRow(table, rank, athlete, calculateNumberOfMedals(category));
-                rank++;
-                numberOfRows += 1;
-                if (numberOfRows > 23) {
+                if (numberOfRows > 22) {
                     document.add(table);
                     table = createAthletesTable();
                     document.newPage();
                 }
+                createAthleteRow(table, rank, athlete, calculateNumberOfMedals(category));
+                rank++;
+                numberOfRows += 1;
             }
             document.add(table);
         }
