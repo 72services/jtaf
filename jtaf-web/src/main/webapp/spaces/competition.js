@@ -40,7 +40,7 @@ function CompetitionController() {
 
     this.isReadOnly = function() {
         return readonly;
-    }
+    };
 
     function parseAndFill(response) {
         competition = JSON.parse(response);
