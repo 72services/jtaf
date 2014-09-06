@@ -18,11 +18,13 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 import org.jboss.logging.Logger;
 
 public class Diplomas extends AbstractReport {
 
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("d. MMMMM yyyy");
     private static final float ATHLETE_FONT_SIZE = 12f;
 
     private Document document;
@@ -106,15 +108,22 @@ public class Diplomas extends AbstractReport {
     private void createCompetitionInfo() throws DocumentException {
         PdfPTable table = new PdfPTable(1);
         table.setWidthPercentage(100);
-        table.setSpacingBefore(cmToPixel(13f));
+        table.setSpacingBefore(cmToPixel(12f));
 
         PdfPCell cell = new PdfPCell(
                 new Phrase(ranking.getCompetition().getName(),
                         FontFactory.getFont(FontFactory.HELVETICA, 25f)));
         cell.setBorder(0);
         cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-
         table.addCell(cell);
+        
+        cell = new PdfPCell(
+                new Phrase(SDF.format(ranking.getCompetition().getCompetitionDate()),
+                        FontFactory.getFont(FontFactory.HELVETICA, 25f)));
+        cell.setBorder(0);
+        cell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+        table.addCell(cell);
+
         document.add(table);
     }
 }

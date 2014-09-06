@@ -16,16 +16,16 @@ import java.util.Locale;
 import org.jboss.logging.Logger;
 
 public class CompetitionRanking extends Ranking {
-    
+
     private Document document;
     private PdfWriter pdfWriter;
     private final CompetitionRankingVO ranking;
-    
+
     public CompetitionRanking(CompetitionRankingVO ranking, Locale locale) {
         super(locale);
         this.ranking = ranking;
     }
-    
+
     public byte[] create() {
         try {
             byte[] ba;
@@ -43,26 +43,26 @@ public class CompetitionRanking extends Ranking {
                 pdfWriter.flush();
                 ba = baos.toByteArray();
             }
-            
+
             return ba;
         } catch (DocumentException | IOException e) {
             Logger.getLogger(CompetitionRanking.class).error(e.getMessage(), e);
             return new byte[0];
         }
     }
-    
+
     private void createRanking() throws DocumentException {
         for (CompetitionRankingCategoryVO category : ranking.getCategories()) {
-            if (numberOfRows > 22) {
+            if (numberOfRows > 24) {
                 document.newPage();
             }
             PdfPTable table = createAthletesTable();
             createCategoryTitle(table, category);
             numberOfRows += 2;
-            
+
             int rank = 1;
             for (Athlete athlete : category.getAthletes()) {
-                if (numberOfRows > 22) {
+                if (numberOfRows > 23) {
                     document.add(table);
                     table = createAthletesTable();
                     document.newPage();
@@ -74,35 +74,35 @@ public class CompetitionRanking extends Ranking {
             document.add(table);
         }
     }
-    
+
     private int calculateNumberOfMedals(CompetitionRankingCategoryVO category) {
-        int numberOfMedals = 0;
+        double numberOfMedals = 0;
         if (ranking.getCompetition().getMedalPercentage() != null
                 && ranking.getCompetition().getMedalPercentage() > 0) {
-            int percentage = ranking.getCompetition().getMedalPercentage();
+            double percentage = ranking.getCompetition().getMedalPercentage();
             numberOfMedals = category.getAthletes().size() * (percentage / 100);
             if (numberOfMedals < 3 && ranking.getCompetition().isAlwaysThreeMedals()) {
                 numberOfMedals = 3;
             }
         }
-        return numberOfMedals;
+        return (int) numberOfMedals;
     }
-    
+
     private PdfPTable createAthletesTable() {
         PdfPTable table = new PdfPTable(new float[]{2f, 10f, 10f, 2f, 5f, 5f});
         table.setWidthPercentage(100);
         table.setSpacingBefore(cmToPixel(0.6f));
         return table;
     }
-    
+
     private void createCategoryTitle(PdfPTable table, CompetitionRankingCategoryVO category) {
         addCategoryTitleCellWithColspan(table, category.getCategory().getAbbreviation(), 1);
         addCategoryTitleCellWithColspan(table, category.getCategory().getName() + " "
                 + category.getCategory().getYearFrom() + " - " + category.getCategory().getYearTo(), 5);
-        
+
         addCategoryTitleCellWithColspan(table, " ", 6);
     }
-    
+
     private void createAthleteRow(PdfPTable table, int rank, Athlete athlete, int numberOfMedals) throws DocumentException {
         if (rank <= numberOfMedals) {
             addCell(table, "* " + rank + ".");
@@ -114,7 +114,7 @@ public class CompetitionRanking extends Ranking {
         addCell(table, athlete.getYear() + "");
         addCell(table, athlete.getClub() == null ? "" : athlete.getClub().getAbbreviation());
         addCellAlignRight(table, athlete.getTotalPoints(ranking.getCompetition()) + "");
-        
+
         StringBuilder sb = new StringBuilder();
         for (Result result : athlete.getResults(ranking.getCompetition())) {
             sb.append(result.getEvent().getName());
@@ -127,5 +127,5 @@ public class CompetitionRanking extends Ranking {
         addCell(table, "");
         addResultsCell(table, sb.toString());
     }
-    
+
 }
