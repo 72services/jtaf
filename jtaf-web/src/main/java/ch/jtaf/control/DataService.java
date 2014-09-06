@@ -12,10 +12,9 @@ import ch.jtaf.entity.Series;
 import ch.jtaf.entity.Space;
 import ch.jtaf.entity.UserSpace;
 import ch.jtaf.entity.UserSpaceRole;
-import ch.jtaf.exception.ConfigurationException;
 import ch.jtaf.i18n.I18n;
 import ch.jtaf.interceptor.TraceInterceptor;
-import ch.jtaf.to.AthleteTO;
+import ch.jtaf.boundry.AthleteTO;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
@@ -295,7 +294,7 @@ public class DataService extends AbstractService {
                 + "join competition comp on r.competition_id = comp.id and comp.series_id = ath.series_id "
                 + "where r.athlete_id = a.id) as numberofresults "
                 + "FROM athlete a JOIN category cat on a.category_id = cat.id "
-                + "JOIN club club on a.club_id = club.id WHERE a.series_id = ? "
+                + "LEFT OUTER JOIN club club on a.club_id = club.id WHERE a.series_id = ? "
                 + "order by a.lastname, a.firstname");
         q.setParameter(1, seriesId);
         JpaResultMapper jrm = new JpaResultMapper();

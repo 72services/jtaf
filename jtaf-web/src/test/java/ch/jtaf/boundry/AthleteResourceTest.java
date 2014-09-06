@@ -7,7 +7,6 @@ import static ch.jtaf.test.util.TestData.ATHLETE_ID;
 import static ch.jtaf.test.util.TestData.COMPETITION_ID;
 import static ch.jtaf.test.util.TestData.SERIES_ID;
 import ch.jtaf.test.util.UnallowedTestSessionContext;
-import ch.jtaf.to.AthleteTO;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

@@ -1,7 +1,7 @@
 package ch.jtaf.report;
 
 import ch.jtaf.i18n.I18n;
-import ch.jtaf.to.AthleteWithEventTO;
+import ch.jtaf.boundry.AthleteWithEventTO;
 import ch.jtaf.vo.EventsRankingVO;
 import ch.jtaf.vo.EventsRankingEventData;
 import com.itextpdf.text.Document;

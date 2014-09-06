@@ -17,7 +17,7 @@ function AthleteController() {
 
         if (id === undefined) {
             fillClubSelect();
-            a = new Object();
+            athlete = new Object();
             document.getElementById("athlete_lastName").focus();
             util.i18n();
         } else {
@@ -30,7 +30,7 @@ function AthleteController() {
 
     this.save = function() {
         fillAthlete();
-        if (athlete.club === undefined || athlete.club === null) {
+        if (clubs !== undefined && clubs !== null && clubs.length > 0 && (athlete.club === undefined || athlete.club === null)) {
             util.error("Club must be choosen.");
         }
         else {

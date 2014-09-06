@@ -25,7 +25,7 @@ import ch.jtaf.interceptor.TraceInterceptor;
 import ch.jtaf.report.ClubRanking;
 import ch.jtaf.report.Diplomas;
 import ch.jtaf.report.Numbers;
-import ch.jtaf.to.AthleteWithEventTO;
+import ch.jtaf.boundry.AthleteWithEventTO;
 import ch.jtaf.vo.ClubRankingVO;
 import ch.jtaf.vo.ClubResultVO;
 import java.util.ArrayList;
