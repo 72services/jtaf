@@ -1,4 +1,4 @@
-package ch.jtaf.boundry;
+package ch.jtaf.to;
 
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Event;

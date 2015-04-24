@@ -14,7 +14,7 @@ import ch.jtaf.entity.UserSpace;
 import ch.jtaf.entity.UserSpaceRole;
 import ch.jtaf.i18n.I18n;
 import ch.jtaf.interceptor.TraceInterceptor;
-import ch.jtaf.boundry.AthleteTO;
+import ch.jtaf.to.AthleteTO;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;

@@ -12,7 +12,7 @@ import ch.jtaf.entity.UserSpace;
 import static ch.jtaf.test.util.TestData.COMPETITION_ID;
 import static ch.jtaf.test.util.TestData.SERIES_ID;
 import static ch.jtaf.test.util.TestData.SPACE_ID;
-import ch.jtaf.boundry.AthleteTO;
+import ch.jtaf.to.AthleteTO;
 import java.util.List;
 import java.util.Locale;
 import javax.persistence.EntityManager;

@@ -1,7 +1,7 @@
 package ch.jtaf.vo;
 
 import ch.jtaf.entity.Event;
-import ch.jtaf.boundry.AthleteWithEventTO;
+import ch.jtaf.to.AthleteWithEventTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

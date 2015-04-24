@@ -1,5 +1,6 @@
 package ch.jtaf.boundry;
 
+import ch.jtaf.to.AthleteTO;
 import ch.jtaf.test.util.TestSessionContext;
 import ch.jtaf.control.DataService;
 import ch.jtaf.entity.Athlete;
