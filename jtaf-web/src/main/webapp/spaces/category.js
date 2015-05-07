@@ -36,14 +36,14 @@ function CategoryController() {
         fillCategory();
         util.xhrPost("/jtaf/res/categories/", function(response) {
             parseAndFill(response);
-            window.location = "series.html?id=" + series_id + "&space_id=" + space_id + "&message=" + "Category saved";
+            window.location.href = "series.html?id=" + series_id + "&space_id=" + space_id + "&message=" + "Category saved";
 
         }, category);
     };
 
 
     this.back = function() {
-        window.location = "series.html?id=" + series_id + "&space_id=" + space_id;
+        window.location.href = "series.html?id=" + series_id + "&space_id=" + space_id;
     };
 
     function parseAndFill(response) {

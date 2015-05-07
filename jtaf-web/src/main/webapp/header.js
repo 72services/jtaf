@@ -76,7 +76,7 @@ function Header() {
 
     this.logout = function() {
         util.xhrGet("/jtaf/res/users/logout", function() {
-            window.location = "index.html";
+            window.location.href = "index.html";
         });
     };
 

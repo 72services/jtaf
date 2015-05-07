@@ -78,19 +78,19 @@ function SeriesController() {
     };
 
     this.addCompetition = function() {
-        window.location = "competition.html?series_id=" + series_id + "&space_id=" + space_id;
+        window.location.href = "competition.html?series_id=" + series_id + "&space_id=" + space_id;
     };
 
     this.addEvent = function() {
-        window.location = "event.html?series_id=" + series_id + "&space_id=" + space_id;
+        window.location.href = "event.html?series_id=" + series_id + "&space_id=" + space_id;
     };
 
     this.addCategory = function() {
-        window.location = "category.html?series_id=" + series_id + "&space_id=" + space_id;
+        window.location.href = "category.html?series_id=" + series_id + "&space_id=" + space_id;
     };
 
     this.addAthlete = function() {
-        window.location = "athlete.html?series_id=" + series_id + "&space_id=" + space_id;
+        window.location.href = "athlete.html?series_id=" + series_id + "&space_id=" + space_id;
     };
 
     this.filter = function(property) {
@@ -182,7 +182,7 @@ function SeriesController() {
 
     this.back = function() {
         localStorage.removeItem("active_tab");
-        window.location = "space.html?id=" + space_id;
+        window.location.href = "space.html?id=" + space_id;
     };
 
     this.recalculateCategories = function() {

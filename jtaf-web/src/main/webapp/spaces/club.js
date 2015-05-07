@@ -28,12 +28,12 @@ function ClubController() {
         fillClub();
         util.xhrPost("/jtaf/res/clubs/", function(response) {
             parseAndFill(response);
-            window.location = "space.html?id=" + space_id + "&message=" + "Club saved";
+            window.location.href = "space.html?id=" + space_id + "&message=" + "Club saved";
         }, club);
     };
 
     this.back = function() {
-        window.location = "space.html?id=" + space_id;
+        window.location.href = "space.html?id=" + space_id;
     };
 
     function parseAndFill(response) {

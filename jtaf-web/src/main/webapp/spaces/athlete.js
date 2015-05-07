@@ -36,13 +36,13 @@ function AthleteController() {
         else {
             util.xhrPost("/jtaf/res/athletes/", function(response) {
                 parseAndFill(response);
-                window.location = "series.html?id=" + series_id + "&space_id=" + space_id + "&message=" + "Athlete saved";
+                window.location.href = "series.html?id=" + series_id + "&space_id=" + space_id + "&message=" + "Athlete saved";
             }, athlete);
         }
     };
 
     this.back = function() {
-        window.location = "series.html?id=" + series_id + "&space_id=" + space_id;
+        window.location.href = "series.html?id=" + series_id + "&space_id=" + space_id;
     };
 
     function fillClubSelect() {

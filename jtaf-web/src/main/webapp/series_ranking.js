@@ -20,12 +20,12 @@ function SeriesRankingController() {
 
     this.openAsPdf = function() {
         var newtab = window.open();
-        newtab.location = "/jtaf/res/rankings/series/pdf/" + ranking.series.id;
+        newtab.location.href = "/jtaf/res/rankings/series/pdf/" + ranking.series.id;
     };
     
     this.createClubRanking = function() {
         var newtab = window.open();
-        newtab.location = "/jtaf/res/rankings/club/" + ranking.series.id;
+        newtab.location.href = "/jtaf/res/rankings/club/" + ranking.series.id;
     };
 
     function parseAndFill(response) {
@@ -51,7 +51,7 @@ function SeriesRankingController() {
             table.className = "ranking";
             var row = document.createElement("tr");
             var cell = document.createElement("td");
-            cell.setAttribute("colspan", 6);
+            cell.setAttribute("colspan", "6");
 
             var title = document.createElement("h3");
             title.innerHTML = createCategoryTitle(category.category);
@@ -92,7 +92,7 @@ function SeriesRankingController() {
 
                 cell = document.createElement("td");
                 cell.style.textAlign = "right";
-                cell.innerHTML = calculateTotalPoints(athlete);
+                cell.innerHTML = calculateTotalPoints(athlete).toString();
                 row.appendChild(cell);
 
                 table.appendChild(row);
@@ -104,7 +104,7 @@ function SeriesRankingController() {
 
                 cell = document.createElement("td");
                 cell.className = "small";
-                cell.setAttribute("colspan", 5);
+                cell.setAttribute("colspan", "5");
                 cell.innerHTML = createResultRow(athlete);
                 row.appendChild(cell);
 

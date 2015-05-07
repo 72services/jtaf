@@ -27,14 +27,14 @@ function CompetitionController() {
     };
 
     this.back = function() {
-        window.location = "series.html?id=" + series_id + "&space_id=" + space_id;
+        window.location.href = "series.html?id=" + series_id + "&space_id=" + space_id;
     };
 
     this.save = function() {
         fillCompetition();
         util.xhrPost("/jtaf/res/competitions/", function(response) {
             parseAndFill(response);
-            window.location = "series.html?id=" + series_id + "&space_id=" + space_id + "&message=" + "Competition saved";
+            window.location.href = "series.html?id=" + series_id + "&space_id=" + space_id + "&message=" + "Competition saved";
         }, competition);
     };
 

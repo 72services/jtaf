@@ -45,10 +45,10 @@ function SpaceController() {
         }
     };
     this.addSeries = function() {
-        window.location = "series.html?space_id=" + space.id;
+        window.location.href = "series.html?space_id=" + space.id;
     };
     this.addClub = function() {
-        window.location = "club.html?space_id=" + space.id;
+        window.location.href = "club.html?space_id=" + space.id;
     };
     this.save = function() {
         fillSpace();

@@ -30,12 +30,12 @@ function EventController() {
         fillEvent();
         util.xhrPost("/jtaf/res/events/", function(response) {
             parseAndFill(response);
-            window.location = "series.html?id=" + series_id + "&space_id=" + space_id + "&message=" + "Event saved";
+            window.location.href = "series.html?id=" + series_id + "&space_id=" + space_id + "&message=" + "Event saved";
         }, jtafEvent);
     };
 
     this.back = function() {
-        window.location = "series.html?id=" + series_id + "&space_id=" + space_id
+        window.location.href = "series.html?id=" + series_id + "&space_id=" + space_id
     };
 
     function parseAndFill(response) {

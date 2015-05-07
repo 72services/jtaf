@@ -28,18 +28,18 @@ function CompetitionsRankingController() {
 
     this.openAsPdf = function() {
         var newtab = window.open();
-        newtab.location = "/jtaf/res/rankings/competition/pdf/" + ranking.competition.id;
+        newtab.location.href = "/jtaf/res/rankings/competition/pdf/" + ranking.competition.id;
     };
 
 
     this.createEventsRanking = function() {
         var newtab = window.open();
-        newtab.location = "/jtaf/res/rankings/events/" + ranking.competition.id;
+        newtab.location.href = "/jtaf/res/rankings/events/" + ranking.competition.id;
     };
 
     this.createDiplomas = function() {
         var newtab = window.open();
-        newtab.location = "/jtaf/res/rankings/diploma/" + ranking.competition.id;
+        newtab.location.href = "/jtaf/res/rankings/diploma/" + ranking.competition.id;
     };
 
     function parseAndFill(response) {
@@ -77,7 +77,7 @@ function CompetitionsRankingController() {
             table.className = "ranking";
             var row = document.createElement("tr");
             var cell = document.createElement("td");
-            cell.setAttribute("colspan", 6);
+            cell.setAttribute("colspan", "6");
 
             var title = document.createElement("h3");
             title.innerHTML = createCategoryTitle(category.category);
@@ -123,7 +123,7 @@ function CompetitionsRankingController() {
 
                 cell = document.createElement("td");
                 cell.style.textAlign = "right";
-                cell.innerHTML = calculateTotalPoints(athlete);
+                cell.innerHTML = calculateTotalPoints(athlete).toString();
                 row.appendChild(cell);
 
                 table.appendChild(row);
@@ -135,7 +135,7 @@ function CompetitionsRankingController() {
 
                 cell = document.createElement("td");
                 cell.className = "small";
-                cell.setAttribute("colspan", 5);
+                cell.setAttribute("colspan", "5");
                 cell.innerHTML = createResultRow(athlete);
                 row.appendChild(cell);
 
