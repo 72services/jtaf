@@ -81,7 +81,7 @@ public class ReportService extends AbstractService {
             query.setParameter("series_id", competition.getSeries_id());
             List<Athlete> athletes = query.getResultList();
 
-            Numbers numbers = new Numbers(competition, athletes, null, locale);
+            Numbers numbers = new Numbers(athletes, locale);
             return numbers.create();
         }
     }

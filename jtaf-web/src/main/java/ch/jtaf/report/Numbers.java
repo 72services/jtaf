@@ -1,7 +1,6 @@
 package ch.jtaf.report;
 
 import ch.jtaf.entity.Athlete;
-import ch.jtaf.entity.Competition;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.FontFactory;
@@ -14,7 +13,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import org.jboss.logging.Logger;
 
 public class Numbers extends AbstractReport {
 
@@ -22,15 +20,11 @@ public class Numbers extends AbstractReport {
     private final static float FONT_SIZE_TEXT = 90f;
     private Document document;
     private PdfWriter pdfWriter;
-    private final Competition competition;
     private final List<Athlete> athletes;
-    private final byte[] logo;
 
-    public Numbers(Competition competition, List<Athlete> athletes, byte[] logo, Locale locale) {
+    public Numbers(List<Athlete> athletes, Locale locale) {
         super(locale);
-        this.competition = competition;
         this.athletes = athletes;
-        this.logo = logo;
     }
 
     public byte[] create() {
@@ -63,7 +57,7 @@ public class Numbers extends AbstractReport {
             pdfWriter.flush();
             return baos.toByteArray();
         } catch (DocumentException | IOException e) {
-            Logger.getLogger(Numbers.class).error(e.getMessage(), e);
+            e.printStackTrace();
             return new byte[0];
         }
     }
@@ -92,11 +86,13 @@ public class Numbers extends AbstractReport {
         cellId.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
         atable.addCell(cellId);
 
-        PdfPCell cellName = new PdfPCell(
-                new Phrase(athlete.getLastName() + " " + athlete.getFirstName()
-                        + "\n" + athlete.getCategory().getAbbreviation()
-                        + " / " + athlete.getClub().getName(),
-                        FontFactory.getFont(FontFactory.HELVETICA, FONT_SIZE_INFO)));
+        String text = athlete.getLastName() + " " + athlete.getFirstName() + "\n";
+        text += athlete.getCategory().getAbbreviation();
+        if (athlete.getClub() != null) {
+            text += " / " + athlete.getClub().getName();
+        }
+
+        PdfPCell cellName = new PdfPCell(new Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, FONT_SIZE_INFO)));
         cellName.setBorder(0);
         cellName.setMinimumHeight(cmToPixel(1.8f));
         cellName.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
@@ -105,7 +101,7 @@ public class Numbers extends AbstractReport {
 
         PdfPCell cellTable = new PdfPCell(atable);
         cellTable.setBorder(0);
-        
+
         table.addCell(cellTable);
     }
 

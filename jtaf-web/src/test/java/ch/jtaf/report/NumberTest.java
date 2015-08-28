@@ -1,27 +1,26 @@
-package ch.jtaf.boundry;
+package ch.jtaf.report;
 
+import ch.jtaf.control.DataService;
 import ch.jtaf.control.ReportService;
-import static ch.jtaf.test.util.TestData.CATEGORY_ID;
-import static ch.jtaf.test.util.TestData.COMPETITION_ID;
-import ch.jtaf.test.util.TestHttpServletRequest;
+import ch.jtaf.entity.Athlete;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.List;
+import java.util.Locale;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.WebApplicationException;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
-public class ReportResourceTest {
+public class NumberTest {
 
-    private static ReportResource rr;
     private static ReportService rs;
     private static EntityManagerFactory emf;
     private static EntityManager em;
-    private static final HttpServletRequest hsr = new TestHttpServletRequest();
 
     @BeforeClass
     public static void beforeClass() {
@@ -29,8 +28,6 @@ public class ReportResourceTest {
         em = emf.createEntityManager();
         rs = new ReportService();
         rs.em = em;
-        rr = new ReportResource();
-        rr.service = rs;
     }
 
     @AfterClass
@@ -48,32 +45,16 @@ public class ReportResourceTest {
         em.clear();
     }
 
-    @Test
-    public void testGetSheets() throws Exception {
-        byte[] report = rr.getSheets(hsr, COMPETITION_ID, CATEGORY_ID, null);
-
-        assertNotNull(report);
-        assertTrue(report.length > 0);
-    }
 
     @Test
     public void testGetNumbers() throws Exception {
-        byte[] report = rr.getNumbers(hsr, COMPETITION_ID, null);
-
+        byte[] report = rs.createNumbers(249l, null, Locale.GERMAN);
         assertNotNull(report);
         assertTrue(report.length > 0);
-    }
-
-    @Test(expected = WebApplicationException.class)
-    public void testGetSheetsNotFound() throws Exception {
-        rr.getSheets(hsr, 0l, 0l, null);
-    }
-
-    @Test
-    public void testExportAsCsv() throws Exception {
-        String report = rr.exportAsCsv(COMPETITION_ID);
-
-        assertNotNull(report);
+        
+        FileOutputStream fos = new FileOutputStream(new File("/Users/simon/Downloads/numbers.pdf"));
+        fos.write(report);
+        fos.close();
     }
 
 }

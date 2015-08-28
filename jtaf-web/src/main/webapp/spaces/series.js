@@ -246,9 +246,14 @@ function SeriesController() {
                 sheetOrderByClub.appendChild(document.createTextNode(util.translate("(order by club)")));
 
                 var numbers = document.createElement("a");
-                numbers.setAttribute("href", "/jtaf/res/reports/numbers?competitionid=" + competition.id + "&orderby=club");
+                numbers.setAttribute("href", "/jtaf/res/reports/numbers?competitionid=" + competition.id);
                 numbers.setAttribute("target", "_blank");
                 numbers.appendChild(document.createTextNode(util.translate("Numbers")));
+
+                var numbersOrderByClub = document.createElement("a");
+                numbersOrderByClub.setAttribute("href", "/jtaf/res/reports/numbers?competitionid=" + competition.id + "&orderby=club");
+                numbersOrderByClub.setAttribute("target", "_blank");
+                numbersOrderByClub.appendChild(document.createTextNode(util.translate("(order by club)")));
 
                 var del = document.createElement("a");
                 del.setAttribute("href", "#");
@@ -265,10 +270,12 @@ function SeriesController() {
                 cellFunction.appendChild(sheet);
                 cellFunction.appendChild(document.createTextNode(" "));
                 cellFunction.appendChild(sheetOrderByClub);
-                cellFunction.appendChild(document.createTextNode("  "));
+                cellFunction.appendChild(document.createElement("br"));
                 cellFunction.appendChild(numbers);
+                cellFunction.appendChild(document.createTextNode("  "));
+                cellFunction.appendChild(numbersOrderByClub);
                 if (!series.locked) {
-                    cellFunction.appendChild(document.createTextNode(" "));
+                    cellFunction.appendChild(document.createElement("br"));
                     cellFunction.appendChild(del);
                 }
                 cellFunction.appendChild(document.createTextNode(" "));

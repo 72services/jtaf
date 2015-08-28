@@ -13,6 +13,7 @@
             <properties>
                 <netbeans.deploy>true</netbeans.deploy>
                 <netbeans.deploy.clientUrlPart></netbeans.deploy.clientUrlPart>
+                <skipTests>true</skipTests>
             </properties>
         </action>
         <action>
@@ -53,6 +54,19 @@
                 <packaging>*</packaging>
             </packagings>
             <goals>
+                <goal>install</goal>
+            </goals>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </action>
+        <action>
+            <actionName>rebuild</actionName>
+            <packagings>
+                <packaging>*</packaging>
+            </packagings>
+            <goals>
+                <goal>clean</goal>
                 <goal>install</goal>
             </goals>
             <properties>
