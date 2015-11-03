@@ -2,7 +2,7 @@ function Util() {
     var self = this;
     var i18messages;
 
-    this.searchMap = new (function(sSearch) {
+    this.searchMap = new (function(searchTerm) {
         function buildValue(sValue) {
             var rNull = /^\s*$/, rBool = /^(true|false)$/i;
             if (rNull.test(sValue)) {
@@ -19,8 +19,8 @@ function Util() {
             }
             return sValue;
         }
-        if (sSearch.length > 1) {
-            for (var aItKey, nKeyId = 0, aCouples = sSearch.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {
+        if (searchTerm.length > 1) {
+            for (var aItKey, nKeyId = 0, aCouples = searchTerm.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++) {
                 aItKey = aCouples[nKeyId].split("=");
                 this[unescape(aItKey[0])] = aItKey.length > 1 ? buildValue(unescape(aItKey[1])) : null;
             }

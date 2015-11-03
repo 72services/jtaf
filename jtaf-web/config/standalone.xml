@@ -333,9 +333,4 @@
         </outbound-socket-binding>
     </socket-binding-group>
 
-    <deployments>
-        <deployment name="jtaf-web-1.0-SNAPSHOT.war" runtime-name="jtaf-web-1.0-SNAPSHOT.war">
-            <content sha1="67e6d5dd66d0f66b699451078f7bfc28f5651a53"/>
-        </deployment>
-    </deployments>
 </server>
