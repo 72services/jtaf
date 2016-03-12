@@ -108,11 +108,12 @@
                         <password>sa</password>
                     </security>
                 </datasource>
-                <datasource jta="true" jndi-name="java:jboss/datasources/MysqlDS" pool-name="JtafDS" enabled="true" use-java-context="true" use-ccm="true">
+                <datasource jta="true" jndi-name="java:jboss/datasources/MySQLDS" pool-name="JtafDS" enabled="true" use-java-context="true" use-ccm="true">
                     <connection-url>jdbc:mysql://localhost:3306/jtaf</connection-url>
                     <driver>mysql</driver>
                     <security>
-                        <user-name>root</user-name>
+                        <user-name>jtaf</user-name>
+                        <password>jtaf</password>
                     </security>
                 </datasource>
                 <drivers>
@@ -238,7 +239,7 @@
                 <security-domain name="jtaf" cache-type="default">
                     <authentication>
                         <login-module code="Database" flag="required">
-                            <module-option name="dsJndiName" value="java:jboss/datasources/MysqlDS"/>
+                            <module-option name="dsJndiName" value="java:jboss/datasources/MySQLDS"/>
                             <module-option name="principalsQuery" value="select secret from securityuser where email = ?"/>
                             <module-option name="rolesQuery" value="select name, 'Roles' from securitygroup where email = ?"/>
                             <module-option name="password-stacking" value="useFirstPass"/>
@@ -284,9 +285,6 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">
             <connector name="http" protocol="HTTP/1.1" scheme="http" socket-binding="http" redirect-port="8443"/>
-            <connector name="https" protocol="HTTP/1.1" scheme="https" socket-binding="https" secure="true">
-                <ssl name="https" key-alias="jbosseap6" password="password" certificate-key-file="${jboss.server.config.dir}/host.keystore" protocol="TLSv1"/>
-            </connector>
             <virtual-server name="default-host" enable-welcome-root="true">
                 <alias name="localhost"/>
                 <alias name="example.com"/>
@@ -333,4 +331,9 @@
         </outbound-socket-binding>
     </socket-binding-group>
 
+    <deployments>
+        <deployment name="jtaf.war" runtime-name="jtaf.war">
+            <fs-archive path="C:\Users\Simon\workspace\jtaf\jtaf-web\target\jtaf.war"/>
+        </deployment>
+    </deployments>
 </server>

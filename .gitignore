@@ -6,3 +6,5 @@
 *.bak
 /jtaf-web/nbproject/private/
 /jtaf-web/target/
+/jtaf-web/.idea/
+/jtaf-web/jtaf-web.iml
