@@ -1,8 +1,19 @@
 package ch.jtaf.jtafandroid;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -13,6 +24,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,18 +42,61 @@ public class MainActivity extends AppCompatActivity {
             AsyncTask asyncTask = loadSeriesTask.execute();
             JSONArray jsonArray = (JSONArray) asyncTask.get();
 
-            StringBuilder sb = new StringBuilder();
+            final List<Pair<Integer, String>> list = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject series = jsonArray.getJSONObject(i);
-                sb.append(series.get("name"));
-                sb.append("\n");
+                list.add(new Pair(Integer.parseInt(series.get("id").toString()), series.get("name").toString()));
             }
 
-            TextView seriesList = (TextView) findViewById(R.id.textView);
-            seriesList.setText(sb.toString());
+            ListView seriesList = (ListView) findViewById(R.id.series_list);
+            final StableArrayAdapter adapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_1, list);
+            seriesList.setAdapter(adapter);
+
+            seriesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+                    final Pair<Integer, String> pair = (Pair<Integer, String>) parent.getItemAtPosition(position);
+                    System.out.println(pair.toString());
+                }
+
+            });
 
         } catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    private class StableArrayAdapter extends ArrayAdapter<Pair<Integer, String>> {
+
+        public StableArrayAdapter(Context context, int textViewResourceId, List<Pair<Integer, String>> objects) {
+            super(context, textViewResourceId, objects);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            Pair<Integer, String> pair = getItem(position);
+            return pair.first;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            Pair<Integer, String> pair = getItem(position);
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_series, parent, false);
+            }
+            TextView tvId = (TextView) convertView.findViewById(R.id.series_id);
+            TextView tvName = (TextView) convertView.findViewById(R.id.series_name);
+            tvId.setText(pair.first.toString());
+            tvName.setText(pair.second);
+            return convertView;
         }
     }
 
@@ -68,4 +126,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 }
