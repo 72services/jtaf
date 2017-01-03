@@ -1,13 +1,13 @@
 package ch.jtaf.jtafandroid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +25,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
             AsyncTask asyncTask = loadSeriesTask.execute();
             JSONArray jsonArray = (JSONArray) asyncTask.get();
 
-            final List<Pair<Integer, String>> list = new ArrayList<>();
+            final List<Series> list = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject series = jsonArray.getJSONObject(i);
-                list.add(new Pair(Integer.parseInt(series.get("id").toString()), series.get("name").toString()));
+                list.add(new Series(series));
             }
 
             ListView seriesList = (ListView) findViewById(R.id.series_list);
@@ -57,8 +55,11 @@ public class MainActivity extends AppCompatActivity {
                 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                    final Pair<Integer, String> pair = (Pair<Integer, String>) parent.getItemAtPosition(position);
-                    System.out.println(pair.toString());
+                    final Series series = (Series) parent.getItemAtPosition(position);
+
+                    Intent intent = new Intent(MainActivity.this, RankingActivity.class);
+                    intent.putExtra(Series.class.getName(), series.getId().toString());
+                    startActivity(intent);
                 }
 
             });
@@ -68,16 +69,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class StableArrayAdapter extends ArrayAdapter<Pair<Integer, String>> {
+    private class StableArrayAdapter extends ArrayAdapter<Series> {
 
-        public StableArrayAdapter(Context context, int textViewResourceId, List<Pair<Integer, String>> objects) {
+        public StableArrayAdapter(Context context, int textViewResourceId, List<Series> objects) {
             super(context, textViewResourceId, objects);
         }
 
         @Override
         public long getItemId(int position) {
-            Pair<Integer, String> pair = getItem(position);
-            return pair.first;
+            Series series = getItem(position);
+            return series.getId();
         }
 
         @Override
@@ -88,14 +89,14 @@ public class MainActivity extends AppCompatActivity {
         @NonNull
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            Pair<Integer, String> pair = getItem(position);
+            Series series = getItem(position);
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_series, parent, false);
             }
             TextView tvId = (TextView) convertView.findViewById(R.id.series_id);
             TextView tvName = (TextView) convertView.findViewById(R.id.series_name);
-            tvId.setText(pair.first.toString());
-            tvName.setText(pair.second);
+            tvId.setText(series.getId().toString());
+            tvName.setText(series.getName());
             return convertView;
         }
     }
