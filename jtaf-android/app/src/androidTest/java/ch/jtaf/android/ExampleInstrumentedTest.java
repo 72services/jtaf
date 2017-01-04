@@ -1,4 +1,4 @@
-package ch.jtaf.jtafandroid;
+package ch.jtaf.android;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("ch.jtaf.jtafandroid", appContext.getPackageName());
+        assertEquals("ch.jtaf.android", appContext.getPackageName());
     }
 }

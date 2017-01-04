@@ -1,4 +1,4 @@
-package ch.jtaf.jtafandroid;
+package ch.jtaf.android;
 
 import android.content.Context;
 import android.content.Intent;

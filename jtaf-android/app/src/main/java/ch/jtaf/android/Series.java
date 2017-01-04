@@ -1,4 +1,4 @@
-package ch.jtaf.jtafandroid;
+package ch.jtaf.android;
 
 import org.json.JSONException;
 import org.json.JSONObject;
