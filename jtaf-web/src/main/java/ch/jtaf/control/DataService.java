@@ -1,28 +1,13 @@
 package ch.jtaf.control;
 
-import ch.jtaf.entity.Athlete;
-import ch.jtaf.entity.Category;
-import ch.jtaf.entity.Club;
-import ch.jtaf.entity.Competition;
-import ch.jtaf.entity.Event;
-import ch.jtaf.entity.Result;
-import ch.jtaf.entity.SecurityGroup;
-import ch.jtaf.entity.SecurityUser;
-import ch.jtaf.entity.Series;
-import ch.jtaf.entity.Space;
-import ch.jtaf.entity.UserSpace;
-import ch.jtaf.entity.UserSpaceRole;
+import ch.jtaf.entity.*;
 import ch.jtaf.i18n.I18n;
 import ch.jtaf.interceptor.TraceInterceptor;
 import ch.jtaf.to.AthleteTO;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.NoSuchAlgorithmException;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import org.jboss.crypto.CryptoUtil;
+import org.jboss.logging.Logger;
+import org.qlrm.mapper.JpaResultMapper;
+
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -36,13 +21,18 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import org.jboss.crypto.CryptoUtil;
-import org.jboss.logging.Logger;
-import org.qlrm.mapper.JpaResultMapper;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.NoSuchAlgorithmException;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
-@Interceptors({TraceInterceptor.class})
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+@Interceptors({TraceInterceptor.class})
 public class DataService extends AbstractService {
 
     @Resource(mappedName = "java:jboss/mail/Default")
