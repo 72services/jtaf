@@ -5,11 +5,6 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          metadata-complete="false">
 
-    <servlet-mapping>
-        <servlet-name>javax.ws.rs.core.Application</servlet-name>
-        <url-pattern>/res/*</url-pattern>
-    </servlet-mapping>         
-
     <security-constraint>
         <display-name>Spaces</display-name>
         <web-resource-collection>
