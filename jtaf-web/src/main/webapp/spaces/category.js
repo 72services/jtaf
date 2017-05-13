@@ -120,7 +120,7 @@ function CategoryController() {
             var select = document.getElementById("select" + i);
             var id = select.options[select.selectedIndex].value;
             events.forEach(function(ev) {
-                if (ev.id == id) {
+                if (ev.id === id) {
                     category.events.push(ev);
                 }
             });

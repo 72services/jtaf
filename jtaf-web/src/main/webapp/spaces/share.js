@@ -48,7 +48,7 @@ function ShareController() {
     this.save = function(index) {
         var userSpace = userSpaces[index];
         var userinput = document.getElementById("userinput");
-        if (userinput != null) {
+        if (userinput !== null) {
             userSpace.user.email = userinput.value;
         }
         var select = document.getElementById("select_" + index);
