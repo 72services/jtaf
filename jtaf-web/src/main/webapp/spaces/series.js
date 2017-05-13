@@ -204,6 +204,7 @@ function SeriesController() {
     function fillForm() {
         document.getElementById("series_id").value = series.id;
         document.getElementById("series_name").value = series.name;
+        document.getElementById("series_hide").checked = series.hide;
         document.getElementById("series_locked").checked = series.locked;
         document.getElementById("series_name").focus();
     }
@@ -491,6 +492,7 @@ function SeriesController() {
 
     function fillSeries() {
         series.name = document.getElementById("series_name").value;
+        series.hide = document.getElementById("series_hide").checked;
         series.locked = document.getElementById("series_locked").checked;
         series.space_id = space_id;
     }

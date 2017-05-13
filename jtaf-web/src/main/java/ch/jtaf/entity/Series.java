@@ -1,24 +1,17 @@
 package ch.jtaf.entity;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name = "series")
 @NamedQueries({
-    @NamedQuery(name = "Series.findAll", query = "select s from Series s where s.space_id = :space_id order by s.name")
+        @NamedQuery(name = "Series.findAll", query = "select s from Series s where s.space_id = :space_id order by s.name")
 })
 public class Series implements Comparable<Series> {
 
@@ -27,6 +20,7 @@ public class Series implements Comparable<Series> {
     private Long id;
     private String name;
     private boolean locked;
+    private boolean hide;
     private Long space_id;
     @Lob
     private byte[] logo;
@@ -109,6 +103,14 @@ public class Series implements Comparable<Series> {
 
     public void setLocked(boolean locked) {
         this.locked = locked;
+    }
+
+    public boolean isHide() {
+        return hide;
+    }
+
+    public void setHide(boolean hide) {
+        this.hide = hide;
     }
 
     @JsonIgnore

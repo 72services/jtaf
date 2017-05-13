@@ -1,20 +1,20 @@
 package ch.jtaf.report;
 
-import ch.jtaf.control.DataService;
 import ch.jtaf.control.ReportService;
-import ch.jtaf.entity.Athlete;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.List;
-import java.util.Locale;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.junit.AfterClass;
-import static org.junit.Assert.*;
-import org.junit.Test;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Locale;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class NumberTest {
 
@@ -52,7 +52,7 @@ public class NumberTest {
         assertNotNull(report);
         assertTrue(report.length > 0);
         
-        FileOutputStream fos = new FileOutputStream(new File("/Users/simon/Downloads/numbers.pdf"));
+        FileOutputStream fos = new FileOutputStream(new File("c:/Users/SimonMartinelli/Downloads/numbers.pdf"));
         fos.write(report);
         fos.close();
     }
