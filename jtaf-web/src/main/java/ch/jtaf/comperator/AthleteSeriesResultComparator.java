@@ -6,7 +6,7 @@ import java.util.Comparator;
 
 public class AthleteSeriesResultComparator implements Comparator<Athlete> {
 
-    private Series series;
+    private final Series series;
     
     public AthleteSeriesResultComparator(Series series) {
         this.series = series;

@@ -112,10 +112,7 @@ public class Result {
             return false;
         }
         final Result other = (Result) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override

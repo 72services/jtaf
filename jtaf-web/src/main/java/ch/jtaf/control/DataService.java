@@ -23,7 +23,6 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.security.NoSuchAlgorithmException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -257,8 +256,7 @@ public class DataService extends AbstractService {
             space.setSeries(series);
             space.setClubs(getClubs(space.getId()));
         }
-        List<Series> flatSeries = sortByCompetitionDate(spaces);
-        return flatSeries;
+        return sortByCompetitionDate(spaces);
     }
 
     public Space getSpace(Long id) {
@@ -288,12 +286,11 @@ public class DataService extends AbstractService {
                 + "order by a.lastname, a.firstname");
         q.setParameter(1, seriesId);
         JpaResultMapper jrm = new JpaResultMapper();
-        List<AthleteTO> list = jrm.list(q, AthleteTO.class);
-        return list;
+        return jrm.list(q, AthleteTO.class);
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public SecurityUser saveUser(SecurityUser user, Locale locale) throws NoSuchAlgorithmException {
+    public SecurityUser saveUser(SecurityUser user, Locale locale) {
         if (user.getConfirmationId() == null) {
             if (em.find(SecurityUser.class, user.getEmail()) == null) {
                 String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, user.getSecret());
@@ -318,7 +315,7 @@ public class DataService extends AbstractService {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public SecurityUser changePassword(SecurityUser user) throws NoSuchAlgorithmException {
+    public SecurityUser changePassword(SecurityUser user) {
         String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, user.getSecret());
         user.setSecret(passwordHash);
         user = em.merge(user);

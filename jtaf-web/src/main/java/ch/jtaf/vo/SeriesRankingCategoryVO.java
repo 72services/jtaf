@@ -43,10 +43,7 @@ public class SeriesRankingCategoryVO implements Comparable<SeriesRankingCategory
             return false;
         }
         final SeriesRankingCategoryVO other = (SeriesRankingCategoryVO) obj;
-        if (!Objects.equals(this.category, other.category)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.category, other.category);
     }
 
     @Override

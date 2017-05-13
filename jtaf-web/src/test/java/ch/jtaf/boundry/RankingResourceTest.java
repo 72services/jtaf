@@ -1,24 +1,26 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.control.ReportService;
-import ch.jtaf.vo.CompetitionRankingVO;
-import static ch.jtaf.test.util.TestData.COMPETITION_ID;
-import static ch.jtaf.test.util.TestData.SERIES_ID;
 import ch.jtaf.test.util.TestHttpServletRequest;
+import ch.jtaf.vo.CompetitionRankingVO;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.ws.rs.WebApplicationException;
-import org.junit.AfterClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
+
+import static ch.jtaf.test.util.TestData.COMPETITION_ID;
+import static ch.jtaf.test.util.TestData.SERIES_ID;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class RankingResourceTest {
 
     private static RankingResource rr;
-    private static ReportService rs;
     private static EntityManagerFactory emf;
     private static EntityManager em;
 
@@ -26,7 +28,7 @@ public class RankingResourceTest {
     public static void beforeClass() {
         emf = Persistence.createEntityManagerFactory("jtaf-test");
         em = emf.createEntityManager();
-        rs = new ReportService();
+        ReportService rs = new ReportService();
         rs.em = em;
         rr = new RankingResource();
         rr.reportService = rs;

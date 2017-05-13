@@ -1,33 +1,26 @@
 package ch.jtaf.control;
 
-import ch.jtaf.entity.Athlete;
-import ch.jtaf.entity.Category;
-import ch.jtaf.entity.Club;
-import ch.jtaf.entity.Competition;
-import ch.jtaf.entity.Event;
-import ch.jtaf.entity.SecurityUser;
-import ch.jtaf.entity.Series;
-import ch.jtaf.entity.Space;
-import ch.jtaf.entity.UserSpace;
-import static ch.jtaf.test.util.TestData.COMPETITION_ID;
-import static ch.jtaf.test.util.TestData.SERIES_ID;
-import static ch.jtaf.test.util.TestData.SPACE_ID;
+import ch.jtaf.entity.*;
 import ch.jtaf.to.AthleteTO;
-import java.util.List;
-import java.util.Locale;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.junit.AfterClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import java.util.List;
+import java.util.Locale;
+
+import static ch.jtaf.test.util.TestData.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class DataServiceTest {
 
     private static final String EMAIL = "simon@martinelli.ch";
-    private static Locale locale = new Locale("DE", "ch");
+    private static final Locale LOCALE = new Locale("DE", "ch");
 
     private static DataService ds;
     private static EntityManagerFactory emf;
@@ -222,7 +215,7 @@ public class DataServiceTest {
 
         assertNotNull(user);
 
-        SecurityUser savedUser = ds.saveUser(user, locale);
+        SecurityUser savedUser = ds.saveUser(user, LOCALE);
 
         assertNotNull(savedUser);
     }

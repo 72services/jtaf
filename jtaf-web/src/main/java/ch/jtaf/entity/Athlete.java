@@ -1,18 +1,9 @@
 package ch.jtaf.entity;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "athlete")
@@ -124,6 +115,7 @@ public class Athlete {
         return p;
     }
 
+    @SuppressWarnings("EmptyMethod")
     public void setTotalPoints(int p) {
         // Ignore. This method is only for JSON serialization
     }
@@ -140,6 +132,7 @@ public class Athlete {
         return p;
     }
 
+    @SuppressWarnings("EmptyMethod")
     public void setSeriesPoints(int p) {
         // Ignore. This method is only for JSON serialization
     }
@@ -170,10 +163,7 @@ public class Athlete {
             return false;
         }
         final Athlete other = (Athlete) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override

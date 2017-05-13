@@ -2,23 +2,23 @@ package ch.jtaf.report;
 
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Competition;
+import ch.jtaf.i18n.I18n;
 import ch.jtaf.vo.SeriesRankingCategoryVO;
 import ch.jtaf.vo.SeriesRankingVO;
-import ch.jtaf.i18n.I18n;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.jboss.logging.Logger;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Locale;
-import org.jboss.logging.Logger;
 
 public class SeriesRanking extends Ranking {
 
     private Document document;
-    private PdfWriter pdfWriter;
     private final SeriesRankingVO ranking;
 
     public SeriesRanking(SeriesRankingVO ranking, Locale locale) {
@@ -31,7 +31,7 @@ public class SeriesRanking extends Ranking {
             byte[] ba;
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                 document = new Document(PageSize.A4);
-                pdfWriter = PdfWriter.getInstance(document, baos);
+                PdfWriter pdfWriter = PdfWriter.getInstance(document, baos);
                 pdfWriter.setPageEvent(new HeaderFooter(
                         I18n.getInstance().getString(locale, "Series Ranking"),
                         ranking.getSeries().getName(),
@@ -88,7 +88,7 @@ public class SeriesRanking extends Ranking {
         addCategoryTitleCellWithColspan(table, " ", 6);
     }
 
-    private void createAthleteRow(PdfPTable table, int position, Athlete athlete) throws DocumentException {
+    private void createAthleteRow(PdfPTable table, int position, Athlete athlete) {
         addCell(table, position + ".");
         addCell(table, athlete.getLastName());
         addCell(table, athlete.getFirstName());

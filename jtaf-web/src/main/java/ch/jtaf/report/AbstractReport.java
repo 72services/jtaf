@@ -21,9 +21,9 @@ public abstract class AbstractReport {
     protected static final float DEFAULT_FONT_SIZE = 9f;
     protected static final float CM_PER_INCH = 2.54f;
     protected static final float DPI = 72f;
-    protected SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+    protected final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
     protected int numberOfRows;
-    protected Locale locale;
+    protected final Locale locale;
 
     protected AbstractReport(Locale locale) {
         this.locale = locale;

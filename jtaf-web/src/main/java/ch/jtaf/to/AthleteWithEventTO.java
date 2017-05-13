@@ -53,10 +53,7 @@ public class AthleteWithEventTO {
         if (!Objects.equals(this.event, other.event)) {
             return false;
         }
-        if (!Objects.equals(this.result, other.result)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.result, other.result);
     }
 
 }

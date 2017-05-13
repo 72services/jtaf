@@ -3,19 +3,20 @@ package ch.jtaf.boundry;
 import ch.jtaf.control.DataService;
 import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.test.util.TestSessionContext;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import org.junit.AfterClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
+
+import static org.junit.Assert.assertNotNull;
 
 public class UserResourceTest {
 
     private static UserResource ur;
-    private static DataService ds;
     private static EntityManagerFactory emf;
     private static EntityManager em;
 
@@ -23,7 +24,7 @@ public class UserResourceTest {
     public static void beforeClass() {
         emf = Persistence.createEntityManagerFactory("jtaf-test");
         em = emf.createEntityManager();
-        ds = new DataService();
+        DataService ds = new DataService();
         ds.em = em;
         ur = new UserResource();
         ur.dataService = ds;

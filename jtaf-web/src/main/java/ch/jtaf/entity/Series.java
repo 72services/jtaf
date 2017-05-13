@@ -140,10 +140,7 @@ public class Series implements Comparable<Series> {
             return false;
         }
         final Series other = (Series) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override

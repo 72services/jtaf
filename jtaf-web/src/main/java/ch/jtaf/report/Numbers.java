@@ -18,8 +18,6 @@ public class Numbers extends AbstractReport {
 
     private final static float FONT_SIZE_INFO = 12f;
     private final static float FONT_SIZE_TEXT = 90f;
-    private Document document;
-    private PdfWriter pdfWriter;
     private final List<Athlete> athletes;
 
     public Numbers(List<Athlete> athletes, Locale locale) {
@@ -29,8 +27,8 @@ public class Numbers extends AbstractReport {
 
     public byte[] create() {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            document = new Document(PageSize.A4, cmToPixel(1.5f), cmToPixel(1.7f), cmToPixel(0.8f), cmToPixel(0f));
-            pdfWriter = PdfWriter.getInstance(document, baos);
+            Document document = new Document(PageSize.A4, cmToPixel(1.5f), cmToPixel(1.7f), cmToPixel(0.8f), cmToPixel(0f));
+            PdfWriter pdfWriter = PdfWriter.getInstance(document, baos);
             document.open();
             int i = 0;
             int number = 1;

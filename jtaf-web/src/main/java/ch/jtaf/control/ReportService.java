@@ -1,47 +1,20 @@
 package ch.jtaf.control;
 
-import ch.jtaf.report.CompetitionCsvExport;
-import ch.jtaf.report.CompetitionRanking;
-import ch.jtaf.report.EventsRanking;
-import ch.jtaf.report.SeriesRanking;
-import ch.jtaf.report.Sheets;
 import ch.jtaf.comperator.AthleteCompetitionResultComparator;
 import ch.jtaf.comperator.AthleteSeriesResultComparator;
-import ch.jtaf.vo.CompetitionRankingCategoryVO;
-import ch.jtaf.entity.Athlete;
-import ch.jtaf.entity.Category;
-import ch.jtaf.entity.Club;
-import ch.jtaf.entity.Competition;
-import ch.jtaf.vo.CompetitionRankingVO;
-import ch.jtaf.vo.EventsRankingEventData;
-import ch.jtaf.vo.SeriesRankingCategoryVO;
-import ch.jtaf.vo.EventsRankingVO;
-import ch.jtaf.entity.Series;
-import ch.jtaf.vo.SeriesRankingVO;
-import ch.jtaf.entity.Event;
-import ch.jtaf.entity.EventType;
-import ch.jtaf.entity.Result;
+import ch.jtaf.entity.*;
 import ch.jtaf.interceptor.TraceInterceptor;
-import ch.jtaf.report.ClubRanking;
-import ch.jtaf.report.Diplomas;
-import ch.jtaf.report.Numbers;
+import ch.jtaf.report.*;
 import ch.jtaf.to.AthleteWithEventTO;
-import ch.jtaf.vo.ClubRankingVO;
-import ch.jtaf.vo.ClubResultVO;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import javax.ejb.EJB;
+import ch.jtaf.vo.*;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.*;
 
 @Interceptors({TraceInterceptor.class})
 @Stateless
@@ -292,7 +265,7 @@ public class ReportService extends AbstractService {
     private List<Athlete> getAthletesWithCompetionResults(Long competitionid) {
         Query q = em.createNativeQuery("select distinct a.* from athlete a join result r on a.id = r.athlete_id and r.competition_id = ?", Athlete.class);
         q.setParameter(1, competitionid);
-        List<Athlete> as = q.getResultList();
+        @SuppressWarnings("unchecked") List<Athlete> as = q.getResultList();
 
         TypedQuery<Result> tq = em.createNamedQuery("Result.findByCompetition", Result.class);
         tq.setParameter("competitionId", competitionid);
@@ -369,6 +342,7 @@ public class ReportService extends AbstractService {
 
         ClubRankingVO cr = new ClubRankingVO();
         cr.setSeries(seriesRanking.getSeries());
+        //noinspection unchecked,unchecked
         cr.setClubs(new ArrayList(pointsPerClub.values()));
         Collections.sort(cr.getClubs());
         return cr;

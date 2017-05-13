@@ -4,24 +4,17 @@ import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Competition;
 import ch.jtaf.entity.Event;
 import ch.jtaf.entity.EventType;
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.jboss.logging.Logger;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import org.jboss.logging.Logger;
 
 public class Sheets extends AbstractReport {
 
@@ -86,7 +79,7 @@ public class Sheets extends AbstractReport {
         }
     }
 
-    private void createLogo() throws BadElementException, DocumentException, MalformedURLException, IOException {
+    private void createLogo() throws DocumentException, IOException {
         if (logo != null) {
             Image image = Image.getInstance(logo);
             image.setAbsolutePosition(cmToPixel(1f), cmToPixel(17.5f));
@@ -95,7 +88,7 @@ public class Sheets extends AbstractReport {
         }
     }
 
-    private void createCategory(Athlete athlete) throws BadElementException, DocumentException, MalformedURLException, IOException {
+    private void createCategory(Athlete athlete) {
         PdfPTable table = new PdfPTable(1);
         table.setWidthPercentage(100);
         addCategoryCell(table, athlete.getCategory().getAbbreviation());

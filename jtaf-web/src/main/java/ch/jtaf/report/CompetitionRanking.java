@@ -1,24 +1,24 @@
 package ch.jtaf.report;
 
-import ch.jtaf.vo.CompetitionRankingCategoryVO;
-import ch.jtaf.vo.CompetitionRankingVO;
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Result;
 import ch.jtaf.i18n.I18n;
+import ch.jtaf.vo.CompetitionRankingCategoryVO;
+import ch.jtaf.vo.CompetitionRankingVO;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.jboss.logging.Logger;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Locale;
-import org.jboss.logging.Logger;
 
 public class CompetitionRanking extends Ranking {
 
     private Document document;
-    private PdfWriter pdfWriter;
     private final CompetitionRankingVO ranking;
 
     public CompetitionRanking(CompetitionRankingVO ranking, Locale locale) {
@@ -32,7 +32,7 @@ public class CompetitionRanking extends Ranking {
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                 float border = cmToPixel(1.5f);
                 document = new Document(PageSize.A4, border, border, border, border);
-                pdfWriter = PdfWriter.getInstance(document, baos);
+                PdfWriter pdfWriter = PdfWriter.getInstance(document, baos);
                 pdfWriter.setPageEvent(new HeaderFooter(
                         I18n.getInstance().getString(locale, "Ranking"),
                         ranking.getCompetition().getName(),
@@ -103,7 +103,7 @@ public class CompetitionRanking extends Ranking {
         addCategoryTitleCellWithColspan(table, " ", 6);
     }
 
-    private void createAthleteRow(PdfPTable table, int rank, Athlete athlete, int numberOfMedals) throws DocumentException {
+    private void createAthleteRow(PdfPTable table, int rank, Athlete athlete, int numberOfMedals) {
         if (rank <= numberOfMedals) {
             addCell(table, "* " + rank + ".");
         } else {

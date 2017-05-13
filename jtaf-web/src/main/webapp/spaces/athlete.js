@@ -106,7 +106,6 @@ function AthleteController() {
             clubs.forEach(function(club) {
                 if (club.id === parseInt(id)) {
                     athlete.club = club;
-                    return;
                 }
             });
         }

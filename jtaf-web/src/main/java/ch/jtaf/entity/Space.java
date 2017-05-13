@@ -99,10 +99,7 @@ public class Space implements Comparable<Space> {
             return false;
         }
         final Space other = (Space) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override

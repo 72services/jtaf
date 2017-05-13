@@ -1,16 +1,8 @@
 package ch.jtaf.entity;
 
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "competition")
@@ -124,10 +116,7 @@ public class Competition implements Comparable<Competition> {
             return false;
         }
         final Competition other = (Competition) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
     @Override

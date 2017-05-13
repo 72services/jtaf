@@ -5,22 +5,16 @@ import ch.jtaf.entity.Category;
 import ch.jtaf.i18n.I18n;
 import ch.jtaf.vo.CompetitionRankingCategoryVO;
 import ch.jtaf.vo.CompetitionRankingVO;
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Phrase;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.jboss.logging.Logger;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-import org.jboss.logging.Logger;
 
 public class Diplomas extends AbstractReport {
 
@@ -28,7 +22,6 @@ public class Diplomas extends AbstractReport {
     private static final float ATHLETE_FONT_SIZE = 12f;
 
     private Document document;
-    private PdfWriter pdfWriter;
     private final byte[] logo;
     private final CompetitionRankingVO ranking;
 
@@ -41,7 +34,7 @@ public class Diplomas extends AbstractReport {
     public byte[] create() {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             document = new Document(PageSize.A5, cmToPixel(1.5f), cmToPixel(1.5f), cmToPixel(1f), cmToPixel(1.5f));
-            pdfWriter = PdfWriter.getInstance(document, baos);
+            PdfWriter pdfWriter = PdfWriter.getInstance(document, baos);
             document.open();
             boolean first = true;
             for (CompetitionRankingCategoryVO cat : ranking.getCategories()) {
@@ -67,7 +60,7 @@ public class Diplomas extends AbstractReport {
         }
     }
 
-    private void createLogo() throws BadElementException, DocumentException, MalformedURLException, IOException {
+    private void createLogo() throws DocumentException, IOException {
         if (logo != null) {
             Image image = Image.getInstance(logo);
             image.scaleToFit(cmToPixel(11f), cmToPixel(11f));

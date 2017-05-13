@@ -43,10 +43,7 @@ public class EventsRankingEventData implements Comparable<EventsRankingEventData
             return false;
         }
         final EventsRankingEventData other = (EventsRankingEventData) obj;
-        if (!Objects.equals(this.event, other.event)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.event, other.event);
     }
 
     @Override

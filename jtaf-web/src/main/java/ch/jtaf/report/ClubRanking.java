@@ -8,15 +8,15 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.jboss.logging.Logger;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Locale;
-import org.jboss.logging.Logger;
 
 public class ClubRanking extends Ranking {
 
     private Document document;
-    private PdfWriter pdfWriter;
     private final ClubRankingVO ranking;
 
     public ClubRanking(ClubRankingVO ranking, Locale locale) {
@@ -30,7 +30,7 @@ public class ClubRanking extends Ranking {
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
                 float border = cmToPixel(1.5f);
                 document = new Document(PageSize.A4, border, border, border, border);
-                pdfWriter = PdfWriter.getInstance(document, baos);
+                PdfWriter pdfWriter = PdfWriter.getInstance(document, baos);
                 pdfWriter.setPageEvent(new HeaderFooter(
                         I18n.getInstance().getString(locale, "Club Ranking"),
                         ranking.getSeries().getName(),
@@ -62,7 +62,7 @@ public class ClubRanking extends Ranking {
         document.add(table);
     }
 
-    private void createClubRow(PdfPTable table, int position, ClubResultVO cr) throws DocumentException {
+    private void createClubRow(PdfPTable table, int position, ClubResultVO cr) {
         addCell(table, position + ".");
         addCell(table, cr.getClub().getName());
         addCellAlignRight(table, "" + cr.getPoints());

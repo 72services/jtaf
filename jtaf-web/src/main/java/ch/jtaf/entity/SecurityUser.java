@@ -1,12 +1,7 @@
 package ch.jtaf.entity;
 
+import javax.persistence.*;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "securityuser")
@@ -90,10 +85,7 @@ public class SecurityUser {
             return false;
         }
         final SecurityUser other = (SecurityUser) obj;
-        if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.email, other.email);
     }
 
     @Override
