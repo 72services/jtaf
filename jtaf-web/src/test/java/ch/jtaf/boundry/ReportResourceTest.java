@@ -68,7 +68,7 @@ public class ReportResourceTest {
 
     @Test(expected = WebApplicationException.class)
     public void testGetSheetsNotFound() throws Exception {
-        rr.getSheets(hsr, 0l, 0l, null);
+        rr.getSheets(hsr, 0L, 0L, null);
     }
 
     @Test

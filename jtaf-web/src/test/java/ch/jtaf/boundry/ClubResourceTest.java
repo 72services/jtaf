@@ -2,20 +2,23 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
 import ch.jtaf.entity.Club;
-import static ch.jtaf.test.util.TestData.CLUB_ID;
-import static ch.jtaf.test.util.TestData.SPACE_ID;
 import ch.jtaf.test.util.TestSessionContext;
 import ch.jtaf.test.util.UnallowedTestSessionContext;
-import java.util.List;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.ws.rs.WebApplicationException;
-import org.junit.AfterClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import java.util.List;
+
+import static ch.jtaf.test.util.TestData.CLUB_ID;
+import static ch.jtaf.test.util.TestData.SPACE_ID;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class ClubResourceTest {
 
@@ -85,7 +88,7 @@ public class ClubResourceTest {
 
     @Test(expected = WebApplicationException.class)
     public void testGetNotFound() throws Exception {
-        cr.get(0l);
+        cr.get(0L);
     }
 
     @Test(expected = WebApplicationException.class)

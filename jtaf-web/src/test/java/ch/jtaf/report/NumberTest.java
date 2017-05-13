@@ -48,7 +48,7 @@ public class NumberTest {
 
     @Test
     public void testGetNumbers() throws Exception {
-        byte[] report = rs.createNumbers(249l, null, Locale.GERMAN);
+        byte[] report = rs.createNumbers(249L, null, Locale.GERMAN);
         assertNotNull(report);
         assertTrue(report.length > 0);
         

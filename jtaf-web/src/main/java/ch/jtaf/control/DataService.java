@@ -203,12 +203,11 @@ public class DataService extends AbstractService {
         return copies;
     }
 
-    private List<Category> copyCategories(Series orig, Series series, List<Event> events) {
+    private void copyCategories(Series orig, Series series, List<Event> events) {
         TypedQuery<Category> q = em.createNamedQuery("Category.findAll", Category.class);
         q.setParameter("series_id", orig.getId());
-        List<Category> categories = q.getResultList();
-        List<Category> copies = new ArrayList<>();
-        for (Category category : categories) {
+
+        for (Category category : q.getResultList()) {
             Category copy = new Category();
             copy.setAbbreviation(category.getAbbreviation());
             copy.setGender(category.getGender());
@@ -225,9 +224,7 @@ public class DataService extends AbstractService {
                 }
             }
             em.persist(copy);
-            copies.add(copy);
         }
-        return copies;
     }
 
     private void copyAthletes(Series orig, Series series) {

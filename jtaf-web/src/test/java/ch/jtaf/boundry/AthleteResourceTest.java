@@ -1,23 +1,24 @@
 package ch.jtaf.boundry;
 
-import ch.jtaf.to.AthleteTO;
-import ch.jtaf.test.util.TestSessionContext;
 import ch.jtaf.control.DataService;
 import ch.jtaf.entity.Athlete;
-import static ch.jtaf.test.util.TestData.ATHLETE_ID;
-import static ch.jtaf.test.util.TestData.COMPETITION_ID;
-import static ch.jtaf.test.util.TestData.SERIES_ID;
+import ch.jtaf.test.util.TestSessionContext;
 import ch.jtaf.test.util.UnallowedTestSessionContext;
-import java.util.List;
+import ch.jtaf.to.AthleteTO;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.ws.rs.WebApplicationException;
-import org.junit.AfterClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import java.util.List;
+
+import static ch.jtaf.test.util.TestData.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class AthleteResourceTest {
 
@@ -89,7 +90,7 @@ public class AthleteResourceTest {
 
     @Test(expected = WebApplicationException.class)
     public void testGetNotFound() throws Exception {
-        ar.get(0l, COMPETITION_ID);
+        ar.get(0L, COMPETITION_ID);
     }
 
     @Test

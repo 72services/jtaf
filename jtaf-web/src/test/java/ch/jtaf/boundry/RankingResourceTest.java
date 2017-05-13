@@ -58,7 +58,7 @@ public class RankingResourceTest {
 
     @Test(expected = WebApplicationException.class)
     public void testGetCompetitionRankingNotFound() throws Exception {
-        rr.getCompetitionRanking(0l);
+        rr.getCompetitionRanking(0L);
     }
 
     @Test

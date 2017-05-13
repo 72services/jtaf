@@ -47,10 +47,7 @@ public class AthleteWithEventTO {
             return false;
         }
         final AthleteWithEventTO other = (AthleteWithEventTO) obj;
-        if (!Objects.equals(this.athlete, other.athlete)) {
-            return false;
-        }
-        return Objects.equals(this.event, other.event) && Objects.equals(this.result, other.result);
+        return Objects.equals(this.athlete, other.athlete) && Objects.equals(this.event, other.event) && Objects.equals(this.result, other.result);
     }
 
 }

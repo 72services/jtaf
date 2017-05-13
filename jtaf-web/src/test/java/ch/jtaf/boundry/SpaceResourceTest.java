@@ -2,19 +2,22 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
 import ch.jtaf.entity.Space;
-import static ch.jtaf.test.util.TestData.SPACE_ID;
 import ch.jtaf.test.util.TestSessionContext;
 import ch.jtaf.test.util.UnallowedTestSessionContext;
-import java.util.List;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.ws.rs.WebApplicationException;
-import org.junit.AfterClass;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import java.util.List;
+
+import static ch.jtaf.test.util.TestData.SPACE_ID;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class SpaceResourceTest {
 
@@ -83,7 +86,7 @@ public class SpaceResourceTest {
 
     @Test(expected = WebApplicationException.class)
     public void testGetNotFound() throws Exception {
-        sr.get(0l);
+        sr.get(0L);
     }
 
     @Test

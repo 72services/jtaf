@@ -2,20 +2,23 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
 import ch.jtaf.entity.Category;
-import static ch.jtaf.test.util.TestData.CATEGORY_ID;
-import static ch.jtaf.test.util.TestData.SERIES_ID;
 import ch.jtaf.test.util.TestSessionContext;
 import ch.jtaf.test.util.UnallowedTestSessionContext;
-import java.util.List;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.ws.rs.WebApplicationException;
-import org.junit.AfterClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import java.util.List;
+
+import static ch.jtaf.test.util.TestData.CATEGORY_ID;
+import static ch.jtaf.test.util.TestData.SERIES_ID;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class CategoryResourceTest {
 
@@ -88,7 +91,7 @@ public class CategoryResourceTest {
     @Test(expected = WebApplicationException.class)
     public void testGetNotfound() throws Exception {
         cr.sessionContext = new UnallowedTestSessionContext();
-        cr.get(0l);
+        cr.get(0L);
     }
 
     @Test
