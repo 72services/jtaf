@@ -5,8 +5,9 @@ import ch.jtaf.i18n.I18n;
 import ch.jtaf.interceptor.TraceInterceptor;
 import ch.jtaf.to.AthleteTO;
 import org.jboss.crypto.CryptoUtil;
-import org.jboss.logging.Logger;
 import org.qlrm.mapper.JpaResultMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -33,6 +34,8 @@ import java.util.Locale;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 @Interceptors({TraceInterceptor.class})
 public class DataService extends AbstractService {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(DataService.class);
 
     @Resource(mappedName = "java:jboss/mail/Default")
     private Session mailSession;
@@ -103,7 +106,7 @@ public class DataService extends AbstractService {
             for (Result r : a.getResults()) {
                 delete(r);
             }
-            a.setResults(new ArrayList<Result>());
+            a.setResults(new ArrayList<>());
             a.setCategory(c);
         }
         return this.save(a);
@@ -297,8 +300,8 @@ public class DataService extends AbstractService {
                 user.setSecret(passwordHash);
                 int hashCode = user.getEmail().hashCode() + user.getLastName().hashCode() + user.getFirstName().hashCode();
                 String string = Integer.toString(hashCode * -1);
-                Logger.getLogger(DataService.class).debug(string);
                 user.setConfirmationId(string);
+                LOGGER.debug(string);
 
                 SecurityGroup group = new SecurityGroup();
                 group.setEmail(user.getEmail());
@@ -338,7 +341,7 @@ public class DataService extends AbstractService {
             msg.saveChanges();
             Transport.send(msg);
         } catch (UnsupportedEncodingException | MessagingException ex) {
-            Logger.getLogger(DataService.class).error(ex.getMessage(), ex);
+            LOGGER.error(ex.getMessage(), ex);
         }
     }
 
@@ -357,7 +360,6 @@ public class DataService extends AbstractService {
         sb.append("\n");
         sb.append("www.jtaf.ch");
 
-        Logger.getLogger(DataService.class).debug(sb.toString());
         return sb.toString();
     }
 

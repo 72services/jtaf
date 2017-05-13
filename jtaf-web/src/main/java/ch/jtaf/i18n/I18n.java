@@ -1,19 +1,22 @@
 package ch.jtaf.i18n;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import org.jboss.logging.Logger;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 public class I18n {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(I18n.class);
 
     private static I18n instance;
     private final Map<String, String> translationsDe = new HashMap<>();
@@ -58,15 +61,14 @@ public class I18n {
                 fillMap(translationsDe, in);
             }
         } catch (IOException ex) {
-            Logger.getLogger(I18n.class).error(ex.getMessage(), ex);
+            LOGGER.error(ex.getMessage(), ex);
         }
     }
 
     private void fillMap(final Map<String, String> map, final BufferedReader in) throws IOException {
         JSONObject obj = (JSONObject) JSONValue.parse(convertInputStreamToString(in));
-        Iterator iter = obj.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry entry = (Map.Entry) iter.next();
+        for (Object o : obj.entrySet()) {
+            Map.Entry entry = (Map.Entry) o;
             map.put((String) entry.getKey(), (String) entry.getValue());
         }
     }

@@ -14,6 +14,7 @@ function ClubController() {
         
         if (id === undefined) {
             club = {};
+            //noinspection BadExpressionStatementJS
             document.getElementById("club_abbreviation").focus;
             util.i18n();
         } else {

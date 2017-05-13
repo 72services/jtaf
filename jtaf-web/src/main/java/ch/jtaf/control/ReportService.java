@@ -226,30 +226,21 @@ public class ReportService extends AbstractService {
             EventsRankingEventData re = new EventsRankingEventData();
             Event e = entry.getKey();
             re.setEvent(e);
-            Collections.sort(entry.getValue(), new Comparator<AthleteWithEventTO>() {
-
-                @Override
-                public int compare(AthleteWithEventTO o1, AthleteWithEventTO o2) {
-                    if (o1.getEvent().getType().equals(EventType.JUMP_THROW)) {
-                        return o2.getResult().getResultAsDouble().compareTo(o1.getResult().getResultAsDouble());
-                    } else {
-                        return o1.getResult().getResultAsDouble().compareTo(o2.getResult().getResultAsDouble());
-                    }
+            entry.getValue().sort((o1, o2) -> {
+                if (o1.getEvent().getType().equals(EventType.JUMP_THROW)) {
+                    return o2.getResult().getResultAsDouble().compareTo(o1.getResult().getResultAsDouble());
+                } else {
+                    return o1.getResult().getResultAsDouble().compareTo(o2.getResult().getResultAsDouble());
                 }
-
             });
             re.setAthletes(entry.getValue());
             ranking.getEvents().add(re);
         }
-        Collections.sort(ranking.getEvents(), new Comparator<EventsRankingEventData>() {
-
-            @Override
-            public int compare(EventsRankingEventData o1, EventsRankingEventData o2) {
-                if (o1.getEvent().getName().equals(o2.getEvent().getName())) {
-                    return o2.getEvent().getGender().compareTo(o1.getEvent().getGender());
-                } else {
-                    return o1.getEvent().getName().compareTo(o2.getEvent().getName());
-                }
+        ranking.getEvents().sort((o1, o2) -> {
+            if (o1.getEvent().getName().equals(o2.getEvent().getName())) {
+                return o2.getEvent().getGender().compareTo(o1.getEvent().getGender());
+            } else {
+                return o1.getEvent().getName().compareTo(o2.getEvent().getName());
             }
         });
         return ranking;
@@ -300,7 +291,7 @@ public class ReportService extends AbstractService {
             }
             a.setResults(rs);
         }
-        Collections.sort(list, new AthleteCompetitionResultComparator(competition));
+        list.sort(new AthleteCompetitionResultComparator(competition));
         return list;
     }
 
@@ -317,7 +308,7 @@ public class ReportService extends AbstractService {
                 filtered.add(athlete);
             }
         }
-        Collections.sort(filtered, new AthleteSeriesResultComparator(series));
+        filtered.sort(new AthleteSeriesResultComparator(series));
         return filtered;
     }
 

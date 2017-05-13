@@ -2,9 +2,10 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.entity.Series;
 import ch.jtaf.interceptor.TraceInterceptor;
-import org.jboss.logging.Logger;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -30,7 +31,7 @@ import java.util.Map;
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class SeriesResource extends BaseResource {
 
-    private Logger LOGGER = Logger.getLogger(SeriesResource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SeriesResource.class);
 
     @GET
     public List<Series> list(@QueryParam("space_id") Long spaceId,
@@ -108,7 +109,7 @@ public class SeriesResource extends BaseResource {
                     }
                 }
             } catch (IOException ex) {
-                Logger.getLogger(SeriesResource.class).error(ex.getMessage(), ex);
+                LOGGER.error(ex.getMessage(), ex);
             }
             return new byte[0];
         }
@@ -152,7 +153,7 @@ public class SeriesResource extends BaseResource {
             os.flush();
             return os.toByteArray();
         } catch (IOException e) {
-            Logger.getLogger(SeriesResource.class).error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             return new byte[0];
         }
     }

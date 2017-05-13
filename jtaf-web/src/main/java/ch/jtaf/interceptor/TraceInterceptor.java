@@ -1,11 +1,12 @@
 package ch.jtaf.interceptor;
 
-import java.security.Principal;
+import org.slf4j.LoggerFactory;
+
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
-import org.jboss.logging.Logger;
+import java.security.Principal;
 
 public class TraceInterceptor {
 
@@ -15,7 +16,7 @@ public class TraceInterceptor {
     @AroundInvoke
     public Object logCall(InvocationContext context) throws Exception {
         Principal principal = sessionContext.getCallerPrincipal();
-        Logger.getLogger(context.getTarget().getClass()).debugv(
+        LoggerFactory.getLogger(context.getTarget().getClass()).debug(
                 "{0}: {1}.{2}({3})",
                 principal.getName(), context.getTarget().getClass().getSimpleName(), context.getMethod().getName(), extractParameters(context));
         return context.proceed();

@@ -1,6 +1,5 @@
 package ch.jtaf.boundry;
 
-import ch.jtaf.control.DataService;
 import ch.jtaf.control.ReportService;
 import ch.jtaf.vo.CompetitionRankingVO;
 import ch.jtaf.vo.SeriesRankingVO;

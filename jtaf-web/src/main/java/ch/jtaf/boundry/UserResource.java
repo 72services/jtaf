@@ -2,7 +2,6 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.interceptor.TraceInterceptor;
-import org.jboss.logging.Logger;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -19,8 +18,6 @@ import javax.ws.rs.core.Context;
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class UserResource extends BaseResource {
-
-    private static final Logger LOGGER = Logger.getLogger(UserResource.class);
 
     @GET
     @Path("current")

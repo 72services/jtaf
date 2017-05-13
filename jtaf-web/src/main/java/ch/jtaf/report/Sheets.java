@@ -8,7 +8,8 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,6 +18,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class Sheets extends AbstractReport {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(Sheets.class);
 
     private final static float FONT_SIZE_INFO = 8f;
     private final static float FONT_SIZE_TEXT = 16f;
@@ -74,7 +77,7 @@ public class Sheets extends AbstractReport {
             pdfWriter.flush();
             return baos.toByteArray();
         } catch (DocumentException | IOException e) {
-            Logger.getLogger(Sheets.class).error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             return new byte[0];
         }
     }

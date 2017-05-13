@@ -10,13 +10,16 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 
 public class SeriesRanking extends Ranking {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(SeriesRanking.class);
 
     private Document document;
     private final SeriesRankingVO ranking;
@@ -44,7 +47,7 @@ public class SeriesRanking extends Ranking {
             }
             return ba;
         } catch (DocumentException | IOException e) {
-            Logger.getLogger(SeriesRanking.class).error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             return new byte[0];
         }
     }

@@ -2,26 +2,26 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.control.ReportService;
 import ch.jtaf.interceptor.TraceInterceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import org.jboss.logging.Logger;
 
 @Path("reports")
 @Interceptors({TraceInterceptor.class})
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class ReportResource {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ReportResource.class);
 
     @EJB
     protected ReportService service;
@@ -45,7 +45,7 @@ public class ReportResource {
                 return report;
             }
         } catch (IllegalArgumentException e) {
-            Logger.getLogger(ReportResource.class).error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
     }
@@ -66,7 +66,7 @@ public class ReportResource {
                 return report;
             }
         } catch (IllegalArgumentException e) {
-            Logger.getLogger(ReportResource.class).error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
     }

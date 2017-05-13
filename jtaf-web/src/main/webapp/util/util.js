@@ -137,7 +137,7 @@ function Util() {
         div.setAttribute("id", "error");
         div.innerHTML = "<b>ERROR</b><br />" + this.translate(message);
         document.body.appendChild(div);
-        window.setTimeout("fade(750, document.getElementById('error''))", 5000);
+        window.setTimeout("fade(750, document.getElementById('error'))", 5000);
     };
 
     this.showMessage = function() {

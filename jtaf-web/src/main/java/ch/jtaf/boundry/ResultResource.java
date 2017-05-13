@@ -1,7 +1,7 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.interceptor.TraceInterceptor;
-import java.math.BigDecimal;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;

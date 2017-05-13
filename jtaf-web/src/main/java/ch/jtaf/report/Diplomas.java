@@ -9,7 +9,8 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class Diplomas extends AbstractReport {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(Diplomas.class);
 
     private static final SimpleDateFormat SDF = new SimpleDateFormat("d. MMMMM yyyy");
     private static final float ATHLETE_FONT_SIZE = 12f;
@@ -55,7 +58,7 @@ public class Diplomas extends AbstractReport {
             pdfWriter.flush();
             return baos.toByteArray();
         } catch (DocumentException | IOException e) {
-            Logger.getLogger(Diplomas.class).error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             return new byte[0];
         }
     }
