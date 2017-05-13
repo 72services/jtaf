@@ -17,7 +17,7 @@ function AthleteController() {
 
         if (id === undefined) {
             fillClubSelect();
-            athlete = new Object();
+            athlete = {};
             document.getElementById("athlete_lastName").focus();
             util.i18n();
         } else {

@@ -31,7 +31,7 @@ function RegisterController() {
     };
 
     function fillUser() {
-        user = new Object();
+        user = {};
         user.email = document.getElementById("user_email").value;
         user.secret = document.getElementById("user_password").value;
         user.lastName = document.getElementById("user_lastName").value;

@@ -15,7 +15,7 @@ function CompetitionController() {
 
         var id = util.searchMap.id;
         if (id === undefined) {
-            competition = new Object();
+            competition = {};
             document.getElementById("competition_name").focus();
             util.i18n();
         } else {

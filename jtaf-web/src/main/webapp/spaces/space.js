@@ -8,7 +8,7 @@ function SpaceController() {
         util.showMessage();
         var id = util.searchMap.id;
         if (id === undefined) {
-            space = new Object();
+            space = {};
             createSeriesTableBody();
             createClubsTableBody();
             document.getElementById("space_name").focus();

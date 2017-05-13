@@ -28,9 +28,9 @@ function ShareController() {
     this.addShare = function() {
         var index = userSpaces.length;
         var table = document.getElementById("shares_table");
-        var userSpace = new Object();
+        var userSpace = {};
         userSpace.space = space;
-        userSpace.user = new Object();
+        userSpace.user = {};
         userSpaces[index] = userSpace;
         createRow(table, userSpace, index);
         document.getElementById("userinput").focus();

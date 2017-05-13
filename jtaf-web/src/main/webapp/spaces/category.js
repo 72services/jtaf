@@ -20,7 +20,7 @@ function CategoryController() {
 
         var id = util.searchMap.id;
         if (id === undefined) {
-            category = new Object();
+            category = {};
             fillEventsTable();
             document.getElementById("category_abbr").focus();
             util.i18n();

@@ -2,21 +2,15 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.entity.SecurityUser;
 import ch.jtaf.interceptor.TraceInterceptor;
-import java.security.NoSuchAlgorithmException;
+import org.jboss.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import org.jboss.logging.Logger;
 
 @Path("users")
 @Produces("application/json")
@@ -36,23 +30,13 @@ public class UserResource extends BaseResource {
 
     @POST
     public SecurityUser save(@Context HttpServletRequest hsr, SecurityUser user) {
-        try {
-            return dataService.saveUser(user, hsr.getLocale());
-        } catch (NoSuchAlgorithmException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new WebApplicationException(Response.Status.PRECONDITION_FAILED);
-        }
+        return dataService.saveUser(user, hsr.getLocale());
     }
 
     @POST
     @Path("changepassword")
     public SecurityUser changePassword(SecurityUser user) {
-        try {
-            return dataService.changePassword(user);
-        } catch (NoSuchAlgorithmException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new WebApplicationException(Response.Status.PRECONDITION_FAILED);
-        }
+        return dataService.changePassword(user);
     }
 
     @POST

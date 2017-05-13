@@ -13,7 +13,7 @@ function ClubController() {
         var id = util.searchMap.id;
         
         if (id === undefined) {
-            club = new Object();
+            club = {};
             document.getElementById("club_abbreviation").focus;
             util.i18n();
         } else {

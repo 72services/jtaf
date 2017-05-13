@@ -15,7 +15,7 @@ function EventController() {
 
         var id = util.searchMap.id;
         if (id === undefined) {
-            jtafEvent = new Object();
+            jtafEvent = {};
             document.getElementById("event_name").focus();
             util.i18n();
         } else {

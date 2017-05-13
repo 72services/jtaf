@@ -15,7 +15,7 @@ function SeriesController() {
         series_id = util.searchMap.id;
 
         if (series_id === undefined) {
-            series = new Object();
+            series = {};
             document.getElementById("series_name").focus();
             util.i18n();
         } else {
@@ -94,7 +94,7 @@ function SeriesController() {
     };
 
     this.filter = function(property) {
-        var filteredAthletes = new Array();
+        var filteredAthletes = [];
         var searchString = document.getElementById(property).value;
         if (searchString !== "") {
             var j = 0;
