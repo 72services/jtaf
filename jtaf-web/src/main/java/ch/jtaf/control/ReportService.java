@@ -300,11 +300,7 @@ public class ReportService extends AbstractService {
         for (Athlete athlete : list) {
             if (athlete.getCategory().getEvents().size() * series.getCompetitions().size() == athlete.getResults().size()) {
                 athlete.setCategory(null);
-                List<Result> rs = new ArrayList<>();
-                for (Result r : athlete.getResults()) {
-                    rs.add(r);
-                }
-                athlete.setResults(rs);
+                athlete.setResults(athlete.getResults());
                 filtered.add(athlete);
             }
         }

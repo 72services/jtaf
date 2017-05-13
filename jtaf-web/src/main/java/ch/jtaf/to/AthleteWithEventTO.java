@@ -50,10 +50,7 @@ public class AthleteWithEventTO {
         if (!Objects.equals(this.athlete, other.athlete)) {
             return false;
         }
-        if (!Objects.equals(this.event, other.event)) {
-            return false;
-        }
-        return Objects.equals(this.result, other.result);
+        return Objects.equals(this.event, other.event) && Objects.equals(this.result, other.result);
     }
 
 }

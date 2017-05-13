@@ -46,10 +46,7 @@ public class SecurityGroup {
             return false;
         }
         final SecurityGroup other = (SecurityGroup) obj;
-        if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
-        return Objects.equals(this.name, other.name);
+        return Objects.equals(this.email, other.email) && Objects.equals(this.name, other.name);
     }
 
     @Override
