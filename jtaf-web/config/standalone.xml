@@ -331,9 +331,4 @@
         </outbound-socket-binding>
     </socket-binding-group>
 
-    <deployments>
-        <deployment name="jtaf.war" runtime-name="jtaf.war">
-            <fs-archive path="C:\Users\Simon\workspace\jtaf\jtaf-web\target\jtaf.war"/>
-        </deployment>
-    </deployments>
 </server>
