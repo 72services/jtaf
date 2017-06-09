@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.4.52.130:3306
--- Erstellungszeit: 08. Jun 2017 um 18:58
+-- Erstellungszeit: 09. Jun 2017 um 17:36
 -- Server Version: 5.5.52
 -- PHP-Version: 5.3.3
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `athlete` (
   KEY `fk_athlete_category` (`category_id`),
   KEY `fk_athlete_club` (`club_id`),
   KEY `fk_athlete_series` (`series_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1619 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1628 ;
 
 --
 -- Daten für Tabelle `athlete`
@@ -732,7 +732,7 @@ INSERT INTO `athlete` (`id`, `firstName`, `gender`, `lastName`, `series_id`, `ye
 (1585, 'Hendrik', 'm', 'Kretschmar', 153, 2007, 242, 28),
 (1586, 'Lukas', 'm', 'Kretschmar', 153, 2006, 242, 28),
 (1587, 'Simon', 'm', 'Lüthi', 153, 2006, 242, 28),
-(1588, 'Maxim', 'm', 'Mark', 153, 2007, 242, 28),
+(1588, 'Maxim', 'm', 'Marx', 153, 2007, 242, 28),
 (1589, 'Ryan', 'm', 'Riberio Rihs', 153, 2008, 243, 28),
 (1590, 'Reto', 'm', 'Steiner', 153, 2007, 242, 28),
 (1591, 'Antonia', 'f', 'Anker', 153, 2003, 246, 28),
@@ -762,7 +762,16 @@ INSERT INTO `athlete` (`id`, `firstName`, `gender`, `lastName`, `series_id`, `ye
 (1615, 'Elyah', 'f', 'Robert', 153, 2010, 250, 29),
 (1616, 'Kimea', 'f', 'Hirt', 153, 2010, 250, 29),
 (1617, 'Nora', 'f', 'Holzmann', 153, 2010, 250, 29),
-(1618, 'Kelly', 'f', 'Zimmermann', 153, 2012, 250, 31);
+(1618, 'Kelly', 'f', 'Zimmermann', 153, 2012, 250, 31),
+(1619, 'Brendan', 'm', 'Demierre', 153, 2004, 241, 28),
+(1620, 'Gianluca', 'm', 'Walther', 153, 2004, 241, 28),
+(1621, 'Laurin', 'm', 'Walther', 153, 2004, 241, 28),
+(1622, 'Alexander', 'm', 'Bangerter', 153, 2005, 241, 28),
+(1623, 'Kevin', 'm', 'Pinto', 153, 2008, 243, 28),
+(1624, 'Anja', 'f', 'Dubler', 153, 2005, 247, 28),
+(1625, 'Keshaani', 'f', 'Sakthivel', 153, 2003, 246, 28),
+(1626, 'Maiyun', 'f', 'Schneider-Ludorff', 153, 2005, 247, 28),
+(1627, 'Leonie', 'f', 'Hubacher', 153, 2009, 249, 28);
 
 -- --------------------------------------------------------
 
