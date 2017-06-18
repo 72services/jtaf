@@ -145,11 +145,11 @@
         <subsystem xmlns="urn:jboss:domain:datasources:4.0">
             <datasources>
                 <datasource jta="true" jndi-name="java:jboss/datasources/MySQLDS" pool-name="JtafDS" enabled="true" use-java-context="true" use-ccm="true">
-                    <connection-url>jdbc:mysql://localhost:3306/jtaf</connection-url>
+                    <connection-url>jdbc:mysql://${env.DB_URL}:3306/jtaf</connection-url>
                     <driver>mysql</driver>
                     <security>
-                        <user-name>jtaf</user-name>
-                        <password>jtaf</password>
+                        <user-name>${env.DB_USER}</user-name>
+                        <password>${env.DB_PASSWORD}</password>
                     </security>
                 </datasource>
                 <datasource jndi-name="java:jboss/datasources/ExampleDS" pool-name="ExampleDS" enabled="true" use-java-context="true">

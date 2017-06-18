@@ -58,6 +58,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.2.3.Final</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.jboss.spec</groupId>
             <artifactId>jboss-javaee-7.0</artifactId>
             <version>1.0.3.Final</version>
@@ -111,12 +117,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.2.3.Final</version>
-            <scope>test</scope>
-        </dependency>        
-        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.30</version>
@@ -148,6 +148,22 @@
                             <filtering>true</filtering>
                         </resource>
                     </webResources>                    
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <imageName>simas/jtaf</imageName>
+                    <dockerDirectory>src/main/docker</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.war</include>
+                        </resource>
+                    </resources>
                 </configuration>
             </plugin>
         </plugins>
