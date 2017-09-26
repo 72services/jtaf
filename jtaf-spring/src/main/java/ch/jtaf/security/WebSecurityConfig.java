@@ -21,7 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/input/**").hasRole("user")
                 .antMatchers("/spaces/**").hasRole("user")
                 .antMatchers("/user/**").hasRole("user")
-                .and().httpBasic()
+                .and().formLogin().loginPage("/login.html").failureUrl("/login_error.html")
                 .and().csrf().disable();
     }
 }
