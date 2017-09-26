@@ -1,12 +1,15 @@
 package ch.jtaf.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "securitygroup")
+@NamedQueries({
+        @NamedQuery(name = "SecurityGroup.findByUsername",
+                query = "select g from SecurityGroup g where g.email = :email")
+
+})
 public class SecurityGroup {
 
     @Id

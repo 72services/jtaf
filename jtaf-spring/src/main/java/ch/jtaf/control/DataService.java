@@ -148,8 +148,8 @@ public class DataService extends AbstractService {
     }
 
     private BigInteger getNumberOfAthletesWithResults(Competition c) {
-        Query q = em.createNativeQuery("select count(distinct a.id) from athlete a "
-                + "join result r on a.id = r.athlete_id and r.competition_id = ?");
+        Query q = em.createNativeQuery("SELECT count(DISTINCT a.id) FROM athlete a "
+                + "JOIN result r ON a.id = r.athlete_id AND r.competition_id = ?");
         q.setParameter(1, c.getId());
         return (BigInteger) q.getSingleResult();
     }
@@ -269,14 +269,14 @@ public class DataService extends AbstractService {
     }
 
     public List<AthleteTO> getAthleteTOs(Long seriesId) {
-        Query q = em.createNativeQuery("SELECT a.id as id, a.lastname as lastname, a.firstname as firstname, "
-                + "a.yearofbirth as yearofbirth , a.gender as gender, cat.abbreviation as catabr, club.abbreviation as clubabr, "
-                + "(select count(*) from result r join athlete ath on r.athlete_id = ath.id "
-                + "join competition comp on r.competition_id = comp.id and comp.series_id = ath.series_id "
-                + "where r.athlete_id = a.id) as numberofresults "
-                + "FROM athlete a JOIN category cat on a.category_id = cat.id "
-                + "LEFT OUTER JOIN club club on a.club_id = club.id WHERE a.series_id = ? "
-                + "order by a.lastname, a.firstname");
+        Query q = em.createNativeQuery("SELECT a.id AS id, a.lastname AS lastname, a.firstname AS firstname, "
+                + "a.yearofbirth AS yearofbirth , a.gender AS gender, cat.abbreviation AS catabr, club.abbreviation AS clubabr, "
+                + "(SELECT count(*) FROM result r JOIN athlete ath ON r.athlete_id = ath.id "
+                + "JOIN competition comp ON r.competition_id = comp.id AND comp.series_id = ath.series_id "
+                + "WHERE r.athlete_id = a.id) AS numberofresults "
+                + "FROM athlete a JOIN category cat ON a.category_id = cat.id "
+                + "LEFT OUTER JOIN club club ON a.club_id = club.id WHERE a.series_id = ? "
+                + "ORDER BY a.lastname, a.firstname");
         q.setParameter(1, seriesId);
         JpaResultMapper jrm = new JpaResultMapper();
         return jrm.list(q, AthleteTO.class);
@@ -494,5 +494,25 @@ public class DataService extends AbstractService {
         }
         Collections.sort(allSeries);
         return allSeries;
+    }
+
+    public SecurityUser getUserByUsernameAndPassword(String name, String password) {
+        TypedQuery<SecurityUser> tq = em.createNamedQuery("SecurityUser.findByUsernameAndPassword", SecurityUser.class);
+        tq.setParameter("email", name);
+        tq.setParameter("secret", password);
+        List<SecurityUser> list = tq.getResultList();
+        if (list.isEmpty()) {
+            return null;
+        } else if (list.size() == 1) {
+            return list.get(0);
+        } else {
+            throw new IllegalStateException("More than one user with the same email found");
+        }
+    }
+
+    public List<SecurityGroup> getGroupsByUsername(String name) {
+        TypedQuery<SecurityGroup> tq = em.createNamedQuery("SecurityGroup.findByUsername", SecurityGroup.class);
+        tq.setParameter("email", name);
+        return tq.getResultList();
     }
 }

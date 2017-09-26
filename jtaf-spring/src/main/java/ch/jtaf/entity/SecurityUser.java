@@ -6,8 +6,11 @@ import java.util.Objects;
 @Entity
 @Table(name = "securityuser")
 @NamedQueries({
-    @NamedQuery(name = "SecurityUser.findByConfirmationId",
-            query = "select u from SecurityUser u where u.confirmationId = :confirmationId")
+        @NamedQuery(name = "SecurityUser.findByConfirmationId",
+                query = "select u from SecurityUser u where u.confirmationId = :confirmationId"),
+        @NamedQuery(name = "SecurityUser.findByUsernameAndPassword",
+                query = "select u from SecurityUser u where u.email = :email and u.secret = :secret")
+
 })
 public class SecurityUser {
 
