@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Edit Space</title>
+        <link rel="stylesheet" type="text/css" href="../css/jtaf.css">
+        <script src="../util/util.js"></script>
+        <script src="space.js"></script>
+        <script>
+            var spaceController = new SpaceController();
+        </script>
+    </head>
+    <body onload="spaceController.loadData();">
+        <script src="/header.js"></script>
+
+        <div id="main">
+            <h1><span class="i18n">Edit Space</span></h1>
+
+            <form action="javascript:spaceController.save();">
+                <div>
+                    <table class="input">
+                        <tr>
+                            <td><span class="i18n">Id</span></td>
+                            <td><input type="text" id="space_id" readonly disabled /></td>
+                        </tr>
+                        <tr>
+                            <td><span class="i18n">Name</span></td>
+                            <td><input type="text" id="space_name" required /></td>
+                        </tr>
+                    </table>
+
+                    <p>
+                        <input type="submit" value="Save" />&nbsp;<a href="index.html"><span class="i18n">Back</span></a>
+                    </p>
+                </div>
+            </form>
+
+            <h1><span class="i18n">Series</span></h1>
+
+            <table class="list">
+                <thead>
+                    <tr>
+                        <th><span class="i18n">Name</span></th>
+                        <th style="width:80px; text-align: right;"></th>
+                    </tr>
+                </thead>
+                <tbody id="series_table">
+                    <tr>
+                        <td><span class="i18n">Loading series</span></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><a href="#" onclick="spaceController.addSeries();"><span class="i18n">Add series</span></a></p>
+
+            <h1><span class="i18n">Clubs</span></h1>
+
+            <table class="list">
+                <thead>
+                    <tr>
+                        <th><span class="i18n">Abbreviation</span></th>
+                        <th><span class="i18n">Name</span></th>
+                        <th style="width:40px; text-align: right;"></th>
+                    </tr>
+                </thead>
+                <tbody id="club_table">
+                    <tr>
+                        <td colspan="3"><span class="i18n">Loading clubs</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><a href="#" onclick="spaceController.addClub();"><span class="i18n">Add club</span></a></p>
+        </div>
+
+        <script src="/footer.js"></script>
+    </body>
+</html>

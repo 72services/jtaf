@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Register</title>
+        <link rel="stylesheet" href="css/jtaf.css">
+        <script src="util/util.js"></script>
+        <script src="register.js"></script>
+        <script>
+            var registerController = new RegisterController();
+        </script>
+    </head>
+    <body onload="registerController.loadData()">
+        <script src="/header.js"></script>
+
+        <div id="main">
+            <h1><span class="i18n">Register</span></h1>
+
+            <form action="javascript:registerController.save();">
+
+                <table class="input">
+                    <tr>
+                        <td><span class="i18n">Email</span></td>
+                        <td><input type="text" id="user_email" required /></td>
+                    </tr>
+                    <tr>
+                        <td><span class="i18n">Password</span></td>
+                        <td><input type="password" id="user_password" required /></td>
+                    </tr>
+                    <tr>
+                        <td><span class="i18n">Confirm password</span></td>
+                        <td><input type="password" id="user_password_confirm" required /></td>
+                    </tr>
+                    <tr>
+                        <td><span class="i18n">Last name</span></td>
+                        <td><input type="text" id="user_lastName" required /></td>
+                    </tr>
+                    <tr>
+                        <td><span class="i18n">First name</span></td>
+                        <td><input type="text" id="user_firstName" required /></td>
+                    </tr>
+                </table>
+
+                <p>
+                    <input type="submit" value="Register" />
+                </p>
+
+                <script>document.getElementById("user_email").focus();</script>
+            </form>
+
+            <script src="/footer.js"></script>
+        </div>
+    </body>
+</html>

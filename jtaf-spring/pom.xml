@@ -15,6 +15,37 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
+    <organization>
+        <name>72 Services LLC</name>
+        <url>https://72.services</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Simon Martinelli</name>
+            <email>simon@72.services</email>
+            <organization>72 Services LLC</organization>
+            <organizationUrl>https://72.services</organizationUrl>
+            <timezone>Europe/Zurich</timezone>
+            <roles>
+                <role>Project Lead</role>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <contributors>
+        <contributor>
+            <name>Adrian Moser</name>
+            <roles>
+                <role>Busines Analyst</role>
+                <role>Tester</role>
+            </roles>
+            <timezone>Europe/Zurich</timezone>
+        </contributor>
+    </contributors>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -47,9 +78,28 @@
 			<artifactId>spring-boot-starter-jersey</artifactId>
 		</dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.44</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.simas.qlrm</groupId>
+            <artifactId>qlrm</artifactId>
+            <version>1.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.4.1</version>
         </dependency>
 
 		<dependency>
