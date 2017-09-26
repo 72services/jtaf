@@ -14,16 +14,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST).hasRole("user")
+                .antMatchers(HttpMethod.PUT).hasRole("user")
+                .antMatchers(HttpMethod.DELETE).hasRole("user")
                 .antMatchers("/", "/css/**", "/i18n/**", "/images/**", "/util/**").permitAll()
                 .antMatchers("/input/**").hasRole("user")
                 .antMatchers("/spaces/**").hasRole("user")
                 .antMatchers("/user/**").hasRole("user")
-                .antMatchers(HttpMethod.PUT, "/res/users/**").hasRole("user")
-                .antMatchers(HttpMethod.DELETE, "/res/users/**").hasRole("user")
-                .antMatchers(HttpMethod.POST, "/res/athletes/**", "/res/categories/**", "/res/clubs/**", "/res/competitions/**", "/res/events/**", "/res/series/**", "/res/spaces/**").hasRole("user")
-                .antMatchers(HttpMethod.PUT, "/res/athletes/**", "/res/categories/**", "/res/clubs/**", "/res/competitions/**", "/res/events/**", "/res/series/**", "/res/spaces/**").hasRole("user")
-                .antMatchers(HttpMethod.DELETE, "/res/athletes/**", "/res/categories/**", "/res/clubs/**", "/res/competitions/**", "/res/events/**", "/res/series/**", "/res/spaces/**").hasRole("user")
-                .and()
-                .httpBasic();
+                .and().httpBasic()
+                .and().csrf().disable();
     }
 }

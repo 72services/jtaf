@@ -3,6 +3,7 @@ package ch.jtaf.security;
 import ch.jtaf.control.DataService;
 import ch.jtaf.entity.SecurityGroup;
 import ch.jtaf.entity.SecurityUser;
+import org.jboss.crypto.CryptoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +23,8 @@ public class JtafAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        SecurityUser user = dataService.getUserByUsernameAndPassword(authentication.getName(), authentication.getCredentials().toString());
+        String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, authentication.getCredentials().toString());
+        SecurityUser user = dataService.getUserByUsernameAndPassword(authentication.getName(), passwordHash);
         if (user != null) {
             List<SecurityGroup> groups = dataService.getGroupsByUsername(user.getEmail());
             List<SimpleGrantedAuthority> roles = new ArrayList<>();

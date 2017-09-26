@@ -21,7 +21,7 @@ public class I18n {
     private static I18n instance;
     private final Map<String, String> translationsDe = new HashMap<>();
     private final String path;
-    private final static String MESSAGES_DE = "/i18n/messages_de.json";
+    private final static String MESSAGES_DE = "/res/i18n/messages_de.json";
     private static final String DE = "DE";
 
     private I18n() {

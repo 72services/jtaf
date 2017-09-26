@@ -3,6 +3,7 @@ package ch.jtaf.control;
 import ch.jtaf.entity.*;
 import ch.jtaf.i18n.I18n;
 import ch.jtaf.to.AthleteTO;
+import org.jboss.crypto.CryptoUtil;
 import org.qlrm.mapper.JpaResultMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -286,9 +287,8 @@ public class DataService extends AbstractService {
     public SecurityUser saveUser(SecurityUser user, Locale locale) {
         if (user.getConfirmationId() == null) {
             if (em.find(SecurityUser.class, user.getEmail()) == null) {
-                // TODO
-                //String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, user.getSecret());
-                //user.setSecret(passwordHash);
+                String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, user.getSecret());
+                user.setSecret(passwordHash);
                 int hashCode = user.getEmail().hashCode() + user.getLastName().hashCode() + user.getFirstName().hashCode();
                 String string = Integer.toString(hashCode * -1);
                 user.setConfirmationId(string);
@@ -310,8 +310,8 @@ public class DataService extends AbstractService {
 
     @Transactional
     public SecurityUser changePassword(SecurityUser user) {
-        //String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, user.getSecret());
-        //user.setSecret(passwordHash);
+        String passwordHash = CryptoUtil.createPasswordHash("MD5", "BASE64", null, null, user.getSecret());
+        user.setSecret(passwordHash);
         user = em.merge(user);
         return user;
     }
