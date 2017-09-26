@@ -2,13 +2,14 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.control.DataService;
 import ch.jtaf.entity.UserSpace;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 public class BaseResource {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(BaseResource.class);
 
     @Autowired
     protected DataService dataService;
@@ -19,7 +20,7 @@ public class BaseResource {
             Object userSpaceByUserAndSeries = dataService.getUserSpaceByUserAndSeries(userName, seriesId);
             return userSpaceByUserAndSeries != null;
         } catch (Exception e) {
-            Logger.getLogger(BaseResource.class.getName()).log(Level.WARNING, e.getMessage(), e);
+            LOGGER.warn(e.getMessage(), e);
             return false;
         }
     }
@@ -30,7 +31,7 @@ public class BaseResource {
             UserSpace userSpaceByUserAndSpace = dataService.getUserSpaceByUserAndSpace(userName, space_id);
             return userSpaceByUserAndSpace != null;
         } catch (Exception e) {
-            Logger.getLogger(BaseResource.class.getName()).log(Level.WARNING, e.getMessage(), e);
+            LOGGER.warn(e.getMessage(), e);
             return false;
         }
     }

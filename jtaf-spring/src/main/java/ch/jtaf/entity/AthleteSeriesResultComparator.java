@@ -1,7 +1,4 @@
-package ch.jtaf.comperator;
-
-import ch.jtaf.entity.Athlete;
-import ch.jtaf.entity.Series;
+package ch.jtaf.entity;
 
 import java.util.Comparator;
 

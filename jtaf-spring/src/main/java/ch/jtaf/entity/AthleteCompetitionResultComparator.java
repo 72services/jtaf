@@ -1,4 +1,4 @@
-package ch.jtaf.comperator;
+package ch.jtaf.entity;
 
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.entity.Competition;
