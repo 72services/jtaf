@@ -25,7 +25,7 @@ public class I18n {
     private static final String DE = "DE";
 
     private I18n() {
-        this.path = System.getProperty("jtaf.confirmation.url");
+        this.path = System.getenv("CONFIRMATION_URL");
         fillDe();
     }
 

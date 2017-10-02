@@ -318,9 +318,9 @@ public class DataService extends AbstractService {
 
     private void sendMail(SecurityUser user, Locale locale) {
         try {
-            String confirmationUrl = System.getProperty("jtaf.confirmation.url");
+            String confirmationUrl = System.getenv("CONFIRMATION_URL");
             if (confirmationUrl == null) {
-                throw new ConfigurationException("jtaf.confirmation.url");
+                throw new ConfigurationException("CONFIRMATION_URL");
             }
 
             Message msg = javaMailSender.createMimeMessage();
