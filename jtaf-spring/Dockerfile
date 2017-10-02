@@ -2,7 +2,7 @@ FROM openjdk:8-jdk-alpine
 
 VOLUME /tmp
 
-ADD target/jtaf-spring-0.0.1-SNAPSHOT.jar app.jar
+ADD target/jtaf-spring-0.0.2-SNAPSHOT.jar app.jar
 
 ENV JAVA_OPTS=""
 
