@@ -20,13 +20,13 @@ public class I18n {
 
     private static I18n instance;
     private final Map<String, String> translationsDe = new HashMap<>();
-    private final String path;
+    private String path;
     private final static String MESSAGES_DE = "/i18n/messages_de.json";
     private static final String DE = "DE";
 
     private I18n() {
-        this.path = System.getenv("CONFIRMATION_URL");
-        fillDe();
+        //this.path = System.getenv("CONFIRMATION_URL");
+        //fillDe();
     }
 
     public static I18n getInstance() {
