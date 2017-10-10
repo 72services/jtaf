@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 @RequestMapping(value = "/res/categories", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CategoryResource extends BaseResource {
 

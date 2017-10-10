@@ -60,7 +60,7 @@ public class SeriesResource extends BaseResource {
     }
 
     @GetMapping("{id}")
-    public Series get(@PathVariable("id") Long id, @RequestParam("function") String function) {
+    public Series get(@PathVariable("id") Long id, @RequestParam(value = "function", required = false) String function) {
         Series s = dataService.getSeries(id);
         if (s == null) {
             throw new NotFoundException();

@@ -1,5 +1,6 @@
 body {
-    background-image: url(/images/track.jpg);
+    //background-image: url(/images/track.jpg);
+	background-color: #BB3B22;
     background-position: top;
     background-repeat: repeat-y;
     margin: 0;
