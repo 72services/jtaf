@@ -1,48 +1,44 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.entity.SecurityUser;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 
-@Path("users")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-@Component
+@RestController
+@RequestMapping(value = "/res/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserResource extends BaseResource {
 
-    @GET
-    @Path("current")
+    @GetMapping("current")
     public SecurityUser getCurrentUser() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        return dataService.get(SecurityUser.class, userName);
+        SecurityUser securityUser = dataService.get(SecurityUser.class, userName);
+        if (securityUser == null) {
+            throw new NoContentException();
+        } else {
+            return securityUser;
+        }
     }
 
-    @POST
-    public SecurityUser save(@Context HttpServletRequest hsr, SecurityUser user) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public SecurityUser save(HttpServletRequest hsr, @RequestBody SecurityUser user) {
         return dataService.saveUser(user, hsr.getLocale());
     }
 
-    @POST
-    @Path("changepassword")
-    public SecurityUser changePassword(SecurityUser user) {
+    @PostMapping(value = "changepassword", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public SecurityUser changePassword(@RequestBody SecurityUser user) {
         return dataService.changePassword(user);
     }
 
-    @POST
-    @Path("confirm")
-    @Consumes({"text/plain"})
+    @PostMapping(value = "confirm", consumes = MediaType.TEXT_PLAIN_VALUE)
     public void save(String confirmationId) {
         dataService.confirmUser(confirmationId);
     }
 
-    @GET
-    @Path("logout")
-    public void logout(@Context HttpServletRequest req) {
+    @GetMapping("logout")
+    public void logout(HttpServletRequest req) {
         req.getSession().invalidate();
     }
 }

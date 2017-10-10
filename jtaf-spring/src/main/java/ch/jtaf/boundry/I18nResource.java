@@ -1,27 +1,21 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.i18n.I18n;
-import org.springframework.stereotype.Component;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import java.util.Map;
 
-@Path("i18n")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-@Component
+@RestController
+@RequestMapping(value = "/res/i18n", produces = MediaType.APPLICATION_JSON_VALUE)
 public class I18nResource extends BaseResource {
-    
-    @GET
-    @Path("messages")
-    public Map<String, String> getMessages(@Context HttpServletRequest hsr) {
+
+    @GetMapping("messages")
+    public Map<String, String> getMessages(HttpServletRequest hsr) {
         return I18n.getInstance().getMessages(hsr.getLocale());
     }
-    
+
 }

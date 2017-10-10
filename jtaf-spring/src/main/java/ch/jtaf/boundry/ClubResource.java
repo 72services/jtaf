@@ -1,54 +1,48 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.entity.Club;
-import org.springframework.stereotype.Component;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("clubs")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-@Component
+@RestController
+@RequestMapping(value = "/res/clubs", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ClubResource extends BaseResource {
 
-    @GET
-    public List<Club> list(@QueryParam("space_id") Long spaceId) {
+    @GetMapping
+    public List<Club> list(@RequestParam("space_id") Long spaceId) {
         return dataService.getClubs(spaceId);
     }
 
-    @POST
-    public Club save(Club club) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Club save(@RequestBody Club club) {
         if (isUserGrantedForSpace(club.getSpace_id())) {
             return dataService.save(club);
         } else {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+            throw new ForbiddenException();
         }
     }
 
-    @GET
-    @Path("{id}")
-    public Club get(@PathParam("id") Long id) {
+    @GetMapping("{id}")
+    public Club get(@PathVariable Long id) {
         Club c = dataService.get(Club.class, id);
         if (c == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else {
             return c;
         }
     }
 
-    @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") Long id) {
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id) {
         Club c = dataService.get(Club.class, id);
         if (c == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else if (isUserGrantedForSpace(c.getSpace_id())) {
             dataService.delete(c);
         } else {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+            throw new ForbiddenException();
         }
     }
 }

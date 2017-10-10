@@ -1,18 +1,17 @@
 package ch.jtaf.boundry;
 
-import org.springframework.stereotype.Component;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-
-@Path("result")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-@Component
+@RestController
+@RequestMapping(value = "/res/result", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ResultResource extends BaseResource {
 
-    @GET
-    public Long calculatePoints(@QueryParam("event_id") Long eventId, @QueryParam("result") String result) {
+    @GetMapping
+    public Long calculatePoints(@RequestParam("event_id") Long eventId, @RequestParam("result") String result) {
         return dataService.calculatePoints(eventId, result);
     }
 

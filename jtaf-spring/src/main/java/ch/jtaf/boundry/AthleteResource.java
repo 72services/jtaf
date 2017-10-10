@@ -2,26 +2,22 @@ package ch.jtaf.boundry;
 
 import ch.jtaf.entity.Athlete;
 import ch.jtaf.to.AthleteTO;
-import org.springframework.stereotype.Component;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("athletes")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-@Component
+@RestController
+@RequestMapping(value = "/res/athletes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AthleteResource extends BaseResource {
 
-    @GET
-    public List<AthleteTO> list(@QueryParam("series_id") Long seriesId) {
+    @GetMapping
+    public List<AthleteTO> list(@RequestParam("series_id") Long seriesId) {
         return dataService.getAthleteTOs(seriesId);
     }
 
-    @POST
-    public Athlete save(@QueryParam("competition_id") Long competitionId, Athlete a) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Athlete save(@RequestParam("competition_id") Long competitionId, @RequestBody Athlete a) {
         if (isUserGrantedForSeries(a.getSeries_id())) {
             Athlete savedAthlete = dataService.saveAthlete(a);
             if (competitionId != null) {
@@ -31,39 +27,36 @@ public class AthleteResource extends BaseResource {
                 return savedAthlete;
             }
         } else {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+            throw new ForbiddenException();
         }
     }
 
-    @GET
-    @Path("{id}")
-    public Athlete get(@PathParam("id") Long id, @QueryParam("competition_id") Long competitionId) {
+    @GetMapping("{id}")
+    public Athlete get(@PathVariable Long id, @RequestParam("competition_id") Long competitionId) {
         Athlete a = dataService.getAthlete(id, competitionId);
         if (a == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else {
             return a;
         }
     }
 
-    @GET
-    @Path("search")
-    public List<Athlete> search(@QueryParam("series_id") Long seriesId,
-            @QueryParam("competition_id") Long competitionId,
-            @QueryParam("query") String query) {
+    @GetMapping("search")
+    public List<Athlete> search(@RequestParam("series_id") Long seriesId,
+                                @RequestParam("competition_id") Long competitionId,
+                                @RequestParam("query") String query) {
         return dataService.searchAthletes(seriesId, competitionId, query);
     }
 
-    @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") Long id) {
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id) {
         Athlete a = dataService.get(Athlete.class, id);
         if (a == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else if (isUserGrantedForSeries(a.getSeries_id())) {
             dataService.delete(a);
         } else {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+            throw new ForbiddenException();
         }
     }
 }

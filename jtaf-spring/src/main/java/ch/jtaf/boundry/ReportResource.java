@@ -4,15 +4,16 @@ import ch.jtaf.control.ReportService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
 
-@Path("reports")
-@Component
+@RestController
+@RequestMapping(value = "/res/reports", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ReportResource {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ReportResource.class);
@@ -20,11 +21,9 @@ public class ReportResource {
     @Autowired
     protected ReportService service;
 
-    @GET
-    @Path("sheets")
-    @Produces("application/pdf")
-    public byte[] getSheets(@Context HttpServletRequest hsr, @QueryParam("competitionid") Long competitionid,
-            @QueryParam("categoryid") Long categoryid, @QueryParam("orderby") String order) {
+    @GetMapping(value = "sheets", produces = MediaType.APPLICATION_PDF_VALUE)
+    public byte[] getSheets(HttpServletRequest hsr, @RequestParam("competitionid") Long competitionid,
+                            @RequestParam("categoryid") Long categoryid, @RequestParam("orderby") String order) {
         try {
             byte[] report = null;
             if (competitionid != null) {
@@ -34,47 +33,43 @@ public class ReportResource {
                 report = service.createEmptySheets(categoryid, hsr.getLocale());
             }
             if (report == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
+                throw new NotFoundException();
             } else {
                 return report;
             }
         } catch (IllegalArgumentException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         }
     }
 
-    @GET
-    @Path("numbers")
-    @Produces("application/pdf")
-    public byte[] getNumbers(@Context HttpServletRequest hsr, @QueryParam("competitionid") Long competitionid,
-            @QueryParam("orderby") String order) {
+    @GetMapping(value = "numbers", produces = MediaType.APPLICATION_PDF_VALUE)
+    public byte[] getNumbers(HttpServletRequest hsr, @RequestParam("competitionid") Long competitionid,
+                             @RequestParam("orderby") String order) {
         try {
             byte[] report = null;
             if (competitionid != null) {
                 report = service.createNumbers(competitionid, order, hsr.getLocale());
             }
             if (report == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
+                throw new NotFoundException();
             } else {
                 return report;
             }
         } catch (IllegalArgumentException e) {
             LOGGER.error(e.getMessage(), e);
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         }
     }
 
-    @GET
-    @Path("export.csv")
-    @Produces({"text/comma-separated-values"})
-    public String exportAsCsv(@QueryParam("competitionid") Long competitionid) {
+    @GetMapping(value = "export.csv", produces = "text/comma-separated-values")
+    public String exportAsCsv(@RequestParam("competitionid") Long competitionid) {
         if (competitionid == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new BadRequestException();
         } else {
             String csv = service.createCompetitionRankingAsCsv(competitionid);
             if (csv == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
+                throw new NotFoundException();
             } else {
                 return csv;
             }

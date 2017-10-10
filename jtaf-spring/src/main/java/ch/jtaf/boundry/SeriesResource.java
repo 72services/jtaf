@@ -3,12 +3,10 @@ package ch.jtaf.boundry;
 import ch.jtaf.entity.Series;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -17,17 +15,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-@Path("series")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-@Component
+@RestController
+@RequestMapping(value = "/res/series", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SeriesResource extends BaseResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SeriesResource.class);
 
-    @GET
-    public List<Series> list(@QueryParam("space_id") Long spaceId,
-            @QueryParam("withCompetitions") String withCompetitions) {
+    @GetMapping
+    public List<Series> list(@RequestParam("space_id") Long spaceId,
+                             @RequestParam("withCompetitions") String withCompetitions) {
         if (withCompetitions == null || !Boolean.parseBoolean(withCompetitions)) {
             return dataService.getSeriesList(spaceId);
         } else {
@@ -35,8 +31,8 @@ public class SeriesResource extends BaseResource {
         }
     }
 
-    @POST
-    public Series save(Series series) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Series save(@RequestBody Series series) {
         if (isUserGrantedForSpace(series.getSpace_id())) {
             if (series.getId() != null) {
                 Series fromDb = dataService.get(Series.class, series.getId());
@@ -45,32 +41,29 @@ public class SeriesResource extends BaseResource {
             Series savedSeries = dataService.save(series);
             return dataService.getSeries(savedSeries.getId());
         } else {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+            throw new ForbiddenException();
         }
     }
 
-    @POST
-    @Path("/recalculateCategories")
-    public void recalculateCategories(Series series) {
+    @PostMapping(value = "recalculateCategories", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void recalculateCategories(@RequestBody Series series) {
         if (isUserGrantedForSpace(series.getSpace_id())) {
             dataService.recalculateCategories(series.getId());
         } else {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+            throw new ForbiddenException();
         }
     }
 
-    @POST
-    @Path("{id}")
-    public void copy(@PathParam("id") Long id, @QueryParam("function") String function) {
+    @PostMapping(value = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void copy(@PathVariable Long id, @RequestParam("function") String function) {
         dataService.copySeries(id);
     }
 
-    @GET
-    @Path("{id}")
-    public Series get(@PathParam("id") Long id, @QueryParam("function") String function) {
+    @GetMapping("{id}")
+    public Series get(@PathVariable("id") Long id, @RequestParam("function") String function) {
         Series s = dataService.getSeries(id);
         if (s == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else {
             if (function != null && function.equals("export")) {
                 return dataService.exportSeries(s);
@@ -80,13 +73,11 @@ public class SeriesResource extends BaseResource {
         }
     }
 
-    @GET
-    @Path("/logo/{id}")
-    @Produces("image/png")
-    public byte[] getLogo(@PathParam("id") Long id) {
+    @GetMapping(value = "/logo/{id}", produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] getLogo(@PathVariable("id") Long id) {
         Series s = dataService.getSeries(id);
         if (s == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else {
             try {
                 byte[] logo = s.getLogo();
@@ -107,16 +98,15 @@ public class SeriesResource extends BaseResource {
         }
     }
 
-    @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") Long id) {
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable("id") Long id) {
         Series s = dataService.get(Series.class, id);
         if (s == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else if (isUserGrantedForSpace(s.getSpace_id())) {
             dataService.deleteSeries(s);
         } else {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+            throw new ForbiddenException();
         }
     }
 
@@ -139,7 +129,7 @@ public class SeriesResource extends BaseResource {
     private static byte[] getBytesFromInputStream(InputStream is) {
         try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             byte[] buffer = new byte[0xFFFF];
-            for (int len; (len = is.read(buffer)) != -1;) {
+            for (int len; (len = is.read(buffer)) != -1; ) {
                 os.write(buffer, 0, len);
             }
             os.flush();

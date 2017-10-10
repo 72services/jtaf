@@ -1,8 +1,5 @@
 package ch.jtaf.entity;
 
-import ch.jtaf.entity.Athlete;
-import ch.jtaf.entity.Competition;
-
 import java.util.Comparator;
 
 public class AthleteCompetitionResultComparator implements Comparator<Athlete> {

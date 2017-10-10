@@ -1,34 +1,29 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.entity.*;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("spaces")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-@Component
+@RestController
+@RequestMapping(value = "/res/spaces", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SpaceResource extends BaseResource {
 
-    @GET
+    @GetMapping
     public List<Space> list() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         return dataService.getMySpaces(userName);
     }
 
-    @GET
-    @Path("/series")
+    @GetMapping("series")
     public List<Series> listSeries() {
         return dataService.getAllSeries();
     }
 
-    @POST
-    public Space save(Space space) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Space save(@RequestBody Space space) {
         if (space.getId() == null) {
             String userName = SecurityContextHolder.getContext().getAuthentication().getName();
             SecurityUser user = dataService.get(SecurityUser.class, userName);
@@ -39,33 +34,31 @@ public class SpaceResource extends BaseResource {
             dataService.save(userSpace);
         } else {
             if (!isUserGrantedForSpace(space.getId())) {
-                throw new WebApplicationException(Response.Status.FORBIDDEN);
+                throw new ForbiddenException();
             }
         }
         return dataService.save(space);
     }
 
-    @GET
-    @Path("{id}")
-    public Space get(@PathParam("id") Long id) {
+    @GetMapping("{id}")
+    public Space get(@PathVariable Long id) {
         Space s = dataService.getSpace(id);
         if (s == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else {
             return s;
         }
     }
 
-    @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") Long id) {
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id) {
         Space s = dataService.get(Space.class, id);
         if (s == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else if (isUserGrantedForSpace(s.getId())) {
             dataService.deleteSpace(s);
         } else {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+            throw new ForbiddenException();
         }
     }
 }

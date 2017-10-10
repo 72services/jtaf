@@ -1,54 +1,48 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.entity.Competition;
-import org.springframework.stereotype.Component;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("competitions")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-@Component
+@RestController
+@RequestMapping(value = "/res/competitions", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CompetitionResource extends BaseResource {
 
-    @GET
-    public List<Competition> list(@QueryParam("series_id") Long seriesId) {
+    @GetMapping
+    public List<Competition> list(@RequestParam("series_id") Long seriesId) {
         return dataService.getCompetititions(seriesId);
     }
 
-    @POST
-    public Competition save(Competition competition) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Competition save(@RequestBody Competition competition) {
         if (isUserGrantedForSeries(competition.getSeries_id())) {
             return dataService.save(competition);
         } else {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+            throw new ForbiddenException();
         }
     }
 
-    @GET
-    @Path("{id}")
-    public Competition get(@PathParam("id") Long id) {
+    @GetMapping("{id}")
+    public Competition get(@PathVariable Long id) {
         Competition c = dataService.get(Competition.class, id);
         if (c == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else {
             return c;
         }
     }
 
-    @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") Long id) {
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id) {
         Competition c = dataService.get(Competition.class, id);
         if (c == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else if (isUserGrantedForSeries(c.getSeries_id())) {
             dataService.delete(c);
         } else {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+            throw new ForbiddenException();
         }
     }
 }

@@ -3,120 +3,106 @@ package ch.jtaf.boundry;
 import ch.jtaf.control.ReportService;
 import ch.jtaf.vo.CompetitionRankingVO;
 import ch.jtaf.vo.SeriesRankingVO;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
-@Path("rankings")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-@Component
+@RestController
+@RequestMapping(value = "/res/rankings", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RankingResource {
 
-    @EJB
+    @Autowired
     protected ReportService reportService;
 
-    @GET
-    @Path("competition/{competitionid}")
-    public CompetitionRankingVO getCompetitionRanking(@PathParam("competitionid") Long competitionid) {
+    @GetMapping("competition/{competitionid}")
+    public CompetitionRankingVO getCompetitionRanking(@PathVariable Long competitionid) {
         CompetitionRankingVO data = reportService.getCompetitionRanking(competitionid);
         if (data == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else {
             return data;
         }
     }
 
-    @GET
-    @Path("competition/pdf/{competitionid}")
-    @Produces("application/pdf")
-    public byte[] getCompetitionRankingAsPdf(@Context HttpServletRequest hsr, @PathParam("competitionid") Long competitionid) {
+    @GetMapping(value = "competition/pdf/{competitionid}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public byte[] getCompetitionRankingAsPdf(HttpServletRequest hsr, @PathVariable Long competitionid) {
         if (competitionid == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new BadRequestException();
         } else {
             byte[] report = reportService.createCompetitionRanking(competitionid, hsr.getLocale());
             if (report == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
+                throw new NotFoundException();
             } else {
                 return report;
             }
         }
     }
 
-    @GET
-    @Path("series/{seriesid}")
-    public SeriesRankingVO getSeriesRanking(@PathParam("seriesid") Long seriesid) {
+    @GetMapping("series/{seriesid}")
+    public SeriesRankingVO getSeriesRanking(@PathVariable Long seriesid) {
         SeriesRankingVO data = reportService.getSeriesRanking(seriesid);
         if (data == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else {
             return data;
         }
     }
 
-    @GET
-    @Path("series/pdf/{seriesid}")
-    @Produces("application/pdf")
-    public byte[] getSeriesRankingAsPdf(@Context HttpServletRequest hsr, @PathParam("seriesid") Long seriesid) {
+    @GetMapping(value = "series/pdf/{seriesid}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public byte[] getSeriesRankingAsPdf(HttpServletRequest hsr, @PathVariable Long seriesid) {
         if (seriesid == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new BadRequestException();
         } else {
             byte[] report = reportService.createSeriesRanking(seriesid, hsr.getLocale());
             if (report == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
+                throw new NotFoundException();
             } else {
                 return report;
             }
         }
     }
 
-    @GET
-    @Path("diploma/{competitionid}")
-    @Produces("application/pdf")
-    public byte[] getDiploma(@Context HttpServletRequest hsr, @PathParam("competitionid") Long competitionid) {
+    @GetMapping(value = "diploma/{competitionid}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public byte[] getDiploma(HttpServletRequest hsr, @PathVariable Long competitionid) {
         if (competitionid == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new BadRequestException();
         } else {
             byte[] report = reportService.createDiploma(competitionid, hsr.getLocale());
             if (report == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
+                throw new NotFoundException();
             } else {
                 return report;
             }
         }
     }
 
-    @GET
-    @Path("events/{competitionid}")
-    @Produces("application/pdf")
-    public byte[] getEventsRanking(@Context HttpServletRequest hsr, @PathParam("competitionid") Long competitionid) {
+    @GetMapping(value = "events/{competitionid}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public byte[] getEventsRanking(HttpServletRequest hsr, @PathVariable Long competitionid) {
         if (competitionid == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new BadRequestException();
         } else {
             byte[] report = reportService.createEventsRanking(competitionid, hsr.getLocale());
             if (report == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
+                throw new NotFoundException();
             } else {
                 return report;
             }
         }
     }
 
-    @GET
-    @Path("club/{seriesid}")
-    @Produces("application/pdf")
-    public byte[] getClubRanking(@Context HttpServletRequest hsr, @PathParam("seriesid") Long seriesId) {
+    @GetMapping(value = "club/{seriesid}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public byte[] getClubRanking(HttpServletRequest hsr, @PathVariable Long seriesId) {
         if (seriesId == null) {
-            throw new WebApplicationException(Response.Status.BAD_REQUEST);
+            throw new BadRequestException();
         } else {
             byte[] report = reportService.createClubRanking(seriesId, hsr.getLocale());
             if (report == null) {
-                throw new WebApplicationException(Response.Status.NOT_FOUND);
+                throw new NotFoundException();
             } else {
                 return report;
             }

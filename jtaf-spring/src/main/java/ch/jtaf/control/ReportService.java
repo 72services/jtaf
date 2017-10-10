@@ -1,7 +1,5 @@
 package ch.jtaf.control;
 
-import ch.jtaf.entity.AthleteCompetitionResultComparator;
-import ch.jtaf.entity.AthleteSeriesResultComparator;
 import ch.jtaf.entity.*;
 import ch.jtaf.report.*;
 import ch.jtaf.to.AthleteWithEventTO;

@@ -1,54 +1,48 @@
 package ch.jtaf.boundry;
 
 import ch.jtaf.entity.Event;
-import org.springframework.stereotype.Component;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("events")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
-@Component
+@RestController
+@RequestMapping(value = "/res/events", produces = MediaType.APPLICATION_JSON_VALUE)
 public class EventResource extends BaseResource {
 
-    @GET
-    public List<Event> list(@QueryParam("series_id") Long seriesId) {
+    @GetMapping
+    public List<Event> list(@RequestParam("series_id") Long seriesId) {
         return dataService.getEvents(seriesId);
     }
 
-    @POST
-    public Event save(Event event) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Event save(@RequestBody Event event) {
         if (isUserGrantedForSeries(event.getSeries_id())) {
             return dataService.save(event);
         } else {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+            throw new ForbiddenException();
         }
     }
 
-    @GET
-    @Path("{id}")
-    public Event get(@PathParam("id") Long id) {
+    @GetMapping("{id}")
+    public Event get(@PathVariable Long id) {
         Event e = dataService.get(Event.class, id);
         if (e == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else {
             return e;
         }
     }
 
-    @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") Long id) {
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id) {
         Event e = dataService.get(Event.class, id);
         if (e == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            throw new NotFoundException();
         } else if (isUserGrantedForSeries(e.getSeries_id())) {
             dataService.delete(e);
         } else {
-            throw new WebApplicationException(Response.Status.FORBIDDEN);
+            throw new ForbiddenException();
         }
     }
 }
