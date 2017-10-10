@@ -10,6 +10,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class BaseResource {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(BaseResource.class);
@@ -39,6 +45,30 @@ public class BaseResource {
         }
     }
 
+    protected static byte[] getBytesFromInputStream(InputStream is) {
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+            byte[] buffer = new byte[0xFFFF];
+            for (int len; (len = is.read(buffer)) != -1; ) {
+                os.write(buffer, 0, len);
+            }
+            os.flush();
+            return os.toByteArray();
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
+            return new byte[0];
+        }
+    }
+
+    protected BufferedImage scaleImageByFixedHeight(BufferedImage image, int imageType, int newHeight) {
+        double ratio = ((double) image.getWidth(null)) / ((double) image.getHeight(null));
+        int newWidth = (int) (ratio * newHeight);
+        Image scaled = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        BufferedImage newImage = new BufferedImage(newWidth, newHeight, imageType);
+        Graphics g = newImage.getGraphics();
+        g.drawImage(scaled, 0, 0, null);
+        g.dispose();
+        return newImage;
+    }
 
     @ExceptionHandler(ForbiddenException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)

@@ -1,1 +1,0 @@
-docker run -p8080:8080 -e DB_URL=10.0.75.1 -e DB_USER=jtaf -e DB_PASSWORD=jtaf simas/jtaf

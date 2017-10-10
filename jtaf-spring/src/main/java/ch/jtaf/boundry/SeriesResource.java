@@ -5,9 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -110,44 +110,15 @@ public class SeriesResource extends BaseResource {
         }
     }
 
-//    @POST
-//    @Path("/upload/{id}")
-//    @Consumes("multipart/form-data")
-//    public void uploadFile(MultipartFormDataInput input, @PathParam("id") Long id) throws IOException {
-//
-//        Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
-//        List<InputPart> inputParts = uploadForm.get("series_logo");
-//
-//        InputStream inputStream = inputParts.get(0).getBody(InputStream.class, null);
-//        byte[] bytes = getBytesFromInputStream(inputStream);
-//
-//        Series series = dataService.get(Series.class, id);
-//        series.setLogo(bytes);
-//        dataService.save(series);
-//    }
+    @PostMapping(value = "/upload/{id}", consumes = "multipart/form-data")
+    public void uploadFile(@RequestParam("series_logo") MultipartFile file, @PathVariable Long id) throws IOException {
+        InputStream inputStream = file.getInputStream();
+        byte[] bytes = getBytesFromInputStream(inputStream);
 
-    private static byte[] getBytesFromInputStream(InputStream is) {
-        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            byte[] buffer = new byte[0xFFFF];
-            for (int len; (len = is.read(buffer)) != -1; ) {
-                os.write(buffer, 0, len);
-            }
-            os.flush();
-            return os.toByteArray();
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            return new byte[0];
-        }
+        Series series = dataService.get(Series.class, id);
+        series.setLogo(bytes);
+        dataService.save(series);
     }
 
-    private BufferedImage scaleImageByFixedHeight(BufferedImage image, int imageType, int newHeight) {
-        double ratio = ((double) image.getWidth(null)) / ((double) image.getHeight(null));
-        int newWidth = (int) (ratio * newHeight);
-        Image scaled = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-        BufferedImage newImage = new BufferedImage(newWidth, newHeight, imageType);
-        Graphics g = newImage.getGraphics();
-        g.drawImage(scaled, 0, 0, null);
-        g.dispose();
-        return newImage;
-    }
+
 }
