@@ -41,7 +41,7 @@ function Header() {
     about.id = "navigation_2";
     about.className = "navigation_inactive";
     about.name = "navigation_element";
-    about.href = "http://www.jtaf.ch";
+    about.href = "https://github.com/simasch/jtaf/";
     about.innerHTML = "ABOUT";
     divNavigation.appendChild(about);
 

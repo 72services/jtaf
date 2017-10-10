@@ -25,9 +25,9 @@ In 2005 JTAF was created in Java using the Eclipse rich client platform and was 
 Finally starting in fall 2013 JTAF is reengineered using HTML5 and REST. 
 
 ## Start using it, now!
-JTAF is available as Software-as-a-Service (SaaS) in the cloud! https://jtaf-simas.rhcloud.com/jtaf/
+JTAF is available as Software-as-a-Service (SaaS) in the cloud! https://wwww.jtaf.ch/
 
-###License
+### License
 JTAF is open source and free software under Apache License, Version 2:
 
 http://www.apache.org/licenses/LICENSE-2.0.html
