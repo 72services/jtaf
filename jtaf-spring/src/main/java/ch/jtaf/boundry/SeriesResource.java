@@ -83,11 +83,13 @@ public class SeriesResource extends BaseResource {
                 byte[] logo = s.getLogo();
                 if (logo != null && logo.length > 0) {
                     BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(s.getLogo()));
-                    bufferedImage = scaleImageByFixedHeight(bufferedImage, BufferedImage.TYPE_INT_RGB, 60);
                     if (bufferedImage != null) {
-                        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                            ImageIO.write(bufferedImage, "png", baos);
-                            return baos.toByteArray();
+                        bufferedImage = scaleImageByFixedHeight(bufferedImage, BufferedImage.TYPE_INT_RGB, 60);
+                        if (bufferedImage != null) {
+                            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                                ImageIO.write(bufferedImage, "png", baos);
+                                return baos.toByteArray();
+                            }
                         }
                     }
                 }
