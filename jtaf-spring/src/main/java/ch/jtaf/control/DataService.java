@@ -7,6 +7,7 @@ import org.jboss.crypto.CryptoUtil;
 import org.qlrm.mapper.JpaResultMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +31,7 @@ public class DataService extends AbstractService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(DataService.class);
 
-    //@Autowired
+    @Autowired
     private JavaMailSender javaMailSender;
 
     public List<Series> getSeriesList(Long spaceId) {
