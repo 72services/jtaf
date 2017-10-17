@@ -16,6 +16,7 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.io.UnsupportedEncodingException;
@@ -323,14 +324,14 @@ public class DataService extends AbstractService {
                 throw new ConfigurationException("CONFIRMATION_URL");
             }
 
-            Message msg = javaMailSender.createMimeMessage();
+            MimeMessage msg = javaMailSender.createMimeMessage();
             msg.setFrom(new InternetAddress("noreply@jtaf.ch", "JTAF - Track and Field"));
             msg.addRecipient(Message.RecipientType.TO,
                     new InternetAddress(user.getEmail(), user.getFirstName() + " " + user.getLastName()));
             msg.setSubject("JTAF - Track and Field | Registration");
             msg.setText(createMessageBody(locale, confirmationUrl, user));
             msg.saveChanges();
-            Transport.send(msg);
+            javaMailSender.send(msg);
         } catch (UnsupportedEncodingException | MessagingException ex) {
             LOGGER.error(ex.getMessage(), ex);
         }
