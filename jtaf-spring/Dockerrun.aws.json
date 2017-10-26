@@ -1,0 +1,12 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "366686065880.dkr.ecr.us-west-2.amazonaws.com/jtaf:latest",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": "8282"
+    }
+  ]
+}
