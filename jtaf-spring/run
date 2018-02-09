@@ -1,0 +1,1 @@
+docker run -d --name jtaf -p 8282:8282 -e DB_URL=jdbc:mysql://DESKTOP-JIQNMVV:3306/jtaf -e DB_USER=jtaf -e DB_PASSWORD=jtaf -e MAIL_PASSWORD=test simas/jtaf
