@@ -2,9 +2,9 @@ function Footer() {
 
     var footer = document.createElement("div");
     footer.id = "footer";
-    footer.innerHTML = "&copy; 2015 by Simon Martinelli, <a href='http://www.simas.ch' target='_blank' style='color: white;'>simas GmbH</a> - "
+    footer.innerHTML = "&copy; 2018 by Simon Martinelli, <a href='http://www.72.services' target='_blank' style='color: white;'>72 Services LLC</a> - "
             + "<a href='https://github.com/simasch/jtaf' target='_blank' style='color: white;'>JTAF on GitHub</a>"
-            + " - Version ${project.version}";
+            + " - Version @project.version@";
     document.body.appendChild(footer);
 
 }
