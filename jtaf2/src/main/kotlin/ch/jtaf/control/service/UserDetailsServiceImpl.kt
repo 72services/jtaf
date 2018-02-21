@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
-class UserDetailsServiceImpl(@Autowired private val securityUserRepository: SecurityUserRepository) : UserDetailsService {
+class UserDetailsServiceImpl(private val securityUserRepository: SecurityUserRepository) : UserDetailsService {
 
     @Transactional
     override fun loadUserByUsername(email: String): UserDetails? {

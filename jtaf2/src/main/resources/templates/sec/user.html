@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head th:replace="common/head :: head"></head>
+<body>
+
+<!--/*@thymesVar id="user" type="org.springframework.security.core.userdetails.User"*/-->
+<!--/*@thymesVar id="authority" type="org.springframework.security.core.GrantedAuthority"*/-->
+
+<div th:include="common/navigation :: navigation ('admin')"></div>
+
+<main role="main" class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1>User</h1>
+
+            <h2 th:inline="text">[[${'User ' + user.username}]]</h2>
+
+            <h2>Authorities</h2>
+            <table class="table  table-striped">
+                <thead>
+                <tr>
+                    <th>Authority</th>
+                </tr>
+                </thead>
+                <tr th:each="authority : ${user.getAuthorities()}">
+                    <td th:text="${authority.authority}">Authority</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div th:include="common/footer :: copy"></div>
+
+</main>
+</body>
+</html>

@@ -12,7 +12,7 @@ data class Result(
         var points: Int = 0,
 
         @ManyToOne
-        var athlete: Athlete,
+        var athlete: Athlete? = null,
 
         @ManyToOne
         var category: Category? = null,

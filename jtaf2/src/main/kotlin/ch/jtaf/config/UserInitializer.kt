@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
-class UserInitializer(@Autowired private val securityUserRepository: SecurityUserRepository,
-                      @Autowired private val securityGroupRepository: SecurityGroupRepository,
-                      @Autowired private val passwordEncoder: PasswordEncoder) : ApplicationRunner {
+class UserInitializer(private val securityUserRepository: SecurityUserRepository,
+                      private val securityGroupRepository: SecurityGroupRepository,
+                      private val passwordEncoder: PasswordEncoder) : ApplicationRunner {
 
     @Transactional
     override fun run(args: ApplicationArguments) {
