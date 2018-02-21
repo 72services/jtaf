@@ -15,10 +15,10 @@ data class Result(
         var athlete: Athlete,
 
         @ManyToOne
-        var category: Category,
+        var category: Category? = null,
 
         @ManyToOne
-        var competition: Competition,
+        var competition: Competition? = null,
 
         var position: Int = 0
 )

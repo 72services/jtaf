@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="navigation (page)">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/">JTAF</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarLeft"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarLeft">
+                <div class="navbar-nav">
+                    <a th:class="${page == 'index'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                       href="/">Home</a>
+                    <a th:class="${page == 'admin'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                       href="/sec/admin">Admin</a>
+                    <a th:class="${page == 'contact'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                       href="/contact">Contact</a>
+                </div>
+            </div>
+            <div class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+                <a th:class="${page == 'user'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                   href="/sec/user"><span th:text ="${#authentication.principal == 'anonymousUser' ? '' : #authentication.principal.username}"></span></a>
+            </div>
+        </nav>
+    </header>
+</div>
+
+</body>
+</html>

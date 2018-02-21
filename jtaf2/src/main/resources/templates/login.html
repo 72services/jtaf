@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head th:replace="common/head :: head"></head>
+<body>
+
+<div th:include="common/navigation :: navigation ('login')"></div>
+
+<main role="main" class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <h1>Login</h1>
+
+            <form th:action="@{/login}" method="post" class="form">
+
+                <div class="form-group">
+                    <label for="username">User Name</label>
+                    <input name="username" id="username" class="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" class="form-control"/>
+                </div>
+
+                <button>Sign In</button>
+            </form>
+            <br/>
+            <div th:if="${param.error}" style="color: red;">
+                Invalid username and password.
+            </div>
+            <div th:if="${param.logout}" style="color: darkgreen;">
+                You have been logged out.
+            </div>
+
+        </div>
+    </div>
+
+    <div th:include="common/footer :: copy"></div>
+
+    <script>
+        document.getElementById('username').focus();
+    </script>
+
+</main>
+</body>
+</html>

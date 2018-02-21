@@ -22,5 +22,5 @@ data class SecurityUser(
         @JoinTable(name = "user_group",
                 joinColumns = [(JoinColumn(name = "user_id", referencedColumnName = "id"))],
                 inverseJoinColumns = [(JoinColumn(name = "group_id", referencedColumnName = "id", unique = true))])
-        var groups: List<SecurityGroup> = ArrayList()
+        var groups: MutableList<SecurityGroup> = ArrayList()
 )
