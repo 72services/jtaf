@@ -27,6 +27,15 @@
 
             <!--/*@thymesVar id="message" type="java.lang.String"*/-->
             <p th:value="${message}"></p>
+
+            <a th:href="${'/sec/competition?seriesId=' + series.id}" th:text="#{messages.add_competition}">Add Competition</a>
+
+            <table class="table table-striped">
+                <tr th:each="competition : ${series.competitions}">
+                    <td th:text="${competition.name}">1. CIS Twann</td>
+                    <td><a th:href="${'/sec/competition/' + competition.id}" th:text="#{messages.edit}">Edit</a></td>
+                </tr>
+            </table>
         </div>
     </div>
 

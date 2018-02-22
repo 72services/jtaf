@@ -21,7 +21,7 @@ class SeriesController(private val seriesRepository: SeriesRepository) {
     }
 
     @GetMapping("{id}")
-    fun get(@PathVariable("id") id: Long): ModelAndView {
+    fun getById(@PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
         mav.model["message"] = ""
 
@@ -29,12 +29,11 @@ class SeriesController(private val seriesRepository: SeriesRepository) {
         if (series.isPresent) {
             mav.model["series"] = series.get()
         } else {
-            throw IllegalStateException()
+            throw IllegalStateException("Series not found")
         }
 
         return mav
     }
-
 
     @PostMapping
     fun post(@AuthenticationPrincipal user: User, series: Series): ModelAndView {
