@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head th:replace="common/head :: head"></head>
+<body>
+
+<div th:include="common/navigation :: navigation ('admin')"></div>
+
+<main role="main" class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 th:text="#{messages.manage_series}">Manage Series</h1>
+
+            <a href="/sec/series" th:text="#{messages.add_series}">Add Series</a>
+
+            <!--/*@thymesVar id="seriesList" type="java.util.List<Series>"*/-->
+            <!--/*@thymesVar id="series" type="ch.jtaf.entity.Series"*/-->
+            <table class="table table-striped">
+                <tr th:each="series: ${seriesList}">
+                    <td th:text="${series.name}">CIS 2018</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div th:include="common/footer :: copy"></div>
+
+</main>
+</body>
+</html>

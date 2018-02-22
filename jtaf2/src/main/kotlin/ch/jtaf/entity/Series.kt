@@ -1,9 +1,6 @@
 package ch.jtaf.entity
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 data class Series(
@@ -13,5 +10,10 @@ data class Series(
         var name: String = "",
 
         var locked: Boolean = false,
-        var hidden: Boolean = false
+        var hidden: Boolean = false,
+
+        @OneToMany(mappedBy = "series")
+        var competitions: MutableList<Competition> = ArrayList(),
+
+        var owner: String? = null
 )

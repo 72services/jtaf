@@ -12,14 +12,16 @@
             <div class="collapse navbar-collapse" id="navbarLeft">
                 <div class="navbar-nav">
                     <a th:class="${page == 'index'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       href="/">Home</a>
-                    <a th:class="${page == 'admin'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       href="/sec/admin">Admin</a>
+                       href="/dashboard">Home</a>
+                    <a th:class="${page == 'series'} ? 'nav-item nav-link active' : 'nav-item nav-link'" th:text="#{messages.manage_series}"
+                       href="/sec/serieslist">Manage Series</a>
+                    <a class="nav-item nav-link" href="https://github.com/simasch/jtaf/" target="_blank">About</a>
                 </div>
             </div>
             <div class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
                 <a th:class="${page == 'user'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                   href="/sec/user"><span th:text ="${#authentication.principal == 'anonymousUser' ? '' : #authentication.principal.username}"></span></a>
+                   href="/sec/user"><span
+                        th:text="${#authentication.principal == 'anonymousUser' ? '' : #authentication.principal.username}"></span></a>
             </div>
         </nav>
     </header>

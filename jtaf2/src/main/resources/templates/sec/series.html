@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head th:replace="common/head :: head"></head>
+<body>
+
+<div th:include="common/navigation :: navigation ('admin')"></div>
+
+<main role="main" class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 th:text="#{messages.edit_series}">Edit Series</h1>
+
+            <!--/*@thymesVar id="series" type="ch.jtaf.entity.Series"*/-->
+            <form action="#" th:action="@{/sec/series}" th:object="${series}" method="post">
+                <div class="form-group">
+                    <label for="id">ID</label>
+                    <input class="form-control" id="id" readonly th:value="*{id}">
+                </div>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input class="form-control" id="name" placeholder="Name" th:field="*{name}">
+                </div>
+                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+            </form>
+
+            <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+            <p th:value="${message}"></p>
+        </div>
+    </div>
+
+    <div th:include="common/footer :: copy"></div>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head th:replace="common/head :: head"></head>
+<body>
+
+<div th:include="common/navigation :: navigation ('index')"></div>
+
+<main role="main" class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 th:text="#{messages.title}">Track and Field Administration</h1>
+
+            <!--/*@thymesVar id="seriesList" type="java.util.List<Series>"*/-->
+            <!--/*@thymesVar id="series" type="ch.jtaf.entity.Series"*/-->
+            <div class="row" th:each="series: ${seriesList}">
+                <div class="col-md-12">
+                    <h2 th:text="${series.name}">CIS 2018</h2>
+
+                    <!--/*@thymesVar id="competitions" type="java.util.List<Competition>"*/-->
+                    <!--/*@thymesVar id="competition" type="ch.jtaf.entity.Competition"*/-->
+                    <div class="row" th:each="competition: ${series.competitions}">
+                        <div class="col-md-3">
+                            <p th:text="${competition.name}">CIS 1</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p th:text="${competition.competitionDate.toString()}">2017-06-10</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}">
+                                Athletes 1/10</p>
+                        </div>
+                        <div class="col-md-3">
+                            <a th:href="/ranking/${competition.id}">Ranking</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div th:include="common/footer :: copy"></div>
+
+</main>
+</body>
+</html>

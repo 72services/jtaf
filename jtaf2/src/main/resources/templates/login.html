@@ -12,7 +12,7 @@
 
             <h1>Login</h1>
 
-            <form th:action="@{/login}" method="post" class="form">
+            <form th:action="@{/login}" method="post">
 
                 <div class="form-group">
                     <label for="username">User Name</label>
@@ -24,7 +24,7 @@
                     <input type="password" name="password" id="password" class="form-control"/>
                 </div>
 
-                <button>Sign In</button>
+                <button class="btn btn-primary">Sign In</button>
             </form>
             <br/>
             <div th:if="${param.error}" style="color: red;">

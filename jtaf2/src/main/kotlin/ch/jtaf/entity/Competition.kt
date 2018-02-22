@@ -20,5 +20,10 @@ data class Competition(
         var locked: Boolean = false,
 
         @ManyToOne
-        var series: Series? = null
+        var series: Series? = null,
+
+        @Transient
+        var numberOfAthletes: Int = 0,
+        @Transient
+        var numberOfAthletesWithResults: Int = 0
 )
