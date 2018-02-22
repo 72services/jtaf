@@ -21,7 +21,7 @@ class SeriesController(private val seriesRepository: SeriesRepository) {
         mav.model["series"] = Series()
 
         if (id != null) {
-            var series = seriesRepository.findById(id)
+            val series = seriesRepository.findById(id)
             if (series.isPresent) {
                 mav.model["series"] = series.get()
             }

@@ -4,7 +4,6 @@ import ch.jtaf.control.repository.SecurityGroupRepository
 import ch.jtaf.control.repository.SecurityUserRepository
 import ch.jtaf.entity.SecurityGroup
 import ch.jtaf.entity.SecurityUser
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.security.crypto.password.PasswordEncoder
