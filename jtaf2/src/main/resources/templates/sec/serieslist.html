@@ -18,7 +18,7 @@
             <table class="table table-striped">
                 <tr th:each="series: ${seriesList}">
                     <td th:text="${series.name}">CIS 2018</td>
-                    <td></td>
+                    <td><a th:href="${'/sec/series/' + series.id}" th:text="#{messages.edit}">Edit</a></td>
                 </tr>
             </table>
         </div>

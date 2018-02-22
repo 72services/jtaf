@@ -5,30 +5,36 @@ import ch.jtaf.entity.Series
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
 @RequestMapping("/sec/series")
 class SeriesController(private val seriesRepository: SeriesRepository) {
 
-    @GetMapping
-    fun get(id: Long?): ModelAndView {
-        val mav = ModelAndView()
+    @GetMapping()
+    fun get(): ModelAndView {
+        val mav = ModelAndView("/sec/series")
         mav.model["message"] = ""
         mav.model["series"] = Series()
+        return mav
+    }
 
-        if (id != null) {
-            val series = seriesRepository.findById(id)
-            if (series.isPresent) {
-                mav.model["series"] = series.get()
-            }
+    @GetMapping("{id}")
+    fun get(@PathVariable("id") id: Long): ModelAndView {
+        val mav = ModelAndView("/sec/series")
+        mav.model["message"] = ""
+
+        val series = seriesRepository.findById(id)
+        if (series.isPresent) {
+            mav.model["series"] = series.get()
+        } else {
+            throw IllegalStateException()
         }
 
         return mav
     }
+
 
     @PostMapping
     fun post(@AuthenticationPrincipal user: User, series: Series): ModelAndView {
