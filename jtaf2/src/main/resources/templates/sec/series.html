@@ -21,15 +21,15 @@
                     <label for="name">Name</label>
                     <input class="form-control" id="name" placeholder="Name" th:field="*{name}">
                 </div>
-                <div class="form-group">
-                    <label for="locked" th:text="#{messages.locked}">Locked</label>
-                    <input type="checkbox" class="form-control" id="locked" th:placeholder="#{messages.locked}" th:field="*{locked}">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="locked" th:placeholder="#{messages.locked}" th:field="*{locked}">
+                    <label class="form-check-label" for="locked" th:text="#{messages.locked}">Locked</label>
                 </div>
-                <div class="form-group">
-                    <label for="hidden" th:text="#{messages.hidden}">Hidden</label>
-                    <input type="checkbox" class="form-control" id="hidden" th:placeholder="#{messages.hidden}" th:field="*{hidden}">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="hidden" th:placeholder="#{messages.hidden}" th:field="*{hidden}">
+                    <label class="form-check-label" for="hidden" th:text="#{messages.hidden}">Hidden</label>
                 </div>
-
+                <br>
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
                 <a href="/sec/serieslist" th:text="#{messages.back}">Back</a>
             </form>
