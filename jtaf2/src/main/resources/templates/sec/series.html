@@ -3,7 +3,7 @@
 <head th:replace="common/head :: head"></head>
 <body>
 
-<div th:include="common/navigation :: navigation ('admin')"></div>
+<div th:include="common/navigation :: navigation ('manage')"></div>
 
 <main role="main" class="container">
 
@@ -21,6 +21,15 @@
                     <label for="name">Name</label>
                     <input class="form-control" id="name" placeholder="Name" th:field="*{name}">
                 </div>
+                <div class="form-group">
+                    <label for="locked" th:text="#{messages.locked}">Locked</label>
+                    <input type="checkbox" class="form-control" id="locked" th:placeholder="#{messages.locked}" th:field="*{locked}">
+                </div>
+                <div class="form-group">
+                    <label for="hidden" th:text="#{messages.hidden}">Hidden</label>
+                    <input type="checkbox" class="form-control" id="hidden" th:placeholder="#{messages.hidden}" th:field="*{hidden}">
+                </div>
+
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
                 <a href="/sec/serieslist" th:text="#{messages.back}">Back</a>
             </form>
@@ -28,12 +37,16 @@
             <!--/*@thymesVar id="message" type="java.lang.String"*/-->
             <p th:value="${message}"></p>
 
-            <a th:href="${'/sec/competition?seriesId=' + series.id}" th:text="#{messages.add_competition}">Add Competition</a>
+            <h3 th:text="#{messages.competitions}">Competitions</h3>
+
+            <a th:href="@{/sec/competition(seriesId=${series.id})}" th:text="#{messages.add_competition}">Add
+                Competition</a>
 
             <table class="table table-striped">
                 <tr th:each="competition : ${series.competitions}">
                     <td th:text="${competition.name}">1. CIS Twann</td>
-                    <td><a th:href="${'/sec/competition/' + competition.id}" th:text="#{messages.edit}">Edit</a></td>
+                    <td><a th:href="@{/sec/competition/{id}(id=${competition.id})}" th:text="#{messages.edit}">Edit</a>
+                    </td>
                 </tr>
             </table>
         </div>

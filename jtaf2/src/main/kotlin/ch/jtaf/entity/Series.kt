@@ -12,7 +12,8 @@ data class Series(
         var locked: Boolean = false,
         var hidden: Boolean = false,
 
-        @OneToMany(mappedBy = "series")
+        @OneToMany
+        @JoinColumn(name = "series_id", insertable = false, updatable = false)
         var competitions: MutableList<Competition> = ArrayList(),
 
         var owner: String? = null

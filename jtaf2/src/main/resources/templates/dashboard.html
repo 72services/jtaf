@@ -31,7 +31,7 @@
                                 Athletes 1/10</p>
                         </div>
                         <div class="col-md-3">
-                            <a th:href="/ranking/${competition.id}">Ranking</a>
+                            <a th:href="@{/ranking/{id}(id=${competition.id})}">Ranking</a>
                         </div>
                     </div>
                 </div>

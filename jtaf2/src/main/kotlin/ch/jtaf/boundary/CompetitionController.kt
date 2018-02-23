@@ -24,7 +24,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
                 mav.model["message"] = ""
 
                 val competition = Competition()
-                competition.series = series.get()
+                competition.seriesId = series.get().id
                 mav.model["competition"] = competition
 
                 return mav

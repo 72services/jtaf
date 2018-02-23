@@ -1,11 +1,9 @@
 package ch.jtaf.entity
 
+import java.sql.Date
 import java.time.LocalDate
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
+import javax.persistence.*
 import javax.persistence.GenerationType.IDENTITY
-import javax.persistence.Id
-import javax.persistence.ManyToOne
 
 @Entity
 data class Competition(
@@ -14,13 +12,13 @@ data class Competition(
         var id: Long? = null,
 
         var name: String = "",
-        var competitionDate: LocalDate = LocalDate.MIN,
+        var competitionDate: Date = Date(System.currentTimeMillis()),
         var medalPercentage: Int = 0,
         var alwaysFirstThreeMedals: Boolean = true,
         var locked: Boolean = false,
 
-        @ManyToOne
-        var series: Series? = null,
+        @Column(name = "series_id")
+        var seriesId: Long? = null,
 
         @Transient
         var numberOfAthletes: Int = 0,

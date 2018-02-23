@@ -13,7 +13,7 @@
                 <div class="navbar-nav">
                     <a th:class="${page == 'index'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
                        href="/dashboard">Home</a>
-                    <a th:class="${page == 'series'} ? 'nav-item nav-link active' : 'nav-item nav-link'" th:text="#{messages.manage_series}"
+                    <a th:class="${page == 'manage'} ? 'nav-item nav-link active' : 'nav-item nav-link'" th:text="#{messages.manage_series}"
                        href="/sec/serieslist">Manage Series</a>
                     <a class="nav-item nav-link" href="https://github.com/simasch/jtaf/" target="_blank">About</a>
                 </div>
