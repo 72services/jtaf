@@ -11,14 +11,16 @@
         <div class="col-md-12">
             <h1 th:text="#{messages.manage_series}">Manage Series</h1>
 
-            <a href="/sec/series" th:text="#{messages.add_series}">Add Series</a>
-
             <!--/*@thymesVar id="seriesList" type="java.util.List<Series>"*/-->
             <!--/*@thymesVar id="series" type="ch.jtaf.entity.Series"*/-->
             <table class="table table-striped">
+                <tr>
+                    <th th:text="#{messages.name}">Name</th>
+                    <th style="text-align: right;"><a href="/sec/series" th:text="#{messages.add_series}" style="text-align: right;">Add Series</a></th>
+                </tr>
                 <tr th:each="series: ${seriesList}">
                     <td th:text="${series.name}">CIS 2018</td>
-                    <td><a th:href="@{/sec/series/{id}(id=${series.id})}" th:text="#{messages.edit}">Edit</a></td>
+                    <td style="text-align: right;"><a th:href="@{/sec/series/{id}(id=${series.id})}" th:text="#{messages.edit}">Edit</a></td>
                 </tr>
             </table>
         </div>

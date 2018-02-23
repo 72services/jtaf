@@ -18,15 +18,17 @@
                     <input class="form-control" id="id" readonly th:value="*{id}">
                 </div>
                 <div class="form-group">
-                    <label for="name">Name</label>
+                    <label for="name" th:text="#{messages.name}">Name</label>
                     <input class="form-control" id="name" placeholder="Name" th:field="*{name}">
                 </div>
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="locked" th:placeholder="#{messages.locked}" th:field="*{locked}">
+                    <input type="checkbox" class="form-check-input" id="locked" th:placeholder="#{messages.locked}"
+                           th:field="*{locked}">
                     <label class="form-check-label" for="locked" th:text="#{messages.locked}">Locked</label>
                 </div>
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="hidden" th:placeholder="#{messages.hidden}" th:field="*{hidden}">
+                    <input type="checkbox" class="form-check-input" id="hidden" th:placeholder="#{messages.hidden}"
+                           th:field="*{hidden}">
                     <label class="form-check-label" for="hidden" th:text="#{messages.hidden}">Hidden</label>
                 </div>
                 <br>
@@ -37,15 +39,37 @@
             <!--/*@thymesVar id="message" type="java.lang.String"*/-->
             <p th:value="${message}"></p>
 
-            <h3 th:text="#{messages.competitions}">Competitions</h3>
+            <br>
 
-            <a th:href="@{/sec/competition(seriesId=${series.id})}" th:text="#{messages.add_competition}">Add
-                Competition</a>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" th:text="#{messages.competitions}">Competitions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:text="#{messages.categories}">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:text="#{messages.events}">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:text="#{messages.atheletes}">Athelets</a>
+                </li>
+            </ul>
 
             <table class="table table-striped">
+                <tr>
+                    <th th:text="#{messages.name}">Name</th>
+                    <th th:text="#{messages.date}">Date</th>
+                    <th style="text-align: right;">
+                        <a th:href="@{/sec/competition(seriesId=${series.id})}" th:text="#{messages.add_competition}">Add
+                            Competition</a>
+                    </th>
+                </tr>
                 <tr th:each="competition : ${series.competitions}">
                     <td th:text="${competition.name}">1. CIS Twann</td>
-                    <td><a th:href="@{/sec/competition/{id}(id=${competition.id})}" th:text="#{messages.edit}">Edit</a>
+                    <td th:text="${competition.competitionDate}">2018-01-02</td>
+                    <td style="text-align: right;">
+                        <a th:href="@{/sec/competition/{id}(id=${competition.id})}" th:text="#{messages.edit}">Edit</a>
                     </td>
                 </tr>
             </table>
