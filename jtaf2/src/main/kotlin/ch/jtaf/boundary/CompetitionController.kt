@@ -1,7 +1,6 @@
 package ch.jtaf.boundary
 
 import ch.jtaf.control.repository.CompetitionRepository
-import ch.jtaf.control.repository.SeriesRepository
 import ch.jtaf.entity.Competition
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*

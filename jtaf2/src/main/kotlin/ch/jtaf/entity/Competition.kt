@@ -1,7 +1,6 @@
 package ch.jtaf.entity
 
 import java.sql.Date
-import java.time.LocalDate
 import javax.persistence.*
 import javax.persistence.GenerationType.IDENTITY
 

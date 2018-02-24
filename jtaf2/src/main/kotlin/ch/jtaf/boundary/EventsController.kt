@@ -1,8 +1,6 @@
 package ch.jtaf.boundary
 
 import ch.jtaf.control.repository.EventRepository
-import ch.jtaf.control.repository.SeriesRepository
-import ch.jtaf.entity.Gender
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller
