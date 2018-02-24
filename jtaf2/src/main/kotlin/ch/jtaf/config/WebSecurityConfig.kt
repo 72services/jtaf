@@ -1,6 +1,6 @@
 package ch.jtaf.config
 
-import ch.jtaf.control.service.UserDetailsServiceImpl
+import ch.jtaf.control.service.UserDetailsService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -30,7 +30,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     }
 
     @Autowired
-    fun configureGlobal(auth: AuthenticationManagerBuilder, userDetailsService: UserDetailsServiceImpl) {
+    fun configureGlobal(auth: AuthenticationManagerBuilder, userDetailsService: UserDetailsService) {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder())
     }
 
