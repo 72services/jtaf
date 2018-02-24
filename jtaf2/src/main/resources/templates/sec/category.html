@@ -50,7 +50,7 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a th:href="@{/sec/categories(seriesId=${category.seriesId})}" th:text="#{messages.back}">Back</a>
+                <a th:href="@{/sec/series/{id}(id=${category.seriesId})}" th:text="#{messages.back}">Back</a>
                 <!--/*@thymesVar id="message" type="java.lang.String"*/-->
                 <span th:text="${message}"></span>
             </form>
@@ -60,5 +60,8 @@
     <div th:include="common/footer :: copy"></div>
 
 </main>
+<script>
+    document.getElementById("abbreviation").focus();
+</script>
 </body>
 </html>

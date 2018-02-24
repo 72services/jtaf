@@ -11,8 +11,8 @@
         <div class="col-md-12">
             <h1 th:text="#{messages.edit_club}">Edit Club</h1>
 
-            <!--/*@thymesVar id="event" type="ch.jtaf.entity.Event"*/-->
-            <form action="#" th:action="@{/sec/club}" th:object="${event}" method="post">
+            <!--/*@thymesVar id="club" type="ch.jtaf.entity.Club"*/-->
+            <form action="#" th:action="@{/sec/club}" th:object="${club}" method="post">
 
                 <div class="form-group">
                     <label for="id">ID</label>
@@ -39,5 +39,8 @@
     <div th:include="common/footer :: copy"></div>
 
 </main>
+<script>
+    document.getElementById("abbreviation").focus();
+</script>
 </body>
 </html>
