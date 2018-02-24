@@ -21,7 +21,7 @@
                 <div class="form-group">
                     <label for="name" th:text="#{messages.abbreviation}">Abbreviation</label>
                     <input class="form-control" id="abbreviation" th:placeholder="#{messages.abbreviation}"
-                           th:field="*{abbreviation}" required>
+                           th:field="*{abbreviation}" required th:autofocus="true">
                 </div>
                 <div class="form-group">
                     <label for="name" th:text="#{messages.name}">Name</label>
@@ -39,8 +39,5 @@
     <div th:include="common/footer :: copy"></div>
 
 </main>
-<script>
-    document.getElementById("abbreviation").focus();
-</script>
 </body>
 </html>
