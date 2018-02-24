@@ -23,7 +23,7 @@
                     <td th:text="${series.name}">CIS 2018</td>
                     <td style="text-align: right;">
                         <a th:href="@{/sec/series/{id}(id=${series.id})}" th:text="#{messages.edit}">Edit</a>
-                        <a th:href="@{/sec/series/delete/{id}(id=${series.id})}" th:text="#{messages.delete}"
+                        <a th:href="@{/sec/series/{id}/delete(id=${series.id})}" th:text="#{messages.delete}"
                            onclick="return confirm('Are you sure?')">Delete</a>
                     </td>
                 </tr>

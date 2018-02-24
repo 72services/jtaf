@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
@@ -13,9 +14,15 @@ import org.springframework.web.servlet.ModelAndView
 class EventsController(private val eventRepository: EventRepository) {
 
     @GetMapping
-    fun get(@AuthenticationPrincipal user: User): ModelAndView {
+    fun get(@AuthenticationPrincipal user: User, @RequestParam("mode", required = false) mode: String?,
+            @RequestParam("categoryId", required = false) categoryId: Long?): ModelAndView {
         val mav = ModelAndView()
         mav.model["events"] = eventRepository.findAllByOwner(user.username)
+        mav.model["mode"] = if (mode == null) "edit" else mode
+        if (categoryId != null) {
+            mav.model["categoryId"] = categoryId
+        }
+
         return mav
     }
 }

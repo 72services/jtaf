@@ -20,7 +20,7 @@
                     <input class="form-control" id="id" readonly th:field="*{id}">
                 </div>
                 <div class="form-group">
-                    <label for="abbreviation" th:text="#{messages.abbreviation}">Abbreviation</label>
+                    <label for="name" th:text="#{messages.abbreviation}">Abbreviation</label>
                     <input class="form-control" id="abbreviation" th:placeholder="#{messages.abbreviation}"
                            th:field="*{abbreviation}" required th:autofocus="true">
                 </div>
@@ -54,6 +54,41 @@
                 <!--/*@thymesVar id="message" type="java.lang.String"*/-->
                 <span th:text="${message}"></span>
             </form>
+
+            <br>
+
+            <h2 th:text="#{messages.events}">Events</h2>
+
+            <table class="table table-striped">
+                <tr>
+                    <th th:text="#{messages.abbreviation}">Abbreviation</th>
+                    <th th:text="#{messages.name}">Name</th>
+                    <th th:text="#{messages.type}">Type</th>
+                    <th th:text="#{messages.gender}">Gender</th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th style="text-align: right;">
+                        <a th:href="@{/sec/events(mode='select', categoryId=${category.id})}"
+                           th:text="#{messages.add_event}" style="text-align: right;">Add Event</a>
+                    </th>
+                </tr>
+                <!--/*@thymesVar id="event" type="ch.jtaf.entity.Event"*/-->
+                <tr th:each="event: ${category.events}">
+                    <td th:text="${event.abbreviation}">jump</td>
+                    <td th:text="${event.name}">Long Jump</td>
+                    <td th:text="${event.eventType}">JUMP</td>
+                    <td th:text="${event.gender}">MALE</td>
+                    <td th:text="${event.a}"></td>
+                    <td th:text="${event.b}"></td>
+                    <td th:text="${event.c}"></td>
+                    <td style="text-align: right;">
+                        <a th:href="@{/sec/category/{id}/event/{eventId}/delete(id=${category.id}, eventId=${event.id})}"
+                           th:text="#{messages.delete}"
+                           onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 

@@ -11,8 +11,7 @@
         <div class="col-md-12">
             <h1 th:text="#{messages.events}">Events</h1>
 
-            <!--/*@thymesVar id="events" type="java.util.List<Event>"*/-->
-            <!--/*@thymesVar id="event" type="ch.jtaf.entity.Event"*/-->
+            <!--/*@thymesVar id="mode" type="java.lang.String"*/-->
             <table class="table table-striped">
                 <tr>
                     <th th:text="#{messages.abbreviation}">Abbreviation</th>
@@ -22,8 +21,13 @@
                     <th>A</th>
                     <th>B</th>
                     <th>C</th>
-                    <th style="text-align: right;"><a href="/sec/event" th:text="#{messages.add_event}" style="text-align: right;">Add Event</a></th>
+                    <th style="text-align: right;">
+                        <a th:if="${mode == 'edit'}" href="/sec/event" th:text="#{messages.add_event}"
+                           style="text-align: right;">Add Event</a>
+                    </th>
                 </tr>
+                <!--/*@thymesVar id="events" type="java.util.List<Event>"*/-->
+                <!--/*@thymesVar id="event" type="ch.jtaf.entity.Event"*/-->
                 <tr th:each="event: ${events}">
                     <td th:text="${event.abbreviation}">jump</td>
                     <td th:text="${event.name}">Long Jump</td>
@@ -32,7 +36,15 @@
                     <td th:text="${event.a}"></td>
                     <td th:text="${event.b}"></td>
                     <td th:text="${event.c}"></td>
-                    <td style="text-align: right;"><a th:href="@{/sec/event/{id}(id=${event.id})}" th:text="#{messages.edit}">Edit</a></td>
+
+                    <td style="text-align: right;">
+                        <a th:if="${mode == 'edit'}" th:href="@{/sec/event/{id}(id=${event.id})}"
+                           th:text="#{messages.edit}"></a>
+                        <!--/*@thymesVar id="categoryId" type="java.lang.Long"*/-->
+                        <a th:if="${mode == 'select'}"
+                           th:href="@{/sec/category/{categoryId}/event/{id}(categoryId=${categoryId}, id=${event.id})}"
+                           th:text="#{messages.select}">Select</a>
+                    </td>
                 </tr>
             </table>
         </div>

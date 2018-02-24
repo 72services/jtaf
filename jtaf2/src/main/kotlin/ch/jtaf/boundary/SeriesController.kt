@@ -38,7 +38,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return mav
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("{id}/delete")
     fun deleteById(@PathVariable("id") id: Long): ModelAndView {
         seriesAuthorizationChecker.checkIfUserAccessToSeries(id)
 
