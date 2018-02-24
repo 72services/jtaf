@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView
 
 @Controller
 @RequestMapping("/sec/serieslist")
-class SeriesListController(private val seriesRepository: SeriesRepository) {
+class SeriesListxController(private val seriesRepository: SeriesRepository) {
 
     @GetMapping
     fun get(@AuthenticationPrincipal user: User): ModelAndView {
