@@ -9,20 +9,29 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h1 th:text="#{messages.clubs}">Clubs</h1>
+            <h1 th:text="#{messages.athletes}">Athletes</h1>
 
-            <!--/*@thymesVar id="clubs" type="java.util.List<Club>"*/-->
-            <!--/*@thymesVar id="club" type="ch.jtaf.entity.Club"*/-->
+            <!--/*@thymesVar id="athletes" type="java.util.List<Athlete>"*/-->
+            <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.Athlete"*/-->
             <table class="table table-striped">
                 <tr>
-                    <th th:text="#{messages.abbreviation}">Abbreviation</th>
-                    <th th:text="#{messages.name}">Name</th>
-                    <th style="text-align: right;"><a href="/sec/club" th:text="#{messages.add_club}" style="text-align: right;">Add Club</a></th>
+                    <th th:text="#{messages.last_name}">Last Name</th>
+                    <th th:text="#{messages.first_name}">First Name</th>
+                    <th th:text="#{messages.year_of_birth}">Year of Birth</th>
+                    <th th:text="#{messages.gender}">Gender</th>
+                    <th th:text="#{messages.club}">Club</th>
+                    <th style="text-align: right;"><a href="/sec/athlete" th:text="#{messages.add_athlete}"
+                                                      style="text-align: right;">Add Athlete</a></th>
                 </tr>
-                <tr th:each="club: ${clubs}">
-                    <td th:text="${club.abbreviation}">jump</td>
-                    <td th:text="${club.name}">Long Jump</td>
-                    <td style="text-align: right;"><a th:href="@{/sec/club/{id}(id=${club.id})}" th:text="#{messages.edit}">Edit</a></td>
+                <tr th:each="athlete: ${athletes}">
+                    <td th:text="${athlete.lastName}">Doe</td>
+                    <td th:text="${athlete.firstName}">John</td>
+                    <td th:text="${athlete.yearOfBirth}">2012</td>
+                    <td th:text="${athlete.gender}">MALE</td>
+                    <td th:text="${athlete.club == null ? '' : athlete.club.abbreviation}">TVE</td>
+                    <td style="text-align: right;">
+                        <a th:href="@{/sec/athlete/{id}(id=${athlete.id})}" th:text="#{messages.edit}">Edit</a>
+                    </td>
                 </tr>
             </table>
         </div>
