@@ -3,9 +3,6 @@ package ch.jtaf.boundary
 import ch.jtaf.control.repository.CompetitionRepository
 import ch.jtaf.control.repository.SeriesRepository
 import ch.jtaf.entity.Competition
-import ch.jtaf.entity.Series
-import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
@@ -13,27 +10,20 @@ import org.springframework.web.servlet.ModelAndView
 @Controller
 @RequestMapping("/sec/competition")
 class CompetitionController(private val competitionRepository: CompetitionRepository,
-                            private val seriesRepository: SeriesRepository) {
+                            private val seriesAuthorizationChecker: SeriesAuthorizationChecker) {
 
     @GetMapping()
-    fun get(@AuthenticationPrincipal user: User, @RequestParam("seriesId") seriesId: Long): ModelAndView {
-        val series = seriesRepository.findById(seriesId)
-        if (series.isPresent) {
-            if (series.get().owner == user.username) {
-                val mav = ModelAndView("/sec/competition")
-                mav.model["message"] = ""
+    fun get(@RequestParam("seriesId") seriesId: Long): ModelAndView {
+        seriesAuthorizationChecker.checkIfUserAccessToSeries(seriesId)
 
-                val competition = Competition()
-                competition.seriesId = series.get().id
-                mav.model["competition"] = competition
+        val mav = ModelAndView("/sec/competition")
+        mav.model["message"] = ""
 
-                return mav
-            } else {
-                throw IllegalArgumentException("User is not owner of the series")
-            }
-        } else {
-            throw IllegalArgumentException("Series not found")
-        }
+        val competition = Competition()
+        competition.seriesId = seriesId
+        mav.model["competition"] = competition
+
+        return mav
     }
 
     @GetMapping("{id}")
@@ -53,6 +43,8 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
 
     @PostMapping
     fun post(competition: Competition): ModelAndView {
+        seriesAuthorizationChecker.checkIfUserAccessToSeries(competition.seriesId)
+
         competitionRepository.save(competition)
 
         val mav = ModelAndView()

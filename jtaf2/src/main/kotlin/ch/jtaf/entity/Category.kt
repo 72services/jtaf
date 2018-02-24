@@ -15,8 +15,7 @@ data class Category(
         var yearTo: Int = 9999,
         var gender: Gender = MALE,
 
-        @ManyToOne
-        var series: Series? = null,
+        var seriesId: Long? = null,
 
         @OneToMany
         @OrderColumn(name = "position")
@@ -30,5 +29,4 @@ data class Category(
                 joinColumns = [(JoinColumn(name = "category_id", referencedColumnName = "id"))],
                 inverseJoinColumns = [(JoinColumn(name = "athlete_id", referencedColumnName = "id", unique = true))])
         var athletes: MutableList<Athlete> = ArrayList()
-
 )

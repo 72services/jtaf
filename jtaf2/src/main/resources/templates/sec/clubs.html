@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head th:replace="common/head :: head"></head>
+<body>
+
+<div th:include="common/navigation :: navigation ('clubs')"></div>
+
+<main role="main" class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 th:text="#{messages.clubs}">Clubs</h1>
+
+            <!--/*@thymesVar id="clubs" type="java.util.List<Club>"*/-->
+            <!--/*@thymesVar id="club" type="ch.jtaf.entity.Club"*/-->
+            <table class="table table-striped">
+                <tr>
+                    <th th:text="#{messages.abbreviation}">Abbreviation</th>
+                    <th th:text="#{messages.name}">Name</th>
+                    <th style="text-align: right;"><a href="/sec/club" th:text="#{messages.add_club}" style="text-align: right;">Add Club</a></th>
+                </tr>
+                <tr th:each="club: ${clubs}">
+                    <td th:text="${club.abbreviation}">jump</td>
+                    <td th:text="${club.name}">Long Jump</td>
+                    <td style="text-align: right;"><a th:href="@{/sec/club/{id}(id=${club.id})}" th:text="#{messages.edit}">Edit</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div th:include="common/footer :: copy"></div>
+
+</main>
+</body>
+</html>

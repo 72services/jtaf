@@ -15,5 +15,7 @@ data class Athlete(
         var gender: Gender = Gender.MALE,
 
         @ManyToOne
-        var club: Club? = null
+        var club: Club? = null,
+
+        var owner: String? = null
 )

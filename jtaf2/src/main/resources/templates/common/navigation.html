@@ -13,8 +13,19 @@
                 <div class="navbar-nav">
                     <a th:class="${page == 'index'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
                        href="/dashboard">Home</a>
-                    <a th:class="${page == 'manage'} ? 'nav-item nav-link active' : 'nav-item nav-link'" th:text="#{messages.manage_series}"
-                       href="/sec/serieslist">Manage Series</a>
+
+                    <a th:class="${page == 'series'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                       th:text="#{messages.series}" href="/sec/serieslist">Manage Series</a>
+
+                    <a th:class="${page == 'events'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                       th:text="#{messages.events}" href="/sec/events">Manage Events</a>
+
+                    <a th:class="${page == 'clubs'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                       th:text="#{messages.clubs}" href="/sec/clubs">Manage Clubs</a>
+
+                    <a th:class="${page == 'athletes'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                       th:text="#{messages.athletes}" href="/sec/athletes">Manage Athletes</a>
+
                     <a class="nav-item nav-link" href="https://github.com/simasch/jtaf/" target="_blank">About</a>
                 </div>
             </div>

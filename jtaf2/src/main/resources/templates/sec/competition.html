@@ -21,12 +21,12 @@
                 </div>
                 <div class="form-group">
                     <label for="name" th:text="#{messages.name}">Name</label>
-                    <input class="form-control" id="name" placeholder="Name" th:field="*{name}">
+                    <input class="form-control" id="name" th:placeholder="#{messages.name}" th:field="*{name}" required>
                 </div>
                 <div class="form-group">
                     <label for="competitionDate" th:text="#{messages.date}">Date</label>
                     <input type="date" class="form-control" id="competitionDate" th:placeholder="#{messages.date}"
-                           th:field="*{competitionDate}">
+                           th:field="*{competitionDate}" re>
                 </div>
                 <div class="form-group">
                     <label for="medalPercentage" th:text="#{messages.medalPercentage}">Date</label>
@@ -48,11 +48,9 @@
                 <br>
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
                 <a th:href="@{/sec/series/{id}(id=*{seriesId})}" th:text="#{messages.back}">Back</a>
+                <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+                <span th:text="${message}"></span>
             </form>
-
-            <!--/*@thymesVar id="message" type="java.lang.String"*/-->
-            <p th:value="${message}"></p>
-
         </div>
     </div>
 

@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView
 class UserController {
 
     @GetMapping
-    fun user(@AuthenticationPrincipal user: User): ModelAndView {
+    fun get(@AuthenticationPrincipal user: User): ModelAndView {
         val mav = ModelAndView("/sec/user")
         mav.model["user"] = user
         return mav

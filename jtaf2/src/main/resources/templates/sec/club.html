@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head th:replace="common/head :: head"></head>
+<body>
+
+<div th:include="common/navigation :: navigation ('clubs')"></div>
+
+<main role="main" class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 th:text="#{messages.edit_club}">Edit Club</h1>
+
+            <!--/*@thymesVar id="event" type="ch.jtaf.entity.Event"*/-->
+            <form action="#" th:action="@{/sec/club}" th:object="${event}" method="post">
+
+                <div class="form-group">
+                    <label for="id">ID</label>
+                    <input class="form-control" id="id" readonly th:field="*{id}">
+                </div>
+                <div class="form-group">
+                    <label for="name" th:text="#{messages.abbreviation}">Abbreviation</label>
+                    <input class="form-control" id="abbreviation" th:placeholder="#{messages.abbreviation}"
+                           th:field="*{abbreviation}" required>
+                </div>
+                <div class="form-group">
+                    <label for="name" th:text="#{messages.name}">Name</label>
+                    <input class="form-control" id="name" th:placeholder="#{messages.name}" th:field="*{name}" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+                <a th:href="@{/sec/clubs}" th:text="#{messages.back}">Back</a>
+                <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+                <span th:text="${message}"></span>
+            </form>
+        </div>
+    </div>
+
+    <div th:include="common/footer :: copy"></div>
+
+</main>
+</body>
+</html>

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView
 class DashboardController(private val seriesRepository: SeriesRepository) {
 
     @GetMapping
-    fun index(): ModelAndView {
+    fun get(): ModelAndView {
         val mav = ModelAndView()
         mav.model["seriesList"] = seriesRepository.findAll()
         return mav

@@ -15,11 +15,11 @@
             <form action="#" th:action="@{/sec/series}" th:object="${series}" method="post">
                 <div class="form-group">
                     <label for="id">ID</label>
-                    <input class="form-control" id="id" readonly th:value="*{id}">
+                    <input class="form-control" id="id" readonly th:field="*{id}">
                 </div>
                 <div class="form-group">
                     <label for="name" th:text="#{messages.name}">Name</label>
-                    <input class="form-control" id="name" placeholder="Name" th:field="*{name}">
+                    <input class="form-control" id="name" placeholder="Name" th:field="*{name}" required>
                 </div>
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="locked" th:placeholder="#{messages.locked}"
@@ -34,27 +34,12 @@
                 <br>
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
                 <a href="/sec/serieslist" th:text="#{messages.back}">Back</a>
+                <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+                <span th:text="${message}"></span>
             </form>
-
-            <!--/*@thymesVar id="message" type="java.lang.String"*/-->
-            <p th:value="${message}"></p>
-
             <br>
 
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#" th:text="#{messages.competitions}">Competitions</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" th:text="#{messages.categories}">Categories</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" th:text="#{messages.events}">Events</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" th:text="#{messages.atheletes}">Athelets</a>
-                </li>
-            </ul>
+            <h2 th:text="#{messages.competitions}">Competitions</h2>
 
             <table class="table table-striped">
                 <tr>
@@ -65,11 +50,38 @@
                             Competition</a>
                     </th>
                 </tr>
+                <!--/*@thymesVar id="competition" type="ch.jtaf.entity.Competition"*/-->
                 <tr th:each="competition : ${series.competitions}">
                     <td th:text="${competition.name}">1. CIS Twann</td>
                     <td th:text="${competition.competitionDate}">2018-01-02</td>
                     <td style="text-align: right;">
                         <a th:href="@{/sec/competition/{id}(id=${competition.id})}" th:text="#{messages.edit}">Edit</a>
+                    </td>
+                </tr>
+            </table>
+
+            <h2 th:text="#{messages.categories}">Categories</h2>
+
+            <table class="table table-striped">
+                <tr>
+                    <th th:text="#{messages.abbreviation}">Abbreviation</th>
+                    <th th:text="#{messages.name}">Name</th>
+                    <th th:text="#{messages.year_from}">Year From</th>
+                    <th th:text="#{messages.year_to}">Year To</th>
+                    <th style="text-align: right;">
+                        <a th:href="@{/sec/category(seriesId=${series.id})}" th:text="#{messages.add_category}">Add
+                            Category</a>
+                    </th>
+                </tr>
+                <!--/*@thymesVar id="categories" type="java.util.List<Category>"*/-->
+                <!--/*@thymesVar id="category" type="ch.jtaf.entity.Category"*/-->
+                <tr th:each="category : ${categories}">
+                    <td th:text="${category.abbreviation}">A</td>
+                    <td th:text="${category.name}">Knaben xy</td>
+                    <td th:text="${category.yearFrom}">1900</td>
+                    <td th:text="${category.yearTo}">2999</td>
+                    <td style="text-align: right;">
+                        <a th:href="@{/sec/category/{id}(id=${category.id})}" th:text="#{messages.edit}">Edit</a>
                     </td>
                 </tr>
             </table>

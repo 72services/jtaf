@@ -1,5 +1,6 @@
 package ch.jtaf.boundary
 
+import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.SeriesRepository
 import ch.jtaf.entity.Series
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -10,11 +11,13 @@ import org.springframework.web.servlet.ModelAndView
 
 @Controller
 @RequestMapping("/sec/series")
-class SeriesController(private val seriesRepository: SeriesRepository) {
+class SeriesController(private val seriesRepository: SeriesRepository,
+                       private val categoryRepository: CategoryRepository,
+                       private val seriesAuthorizationChecker: SeriesAuthorizationChecker) {
 
     @GetMapping()
     fun get(): ModelAndView {
-        val mav = ModelAndView("/sec/series")
+        val mav = ModelAndView()
         mav.model["message"] = ""
         mav.model["series"] = Series()
         return mav
@@ -22,21 +25,20 @@ class SeriesController(private val seriesRepository: SeriesRepository) {
 
     @GetMapping("{id}")
     fun getById(@PathVariable("id") id: Long): ModelAndView {
+        val series = seriesAuthorizationChecker.checkIfUserAccessToSeries(id)
+
         val mav = ModelAndView("/sec/series")
         mav.model["message"] = ""
-
-        val series = seriesRepository.findById(id)
-        if (series.isPresent) {
-            mav.model["series"] = series.get()
-        } else {
-            throw IllegalStateException("Series not found")
-        }
+        mav.model["series"] = series
+        mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
 
         return mav
     }
 
     @PostMapping
     fun post(@AuthenticationPrincipal user: User, series: Series): ModelAndView {
+        seriesAuthorizationChecker.checkIfUserAccessToSeries(series.id)
+
         series.owner = user.username
         seriesRepository.save(series)
 

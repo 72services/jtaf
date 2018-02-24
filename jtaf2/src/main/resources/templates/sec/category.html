@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head th:replace="common/head :: head"></head>
+<body>
+
+<div th:include="common/navigation :: navigation ('manage')"></div>
+
+<main role="main" class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 th:text="#{messages.edit_category}">Edit Category</h1>
+
+            <!--/*@thymesVar id="category" type="ch.jtaf.entity.Category"*/-->
+            <form action="#" th:action="@{/sec/category}" th:object="${category}" method="post">
+                <input type="hidden" id="seriesId" th:field="*{seriesId}">
+
+                <div class="form-group">
+                    <label for="id">ID</label>
+                    <input class="form-control" id="id" readonly th:field="*{id}">
+                </div>
+                <div class="form-group">
+                    <label for="name" th:text="#{messages.abbreviation}">Abbreviation</label>
+                    <input class="form-control" id="abbreviation" th:placeholder="#{messages.abbreviation}"
+                           th:field="*{abbreviation}" required>
+                </div>
+                <div class="form-group">
+                    <label for="name" th:text="#{messages.name}">Name</label>
+                    <input class="form-control" id="name" th:placeholder="#{messages.name}" th:field="*{name}" required>
+                </div>
+                <div class="form-group">
+                    <label for="yearFrom" th:text="#{messages.year_from}">Year From</label>
+                    <input class="form-control" id="yearFrom" th:placeholder="#{messages.year_from}"
+                           th:field="*{yearFrom}" required>
+                </div>
+                <div class="form-group">
+                    <label for="yearTo" th:text="#{messages.year_to}">Year From</label>
+                    <input class="form-control" id="yearTo" th:placeholder="#{messages.year_to}"
+                           th:field="*{yearTo}" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender" th:text="#{messages.gender}">Gender</label>
+                    <select id="gender" class="form-control" th:field="*{gender}">
+                        <!--/*@thymesVar id="gender" type="ch.jtaf.entity.Gender"*/-->
+                        <option th:each="gender : ${T(ch.jtaf.entity.Gender).values()}"
+                                th:value="${gender}"
+                                th:text="${gender}">Genders
+                        </option>
+                    </select>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+                <a th:href="@{/sec/categories(seriesId=${category.seriesId})}" th:text="#{messages.back}">Back</a>
+                <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+                <span th:text="${message}"></span>
+            </form>
+        </div>
+    </div>
+
+    <div th:include="common/footer :: copy"></div>
+
+</main>
+</body>
+</html>
