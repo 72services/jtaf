@@ -1,6 +1,9 @@
 package ch.jtaf.control.repository
 
 import ch.jtaf.AbstractBaseDataTest
+import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,7 +20,11 @@ class AthleteRepositoryTest : AbstractBaseDataTest() {
 
     @Test
     fun findAthleteDTOsBySeriesId() {
-        athleteRepository.findAthleteDTOsBySeriesId(1);
+        val dtos = athleteRepository.findAthleteDTOsBySeriesId(1);
+
+        assertFalse(dtos.isEmpty())
+        assertEquals(1, dtos.size)
+        assertEquals("Max", dtos[0].firstName)
     }
 
 }

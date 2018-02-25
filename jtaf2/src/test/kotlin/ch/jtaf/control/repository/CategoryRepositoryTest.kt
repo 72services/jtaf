@@ -2,6 +2,8 @@ package ch.jtaf.control.repository
 
 import ch.jtaf.AbstractBaseDataTest
 import ch.jtaf.entity.Gender
+import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,7 +20,10 @@ class CategoryRepositoryTest : AbstractBaseDataTest() {
 
     @Test
     fun findByGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual() {
-        categoryRepository.findByGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(Gender.MALE, 2004, 2004);
+        val category = categoryRepository.findByGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(
+                Gender.MALE, 2004, 2004);
+
+        assertEquals("A", category?.abbreviation)
     }
 
 }
