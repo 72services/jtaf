@@ -1,5 +1,6 @@
 package ch.jtaf.control.repository
 
+import ch.jtaf.AbstractBaseDataTest
 import ch.jtaf.entity.Gender
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -10,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @DataJpaTest
-class CategoryRepositoryTest {
+class CategoryRepositoryTest : AbstractBaseDataTest() {
 
     @Autowired
     lateinit var categoryRepository: CategoryRepository

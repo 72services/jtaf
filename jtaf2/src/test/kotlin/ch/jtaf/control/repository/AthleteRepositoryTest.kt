@@ -1,5 +1,6 @@
 package ch.jtaf.control.repository
 
+import ch.jtaf.AbstractBaseDataTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -9,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @DataJpaTest
-class AthleteRepositoryTest {
+class AthleteRepositoryTest : AbstractBaseDataTest() {
 
     @Autowired
     lateinit var athleteRepository: AthleteRepository
