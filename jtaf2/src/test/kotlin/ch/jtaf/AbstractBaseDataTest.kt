@@ -7,21 +7,30 @@ import javax.persistence.EntityManager
 
 abstract class AbstractBaseDataTest() {
 
+    val email = "john.doe@jtaf.ch"
+
     @Autowired
     lateinit var em: EntityManager
 
     @Before
     fun createTestData() {
-        val series = Series(name = "CIS 2018", owner = "info@jtaf.ch")
+        val securityGroup = SecurityGroup(name = "ADMIN")
+        em.persist(securityGroup)
+
+        val securityUser = SecurityUser(email = email)
+        securityUser.groups.add(securityGroup)
+        em.persist(securityUser)
+
+        val series = Series(name = "CIS 2018", owner = email)
         em.persist(series)
 
-        val club = Club(abbreviation = "TVT", name = "TV Twann", owner = "info@jtaf.ch")
+        val club = Club(abbreviation = "TVT", name = "TV Twann", owner = email)
         em.persist(club)
 
-        val athlete = Athlete(lastName = "Meier", firstName = "Max", yearOfBirth = 2004, club = club, owner = "info@jtaf.ch")
+        val athlete = Athlete(lastName = "Meier", firstName = "Max", yearOfBirth = 2004, club = club, owner = email)
         em.persist(athlete)
 
-        val event = Event(abbreviation = "80", name = "80 m", owner = "info@jtaf.ch")
+        val event = Event(abbreviation = "80", name = "80 m", owner = email)
         em.persist(event)
 
         val competition = Competition(name = "1. CIS Twann", seriesId = series.id)

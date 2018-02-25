@@ -4,7 +4,6 @@ import ch.jtaf.AbstractBaseDataTest
 import ch.jtaf.entity.Gender
 import org.junit.Assert
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,18 +13,17 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @DataJpaTest
-class CategoryRepositoryTest : AbstractBaseDataTest() {
+class ClubRepositoryTest : AbstractBaseDataTest() {
 
     @Autowired
-    lateinit var categoryRepository: CategoryRepository
+    lateinit var clubRepository: ClubRepository
 
     @Test
-    fun findByGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual() {
-        val category = categoryRepository.findByGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(
-                Gender.MALE, 2004, 2004);
+    fun findAllByOwner() {
+        val club = clubRepository.findAllByOwner(email);
 
-        assertNotNull(category)
-        assertEquals("A", category?.abbreviation)
+        assertEquals(1, club.size)
+        assertEquals("TVT", club[0].abbreviation)
     }
 
 }
