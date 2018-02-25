@@ -1,0 +1,23 @@
+package ch.jtaf.control.repository
+
+import ch.jtaf.entity.Gender
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.junit4.SpringRunner
+
+@RunWith(SpringRunner::class)
+@DataJpaTest
+class CategoryRepositoryTest {
+
+    @Autowired
+    lateinit var categoryRepository: CategoryRepository
+
+    @Test
+    fun findByGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual() {
+        categoryRepository.findByGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(Gender.MALE, 2004, 2004);
+    }
+
+}

@@ -1,5 +1,6 @@
 package ch.jtaf.boundary
 
+import ch.jtaf.control.repository.AthleteRepository
 import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.SeriesRepository
 import ch.jtaf.entity.Series
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView
 @RequestMapping("/sec/series")
 class SeriesController(private val seriesRepository: SeriesRepository,
                        private val categoryRepository: CategoryRepository,
+                       private val athleteRepository: AthleteRepository,
                        private val seriesAuthorizationChecker: SeriesAuthorizationChecker) {
 
     @GetMapping()
@@ -34,9 +36,56 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         mav.model["message"] = ""
         mav.model["series"] = series
         mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
 
         return mav
     }
+
+    @GetMapping("{id}/athlete/{athleteId}")
+    fun addEvent(@PathVariable("id") id: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
+        val mav = ModelAndView("/sec/series")
+        mav.model["message"] = ""
+
+        val series = seriesRepository.getOne(id)
+        val athlete = athleteRepository.getOne(athleteId)
+
+        val category = categoryRepository.findByGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(
+                athlete.gender, athlete.yearOfBirth, athlete.yearOfBirth)
+
+        if (category == null) {
+            mav.model["message"] = "No matching category found for gender " + athlete.gender + " and year " + athlete.yearOfBirth
+        } else {
+            category.athletes.add(athlete)
+            categoryRepository.save(category)
+        }
+
+        mav.model["series"] = series
+        mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
+
+        return mav
+    }
+
+    @GetMapping("{id}/event/{eventId}/delete")
+    fun deleteById(@PathVariable("id") id: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
+        val mav = ModelAndView("/sec/series")
+        mav.model["message"] = ""
+
+        val series = seriesRepository.getOne(id)
+        val athlete = athleteRepository.getOne(athleteId)
+
+        val category = categoryRepository.getOne(id)
+        category.athletes.remove(athlete)
+
+        categoryRepository.save(category)
+
+        mav.model["series"] = series
+        mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
+
+        return mav
+    }
+
 
     @PostMapping
     fun post(@AuthenticationPrincipal user: User, series: Series): ModelAndView {

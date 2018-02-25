@@ -33,8 +33,8 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         mav.model["message"] = ""
 
         val category = categoryRepository.getOne(id)
-        val event = eventRepository.findById(eventId)
-        category.events.add(event.get())
+        val event = eventRepository.getOne(eventId)
+        category.events.add(event)
         categoryRepository.save(category)
 
         mav.model["category"] = category
@@ -48,8 +48,8 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         mav.model["message"] = ""
 
         val category = categoryRepository.getOne(id)
-        val event = eventRepository.findById(eventId)
-        category.events.remove(event.get())
+        val event = eventRepository.getOne(eventId)
+        category.events.remove(event)
 
         categoryRepository.save(category)
 

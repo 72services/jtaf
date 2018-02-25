@@ -86,6 +86,40 @@
                     </td>
                 </tr>
             </table>
+
+            <h2 th:text="#{messages.athletes}">Athletes</h2>
+
+            <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+            <span style="color: red;" th:text="${message}"></span>
+
+            <table class="table table-striped">
+                <tr>
+                    <th th:text="#{messages.category}">Category</th>
+                    <th th:text="#{messages.last_name}">Last Name</th>
+                    <th th:text="#{messages.first_name}">First Name</th>
+                    <th th:text="#{messages.year_of_birth}">Year of Birth</th>
+                    <th th:text="#{messages.gender}">Gender</th>
+                    <th th:text="#{messages.club}">Club</th>
+                    <th style="text-align: right;">
+                        <a th:href="@{/sec/athletes(mode='select', seriesId=${series.id})}"
+                           th:text="#{messages.add_athlete}" style="text-align: right;">Add Athlete</a>
+                    </th>
+                </tr>
+                <!--/*@thymesVar id="athletes" type="java.util.List<AthleteDTO>"*/-->
+                <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.AthleteDTO"*/-->
+                <tr th:each="athlete : ${athletes}">
+                    <td th:text="${athlete.category}">A</td>
+                    <td th:text="${athlete.lastName}">Muster</td>
+                    <td th:text="${athlete.firstName}">Peter</td>
+                    <td th:text="${athlete.yearOfBirth}">2004</td>
+                    <td th:text="${athlete.gender}">MALE</td>
+                    <td th:text="${athlete.club}">TVE</td>
+                    <td style="text-align: right;">
+                        <a th:href="@{/sec/series/{id}/athlete/{athleteId}/remove(id=${series.id}, athleteId=${athlete.id})}"
+                           th:text="#{messages.delete}">Remove</a>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 
