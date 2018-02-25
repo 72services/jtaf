@@ -38,8 +38,12 @@
                     <td th:text="${event.c}"></td>
 
                     <td style="text-align: right;">
-                        <a th:if="${mode == 'edit'}" th:href="@{/sec/event/{id}(id=${event.id})}"
-                           th:text="#{messages.edit}"></a>
+                        <a th:href="@{/sec/event/{id}(id=${event.id})}" th:text="#{messages.edit}"></a>
+
+                        <a th:if="${mode == 'edit'}" th:href="@{/sec/events/{id}/delete(id=${event.id})}"
+                           th:text="#{messages.delete}"
+                           onclick="return confirm('Are you sure?')">Delete</a>
+
                         <!--/*@thymesVar id="categoryId" type="java.lang.Long"*/-->
                         <a th:if="${mode == 'select'}"
                            th:href="@{/sec/category/{categoryId}/event/{id}(categoryId=${categoryId}, id=${event.id})}"

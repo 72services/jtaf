@@ -38,17 +38,6 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return mav
     }
 
-    @GetMapping("{id}/delete")
-    fun deleteById(@PathVariable("id") id: Long): ModelAndView {
-        seriesAuthorizationChecker.checkIfUserAccessToSeries(id)
-
-        seriesRepository.deleteById(id)
-
-        val mav = ModelAndView("/sec/serieslist")
-        mav.model["seriesList"] = seriesRepository.findAll()
-        return mav
-    }
-
     @PostMapping
     fun post(@AuthenticationPrincipal user: User, series: Series): ModelAndView {
         if (series.id != null) {
