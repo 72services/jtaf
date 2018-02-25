@@ -30,17 +30,12 @@ class AthleteController(private val athleteRepository: AthleteRepository,
     }
 
     @GetMapping("{id}")
-    fun getById(@PathVariable("id") id: Long): ModelAndView {
+    fun getById(@AuthenticationPrincipal user: User, @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/athlete")
         mav.model["message"] = ""
 
-        val athlete = athleteRepository.findById(id)
-        if (athlete.isPresent) {
-            mav.model["athlete"] = athlete.get()
-            mav.model["clubs"] = clubRepository.findAll()
-        } else {
-            throw IllegalStateException("Athlete not found")
-        }
+        mav.model["athlete"] = athleteRepository.getOne(id)
+        mav.model["clubs"] = clubRepository.findAllByOwner(user.username)
 
         return mav
     }

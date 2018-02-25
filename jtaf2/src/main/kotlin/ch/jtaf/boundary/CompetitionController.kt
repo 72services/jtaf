@@ -30,12 +30,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         val mav = ModelAndView("/sec/competition")
         mav.model["message"] = ""
 
-        val competition = competitionRepository.findById(id)
-        if (competition.isPresent) {
-            mav.model["competition"] = competition.get()
-        } else {
-            throw IllegalStateException("Competition not found")
-        }
+        mav.model["competition"] = competitionRepository.getOne(id)
 
         return mav
     }

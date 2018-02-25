@@ -32,19 +32,12 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         val mav = ModelAndView("/sec/category")
         mav.model["message"] = ""
 
-        val optionalCategory = categoryRepository.findById(id)
-        if (optionalCategory.isPresent) {
-            val category = optionalCategory.get()
+        val category = categoryRepository.getOne(id)
+        val event = eventRepository.findById(eventId)
+        category.events.add(event.get())
+        categoryRepository.save(category)
 
-            val event = eventRepository.findById(eventId)
-            category.events.add(event.get())
-
-            categoryRepository.save(category)
-
-            mav.model["category"] = category
-        } else {
-            throw IllegalStateException("Category not found")
-        }
+        mav.model["category"] = category
 
         return mav
     }
@@ -54,19 +47,13 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         val mav = ModelAndView("/sec/category")
         mav.model["message"] = ""
 
-        val optionalCategory = categoryRepository.findById(id)
-        if (optionalCategory.isPresent) {
-            val category = optionalCategory.get()
+        val category = categoryRepository.getOne(id)
+        val event = eventRepository.findById(eventId)
+        category.events.remove(event.get())
 
-            val event = eventRepository.findById(eventId)
-            category.events.remove(event.get())
+        categoryRepository.save(category)
 
-            categoryRepository.save(category)
-
-            mav.model["category"] = category
-        } else {
-            throw IllegalStateException("Category not found")
-        }
+        mav.model["category"] = category
 
         return mav
     }
@@ -76,12 +63,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         val mav = ModelAndView("/sec/category")
         mav.model["message"] = ""
 
-        val category = categoryRepository.findById(id)
-        if (category.isPresent) {
-            mav.model["category"] = category.get()
-        } else {
-            throw IllegalStateException("Category not found")
-        }
+        mav.model["category"] = categoryRepository.getOne(id)
 
         return mav
     }
@@ -90,9 +72,23 @@ class CategoryController(private val categoryRepository: CategoryRepository,
     fun post(category: Category): ModelAndView {
         seriesAuthorizationChecker.checkIfUserAccessToSeries(category.seriesId)
 
-        categoryRepository.save(category)
-
         val mav = ModelAndView()
+
+        if (category.id == null) {
+            categoryRepository.save(category)
+            mav.model["category"] = category
+        } else {
+            val categoryFromDb = categoryRepository.getOne(category.id!!)
+            categoryFromDb.abbreviation = category.abbreviation
+            categoryFromDb.name = category.name
+            categoryFromDb.yearFrom = category.yearFrom
+            categoryFromDb.yearFrom = category.yearTo
+            categoryFromDb.gender = category.gender
+            categoryRepository.save(categoryFromDb)
+
+            mav.model["category"] = categoryFromDb
+        }
+
         mav.model["message"] = "Category saved!"
         return mav
     }

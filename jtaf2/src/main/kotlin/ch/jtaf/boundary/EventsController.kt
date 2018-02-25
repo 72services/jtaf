@@ -19,7 +19,7 @@ class EventsController(private val eventRepository: EventRepository) {
             @RequestParam("categoryId", required = false) categoryId: Long?): ModelAndView {
         val mav = ModelAndView()
         mav.model["events"] = eventRepository.findAllByOwner(user.username)
-        mav.model["mode"] = if (mode == null) "edit" else mode
+        mav.model["mode"] = mode ?: "edit"
         if (categoryId != null) {
             mav.model["categoryId"] = categoryId
         }
@@ -33,6 +33,7 @@ class EventsController(private val eventRepository: EventRepository) {
 
         val mav = ModelAndView("/sec/events")
         mav.model["events"] = eventRepository.findAllByOwner(user.username)
+        mav.model["mode"] = "edit"
         return mav
     }
 

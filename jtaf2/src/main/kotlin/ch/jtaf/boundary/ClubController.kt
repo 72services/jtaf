@@ -31,12 +31,7 @@ class ClubController(private val clubRepository: ClubRepository) {
         val mav = ModelAndView("/sec/club")
         mav.model["message"] = ""
 
-        val club = clubRepository.findById(id)
-        if (club.isPresent) {
-            mav.model["club"] = club.get()
-        } else {
-            throw IllegalStateException("Club not found")
-        }
+        mav.model["club"] = clubRepository.getOne(id)
 
         return mav
     }

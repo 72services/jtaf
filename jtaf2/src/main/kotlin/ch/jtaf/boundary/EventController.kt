@@ -31,12 +31,7 @@ class EventController(private val eventRepository: EventRepository) {
         val mav = ModelAndView("/sec/event")
         mav.model["message"] = ""
 
-        val event = eventRepository.findById(id)
-        if (event.isPresent) {
-            mav.model["event"] = event.get()
-        } else {
-            throw IllegalStateException("Event not found")
-        }
+        mav.model["event"] = eventRepository.getOne(id)
 
         return mav
     }

@@ -38,7 +38,8 @@
                     <td th:text="${event.c}"></td>
 
                     <td style="text-align: right;">
-                        <a th:href="@{/sec/event/{id}(id=${event.id})}" th:text="#{messages.edit}"></a>
+                        <a th:if="${mode == 'edit'}" th:href="@{/sec/event/{id}(id=${event.id})}"
+                           th:text="#{messages.edit}"></a>
 
                         <a th:if="${mode == 'edit'}" th:href="@{/sec/events/{id}/delete(id=${event.id})}"
                            th:text="#{messages.delete}"
