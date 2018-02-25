@@ -53,7 +53,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
                 athlete.gender, athlete.yearOfBirth, athlete.yearOfBirth)
 
         if (category == null) {
-            mav.model["message"] = "No matching category found for gender " + athlete.gender + " and year " + athlete.yearOfBirth
+            mav.model["athletes_message"] = "No matching category found for gender " + athlete.gender + " and year " + athlete.yearOfBirth
         } else {
             category.athletes.add(athlete)
             categoryRepository.save(category)
@@ -89,15 +89,30 @@ class SeriesController(private val seriesRepository: SeriesRepository,
 
     @PostMapping
     fun post(@AuthenticationPrincipal user: User, series: Series): ModelAndView {
+        val mav = ModelAndView()
+
         if (series.id != null) {
             seriesAuthorizationChecker.checkIfUserAccessToSeries(series.id)
+            val seriesFromDb = seriesRepository.getOne(series.id!!)
+            seriesFromDb.name = series.name
+            seriesFromDb.locked = series.locked
+            seriesFromDb.hidden = series.hidden
+            seriesFromDb.owner = series.owner
+            seriesRepository.save(seriesFromDb)
+
+            mav.model["series"] = seriesFromDb
+        }
+        else {
+            series.owner = user.username
+            mav.model["series"] = series
         }
 
-        series.owner = user.username
-        seriesRepository.save(series)
 
-        val mav = ModelAndView()
         mav.model["message"] = "Series saved!"
+
+        mav.model["categories"] = categoryRepository.findAllBySeriesId(series.id!!)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(series.id!!)
+
         return mav
     }
 }

@@ -82,7 +82,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
             categoryFromDb.abbreviation = category.abbreviation
             categoryFromDb.name = category.name
             categoryFromDb.yearFrom = category.yearFrom
-            categoryFromDb.yearFrom = category.yearTo
+            categoryFromDb.yearTo = category.yearTo
             categoryFromDb.gender = category.gender
             categoryRepository.save(categoryFromDb)
 
