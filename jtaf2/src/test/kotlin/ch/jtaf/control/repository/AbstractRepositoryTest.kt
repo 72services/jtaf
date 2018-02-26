@@ -8,6 +8,7 @@ import javax.persistence.EntityManager
 abstract class AbstractRepositoryTest {
 
     val email = "john.doe@jtaf.ch"
+    var seriesId = 0L
 
     @Autowired
     lateinit var em: EntityManager
@@ -23,6 +24,7 @@ abstract class AbstractRepositoryTest {
 
         val series = Series(name = "CIS 2018", owner = email)
         em.persist(series)
+        seriesId = series.id!!
 
         val club = Club(abbreviation = "TVT", name = "TV Twann", owner = email)
         em.persist(club)

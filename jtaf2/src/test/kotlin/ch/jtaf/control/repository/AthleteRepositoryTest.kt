@@ -16,10 +16,23 @@ class AthleteRepositoryTest : AbstractRepositoryTest() {
 
     @Test
     fun findAthleteDTOsBySeriesId() {
-        val dtos = athleteRepository.findAthleteDTOsBySeriesId(1);
+        val dtos = athleteRepository.findAthleteDTOsBySeriesId(seriesId);
 
         assertEquals(1, dtos.size)
         assertEquals("Max", dtos[0].firstName)
     }
 
+    @Test
+    fun getTotalNumberOfAthletesForSeries() {
+        val number = athleteRepository.getTotalNumberOfAthletesForSeries(seriesId)
+
+        assertEquals(1, number)
+    }
+
+    @Test
+    fun getTotalNumberOfAthleteWithResultsForCompetition() {
+        val number = athleteRepository.getTotalNumberOfAthleteWithResultsForCompetition(seriesId) ?: 0
+
+        assertEquals(0, number)
+    }
 }
