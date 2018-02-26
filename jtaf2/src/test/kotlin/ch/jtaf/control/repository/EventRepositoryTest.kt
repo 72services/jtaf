@@ -1,6 +1,5 @@
 package ch.jtaf.control.repository
 
-import ch.jtaf.AbstractBaseDataTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -10,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @DataJpaTest
-class EventRepositoryTest : AbstractBaseDataTest() {
+class EventRepositoryTest : AbstractRepositoryTest() {
 
     @Autowired
     lateinit var eventRepository: EventRepository

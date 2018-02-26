@@ -1,7 +1,5 @@
 package ch.jtaf.control.repository
 
-import ch.jtaf.AbstractBaseDataTest
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
@@ -12,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @DataJpaTest
-class SecurityUserRepositoryTest : AbstractBaseDataTest() {
+class SecurityUserRepositoryTest : AbstractRepositoryTest() {
 
     @Autowired
     lateinit var securityUserRepository: SecurityUserRepository

@@ -1,11 +1,11 @@
-package ch.jtaf
+package ch.jtaf.control.repository
 
 import ch.jtaf.entity.*
 import org.junit.Before
 import org.springframework.beans.factory.annotation.Autowired
 import javax.persistence.EntityManager
 
-abstract class AbstractBaseDataTest() {
+abstract class AbstractRepositoryTest {
 
     val email = "john.doe@jtaf.ch"
 
