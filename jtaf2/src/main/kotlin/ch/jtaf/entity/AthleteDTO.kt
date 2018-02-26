@@ -6,6 +6,6 @@ data class AthleteDTO(
         var firstName: String = "",
         var yearOfBirth: Int = 0,
         var gender: Gender = Gender.MALE,
-        var club: String = "",
+        var club: String? = "",
         var category: String = ""
 )

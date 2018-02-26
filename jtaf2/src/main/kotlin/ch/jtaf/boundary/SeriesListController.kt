@@ -15,13 +15,12 @@ import java.util.function.Consumer
 @Controller
 @RequestMapping("/sec/serieslist")
 class SeriesListController(private val seriesRepository: SeriesRepository,
-                           private val athleteRepository: AthleteRepository,
                            private val seriesAuthorizationChecker: SeriesAuthorizationChecker) {
 
     @GetMapping
     fun get(@AuthenticationPrincipal user: User): ModelAndView {
         val mav = ModelAndView()
-        fillSeriesData(mav, user)
+        mav.model["seriesList"] = seriesRepository.findAllByOwner(user.username)
         return mav
     }
 
@@ -32,22 +31,10 @@ class SeriesListController(private val seriesRepository: SeriesRepository,
         seriesRepository.deleteById(id)
 
         val mav = ModelAndView("/sec/serieslist")
-        fillSeriesData(mav, user)
+        mav.model["seriesList"] = seriesRepository.findAllByOwner(user.username)
         return mav
     }
 
-    private fun fillSeriesData(mav: ModelAndView, user: User) {
-        val seriesList = seriesRepository.findAllByOwner(user.username)
-        seriesList.forEach {
-            val numberOfAthletes = athleteRepository.getTotalNumberOfAthletesForSeries(it.id!!)
 
-            it.competitions.forEach {
-                it.numberOfAthletes = numberOfAthletes ?: 0
-                it.numberOfAthletesWithResults = athleteRepository.getTotalNumberOfAthleteWithResultsForCompetition(it.id!!) ?: 0
-            }
-        }
-
-        mav.model["seriesList"] = seriesList
-    }
 
 }
