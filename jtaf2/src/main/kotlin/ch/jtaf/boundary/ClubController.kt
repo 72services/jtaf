@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
-@RequestMapping("/sec/club")
 class ClubController(private val clubRepository: ClubRepository) {
 
-    @GetMapping()
-    fun get(): ModelAndView {
-        val mav = ModelAndView("/sec/club")
+    @GetMapping("/sec/{organization}/club")
+    fun get(@PathVariable("organization") organzation: String): ModelAndView {
+        val mav = ModelAndView("/sec/${organzation}/club")
         mav.model["message"] = ""
 
         val club = Club()
@@ -26,9 +25,10 @@ class ClubController(private val clubRepository: ClubRepository) {
         return mav
     }
 
-    @GetMapping("{id}")
-    fun getById(@PathVariable("id") id: Long): ModelAndView {
-        val mav = ModelAndView("/sec/club")
+    @GetMapping("/sec/{organization}/club/{id}")
+    fun getById(@PathVariable("organization") organzation: String,
+                @PathVariable("id") id: Long): ModelAndView {
+        val mav = ModelAndView("/sec/${organzation}/club")
         mav.model["message"] = ""
 
         mav.model["club"] = clubRepository.getOne(id)
@@ -36,8 +36,10 @@ class ClubController(private val clubRepository: ClubRepository) {
         return mav
     }
 
-    @PostMapping
-    fun post(@AuthenticationPrincipal user: User, club: Club): ModelAndView {
+    @PostMapping("/sec/{organization}/club")
+    fun post(@AuthenticationPrincipal user: User,
+             @PathVariable("organization") organzation: String,
+             club: Club): ModelAndView {
         club.owner = user.username
 
         clubRepository.save(club)

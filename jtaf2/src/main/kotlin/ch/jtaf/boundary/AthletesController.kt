@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
-@RequestMapping("/sec/athletes")
 class AthletesController(private val athleteRepository: AthleteRepository) {
 
-    @GetMapping
-    fun get(@AuthenticationPrincipal user: User, @RequestParam("mode", required = false) mode: String?,
+    @GetMapping("/sec/{organization}/athletes")
+    fun get(@AuthenticationPrincipal user: User,
+            @PathVariable("organization") organzation: String,
+            @RequestParam("mode", required = false) mode: String?,
             @RequestParam("seriesId", required = false) seriesId: Long?): ModelAndView {
         val mav = ModelAndView()
         mav.model["athletes"] = athleteRepository.findAllByOwner(user.username)
@@ -27,11 +28,13 @@ class AthletesController(private val athleteRepository: AthleteRepository) {
         return mav
     }
 
-    @GetMapping("{id}/delete")
-    fun deleteById(@AuthenticationPrincipal user: User, @PathVariable("id") id: Long): ModelAndView {
+    @GetMapping("/sec/{organization}/athletes/{id}/delete")
+    fun deleteById(@AuthenticationPrincipal user: User,
+                   @PathVariable("organization") organzation: String,
+                   @PathVariable("id") id: Long): ModelAndView {
         athleteRepository.deleteById(id)
 
-        val mav = ModelAndView("/sec/athletes")
+        val mav = ModelAndView("/sec/$organzation/athletes")
         mav.model["athletes"] = athleteRepository.findAllByOwner(user.username)
         mav.model["mode"] = "edit"
         return mav

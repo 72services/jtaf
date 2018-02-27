@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
-@RequestMapping("/sec/category")
 class CategoryController(private val categoryRepository: CategoryRepository,
                          private val eventRepository: EventRepository,
                          private val seriesAuthorizationChecker: SeriesAuthorizationChecker) {
 
-    @GetMapping()
-    fun get(@RequestParam("seriesId") seriesId: Long): ModelAndView {
+    @GetMapping("/sec/{organization}/category")
+    fun get(@PathVariable("organization") organzation: String,
+            @RequestParam("seriesId") seriesId: Long): ModelAndView {
         seriesAuthorizationChecker.checkIfUserAccessToSeries(seriesId)
 
-        val mav = ModelAndView("/sec/category")
+        val mav = ModelAndView("/sec/${organzation}/category")
         mav.model["message"] = ""
 
         val category = Category()
@@ -27,9 +27,11 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return mav
     }
 
-    @GetMapping("{id}/event/{eventId}")
-    fun addEvent(@PathVariable("id") id: Long, @PathVariable("eventId") eventId: Long): ModelAndView {
-        val mav = ModelAndView("/sec/category")
+    @GetMapping("/sec/{organization}/category/{id}/event/{eventId}")
+    fun addEvent(@PathVariable("organization") organzation: String,
+                 @PathVariable("id") id: Long,
+                 @PathVariable("eventId") eventId: Long): ModelAndView {
+        val mav = ModelAndView("/sec/${organzation}/category")
         mav.model["message"] = ""
 
         val category = categoryRepository.getOne(id)
@@ -42,9 +44,11 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return mav
     }
 
-    @GetMapping("{id}/event/{eventId}/delete")
-    fun deleteById(@PathVariable("id") id: Long, @PathVariable("eventId") eventId: Long): ModelAndView {
-        val mav = ModelAndView("/sec/category")
+    @GetMapping("/sec/{organization}/category/{id}/event/{eventId}/delete")
+    fun deleteById(@PathVariable("organization") organzation: String,
+                   @PathVariable("id") id: Long,
+                   @PathVariable("eventId") eventId: Long): ModelAndView {
+        val mav = ModelAndView("/sec/${organzation}/category")
         mav.model["message"] = ""
 
         val category = categoryRepository.getOne(id)
@@ -58,9 +62,10 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return mav
     }
 
-    @GetMapping("{id}")
-    fun getById(@PathVariable("id") id: Long): ModelAndView {
-        val mav = ModelAndView("/sec/category")
+    @GetMapping("/sec/{organization}/category/{id}")
+    fun getById(@PathVariable("organization") organzation: String,
+                @PathVariable("id") id: Long): ModelAndView {
+        val mav = ModelAndView("/sec/${organzation}/category")
         mav.model["message"] = ""
 
         mav.model["category"] = categoryRepository.getOne(id)
@@ -68,8 +73,9 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return mav
     }
 
-    @PostMapping
-    fun post(category: Category): ModelAndView {
+    @PostMapping("/sec/{organization}/category/")
+    fun post(@PathVariable("organization") organzation: String,
+             category: Category): ModelAndView {
         seriesAuthorizationChecker.checkIfUserAccessToSeries(category.seriesId)
 
         val mav = ModelAndView()

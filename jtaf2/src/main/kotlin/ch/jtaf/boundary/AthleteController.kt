@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
-@RequestMapping("/sec/athlete")
 class AthleteController(private val athleteRepository: AthleteRepository,
                         private val clubRepository: ClubRepository) {
 
-    @GetMapping()
-    fun get(): ModelAndView {
-        val mav = ModelAndView("/sec/athlete")
+    @GetMapping("/sec/{organization}/athlete")
+    fun get(@PathVariable("organization") organzation: String): ModelAndView {
+        val mav = ModelAndView("/sec/$organzation/athlete")
         mav.model["message"] = ""
 
         val athlete = Athlete()
@@ -29,9 +28,11 @@ class AthleteController(private val athleteRepository: AthleteRepository,
         return mav
     }
 
-    @GetMapping("{id}")
-    fun getById(@AuthenticationPrincipal user: User, @PathVariable("id") id: Long): ModelAndView {
-        val mav = ModelAndView("/sec/athlete")
+    @GetMapping("/sec/{organization}/athlete/{id}")
+    fun getById(@AuthenticationPrincipal user: User,
+                @PathVariable("organization") organzation: String,
+                @PathVariable("id") id: Long): ModelAndView {
+        val mav = ModelAndView("/sec/${organzation}athlete")
         mav.model["message"] = ""
 
         mav.model["athlete"] = athleteRepository.getOne(id)
@@ -40,8 +41,10 @@ class AthleteController(private val athleteRepository: AthleteRepository,
         return mav
     }
 
-    @PostMapping
-    fun post(@AuthenticationPrincipal user: User, athlete: Athlete): ModelAndView {
+    @PostMapping("/sec/{organization}/athlete")
+    fun post(@AuthenticationPrincipal user: User,
+             @PathVariable("organization") organzation: String,
+             athlete: Athlete): ModelAndView {
         athlete.owner = user.username
 
         athleteRepository.save(athlete)
