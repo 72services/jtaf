@@ -14,35 +14,34 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
-@RequestMapping("/sec/series")
 class SeriesController(private val seriesRepository: SeriesRepository,
                        private val categoryRepository: CategoryRepository,
                        private val athleteRepository: AthleteRepository,
-                       private val seriesAuthorizationChecker: SeriesAuthorizationChecker) {
+                       private val organizationAuthorizationChecker: OrganizationAuthorizationChecker) {
 
-    @GetMapping()
-    fun get(): ModelAndView {
-        val mav = ModelAndView()
+    @GetMapping("/sec/{organization}/series")
+    fun get(@PathVariable("organization") organization: String): ModelAndView {
+        val mav = ModelAndView("/sec/series")
         mav.model["message"] = ""
         mav.model["series"] = Series()
         return mav
     }
 
-    @GetMapping("{id}")
-    fun getById(@PathVariable("id") id: Long): ModelAndView {
-        val series = seriesAuthorizationChecker.checkIfUserAccessToSeries(id)
-
+    @GetMapping("sec/{organization}/series/{id}")
+    fun getById(@PathVariable("organization") organization: String,
+                @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
         mav.model["message"] = ""
-        mav.model["series"] = series
+        mav.model["series"] = seriesRepository.getOne(id)
         mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
         mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
 
         return mav
     }
 
-    @GetMapping("{id}/athlete/{athleteId}")
-    fun addEvent(@PathVariable("id") id: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
+    @GetMapping("/sec/{organization}/series/{id}/athlete/{athleteId}")
+    fun addEvent(@PathVariable("organization") organization: String,
+                 @PathVariable("id") id: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
         mav.model["message"] = ""
 
@@ -66,8 +65,9 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return mav
     }
 
-    @GetMapping("{id}/event/{eventId}/delete")
-    fun deleteById(@PathVariable("id") id: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
+    @GetMapping("sec/{organization}/series/{id}/athlete/{athleteId}/delete")
+    fun deleteById(@PathVariable("organization") organization: String,
+                   @PathVariable("id") id: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
         mav.model["message"] = ""
 
@@ -87,12 +87,13 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     }
 
 
-    @PostMapping
-    fun post(@AuthenticationPrincipal user: User, series: Series): ModelAndView {
-        val mav = ModelAndView()
+    @PostMapping("sec/{organization}/series")
+    fun post(@AuthenticationPrincipal user: User,
+             @PathVariable("organization") organization: String,
+             series: Series): ModelAndView {
+        val mav = ModelAndView("/sec/series")
 
         if (series.id != null) {
-            seriesAuthorizationChecker.checkIfUserAccessToSeries(series.id)
             val seriesFromDb = seriesRepository.getOne(series.id!!)
             seriesFromDb.name = series.name
             seriesFromDb.locked = series.locked
@@ -101,8 +102,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
             seriesRepository.save(seriesFromDb)
 
             mav.model["series"] = seriesFromDb
-        }
-        else {
+        } else {
             series.owner = user.username
             mav.model["series"] = series
         }

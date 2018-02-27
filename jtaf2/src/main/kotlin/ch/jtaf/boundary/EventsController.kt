@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
-@RequestMapping("/sec/events")
 class EventsController(private val eventRepository: EventRepository) {
 
-    @GetMapping
-    fun get(@AuthenticationPrincipal user: User, @RequestParam("mode", required = false) mode: String?,
+    @GetMapping("/sec/{organization}/events")
+    fun get(@AuthenticationPrincipal user: User,
+            @PathVariable("organization") organization: String,
+            @RequestParam("mode", required = false) mode: String?,
             @RequestParam("categoryId", required = false) categoryId: Long?): ModelAndView {
-        val mav = ModelAndView()
+        val mav = ModelAndView("/sec/events")
         mav.model["events"] = eventRepository.findAllByOwner(user.username)
         mav.model["mode"] = mode ?: "edit"
         if (categoryId != null) {
@@ -27,8 +28,10 @@ class EventsController(private val eventRepository: EventRepository) {
         return mav
     }
 
-    @GetMapping("{id}/delete")
-    fun deleteById(@AuthenticationPrincipal user: User, @PathVariable("id") id: Long): ModelAndView {
+    @GetMapping("/sec/{organization}/events/{id}/delete")
+    fun deleteById(@AuthenticationPrincipal user: User,
+                   @PathVariable("organization") organization: String,
+                   @PathVariable("id") id: Long): ModelAndView {
         eventRepository.deleteById(id)
 
         val mav = ModelAndView("/sec/events")

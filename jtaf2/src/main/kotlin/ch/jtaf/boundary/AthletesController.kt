@@ -15,10 +15,10 @@ class AthletesController(private val athleteRepository: AthleteRepository) {
 
     @GetMapping("/sec/{organization}/athletes")
     fun get(@AuthenticationPrincipal user: User,
-            @PathVariable("organization") organzation: String,
+            @PathVariable("organization") organization: String,
             @RequestParam("mode", required = false) mode: String?,
             @RequestParam("seriesId", required = false) seriesId: Long?): ModelAndView {
-        val mav = ModelAndView()
+        val mav = ModelAndView("/sec/athletes")
         mav.model["athletes"] = athleteRepository.findAllByOwner(user.username)
         mav.model["mode"] = mode ?: "edit"
         if (seriesId != null) {
@@ -30,11 +30,11 @@ class AthletesController(private val athleteRepository: AthleteRepository) {
 
     @GetMapping("/sec/{organization}/athletes/{id}/delete")
     fun deleteById(@AuthenticationPrincipal user: User,
-                   @PathVariable("organization") organzation: String,
+                   @PathVariable("organization") organization: String,
                    @PathVariable("id") id: Long): ModelAndView {
         athleteRepository.deleteById(id)
 
-        val mav = ModelAndView("/sec/$organzation/athletes")
+        val mav = ModelAndView("/sec/athletes")
         mav.model["athletes"] = athleteRepository.findAllByOwner(user.username)
         mav.model["mode"] = "edit"
         return mav

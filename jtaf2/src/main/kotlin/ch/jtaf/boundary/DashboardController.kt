@@ -15,12 +15,8 @@ class DashboardController(private val seriesRepository: SeriesRepository,
 
     @GetMapping
     fun get(): ModelAndView {
-        val mav = ModelAndView()
-        fillSeriesData(mav)
-        return mav
-    }
+        val mav = ModelAndView("/dashboard")
 
-    private fun fillSeriesData(mav: ModelAndView) {
         val seriesList = seriesRepository.findAll()
         seriesList.forEach {
             val numberOfAthletes = athleteRepository.getTotalNumberOfAthletesForSeries(it.id!!)
@@ -32,5 +28,7 @@ class DashboardController(private val seriesRepository: SeriesRepository,
         }
 
         mav.model["seriesList"] = seriesList
+
+        return mav
     }
 }

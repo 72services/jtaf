@@ -17,8 +17,8 @@ class AthleteController(private val athleteRepository: AthleteRepository,
                         private val clubRepository: ClubRepository) {
 
     @GetMapping("/sec/{organization}/athlete")
-    fun get(@PathVariable("organization") organzation: String): ModelAndView {
-        val mav = ModelAndView("/sec/$organzation/athlete")
+    fun get(@PathVariable("organization") organization: String): ModelAndView {
+        val mav = ModelAndView("/sec/athlete")
         mav.model["message"] = ""
 
         val athlete = Athlete()
@@ -30,9 +30,9 @@ class AthleteController(private val athleteRepository: AthleteRepository,
 
     @GetMapping("/sec/{organization}/athlete/{id}")
     fun getById(@AuthenticationPrincipal user: User,
-                @PathVariable("organization") organzation: String,
+                @PathVariable("organization") organization: String,
                 @PathVariable("id") id: Long): ModelAndView {
-        val mav = ModelAndView("/sec/${organzation}athlete")
+        val mav = ModelAndView("/sec/athlete")
         mav.model["message"] = ""
 
         mav.model["athlete"] = athleteRepository.getOne(id)
@@ -43,13 +43,13 @@ class AthleteController(private val athleteRepository: AthleteRepository,
 
     @PostMapping("/sec/{organization}/athlete")
     fun post(@AuthenticationPrincipal user: User,
-             @PathVariable("organization") organzation: String,
+             @PathVariable("organization") organization: String,
              athlete: Athlete): ModelAndView {
         athlete.owner = user.username
 
         athleteRepository.save(athlete)
 
-        val mav = ModelAndView()
+        val mav = ModelAndView("/sec/athlete")
         mav.model["message"] = "Athlete saved!"
         mav.model["clubs"] = clubRepository.findAll()
 

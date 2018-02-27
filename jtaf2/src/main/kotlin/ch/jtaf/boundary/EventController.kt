@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
-@RequestMapping("/sec/event")
 class EventController(private val eventRepository: EventRepository) {
 
-    @GetMapping()
-    fun get(): ModelAndView {
+    @GetMapping("/sec/{organization}/event")
+    fun get(@PathVariable("organization") organization: String): ModelAndView {
         val mav = ModelAndView("/sec/event")
         mav.model["message"] = ""
 
@@ -26,8 +25,9 @@ class EventController(private val eventRepository: EventRepository) {
         return mav
     }
 
-    @GetMapping("{id}")
-    fun getById(@PathVariable("id") id: Long): ModelAndView {
+    @GetMapping("/sec/{organization}/event/{id}")
+    fun getById(@PathVariable("organization") organization: String,
+                @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/event")
         mav.model["message"] = ""
 
@@ -36,13 +36,15 @@ class EventController(private val eventRepository: EventRepository) {
         return mav
     }
 
-    @PostMapping
-    fun post(@AuthenticationPrincipal user: User, event: Event): ModelAndView {
+    @PostMapping("/sec/{organization}/event")
+    fun post(@AuthenticationPrincipal user: User,
+             @PathVariable("organization") organization: String,
+             event: Event): ModelAndView {
         event.owner = user.username
 
         eventRepository.save(event)
 
-        val mav = ModelAndView()
+        val mav = ModelAndView("/sec/event")
         mav.model["message"] = "Event saved!"
         return mav
     }

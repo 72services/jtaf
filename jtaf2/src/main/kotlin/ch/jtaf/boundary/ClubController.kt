@@ -15,8 +15,8 @@ import org.springframework.web.servlet.ModelAndView
 class ClubController(private val clubRepository: ClubRepository) {
 
     @GetMapping("/sec/{organization}/club")
-    fun get(@PathVariable("organization") organzation: String): ModelAndView {
-        val mav = ModelAndView("/sec/${organzation}/club")
+    fun get(@PathVariable("organization") organization: String): ModelAndView {
+        val mav = ModelAndView("/sec/club")
         mav.model["message"] = ""
 
         val club = Club()
@@ -26,9 +26,9 @@ class ClubController(private val clubRepository: ClubRepository) {
     }
 
     @GetMapping("/sec/{organization}/club/{id}")
-    fun getById(@PathVariable("organization") organzation: String,
+    fun getById(@PathVariable("organization") organization: String,
                 @PathVariable("id") id: Long): ModelAndView {
-        val mav = ModelAndView("/sec/${organzation}/club")
+        val mav = ModelAndView("/sec/club")
         mav.model["message"] = ""
 
         mav.model["club"] = clubRepository.getOne(id)
@@ -38,13 +38,13 @@ class ClubController(private val clubRepository: ClubRepository) {
 
     @PostMapping("/sec/{organization}/club")
     fun post(@AuthenticationPrincipal user: User,
-             @PathVariable("organization") organzation: String,
+             @PathVariable("organization") organization: String,
              club: Club): ModelAndView {
         club.owner = user.username
 
         clubRepository.save(club)
 
-        val mav = ModelAndView()
+        val mav = ModelAndView("/sec/club")
         mav.model["message"] = "Club saved!"
         return mav
     }
