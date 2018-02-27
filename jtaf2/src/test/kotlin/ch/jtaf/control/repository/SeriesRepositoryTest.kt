@@ -16,7 +16,7 @@ class SeriesRepositoryTest : AbstractRepositoryTest() {
 
     @Test
     fun findAll() {
-        val list = seriesRepository.findAllByOwner(email)
+        val list = seriesRepository.findByOrganizationId(organizationId)
 
         assertEquals(1, list.size)
         assertEquals("CIS 2018", list[0].name)

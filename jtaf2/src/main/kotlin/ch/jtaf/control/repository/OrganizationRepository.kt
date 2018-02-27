@@ -8,5 +8,7 @@ import java.util.*
 @Repository
 interface OrganizationRepository : JpaRepository<Organization, Long> {
 
-    fun findByKey(key: String): Optional<Organization>
+    fun findByKey(key: String): Organization
+
+    fun findAllByOwner(username: String?): List<Organization>
 }

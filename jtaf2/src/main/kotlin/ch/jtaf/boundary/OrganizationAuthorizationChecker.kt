@@ -12,14 +12,9 @@ class OrganizationAuthorizationChecker(private val organizationRepository: Organ
     fun userHasAccessToOrganization(organization: String) {
         val authentication = SecurityContextHolder.getContext().authentication
 
-        val organizationOptional = organizationRepository.findByKey(organization)
-        if (organizationOptional.isPresent) {
-            val organization = organizationOptional.get()
-            if (organization.owner != authentication.name) {
-                throw IllegalArgumentException("User is not granted to access this organization")
-            }
-        } else {
-            throw IllegalArgumentException("Series does not exists")
+        val organization = organizationRepository.findByKey(organization)
+        if (organization.owner != authentication.name) {
+            throw IllegalArgumentException("User is not granted to access this organization")
         }
     }
 

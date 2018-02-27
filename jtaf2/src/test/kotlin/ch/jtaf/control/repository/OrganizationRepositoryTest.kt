@@ -9,17 +9,17 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @DataJpaTest
-class ClubRepositoryTest : AbstractRepositoryTest() {
+class OrganizationRepositoryTest : AbstractRepositoryTest() {
 
     @Autowired
-    lateinit var clubRepository: ClubRepository
+    lateinit var organizationRepository: OrganizationRepository
 
     @Test
-    fun findAllByOwner() {
-        val club = clubRepository.findByOrganizationId(organizationId)
+    fun findAll() {
+        val list = organizationRepository.findAllByOwner(email)
 
-        assertEquals(1, club.size)
-        assertEquals("TVT", club[0].abbreviation)
+        assertEquals(1, list.size)
+        assertEquals("Concours Intersection", list[0].name)
     }
 
 }

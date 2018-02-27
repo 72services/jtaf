@@ -13,7 +13,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
                          private val organizationAuthorizationChecker: OrganizationAuthorizationChecker) {
 
     @GetMapping("/sec/{organization}/category")
-    fun get(@PathVariable("organization") organization: String,
+    fun get(@PathVariable("organization") organizationKey: String,
             @RequestParam("seriesId") seriesId: Long): ModelAndView {
         val mav = ModelAndView("/sec/category")
         mav.model["message"] = ""
@@ -26,7 +26,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
     }
 
     @GetMapping("/sec/{organization}/category/{id}/event/{eventId}")
-    fun addEvent(@PathVariable("organization") organization: String,
+    fun addEvent(@PathVariable("organization") organizationKey: String,
                  @PathVariable("id") id: Long,
                  @PathVariable("eventId") eventId: Long): ModelAndView {
         val mav = ModelAndView("/sec/category")
@@ -43,7 +43,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
     }
 
     @GetMapping("/sec/{organization}/category/{id}/event/{eventId}/delete")
-    fun deleteById(@PathVariable("organization") organization: String,
+    fun deleteById(@PathVariable("organization") organizationKey: String,
                    @PathVariable("id") id: Long,
                    @PathVariable("eventId") eventId: Long): ModelAndView {
         val mav = ModelAndView("/sec/category")
@@ -61,7 +61,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
     }
 
     @GetMapping("/sec/{organization}/category/{id}")
-    fun getById(@PathVariable("organization") organization: String,
+    fun getById(@PathVariable("organization") organizationKey: String,
                 @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/category")
         mav.model["message"] = ""
@@ -72,7 +72,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
     }
 
     @PostMapping("/sec/{organization}/category/")
-    fun post(@PathVariable("organization") organization: String,
+    fun post(@PathVariable("organization") organizationKey: String,
              category: Category): ModelAndView {
         val mav = ModelAndView("/sec/category")
 

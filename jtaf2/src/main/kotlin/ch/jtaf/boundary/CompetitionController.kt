@@ -11,7 +11,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
                             private val organizationAuthorizationChecker: OrganizationAuthorizationChecker) {
 
     @GetMapping("/sec/{organization}/series/{seriesId}/competition")
-    fun get(@PathVariable("organization") organization: String,
+    fun get(@PathVariable("organization") organizationKey: String,
             @PathVariable("seriesId") seriesId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
         mav.model["message"] = ""
@@ -24,7 +24,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
     }
 
     @GetMapping("/sec/{organization}/series/{seriesId}/competition/{id}")
-    fun getById(@PathVariable("organization") organization: String,
+    fun getById(@PathVariable("organization") organizationKey: String,
                 @PathVariable("seriesId") seriesId: Long,
                 @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
@@ -36,7 +36,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
     }
 
     @PostMapping("/sec/{organization}/series/{seriesId}/competition")
-    fun post(@PathVariable("organization") organization: String,
+    fun post(@PathVariable("organization") organizationKey: String,
              @PathVariable("seriesId") seriesId: Long,
              competition: Competition): ModelAndView {
         competitionRepository.save(competition)

@@ -1,6 +1,7 @@
 package ch.jtaf.boundary
 
 import ch.jtaf.control.repository.ClubRepository
+import ch.jtaf.control.repository.OrganizationRepository
 import ch.jtaf.entity.Club
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
@@ -12,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
-class ClubController(private val clubRepository: ClubRepository) {
+class ClubController(private val clubRepository: ClubRepository,
+                     private val organizationRepository: OrganizationRepository) {
 
     @GetMapping("/sec/{organization}/club")
-    fun get(@PathVariable("organization") organization: String): ModelAndView {
+    fun get(@PathVariable("organization") organizationKey: String): ModelAndView {
         val mav = ModelAndView("/sec/club")
         mav.model["message"] = ""
 
@@ -26,7 +28,7 @@ class ClubController(private val clubRepository: ClubRepository) {
     }
 
     @GetMapping("/sec/{organization}/club/{id}")
-    fun getById(@PathVariable("organization") organization: String,
+    fun getById(@PathVariable("organization") organizationKey: String,
                 @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/club")
         mav.model["message"] = ""
@@ -38,9 +40,10 @@ class ClubController(private val clubRepository: ClubRepository) {
 
     @PostMapping("/sec/{organization}/club")
     fun post(@AuthenticationPrincipal user: User,
-             @PathVariable("organization") organization: String,
+             @PathVariable("organization") organizationKey: String,
              club: Club): ModelAndView {
-        club.owner = user.username
+        val organization = organizationRepository.findByKey(organizationKey)
+        club.organizationId = organization.id
 
         clubRepository.save(club)
 

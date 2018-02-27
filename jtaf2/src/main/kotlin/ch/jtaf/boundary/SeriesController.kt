@@ -2,6 +2,7 @@ package ch.jtaf.boundary
 
 import ch.jtaf.control.repository.AthleteRepository
 import ch.jtaf.control.repository.CategoryRepository
+import ch.jtaf.control.repository.OrganizationRepository
 import ch.jtaf.control.repository.SeriesRepository
 import ch.jtaf.entity.Series
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -17,10 +18,10 @@ import org.springframework.web.servlet.ModelAndView
 class SeriesController(private val seriesRepository: SeriesRepository,
                        private val categoryRepository: CategoryRepository,
                        private val athleteRepository: AthleteRepository,
-                       private val organizationAuthorizationChecker: OrganizationAuthorizationChecker) {
+                       private val organizationRepository: OrganizationRepository) {
 
     @GetMapping("/sec/{organization}/series")
-    fun get(@PathVariable("organization") organization: String): ModelAndView {
+    fun get(@PathVariable("organization") organizationKey: String): ModelAndView {
         val mav = ModelAndView("/sec/series")
         mav.model["message"] = ""
         mav.model["series"] = Series()
@@ -28,7 +29,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     }
 
     @GetMapping("sec/{organization}/series/{id}")
-    fun getById(@PathVariable("organization") organization: String,
+    fun getById(@PathVariable("organization") organizationKey: String,
                 @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
         mav.model["message"] = ""
@@ -40,7 +41,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     }
 
     @GetMapping("/sec/{organization}/series/{id}/athlete/{athleteId}")
-    fun addEvent(@PathVariable("organization") organization: String,
+    fun addEvent(@PathVariable("organization") organizationKey: String,
                  @PathVariable("id") id: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
         mav.model["message"] = ""
@@ -66,7 +67,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     }
 
     @GetMapping("sec/{organization}/series/{id}/athlete/{athleteId}/delete")
-    fun deleteById(@PathVariable("organization") organization: String,
+    fun deleteById(@PathVariable("organization") organizationKey: String,
                    @PathVariable("id") id: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
         mav.model["message"] = ""
@@ -89,24 +90,25 @@ class SeriesController(private val seriesRepository: SeriesRepository,
 
     @PostMapping("sec/{organization}/series")
     fun post(@AuthenticationPrincipal user: User,
-             @PathVariable("organization") organization: String,
+             @PathVariable("organization") organizationKey: String,
              series: Series): ModelAndView {
         val mav = ModelAndView("/sec/series")
+
+        val organization = organizationRepository.findByKey(organizationKey)
 
         if (series.id != null) {
             val seriesFromDb = seriesRepository.getOne(series.id!!)
             seriesFromDb.name = series.name
             seriesFromDb.locked = series.locked
             seriesFromDb.hidden = series.hidden
-            seriesFromDb.owner = series.owner
+            seriesFromDb.organizationId = organization.id
             seriesRepository.save(seriesFromDb)
 
             mav.model["series"] = seriesFromDb
         } else {
-            series.owner = user.username
+            series.organizationId = organization.id
             mav.model["series"] = series
         }
-
 
         mav.model["message"] = "Series saved!"
 

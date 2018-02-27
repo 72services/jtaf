@@ -16,5 +16,5 @@ data class Series(
         @JoinColumn(name = "series_id", insertable = false, updatable = false)
         var competitions: MutableList<Competition> = ArrayList(),
 
-        var owner: String? = null
+        var organizationId: Long? = null
 )

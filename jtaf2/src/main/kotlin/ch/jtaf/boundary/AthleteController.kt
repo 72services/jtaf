@@ -2,6 +2,7 @@ package ch.jtaf.boundary
 
 import ch.jtaf.control.repository.AthleteRepository
 import ch.jtaf.control.repository.ClubRepository
+import ch.jtaf.control.repository.OrganizationRepository
 import ch.jtaf.entity.Athlete
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
@@ -14,10 +15,11 @@ import org.springframework.web.servlet.ModelAndView
 
 @Controller
 class AthleteController(private val athleteRepository: AthleteRepository,
-                        private val clubRepository: ClubRepository) {
+                        private val clubRepository: ClubRepository,
+                        private val organizationRepository: OrganizationRepository) {
 
     @GetMapping("/sec/{organization}/athlete")
-    fun get(@PathVariable("organization") organization: String): ModelAndView {
+    fun get(@PathVariable("organization") organizationKey: String): ModelAndView {
         val mav = ModelAndView("/sec/athlete")
         mav.model["message"] = ""
 
@@ -30,22 +32,26 @@ class AthleteController(private val athleteRepository: AthleteRepository,
 
     @GetMapping("/sec/{organization}/athlete/{id}")
     fun getById(@AuthenticationPrincipal user: User,
-                @PathVariable("organization") organization: String,
+                @PathVariable("organization") organizationKey: String,
                 @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/athlete")
         mav.model["message"] = ""
 
         mav.model["athlete"] = athleteRepository.getOne(id)
-        mav.model["clubs"] = clubRepository.findAllByOwner(user.username)
+
+        val organization = organizationRepository.findByKey(organizationKey)
+        mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
 
         return mav
     }
 
     @PostMapping("/sec/{organization}/athlete")
     fun post(@AuthenticationPrincipal user: User,
-             @PathVariable("organization") organization: String,
+             @PathVariable("organization") organizationKey: String,
              athlete: Athlete): ModelAndView {
-        athlete.owner = user.username
+
+        val organization = organizationRepository.findByKey(organizationKey)
+        athlete.organizationId = organization.id
 
         athleteRepository.save(athlete)
 

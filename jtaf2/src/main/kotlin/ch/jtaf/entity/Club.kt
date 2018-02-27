@@ -13,5 +13,5 @@ data class Club(
         var abbreviation: String = "",
         var name: String = "",
 
-        var owner: String? = null
+        var organizationId: Long? = null
 )

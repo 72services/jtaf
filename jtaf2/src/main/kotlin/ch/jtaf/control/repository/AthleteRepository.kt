@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface AthleteRepository : JpaRepository<Athlete, Long> {
 
-    fun findAllByOwner(username: String): List<Athlete>
+    fun findByOrganizationId(organizationId: Long): List<Athlete>
 
     @Query("SELECT NEW ch.jtaf.entity.AthleteDTO(" +
             "a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, cl.abbreviation, c.abbreviation" +

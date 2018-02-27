@@ -15,7 +15,21 @@
                        href="/dashboard">Home</a>
 
                     <a th:class="${page == 'organizations'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:text="#{messages.organizations}" href="/sec/organizations">My Organizations</a>
+                       th:text="#{messages.organizations}" href="/sec/organizations">Organizations</a>
+
+                    <a th:class="${page == 'series'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                       th:text="#{messages.series}" href="/sec/serieslist">Manage Series</a>
+
+                    <a th:class="${page == 'events'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                       th:text="#{messages.events}" href="/sec/events">Manage Events</a>
+
+                    <a th:class="${page == 'clubs'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                       th:text="#{messages.clubs}" href="/sec/clubs">Manage Clubs</a>
+
+                    <a th:class="${page == 'athletes'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                       th:text="#{messages.athletes}" href="/sec/athletes">Manage Athletes</a>
+
+                    <a class="nav-item nav-link" href="https://github.com/simasch/jtaf/" target="_blank">About</a>
                 </div>
             </div>
             <div class="navbar-nav flex-row ml-md-auto d-none d-md-flex">

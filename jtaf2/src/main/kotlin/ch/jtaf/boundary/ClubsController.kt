@@ -1,6 +1,7 @@
 package ch.jtaf.boundary
 
 import ch.jtaf.control.repository.ClubRepository
+import ch.jtaf.control.repository.OrganizationRepository
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller
@@ -10,13 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
-class ClubsController(private val clubRepository: ClubRepository) {
+class ClubsController(private val clubRepository: ClubRepository,
+                      private val organizationRepository: OrganizationRepository) {
 
     @GetMapping("/sec/{organization}/clubs")
     fun get(@AuthenticationPrincipal user: User,
-            @PathVariable("organization") organization: String): ModelAndView {
+            @PathVariable("organization") organizationKey: String): ModelAndView {
         val mav = ModelAndView("/sec/clubs")
-        mav.model["clubs"] = clubRepository.findAllByOwner(user.username)
+
+        val organization = organizationRepository.findByKey(organizationKey)
+        mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
+
         return mav
     }
 }

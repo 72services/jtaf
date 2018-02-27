@@ -8,6 +8,7 @@ import javax.persistence.EntityManager
 abstract class AbstractRepositoryTest {
 
     val email = "john.doe@jtaf.ch"
+    var organizationId = 0L
     var seriesId = 0L
 
     @Autowired
@@ -22,17 +23,21 @@ abstract class AbstractRepositoryTest {
         securityUser.groups.add(securityGroup)
         em.persist(securityUser)
 
-        val series = Series(name = "CIS 2018", owner = email)
+        val organization = Organization(key = "cis", name ="Concours Intersection", owner = email)
+        em.persist(organization)
+        organizationId = organization.id!!
+
+        val series = Series(name = "CIS 2018", organizationId = organizationId)
         em.persist(series)
         seriesId = series.id!!
 
-        val club = Club(abbreviation = "TVT", name = "TV Twann", owner = email)
+        val club = Club(abbreviation = "TVT", name = "TV Twann", organizationId = organizationId)
         em.persist(club)
 
-        val athlete = Athlete(lastName = "Meier", firstName = "Max", yearOfBirth = 2004, club = club, owner = email)
+        val athlete = Athlete(lastName = "Meier", firstName = "Max", yearOfBirth = 2004, club = club, organizationId = organizationId)
         em.persist(athlete)
 
-        val event = Event(abbreviation = "80", name = "80 m", owner = email)
+        val event = Event(abbreviation = "80", name = "80 m", organizationId = organizationId)
         em.persist(event)
 
         val competition = Competition(name = "1. CIS Twann", seriesId = series.id)

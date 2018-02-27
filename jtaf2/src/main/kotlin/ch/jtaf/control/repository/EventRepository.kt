@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface EventRepository : JpaRepository<Event, Long> {
 
-    fun findAllByOwner(username: String): List<Event>
+    fun findByOrganizationId(organizationId: Long): List<Event>
 }

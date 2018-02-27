@@ -17,5 +17,5 @@ data class Athlete(
         @ManyToOne
         var club: Club? = null,
 
-        var owner: String? = null
+        var organizationId: Long? = null
 )
