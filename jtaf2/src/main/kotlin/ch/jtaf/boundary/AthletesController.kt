@@ -24,7 +24,12 @@ class AthletesController(private val athleteRepository: AthleteRepository,
         val mav = ModelAndView("/sec/athletes")
 
         val organization = organizationRepository.findByKey(organizationKey)
-        mav.model["athletes"] = athleteRepository.findByOrganizationId(organization.id!!)
+
+        mav.model["athletes"] = if (mode == "select") {
+            athleteRepository.findByOrganizationIdAndNotAssignedToSeries(organization.id!!, seriesId)
+        } else {
+            athleteRepository.findByOrganizationId(organization.id!!)
+        }
 
         mav.model["mode"] = mode ?: "edit"
         if (seriesId != null) {

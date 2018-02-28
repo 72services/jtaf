@@ -14,6 +14,22 @@ class AthleteRepositoryTest : AbstractRepositoryTest() {
     @Autowired
     lateinit var athleteRepository: AthleteRepository
 
+
+    @Test
+    fun findByOrganizationId() {
+        val list = athleteRepository.findByOrganizationId(1)
+
+        assertEquals(1, list.size)
+        assertEquals("Max", list[0].firstName)
+    }
+
+    @Test
+    fun findByOrganizationIdAndNotAssignedToSeries() {
+        val list = athleteRepository.findByOrganizationIdAndNotAssignedToSeries(1, 1)
+
+        assertEquals(0, list.size)
+    }
+
     @Test
     fun findAthleteDTOsBySeriesId() {
         val dtos = athleteRepository.findAthleteDTOsBySeriesId(seriesId);

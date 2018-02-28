@@ -3,7 +3,8 @@
 <head th:replace="common/head :: head"></head>
 <body>
 
-<div th:include="sec/common/navigation :: navigation ('series')"></div>
+<!--/*@thymesVar id="organization" type="java.lang.String"*/-->
+<div th:include="sec/common/navigation :: navigation ('series', ${organization})"></div>
 
 <main role="main" class="container">
 
@@ -12,7 +13,8 @@
             <h1 th:text="#{messages.edit_competition}">Edit Competition</h1>
 
             <!--/*@thymesVar id="competition" type="ch.jtaf.entity.Competition"*/-->
-            <form action="#" th:action="@{/sec/competition}" th:object="${competition}" method="post">
+            <form action="#" th:action="@{/sec/{organization}/competition(organization=${organization})}"
+                  th:object="${competition}" method="post">
                 <input type="hidden" id="seriesId" th:field="*{seriesId}">
 
                 <div class="form-group">
@@ -48,7 +50,8 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a th:href="@{/sec/series/{id}(id=*{seriesId})}" th:text="#{messages.back}">Back</a>
+                <a th:href="@{/sec/{organization}/series/{id}(organization=${organization},id=*{seriesId})}"
+                   th:text="#{messages.back}">Back</a>
                 <!--/*@thymesVar id="message" type="java.lang.String"*/-->
                 <span th:text="${message}"></span>
             </form>

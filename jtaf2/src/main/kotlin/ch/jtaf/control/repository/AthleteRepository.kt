@@ -11,6 +11,10 @@ interface AthleteRepository : JpaRepository<Athlete, Long> {
 
     fun findByOrganizationId(organizationId: Long): List<Athlete>
 
+    @Query("SELECT a.* FROM athlete a WHERE a.organization_id = 1 AND a.id NOT IN (SELECT ca.athlete_id FROM category_athlete ca WHERE ca.athlete_id = a.id)",
+            nativeQuery = true)
+    fun findByOrganizationIdAndNotAssignedToSeries(id: Long, seriesId: Long?): List<Athlete>
+
     @Query("SELECT NEW ch.jtaf.entity.AthleteDTO(" +
             "a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, cl.abbreviation, c.abbreviation" +
             ") FROM Category c JOIN c.athletes a LEFT JOIN a.club cl WHERE c.seriesId = ?1")
@@ -21,4 +25,5 @@ interface AthleteRepository : JpaRepository<Athlete, Long> {
 
     @Query("SELECT COUNT(r.athlete) FROM Result r WHERE r.competition.id = ?1 GROUP BY r.athlete")
     fun getTotalNumberOfAthleteWithResultsForCompetition(id: Long): Int?
+
 }

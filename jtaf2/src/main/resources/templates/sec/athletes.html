@@ -3,7 +3,9 @@
 <head th:replace="common/head :: head"></head>
 <body>
 
-<div th:include="sec/common/navigation :: navigation ('athletes')"></div>
+<!--/*@thymesVar id="seriesId" type="java.lang.Long"*/-->
+<!--/*@thymesVar id="organization" type="java.lang.String"*/-->
+<div th:include="sec/common/navigation :: navigation ('athletes', ${organization})"></div>
 
 <main role="main" class="container">
 
@@ -20,7 +22,9 @@
                     <th th:text="#{messages.gender}">Gender</th>
                     <th th:text="#{messages.club}">Club</th>
                     <th style="text-align: right;">
-                        <a th:if="${mode == 'edit'}" href="/sec/athlete" th:text="#{messages.add_athlete}"
+                        <a th:if="${mode == 'edit'}"
+                           th:href="@{/sec/{organization}/athlete(organization=${organization})}"
+                           th:text="#{messages.add_athlete}"
                            style="text-align: right;">Add Athlete</a>
                     </th>
                 </tr>
@@ -33,20 +37,24 @@
                     <td th:text="${athlete.gender}">MALE</td>
                     <td th:text="${athlete.club == null ? '' : athlete.club.abbreviation}">TVE</td>
                     <td style="text-align: right;">
-                        <a th:if="${mode == 'edit'}" th:href="@{/sec/athlete/{id}(id=${athlete.id})}"
+                        <a th:if="${mode == 'edit'}"
+                           th:href="@{/sec/{organization}/athlete/{id}(organization=${organization},id=${athlete.id})}"
                            th:text="#{messages.edit}"></a>
 
-                        <a th:if="${mode == 'edit'}" th:href="@{/sec/athlete/{id}/delete(id=${athlete.id})}"
+                        <a th:if="${mode == 'edit'}"
+                           th:href="@{/sec/{organization}/athlete/{id}/delete(organization=${organization},id=${athlete.id})}"
                            th:text="#{messages.delete}"
                            onclick="return confirm('Are you sure?')">Delete</a>
 
-                        <!--/*@thymesVar id="seriesId" type="java.lang.Long"*/-->
                         <a th:if="${mode == 'select'}"
-                           th:href="@{/sec/series/{seriesId}/athlete/{id}(seriesId=${seriesId}, id=${athlete.id})}"
+                           th:href="@{/sec/{organization}/series/{seriesId}/athlete/{id}(organization=${organization},seriesId=${seriesId},id=${athlete.id})}"
                            th:text="#{messages.select}">Select</a>
                     </td>
                 </tr>
             </table>
+            <a th:if="${mode == 'select'}"
+               th:href="@{/sec/{organization}/series/{seriesId}(organization=${organization},seriesId=${seriesId})}"
+               th:text="#{messages.back}">Back</a>
         </div>
     </div>
 

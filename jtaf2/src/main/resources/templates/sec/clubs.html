@@ -3,7 +3,8 @@
 <head th:replace="common/head :: head"></head>
 <body>
 
-<div th:include="sec/common/navigation :: navigation ('clubs')"></div>
+<!--/*@thymesVar id="organization" type="java.lang.String"*/-->
+<div th:include="sec/common/navigation :: navigation ('clubs', ${organization})"></div>
 
 <main role="main" class="container">
 
@@ -17,12 +18,17 @@
                 <tr>
                     <th th:text="#{messages.abbreviation}">Abbreviation</th>
                     <th th:text="#{messages.name}">Name</th>
-                    <th style="text-align: right;"><a href="/sec/club" th:text="#{messages.add_club}" style="text-align: right;">Add Club</a></th>
+                    <th style="text-align: right;"><a
+                            th:href="@{/sec/{organization}/club(organization=${organization})}"
+                            th:text="#{messages.add_club}" style="text-align: right;">Add
+                        Club</a></th>
                 </tr>
                 <tr th:each="club: ${clubs}">
                     <td th:text="${club.abbreviation}">jump</td>
                     <td th:text="${club.name}">Long Jump</td>
-                    <td style="text-align: right;"><a th:href="@{/sec/club/{id}(id=${club.id})}" th:text="#{messages.edit}">Edit</a></td>
+                    <td style="text-align: right;"><a
+                            th:href="@{/sec/{organization}/club/{id}(organization=${organization},id=${club.id})}"
+                            th:text="#{messages.edit}">Edit</a></td>
                 </tr>
             </table>
         </div>

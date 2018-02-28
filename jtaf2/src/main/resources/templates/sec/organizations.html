@@ -3,7 +3,7 @@
 <head th:replace="common/head :: head"></head>
 <body>
 
-<div th:include="sec/common/navigation :: navigation ('organizations')"></div>
+<div th:include="common/navigation :: navigation ('organizations')"></div>
 
 <main role="main" class="container">
 
@@ -17,15 +17,19 @@
                 <tr>
                     <th th:text="#{messages.key}">Key</th>
                     <th th:text="#{messages.name}">Name</th>
-                    <th style="text-align: right;"><a href="/sec/organizatoin" th:text="#{messages.add_organization}"
+                    <th style="text-align: right;"><a href="/sec/organization" th:text="#{messages.add_organization}"
                                                       style="text-align: right;">Add Series</a></th>
                 </tr>
                 <tr th:each="organization: ${organizations}">
                     <td th:text="${organization.key}">tverlach</td>
                     <td th:text="${organization.name}">Turnverein Erlach</td>
                     <td style="text-align: right;">
+                        <a th:href="@{/sec/{organization}/serieslist(organization=${organization.key})}"
+                           th:text="#{messages.select}">Select</a>
+
                         <a th:href="@{/sec/organization/{id}(id=${organization.id})}"
                            th:text="#{messages.edit}">Edit</a>
+
                         <a th:href="@{/sec/organization/{id}/delete(id=${organization.id})}"
                            th:text="#{messages.delete}"
                            onclick="return confirm('Are you sure?')">Delete</a>

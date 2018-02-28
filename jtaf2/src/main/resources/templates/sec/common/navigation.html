@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<div th:fragment="navigation (page)">
+<!--/*@thymesVar id="organization" type="java.lang.String"*/-->
+<div th:fragment="navigation (page, organization)">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/">JTAF</a>
@@ -18,16 +19,20 @@
                        th:text="#{messages.organizations}" href="/sec/organizations">Organizations</a>
 
                     <a th:class="${page == 'series'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:text="#{messages.series}" href="/sec/serieslist">Manage Series</a>
+                       th:text="#{messages.series}"
+                       th:href="@{/sec/{organization}/serieslist(organization=${organization})}">Manage Series</a>
 
                     <a th:class="${page == 'events'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:text="#{messages.events}" href="/sec/events">Manage Events</a>
+                       th:text="#{messages.events}"
+                       th:href="@{/sec/{organization}/events(organization=${organization})}">Manage Events</a>
 
                     <a th:class="${page == 'clubs'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:text="#{messages.clubs}" href="/sec/clubs">Manage Clubs</a>
+                       th:text="#{messages.clubs}"
+                       th:href="@{/sec/{organization}/clubs(organization=${organization})}">Manage Clubs</a>
 
                     <a th:class="${page == 'athletes'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:text="#{messages.athletes}" href="/sec/athletes">Manage Athletes</a>
+                       th:text="#{messages.athletes}"
+                       th:href="@{/sec/{organization}/athletes(organization=${organization})}">Manage Athletes</a>
 
                     <a class="nav-item nav-link" href="https://github.com/simasch/jtaf/" target="_blank">About</a>
                 </div>
