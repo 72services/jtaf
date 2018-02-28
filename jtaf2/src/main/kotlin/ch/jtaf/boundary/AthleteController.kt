@@ -7,10 +7,7 @@ import ch.jtaf.entity.Athlete
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
@@ -19,9 +16,13 @@ class AthleteController(private val athleteRepository: AthleteRepository,
                         private val organizationRepository: OrganizationRepository) {
 
     @GetMapping("/sec/{organization}/athlete")
-    fun get(@PathVariable("organization") organizationKey: String): ModelAndView {
+    fun get(@PathVariable("organization") organizationKey: String,
+            @RequestParam("seriesId") seriesId: Long,
+            @RequestParam("mode") mode: String): ModelAndView {
         val mav = ModelAndView("/sec/athlete")
         mav.model["message"] = ""
+        mav.model["seriesId"] = seriesId
+        mav.model["mode"] = mode
 
         val athlete = Athlete()
         mav.model["athlete"] = athlete
@@ -33,9 +34,13 @@ class AthleteController(private val athleteRepository: AthleteRepository,
     @GetMapping("/sec/{organization}/athlete/{id}")
     fun getById(@AuthenticationPrincipal user: User,
                 @PathVariable("organization") organizationKey: String,
-                @PathVariable("id") id: Long): ModelAndView {
+                @PathVariable("id") id: Long,
+                @RequestParam("seriesId") seriesId: Long,
+                @RequestParam("mode") mode: String): ModelAndView {
         val mav = ModelAndView("/sec/athlete")
         mav.model["message"] = ""
+        mav.model["seriesId"] = seriesId
+        mav.model["mode"] = mode
 
         mav.model["athlete"] = athleteRepository.getOne(id)
 
@@ -48,6 +53,8 @@ class AthleteController(private val athleteRepository: AthleteRepository,
     @PostMapping("/sec/{organization}/athlete")
     fun post(@AuthenticationPrincipal user: User,
              @PathVariable("organization") organizationKey: String,
+             @RequestParam("seriesId") seriesId: Long,
+             @RequestParam("mode") mode: String,
              athlete: Athlete): ModelAndView {
 
         val organization = organizationRepository.findByKey(organizationKey)
@@ -56,6 +63,9 @@ class AthleteController(private val athleteRepository: AthleteRepository,
         athleteRepository.save(athlete)
 
         val mav = ModelAndView("/sec/athlete")
+        mav.model["seriesId"] = seriesId
+        mav.model["mode"] = mode
+
         mav.model["message"] = "Athlete saved!"
         mav.model["clubs"] = clubRepository.findAll()
 

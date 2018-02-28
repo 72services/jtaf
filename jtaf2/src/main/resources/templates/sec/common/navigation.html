@@ -12,15 +12,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarLeft">
                 <div class="navbar-nav">
-                    <a th:class="${page == 'index'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       href="/dashboard">Home</a>
-
-                    <a th:class="${page == 'organizations'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:text="#{messages.organizations}" href="/sec/organizations">Organizations</a>
-
                     <a th:class="${page == 'series'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:text="#{messages.series}"
-                       th:href="@{/sec/{organization}/serieslist(organization=${organization})}">Manage Series</a>
+                       th:text="${organization}"
+                       th:href="@{/sec/{organization}/serieslist(organization=${organization})}">CIS</a>
 
                     <a th:class="${page == 'events'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
                        th:text="#{messages.events}"

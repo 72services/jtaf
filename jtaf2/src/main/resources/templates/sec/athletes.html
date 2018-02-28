@@ -22,8 +22,7 @@
                     <th th:text="#{messages.gender}">Gender</th>
                     <th th:text="#{messages.club}">Club</th>
                     <th style="text-align: right;">
-                        <a th:if="${mode == 'edit'}"
-                           th:href="@{/sec/{organization}/athlete(organization=${organization})}"
+                        <a th:href="@{/sec/{organization}/athlete(organization=${organization},seriesId=${seriesId},mode=${mode})}"
                            th:text="#{messages.add_athlete}"
                            style="text-align: right;">Add Athlete</a>
                     </th>
@@ -37,18 +36,17 @@
                     <td th:text="${athlete.gender}">MALE</td>
                     <td th:text="${athlete.club == null ? '' : athlete.club.abbreviation}">TVE</td>
                     <td style="text-align: right;">
-                        <a th:if="${mode == 'edit'}"
-                           th:href="@{/sec/{organization}/athlete/{id}(organization=${organization},id=${athlete.id})}"
+                        <a th:if="${mode == 'select'}"
+                           th:href="@{/sec/{organization}/series/{seriesId}/athlete/{id}(organization=${organization},seriesId=${seriesId},id=${athlete.id})}"
+                           th:text="#{messages.select}">Select</a>
+
+                        <a th:href="@{/sec/{organization}/athlete/{id}(organization=${organization},id=${athlete.id},seriesId=${seriesId},mode=${mode})}"
                            th:text="#{messages.edit}"></a>
 
                         <a th:if="${mode == 'edit'}"
                            th:href="@{/sec/{organization}/athlete/{id}/delete(organization=${organization},id=${athlete.id})}"
                            th:text="#{messages.delete}"
                            onclick="return confirm('Are you sure?')">Delete</a>
-
-                        <a th:if="${mode == 'select'}"
-                           th:href="@{/sec/{organization}/series/{seriesId}/athlete/{id}(organization=${organization},seriesId=${seriesId},id=${athlete.id})}"
-                           th:text="#{messages.select}">Select</a>
                     </td>
                 </tr>
             </table>

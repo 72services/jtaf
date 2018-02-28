@@ -21,7 +21,7 @@ class OrganizationController(private val organizationRepository: OrganizationRep
         return mav
     }
 
-    @GetMapping("sec/organization/{id}")
+    @GetMapping("/sec/organization/{id}")
     fun getById(@PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/organization")
         mav.model["message"] = ""
@@ -30,7 +30,7 @@ class OrganizationController(private val organizationRepository: OrganizationRep
         return mav
     }
 
-    @PostMapping("sec/organization}")
+    @PostMapping("/sec/organization")
     fun post(@AuthenticationPrincipal user: User,
              organization: Organization): ModelAndView {
         val mav = ModelAndView("/sec/organization")
