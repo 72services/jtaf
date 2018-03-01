@@ -1,6 +1,7 @@
 package ch.jtaf.control.repository
 
 import ch.jtaf.entity.Athlete
+import ch.jtaf.entity.AthleteDTO
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
@@ -14,8 +15,10 @@ interface AthleteRepository : JpaRepository<Athlete, Long> {
             nativeQuery = true)
     fun findByOrganizationIdAndNotAssignedToSeries(id: Long, seriesId: Long?): List<Athlete>
 
-    @Query("SELECT a FROM Category c JOIN c.athletes a WHERE c.seriesId = ?1")
-    fun findAthleteBySeriesId(id: Long): List<Athlete>
+    @Query("SELECT NEW ch.jtaf.entity.AthleteDTO" +
+            "(a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, cl.abbreviation, c.abbreviation) " +
+            "FROM Category c JOIN c.athletes a LEFT JOIN a.club cl WHERE c.seriesId = ?1")
+    fun findAthleteDTOsBySeriesId(id: Long): List<AthleteDTO>
 
     @Query("SELECT COUNT(a) FROM Category c JOIN c.athletes a WHERE c.seriesId = ?1")
     fun getTotalNumberOfAthletesForSeries(id: Long): Int?

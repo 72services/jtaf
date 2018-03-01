@@ -34,7 +34,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         mav.model["message"] = ""
         mav.model["series"] = seriesRepository.getOne(id)
         mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
-        mav.model["athletes"] = athleteRepository.findAthleteBySeriesId(id)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
 
         return mav
     }
@@ -60,7 +60,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
 
         mav.model["series"] = series
         mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
-        mav.model["athletes"] = athleteRepository.findAthleteBySeriesId(id)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
 
         return mav
     }
@@ -81,7 +81,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
 
         mav.model["series"] = series
         mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
-        mav.model["athletes"] = athleteRepository.findAthleteBySeriesId(id)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
 
         return mav
     }
@@ -112,7 +112,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         mav.model["message"] = "Series saved!"
 
         mav.model["categories"] = categoryRepository.findAllBySeriesId(series.id!!)
-        mav.model["athletes"] = athleteRepository.findAthleteBySeriesId(series.id!!)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(series.id!!)
 
         return mav
     }

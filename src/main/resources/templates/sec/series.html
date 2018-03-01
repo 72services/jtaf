@@ -109,15 +109,15 @@
                            th:text="#{messages.add_athlete}" style="text-align: right;">Add Athlete</a>
                     </th>
                 </tr>
-                <!--/*@thymesVar id="athletes" type="java.util.List<Athlete>"*/-->
-                <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.Athlete"*/-->
+                <!--/*@thymesVar id="athletes" type="java.util.List<AthleteDTO>"*/-->
+                <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.AthleteDTO"*/-->
                 <tr th:each="athlete : ${athletes}">
                     <td th:text="${athlete.category}">A</td>
                     <td th:text="${athlete.lastName}">Muster</td>
                     <td th:text="${athlete.firstName}">Peter</td>
                     <td th:text="${athlete.yearOfBirth}">2004</td>
                     <td th:text="${athlete.gender}">MALE</td>
-                    <td th:text="${athlete.club == null ? '' : athlete.club.abbreviation}">TVE</td>
+                    <td th:text="${athlete.club">TVE</td>
                     <td style="text-align: right;">
                         <a th:href="@{/sec/{organization}/series/{id}/athlete/{athleteId}/remove(organization=${organization},id=${series.id}, athleteId=${athlete.id})}"
                            th:text="#{messages.delete}">Remove</a>
