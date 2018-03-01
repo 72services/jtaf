@@ -1,1 +1,1 @@
-mvnw clean install
+./mvnw clean install

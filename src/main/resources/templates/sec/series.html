@@ -117,7 +117,7 @@
                     <td th:text="${athlete.firstName}">Peter</td>
                     <td th:text="${athlete.yearOfBirth}">2004</td>
                     <td th:text="${athlete.gender}">MALE</td>
-                    <td th:text="${athlete.club">TVE</td>
+                    <td th:text="${athlete.club}">TVE</td>
                     <td style="text-align: right;">
                         <a th:href="@{/sec/{organization}/series/{id}/athlete/{athleteId}/remove(organization=${organization},id=${series.id}, athleteId=${athlete.id})}"
                            th:text="#{messages.delete}">Remove</a>
