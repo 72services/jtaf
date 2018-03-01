@@ -1,1 +1,14 @@
-./mvnw clean install
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn test
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - mvn package
+artifacts:
+  files:
+    - target/jtaf2-2.0.0-SNAPSHOT.jar
