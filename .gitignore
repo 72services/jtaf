@@ -1,12 +1,24 @@
-*.class
+target/
+!.mvn/wrapper/maven-wrapper.jar
 
-# Package Files #
-*.war
-*.ear
-*.bak
-/jtaf-web/nbproject/private/
-/jtaf-web/target/
-/jtaf-web/.idea/
-/jtaf-web/jtaf-web.iml
-/jtaf-android/.idea
-/.idea
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
