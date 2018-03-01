@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
@@ -35,7 +34,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         mav.model["message"] = ""
         mav.model["series"] = seriesRepository.getOne(id)
         mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
+        mav.model["athletes"] = athleteRepository.findAthleteBySeriesId(id)
 
         return mav
     }
@@ -61,7 +60,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
 
         mav.model["series"] = series
         mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
+        mav.model["athletes"] = athleteRepository.findAthleteBySeriesId(id)
 
         return mav
     }
@@ -82,7 +81,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
 
         mav.model["series"] = series
         mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
+        mav.model["athletes"] = athleteRepository.findAthleteBySeriesId(id)
 
         return mav
     }
@@ -113,7 +112,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         mav.model["message"] = "Series saved!"
 
         mav.model["categories"] = categoryRepository.findAllBySeriesId(series.id!!)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(series.id!!)
+        mav.model["athletes"] = athleteRepository.findAthleteBySeriesId(series.id!!)
 
         return mav
     }
