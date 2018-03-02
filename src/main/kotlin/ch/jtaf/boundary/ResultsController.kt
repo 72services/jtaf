@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
 
@@ -19,12 +20,32 @@ class ResultsController(private val athleteRepository: AthleteRepository,
                         private val resultRepository: ResultRepository,
                         private val categoryRepository: CategoryRepository) {
 
-    @GetMapping("/sec/{organization}/athlete/{athleteId}/results}")
-    fun getByAthlete(@AuthenticationPrincipal user: User,
-                     @PathVariable("organization") organizationKey: String,
-                     @PathVariable("athleteId") athleteId: Long,
-                     @RequestParam("seriesId") seriesId: Long,
-                     @RequestParam("competitionId") competitionId: Long): ModelAndView {
+    @PostMapping("/sec/{organization}/search")
+    fun search(@AuthenticationPrincipal user: User,
+               @PathVariable("organization") organizationKey: String,
+               searchRequest: SearchRequest): ModelAndView {
+        val id = searchRequest.term.toLongOrNull()
+        if (id != null) {
+            return getWithAthlete(user, organizationKey, id, searchRequest.seriesId, searchRequest.competitionId)
+        } else {
+            val mav = ModelAndView("/sec/athlete_results")
+            mav.model["message"] = ""
+            mav.model["searchRequest"] = searchRequest
+
+            val athletes = athleteRepository.findByLastNameContainingIgnoreCaseOrFirstNameContainingIgnoreCase(searchRequest.term, searchRequest.term)
+            mav.model["athletes"] = athletes
+            mav.model["athlete"] = null
+            mav.model["results"] = null
+            return mav;
+        }
+    }
+
+    @GetMapping("/sec/{organization}/athlete/{athleteId}/results")
+    fun getWithAthlete(@AuthenticationPrincipal user: User,
+                       @PathVariable("organization") organizationKey: String,
+                       @PathVariable("athleteId") athleteId: Long,
+                       @RequestParam("seriesId") seriesId: Long,
+                       @RequestParam("competitionId") competitionId: Long): ModelAndView {
 
         val athlete = athleteRepository.getOne(athleteId)
         val competition = competitionRepository.getOne(competitionId)
@@ -39,8 +60,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
 
         val mav = ModelAndView("/sec/athlete_results")
         mav.model["message"] = ""
-        mav.model["seriesId"] = seriesId
-        mav.model["competitionId"] = competitionId
+        mav.model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId = competitionId, term = athleteId.toString())
         mav.model["athlete"] = athlete
         mav.model["results"] = results
         return mav

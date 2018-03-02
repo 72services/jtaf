@@ -35,7 +35,7 @@ class AthleteRepositoryTest : AbstractRepositoryTest() {
         val dtos = athleteRepository.findAthleteDTOsBySeriesId(seriesId);
 
         assertEquals(1, dtos.size)
-        assertEquals("Max", dtos[0].firstName)
+        assertEquals("Max", dtos.first().firstName)
     }
 
     @Test
@@ -50,5 +50,13 @@ class AthleteRepositoryTest : AbstractRepositoryTest() {
         val number = athleteRepository.getTotalNumberOfAthleteWithResultsForCompetition(seriesId) ?: 0
 
         assertEquals(0, number)
+    }
+
+    @Test
+    fun findByLastNameLikeOrFirstNameLike() {
+        val athletes = athleteRepository.findByLastNameContainingIgnoreCaseOrFirstNameContainingIgnoreCase("Max", "Max")
+
+        assertEquals(1, athletes.size)
+        assertEquals("Max", athletes.first().firstName)
     }
 }

@@ -2,10 +2,10 @@ package ch.jtaf.boundary
 
 import ch.jtaf.control.repository.CompetitionRepository
 import ch.jtaf.entity.Competition
-import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
@@ -43,8 +43,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
                 @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/athlete_results")
         mav.model["message"] = ""
-        mav.model["seriesId"] = seriesId
-        mav.model["competitionId"] = id
+        mav.model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId =  id)
         mav.model["athlete"] = null
         mav.model["results"] = null
         return mav

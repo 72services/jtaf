@@ -12,6 +12,18 @@
         <div class="col-md-12">
             <h1 th:text="#{messages.enter_results}">Enter Results</h1>
 
+            <!--/*@thymesVar id="searchRequest" type="ch.jtaf.boundary.SearchRequest"*/-->
+            <form action="#" th:action="@{/sec/{organization}/search(organization=${organization})}" th:object="${searchRequest}" method="post">
+                <input type="hidden" id="seriesId" th:field="*{seriesId}">
+                <input type="hidden" id="competitionId" th:field="*{competitionId}">
+                <div class="form-group">
+                    <input class="form-control" id="term" th:field="*{term}" th:autofocus="true">
+                </div>
+
+                <button type="submit" class="btn btn-primary" th:text="#{messages.search}">Search</button>
+            </form>
+
+            <!--/*@thymesVar id="seriesId" type="java.lang.String"*/-->
             <!--/*@thymesVar id="competitionId" type="java.lang.String"*/-->
             <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.Athlete"*/-->
             <form th:if="${athlete != null}" action="#"
