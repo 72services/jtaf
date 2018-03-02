@@ -8,6 +8,8 @@
 
 <main role="main" class="container">
 
+    <!--/*@thymesVar id="seriesId" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="competitionId" type="java.lang.String"*/-->
     <div class="row">
         <div class="col-md-12">
             <h1 th:text="#{messages.enter_results}">Enter Results</h1>
@@ -17,14 +19,39 @@
                 <input type="hidden" id="seriesId" th:field="*{seriesId}">
                 <input type="hidden" id="competitionId" th:field="*{competitionId}">
                 <div class="form-group">
+                    <label for="term" th:text="#{messages.search_athletes}">Search Athletes</label>
                     <input class="form-control" id="term" th:field="*{term}" th:autofocus="true">
                 </div>
 
                 <button type="submit" class="btn btn-primary" th:text="#{messages.search}">Search</button>
             </form>
 
-            <!--/*@thymesVar id="seriesId" type="java.lang.String"*/-->
-            <!--/*@thymesVar id="competitionId" type="java.lang.String"*/-->
+            <table th:if="${!athletes.isEmpty()}" class="table" style="margin-top: 10px;">
+                <!--/*@thymesVar id="athletes" type="java.util.List<ch.jtaf.entity.AthleteDTO>"*/-->
+                <!--/*@thymesVar id="dto" type="ch.jtaf.entity.AthleteDTO"*/-->
+                <tr th:each="dto: ${athletes}">
+                    <td>
+                        <span th:text="${dto.id}">1</span>
+                    </td>
+                    <td>
+                        <span th:text="${dto.lastName}">Muster</span>
+                    </td>
+                    <td>
+                        <span th:text="${dto.firstName}">Max</span>
+                    </td>
+                    <td>
+                        <span th:text="${dto.category}">A</span>
+                    </td>
+                    <td>
+                        <span th:text="${dto.club}">TVT</span>
+                    </td>
+                    <td style="text-align: right;">
+                        <a th:href="@{/sec/{organization}/athlete/{athleteId}/results(organization=${organization},athleteId=${dto.id},seriesId=${seriesId},competitionId=${competitionId})}"
+                           th:text="#{messages.select}">Select</a>
+                    </td>
+                </tr>
+            </table>
+
             <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.Athlete"*/-->
             <form th:if="${athlete != null}" action="#"
                   th:action="@{/sec/{organization}/athlete(organization=${organization},competitionId=${competitionId})}"
@@ -72,8 +99,7 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}" disabled>Save</button>
-                <a th:href="@{/sec/{organization}/series(organization=${organization})}"
-                   th:text="#{messages.back}">Back</a>
+
                 <!--/*@thymesVar id="message" type="java.lang.String"*/-->
                 <span th:text="${message}"></span>
             </form>

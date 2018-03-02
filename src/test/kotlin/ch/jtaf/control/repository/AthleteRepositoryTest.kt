@@ -53,8 +53,8 @@ class AthleteRepositoryTest : AbstractRepositoryTest() {
     }
 
     @Test
-    fun findByLastNameLikeOrFirstNameLike() {
-        val athletes = athleteRepository.findByLastNameContainingIgnoreCaseOrFirstNameContainingIgnoreCase("Max", "Max")
+    fun searchAthletes() {
+        val athletes = athleteRepository.searchAthletes(seriesId, "Max%")
 
         assertEquals(1, athletes.size)
         assertEquals("Max", athletes.first().firstName)

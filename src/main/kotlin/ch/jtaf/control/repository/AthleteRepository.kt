@@ -26,6 +26,9 @@ interface AthleteRepository : JpaRepository<Athlete, Long> {
     @Query("SELECT COUNT(r.athlete) FROM Result r WHERE r.competition.id = ?1 GROUP BY r.athlete")
     fun getTotalNumberOfAthleteWithResultsForCompetition(id: Long): Int?
 
-    fun findByLastNameContainingIgnoreCaseOrFirstNameContainingIgnoreCase(lastName: String, firstName: String): List<Athlete>
+    @Query("SELECT NEW ch.jtaf.entity.AthleteDTO" +
+            "(a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, cl.abbreviation, c.abbreviation) " +
+            "FROM Category c JOIN c.athletes a LEFT JOIN a.club cl WHERE c.seriesId = ?1 AND (UPPER(a.lastName) like UPPER(?2) OR UPPER(a.firstName) like UPPER(?2))")
+    fun searchAthletes(seriesId: Long, name: String): List<AthleteDTO>
 
 }

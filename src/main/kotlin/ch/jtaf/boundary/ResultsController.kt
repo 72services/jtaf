@@ -30,9 +30,12 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         } else {
             val mav = ModelAndView("/sec/athlete_results")
             mav.model["message"] = ""
+            mav.model["seriesId"] = searchRequest.seriesId
+            mav.model["competitionId"] = searchRequest.competitionId
+
             mav.model["searchRequest"] = searchRequest
 
-            val athletes = athleteRepository.findByLastNameContainingIgnoreCaseOrFirstNameContainingIgnoreCase(searchRequest.term, searchRequest.term)
+            val athletes = athleteRepository.searchAthletes(searchRequest.seriesId, searchRequest.term + "%")
             mav.model["athletes"] = athletes
             mav.model["athlete"] = null
             mav.model["results"] = null
@@ -60,7 +63,10 @@ class ResultsController(private val athleteRepository: AthleteRepository,
 
         val mav = ModelAndView("/sec/athlete_results")
         mav.model["message"] = ""
+        mav.model["seriesId"] = seriesId
+        mav.model["competitionId"] = competitionId
         mav.model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId = competitionId, term = athleteId.toString())
+        mav.model["athletes"] = ArrayList<AthleteDTO>()
         mav.model["athlete"] = athlete
         mav.model["results"] = results
         return mav
