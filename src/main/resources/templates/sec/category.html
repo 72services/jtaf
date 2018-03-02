@@ -72,7 +72,7 @@
                     <th>B</th>
                     <th>C</th>
                     <th style="text-align: right;">
-                        <a th:href="@{/sec/events(mode='select', categoryId=${category.id})}"
+                        <a th:href="@{/sec/{organization}/events(organization=${organization},mode='select', categoryId=${category.id})}"
                            th:text="#{messages.add_event}" style="text-align: right;">Add Event</a>
                     </th>
                 </tr>

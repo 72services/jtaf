@@ -38,7 +38,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
             val athletes = athleteRepository.searchAthletes(searchRequest.seriesId, searchRequest.term + "%")
             mav.model["athletes"] = athletes
             mav.model["athlete"] = null
-            mav.model["results"] = null
+            mav.model["resultContainer"] = ResultContainer(searchRequest.seriesId, searchRequest.competitionId)
             return mav;
         }
     }
@@ -68,7 +68,31 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         mav.model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId = competitionId, term = athleteId.toString())
         mav.model["athletes"] = ArrayList<AthleteDTO>()
         mav.model["athlete"] = athlete
-        mav.model["results"] = results
+        mav.model["resultContainer"] = ResultContainer(seriesId, competitionId, results)
+        return mav
+    }
+
+    @PostMapping("/sec/{organization}/results")
+    fun postResults(@AuthenticationPrincipal user: User,
+                    @PathVariable("organization") organizationKey: String,
+                    resultContainer: ResultContainer): ModelAndView {
+        val savedResults = ArrayList<Result>()
+        resultContainer.results.forEach {
+            val result = resultRepository.getOne(it.id!!)
+            result.result = it.result
+            val savedResult = resultRepository.save(result)
+            savedResults.add(savedResult)
+        }
+        resultContainer.results = savedResults
+
+        val mav = ModelAndView("/sec/athlete_results")
+        mav.model["message"] = "Results saved!"
+        mav.model["seriesId"] = null
+        mav.model["competitionId"] = null
+        mav.model["searchRequest"] = SearchRequest(resultContainer.seriesId, resultContainer.competitionId)
+        mav.model["athletes"] = ArrayList<AthleteDTO>()
+        mav.model["athlete"] = null
+        mav.model["resultContainer"] = resultContainer
         return mav
     }
 

@@ -20,7 +20,7 @@
                 <input type="hidden" id="competitionId" th:field="*{competitionId}">
                 <div class="form-group">
                     <label for="term" th:text="#{messages.search_athletes}">Search Athletes</label>
-                    <input class="form-control" id="term" th:field="*{term}" th:autofocus="true">
+                    <input class="form-control" id="term" th:field="*{term}" th:autofocus="${resultContainer.results.isEmpty()}">
                 </div>
 
                 <button type="submit" class="btn btn-primary" th:text="#{messages.search}">Search</button>
@@ -102,6 +102,30 @@
 
                 <!--/*@thymesVar id="message" type="java.lang.String"*/-->
                 <span th:text="${message}"></span>
+            </form>
+
+            <!--/*@thymesVar id="resultContainer" type="ch.jtaf.boundary.ResultContainer"*/-->
+            <form th:if="${!resultContainer.results.isEmpty()}" action="#" th:action="@{/sec/{organization}/results(organization=${organization})}"
+                  th:object="${resultContainer}" method="post">
+                <input type="hidden" id="result_seriesId" th:field="*{seriesId}">
+                <input type="hidden" id="result_competitionId" th:field="*{competitionId}">
+
+                <table class="table" style="margin-top: 10px;">
+                    <!--/*@thymesVar id="results" type="java.util.List"*/-->
+                    <!--/*@thymesVar id="result" type="ch.jtaf.entity.Result"*/-->
+                    <tr th:each="result,i: *{results}">
+                        <td>
+                            <span th:text="${result.event.name}">80 m</span>
+                        </td>
+                        <td>
+                            <input type="hidden" th:field="*{results[__${i.index}__].id}">
+
+                            <input class="form-control" th:field="*{results[__${i.index}__].result}"
+                                   th:autofocus="${!resultContainer.results.isEmpty() && i.index == 0}">
+                        </td>
+                    </tr>
+                </table>
+                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
             </form>
         </div>
     </div>

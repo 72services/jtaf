@@ -25,6 +25,17 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return mav
     }
 
+    @GetMapping("/sec/{organization}/category/{id}")
+    fun getById(@PathVariable("organization") organizationKey: String,
+                @PathVariable("id") id: Long): ModelAndView {
+        val mav = ModelAndView("/sec/category")
+        mav.model["message"] = ""
+
+        mav.model["category"] = categoryRepository.getOne(id)
+
+        return mav
+    }
+
     @GetMapping("/sec/{organization}/category/{id}/event/{eventId}")
     fun addEvent(@PathVariable("organization") organizationKey: String,
                  @PathVariable("id") id: Long,
@@ -59,17 +70,6 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         categoryRepository.save(category)
 
         mav.model["category"] = category
-
-        return mav
-    }
-
-    @GetMapping("/sec/{organization}/category/{id}")
-    fun getById(@PathVariable("organization") organizationKey: String,
-                @PathVariable("id") id: Long): ModelAndView {
-        val mav = ModelAndView("/sec/category")
-        mav.model["message"] = ""
-
-        mav.model["category"] = categoryRepository.getOne(id)
 
         return mav
     }

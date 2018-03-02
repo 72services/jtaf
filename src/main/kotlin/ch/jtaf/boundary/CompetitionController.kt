@@ -40,16 +40,16 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
 
     @GetMapping("/sec/{organization}/series/{seriesId}/competition/{id}/results")
     fun enterResults(@PathVariable("organization") organizationKey: String,
-                @PathVariable("seriesId") seriesId: Long,
-                @PathVariable("id") id: Long): ModelAndView {
+                     @PathVariable("seriesId") seriesId: Long,
+                     @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/athlete_results")
         mav.model["message"] = ""
         mav.model["seriesId"] = seriesId
         mav.model["competitionId"] = id
-        mav.model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId =  id)
+        mav.model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId = id)
         mav.model["athletes"] = ArrayList<AthleteDTO>()
         mav.model["athlete"] = null
-        mav.model["results"] = null
+        mav.model["resultContainer"] = ResultContainer(seriesId, id)
         return mav
     }
 
