@@ -10,5 +10,6 @@ interface CategoryRepository : JpaRepository<Category, Long> {
 
     fun findAllBySeriesId(seriesId: Long): List<Category>
 
-    fun findByGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(gender: Gender, dateFrom: Int, dateTo: Int): Category?
+    fun findBySeriesIdAndGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(
+            seriesId: Long, gender: Gender, dateFrom: Int, dateTo: Int): Category?
 }

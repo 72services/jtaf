@@ -35,16 +35,18 @@ class OrganizationController(private val organizationRepository: OrganizationRep
              organization: Organization): ModelAndView {
         val mav = ModelAndView("/sec/organization")
 
-        if (organization.id != null) {
+        if (organization.id == null) {
+            organization.owner = user.username
+            organizationRepository.save(organization)
+
+            mav.model["organization"] = organization
+        } else {
             val organizationFromDb = organizationRepository.getOne(organization.id!!)
             organizationFromDb.key = organization.key
             organizationFromDb.name = organization.name
             organizationRepository.save(organizationFromDb)
 
             mav.model["organization"] = organizationFromDb
-        } else {
-            organization.owner = user.username
-            mav.model["organization"] = organization
         }
 
         mav.model["message"] = "Organization saved!"

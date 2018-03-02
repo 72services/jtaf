@@ -34,7 +34,8 @@ abstract class AbstractRepositoryTest {
         val club = Club(abbreviation = "TVT", name = "TV Twann", organizationId = organizationId)
         em.persist(club)
 
-        val athlete = Athlete(lastName = "Meier", firstName = "Max", yearOfBirth = 2004, club = club, organizationId = organizationId)
+        val athlete = Athlete(lastName = "Meier", firstName = "Max", yearOfBirth = 2004, organizationId = organizationId)
+        athlete.club = club
         em.persist(athlete)
 
         val event = Event(abbreviation = "80", name = "80 m", organizationId = organizationId)

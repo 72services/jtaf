@@ -16,11 +16,11 @@ data class SecurityUser(
         var lastName: String = "",
 
         var confirmationId: String = "",
-        var confirmed: Boolean = false,
-
-        @OneToMany
-        @JoinTable(name = "user_group",
-                joinColumns = [(JoinColumn(name = "user_id", referencedColumnName = "id"))],
-                inverseJoinColumns = [(JoinColumn(name = "group_id", referencedColumnName = "id", unique = true))])
-        var groups: MutableList<SecurityGroup> = ArrayList()
-)
+        var confirmed: Boolean = false
+) {
+    @OneToMany
+    @JoinTable(name = "user_group",
+            joinColumns = [(JoinColumn(name = "user_id", referencedColumnName = "id"))],
+            inverseJoinColumns = [(JoinColumn(name = "group_id", referencedColumnName = "id", unique = true))])
+    var groups: MutableList<SecurityGroup> = ArrayList()
+}

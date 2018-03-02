@@ -8,12 +8,12 @@ data class Organization(
         @Id @GeneratedValue(strategy = IDENTITY)
         var id: Long? = null,
 
-        @Column(name = "organization_key")
+        @Column(name = "organization_key", unique = true)
         var key: String = "",
         var name: String = "",
 
-        var owner: String? = null,
-
-        @OneToMany(mappedBy = "organization")
-        var securityUser: MutableList<OrganizationUser> = ArrayList()
-)
+        var owner: String? = null
+) {
+    @OneToMany(mappedBy = "organization")
+    var securityUser: MutableList<OrganizationUser> = ArrayList()
+}

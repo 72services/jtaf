@@ -36,7 +36,7 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a th:href="@{/sec/{organization}/serieslist(organization=${organization})}" th:text="#{messages.back}">Back</a>
+                <a th:href="@{/sec/{organization}(organization=${organization})}" th:text="#{messages.back}">Back</a>
                 <!--/*@thymesVar id="message" type="java.lang.String"*/-->
                 <span th:text="${message}"></span>
             </form>
@@ -77,7 +77,7 @@
                            th:text="#{messages.add_category}">Add Category</a>
                     </th>
                 </tr>
-                <!--/*@thymesVar id="categories" type="java.util.List<Category>"*/-->
+                <!--/*@thymesVar id="categories" type="java.util.List"*/-->
                 <!--/*@thymesVar id="category" type="ch.jtaf.entity.Category"*/-->
                 <tr th:each="category : ${categories}">
                     <td th:text="${category.abbreviation}">A</td>

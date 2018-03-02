@@ -1,5 +1,6 @@
 package ch.jtaf.boundary
 
+import ch.jtaf.control.repository.AthleteRepository
 import ch.jtaf.control.repository.OrganizationRepository
 import ch.jtaf.control.repository.SeriesRepository
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -11,30 +12,26 @@ import org.springframework.web.servlet.ModelAndView
 
 @Controller
 class SeriesListController(private val seriesRepository: SeriesRepository,
+                           private val athleteRepository: AthleteRepository,
                            private val organizationRepository: OrganizationRepository) {
 
-    @GetMapping("/sec/{organization}/serieslist")
+    @GetMapping("/sec/{organization}")
     fun get(@AuthenticationPrincipal user: User,
             @PathVariable("organization") organizationKey: String): ModelAndView {
-        val mav = ModelAndView("/sec/serieslist")
-
         val organization = organizationRepository.findByKey(organizationKey)
-        mav.model["seriesList"] = seriesRepository.findByOrganizationId(organization.id!!)
+        val seriesList = seriesRepository.findByOrganizationId(organization.id!!)
 
-        return mav
-    }
+        seriesList.forEach {
+            val numberOfAthletes = athleteRepository.getTotalNumberOfAthletesForSeries(it.id!!)
 
-    @GetMapping("/sec/{organization}/serieslist/{id}/delete")
-    fun deleteById(@AuthenticationPrincipal user: User,
-                   @PathVariable("organization") organizationKey: String,
-                   @PathVariable("id") id: Long): ModelAndView {
-        seriesRepository.deleteById(id)
+            it.competitions.forEach {
+                it.numberOfAthletes = numberOfAthletes ?: 0
+                it.numberOfAthletesWithResults = athleteRepository.getTotalNumberOfAthleteWithResultsForCompetition(it.id!!) ?: 0
+            }
+        }
 
         val mav = ModelAndView("/sec/serieslist")
-
-        val organization = organizationRepository.findByKey(organizationKey)
-        mav.model["seriesList"] = seriesRepository.findByOrganizationId(organization.id!!)
-
+        mav.model["seriesList"] = seriesList
         return mav
     }
 

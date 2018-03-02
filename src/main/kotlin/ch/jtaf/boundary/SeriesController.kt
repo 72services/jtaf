@@ -48,8 +48,8 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         val series = seriesRepository.getOne(id)
         val athlete = athleteRepository.getOne(athleteId)
 
-        val category = categoryRepository.findByGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(
-                athlete.gender, athlete.yearOfBirth, athlete.yearOfBirth)
+        val category = categoryRepository.findBySeriesIdAndGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(
+                id, athlete.gender, athlete.yearOfBirth, athlete.yearOfBirth)
 
         if (category == null) {
             mav.model["athletes_message"] = "No matching category found for gender " + athlete.gender + " and year " + athlete.yearOfBirth
@@ -95,7 +95,12 @@ class SeriesController(private val seriesRepository: SeriesRepository,
 
         val organization = organizationRepository.findByKey(organizationKey)
 
-        if (series.id != null) {
+        if (series.id == null) {
+            series.organizationId = organization.id
+            seriesRepository.save(series)
+
+            mav.model["series"] = series
+        } else {
             val seriesFromDb = seriesRepository.getOne(series.id!!)
             seriesFromDb.name = series.name
             seriesFromDb.locked = series.locked
@@ -104,9 +109,6 @@ class SeriesController(private val seriesRepository: SeriesRepository,
             seriesRepository.save(seriesFromDb)
 
             mav.model["series"] = seriesFromDb
-        } else {
-            series.organizationId = organization.id
-            mav.model["series"] = series
         }
 
         mav.model["message"] = "Series saved!"
@@ -116,4 +118,19 @@ class SeriesController(private val seriesRepository: SeriesRepository,
 
         return mav
     }
+
+    @GetMapping("/sec/{organization}/series/{id}/delete")
+    fun deleteById(@AuthenticationPrincipal user: User,
+                   @PathVariable("organization") organizationKey: String,
+                   @PathVariable("id") id: Long): ModelAndView {
+        seriesRepository.deleteById(id)
+
+        val mav = ModelAndView("/sec/serieslist")
+
+        val organization = organizationRepository.findByKey(organizationKey)
+        mav.model["seriesList"] = seriesRepository.findByOrganizationId(organization.id!!)
+
+        return mav
+    }
+
 }

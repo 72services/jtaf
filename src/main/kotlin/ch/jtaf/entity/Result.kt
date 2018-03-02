@@ -18,7 +18,7 @@ data class Result(
         var athlete: Athlete? = null,
 
         @ManyToOne
-        var category: Category? = null,
+        var event: Event? = null,
 
         @ManyToOne
         var competition: Competition? = null,

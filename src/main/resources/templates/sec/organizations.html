@@ -24,7 +24,7 @@
                     <td th:text="${organization.key}">tverlach</td>
                     <td th:text="${organization.name}">Turnverein Erlach</td>
                     <td style="text-align: right;">
-                        <a th:href="@{/sec/{organization}/serieslist(organization=${organization.key})}"
+                        <a th:href="@{/sec/{organization}(organization=${organization.key})}"
                            th:text="#{messages.select}">Select</a>
 
                         <a th:href="@{/sec/organization/{id}(id=${organization.id})}"

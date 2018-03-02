@@ -35,6 +35,8 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         val category = categoryRepository.getOne(id)
         val event = eventRepository.getOne(eventId)
         category.events.add(event)
+
+        category.updateEventPositions()
         categoryRepository.save(category)
 
         mav.model["category"] = category
@@ -53,6 +55,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         val event = eventRepository.getOne(eventId)
         category.events.remove(event)
 
+        category.updateEventPositions()
         categoryRepository.save(category)
 
         mav.model["category"] = category
@@ -78,6 +81,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
 
         if (category.id == null) {
             categoryRepository.save(category)
+
             mav.model["category"] = category
         } else {
             val categoryFromDb = categoryRepository.getOne(category.id!!)

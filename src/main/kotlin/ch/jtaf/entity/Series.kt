@@ -12,9 +12,9 @@ data class Series(
         var locked: Boolean = false,
         var hidden: Boolean = false,
 
-        @OneToMany
-        @JoinColumn(name = "series_id", insertable = false, updatable = false)
-        var competitions: MutableList<Competition> = ArrayList(),
-
         var organizationId: Long? = null
-)
+) {
+    @OneToMany
+    @JoinColumn(name = "series_id", insertable = false, updatable = false)
+    var competitions: MutableList<Competition> = ArrayList()
+}

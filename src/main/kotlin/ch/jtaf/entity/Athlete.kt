@@ -14,8 +14,8 @@ data class Athlete(
         @Enumerated(EnumType.STRING)
         var gender: Gender = Gender.MALE,
 
-        @ManyToOne
-        var club: Club? = null,
-
         var organizationId: Long? = null
-)
+) {
+    @ManyToOne
+    var club: Club? = null
+}

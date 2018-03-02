@@ -15,18 +15,25 @@ data class Category(
         var yearTo: Int = 9999,
         var gender: Gender = MALE,
 
-        var seriesId: Long? = null,
+        var seriesId: Long? = null
+) {
+    @OneToMany
+    @OrderColumn(name = "position")
+    @JoinTable(name = "category_event",
+            joinColumns = [(JoinColumn(name = "category_id", referencedColumnName = "id"))],
+            inverseJoinColumns = [(JoinColumn(name = "event_id", referencedColumnName = "id", unique = true))])
+    var events: MutableList<Event> = ArrayList()
 
-        @OneToMany
-        @OrderColumn(name = "position")
-        @JoinTable(name = "category_event",
-                joinColumns = [(JoinColumn(name = "category_id", referencedColumnName = "id"))],
-                inverseJoinColumns = [(JoinColumn(name = "event_id", referencedColumnName = "id", unique = true))])
-        var events: MutableList<Event> = ArrayList(),
+    @OneToMany
+    @JoinTable(name = "category_athlete",
+            joinColumns = [(JoinColumn(name = "category_id", referencedColumnName = "id"))],
+            inverseJoinColumns = [(JoinColumn(name = "athlete_id", referencedColumnName = "id", unique = true))])
+    var athletes: MutableList<Athlete> = ArrayList()
 
-        @OneToMany
-        @JoinTable(name = "category_athlete",
-                joinColumns = [(JoinColumn(name = "category_id", referencedColumnName = "id"))],
-                inverseJoinColumns = [(JoinColumn(name = "athlete_id", referencedColumnName = "id", unique = true))])
-        var athletes: MutableList<Athlete> = ArrayList()
-)
+    fun updateEventPositions() {
+        var i = 1
+        events.forEach {
+            it.position = i++
+        }
+    }
+}

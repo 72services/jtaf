@@ -17,10 +17,11 @@ data class Competition(
         var locked: Boolean = false,
 
         @Column(name = "series_id")
-        var seriesId: Long? = null,
+        var seriesId: Long? = null
+) {
+    @Transient
+    var numberOfAthletes: Int = 0
 
-        @Transient
-        var numberOfAthletes: Int = 0,
-        @Transient
-        var numberOfAthletesWithResults: Int = 0
-)
+    @Transient
+    var numberOfAthletesWithResults: Int = 0
+}

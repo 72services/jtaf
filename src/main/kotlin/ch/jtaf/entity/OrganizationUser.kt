@@ -11,14 +11,14 @@ data class OrganizationUser(
         var abbreviation: String = "",
         var name: String = "",
 
-        var owner: String? = null,
+        var owner: String? = null
+) {
+    @ManyToOne
+    var organization: Organization? = null
 
-        @ManyToOne
-        var organization: Organization? = null,
-
-        @OneToMany
-        @JoinTable(name = "organizationuser_securityuser",
-                joinColumns = [(JoinColumn(name = "organizationuser_id", referencedColumnName = "id"))],
-                inverseJoinColumns = [(JoinColumn(name = "securityuser_id", referencedColumnName = "id", unique = true))])
-        var users: MutableList<SecurityUser> = ArrayList()
-)
+    @OneToMany
+    @JoinTable(name = "organizationuser_securityuser",
+            joinColumns = [(JoinColumn(name = "organizationuser_id", referencedColumnName = "id"))],
+            inverseJoinColumns = [(JoinColumn(name = "securityuser_id", referencedColumnName = "id", unique = true))])
+    var users: MutableList<SecurityUser> = ArrayList()
+}

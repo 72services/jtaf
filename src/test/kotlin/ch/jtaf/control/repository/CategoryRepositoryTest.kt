@@ -18,8 +18,8 @@ class CategoryRepositoryTest : AbstractRepositoryTest() {
 
     @Test
     fun findByGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual() {
-        val category = categoryRepository.findByGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(
-                Gender.MALE, 2004, 2004);
+        val category = categoryRepository.findBySeriesIdAndGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(
+                seriesId, Gender.MALE, 2004, 2004);
 
         assertNotNull(category)
         assertEquals("A", category?.abbreviation)

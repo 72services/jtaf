@@ -14,7 +14,7 @@
                 <div class="navbar-nav">
                     <a th:class="${page == 'series'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
                        th:text="${organization}"
-                       th:href="@{/sec/{organization}/serieslist(organization=${organization})}">CIS</a>
+                       th:href="@{/sec/{organization}(organization=${organization})}">CIS</a>
 
                     <a th:class="${page == 'events'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
                        th:text="#{messages.events}"

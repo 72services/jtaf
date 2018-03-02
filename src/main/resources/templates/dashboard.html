@@ -21,14 +21,13 @@
                     <!--/*@thymesVar id="competition" type="ch.jtaf.entity.Competition"*/-->
                     <div class="row" th:each="competition: ${series.competitions}">
                         <div class="col-md-3">
-                            <p th:text="${competition.name}">CIS 1</p>
+                            <span th:text="${competition.name}">CIS 1</span>
                         </div>
                         <div class="col-md-3">
-                            <p th:text="${competition.competitionDate.toString()}">2017-06-10</p>
+                            <span th:text="${competition.competitionDate.toString()}">2017-06-10</span>
                         </div>
                         <div class="col-md-3">
-                            <p th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}">
-                                Athletes 1/10</p>
+                            <span th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}">Athletes 1/10</span>
                         </div>
                         <div class="col-md-3">
                             <a th:href="@{/ranking/{id}(id=${competition.id})}">Ranking</a>

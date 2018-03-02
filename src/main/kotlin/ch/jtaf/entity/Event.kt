@@ -19,5 +19,7 @@ data class Event(
         var b: Double = 0.0,
         var c: Double = 0.0,
 
+        var position: Int = 0,
+
         var organizationId: Long? = null
 )
