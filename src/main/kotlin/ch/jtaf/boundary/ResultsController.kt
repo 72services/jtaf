@@ -38,7 +38,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
             val athletes = athleteRepository.searchAthletes(searchRequest.seriesId, searchRequest.term + "%")
             mav.model["athletes"] = athletes
             mav.model["athlete"] = null
-            mav.model["resultContainer"] = ResultContainer(searchRequest.seriesId, searchRequest.competitionId)
+            mav.model["resultContainer"] = ResultContainer(searchRequest.seriesId, searchRequest.competitionId, null)
             return mav;
         }
     }
@@ -68,7 +68,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         mav.model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId = competitionId, term = athleteId.toString())
         mav.model["athletes"] = ArrayList<AthleteDTO>()
         mav.model["athlete"] = athlete
-        mav.model["resultContainer"] = ResultContainer(seriesId, competitionId, results)
+        mav.model["resultContainer"] = ResultContainer(seriesId, competitionId, athlete.id, results)
         return mav
     }
 
@@ -91,7 +91,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         mav.model["competitionId"] = null
         mav.model["searchRequest"] = SearchRequest(resultContainer.seriesId, resultContainer.competitionId)
         mav.model["athletes"] = ArrayList<AthleteDTO>()
-        mav.model["athlete"] = null
+        mav.model["athlete"] = athleteRepository.getOne(resultContainer.athleteId!!)
         mav.model["resultContainer"] = resultContainer
         return mav
     }

@@ -49,7 +49,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         mav.model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId = id)
         mav.model["athletes"] = ArrayList<AthleteDTO>()
         mav.model["athlete"] = null
-        mav.model["resultContainer"] = ResultContainer(seriesId, id)
+        mav.model["resultContainer"] = ResultContainer(seriesId, id, null)
         return mav
     }
 
