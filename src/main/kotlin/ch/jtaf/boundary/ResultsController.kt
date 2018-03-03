@@ -39,7 +39,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
             mav.model["athletes"] = athletes
             mav.model["athlete"] = null
             mav.model["resultContainer"] = ResultContainer(searchRequest.seriesId, searchRequest.competitionId, null)
-            return mav;
+            return mav
         }
     }
 

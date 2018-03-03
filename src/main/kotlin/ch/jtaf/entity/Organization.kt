@@ -15,5 +15,5 @@ data class Organization(
         var owner: String? = null
 ) {
     @OneToMany(mappedBy = "organization")
-    var securityUser: MutableList<OrganizationUser> = ArrayList()
+    var users: MutableList<OrganizationUser> = ArrayList()
 }

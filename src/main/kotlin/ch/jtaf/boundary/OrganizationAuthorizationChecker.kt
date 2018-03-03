@@ -1,8 +1,6 @@
 package ch.jtaf.boundary
 
 import ch.jtaf.control.repository.OrganizationRepository
-import ch.jtaf.control.repository.SeriesRepository
-import ch.jtaf.entity.Series
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 

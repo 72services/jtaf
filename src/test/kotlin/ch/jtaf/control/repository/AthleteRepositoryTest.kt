@@ -32,7 +32,7 @@ class AthleteRepositoryTest : AbstractRepositoryTest() {
 
     @Test
     fun findAthleteDTOsBySeriesId() {
-        val dtos = athleteRepository.findAthleteDTOsBySeriesId(seriesId);
+        val dtos = athleteRepository.findAthleteDTOsBySeriesId(seriesId)
 
         assertEquals(1, dtos.size)
         assertEquals("Max", dtos.first().firstName)

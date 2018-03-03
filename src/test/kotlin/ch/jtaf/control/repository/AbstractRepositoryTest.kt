@@ -12,7 +12,7 @@ abstract class AbstractRepositoryTest {
     var seriesId = 0L
 
     @Autowired
-    lateinit var em: EntityManager
+    private lateinit var em: EntityManager
 
     @Before
     fun createTestData() {
