@@ -26,8 +26,10 @@
                 <button type="submit" class="btn btn-primary" th:text="#{messages.search}">Search</button>
             </form>
 
+            <!--/*@thymesVar id="athletes" type="java.util.List<ch.jtaf.entity.AthleteDTO>"*/-->
+            <h2 th:if="${!athletes.isEmpty()}" th:text="#{messages.athletes}">Athletes</h2>
+
             <table th:if="${!athletes.isEmpty()}" class="table" style="margin-top: 10px;">
-                <!--/*@thymesVar id="athletes" type="java.util.List<ch.jtaf.entity.AthleteDTO>"*/-->
                 <!--/*@thymesVar id="dto" type="ch.jtaf.entity.AthleteDTO"*/-->
                 <tr th:each="dto: ${athletes}">
                     <td>
@@ -45,64 +47,81 @@
                     <td>
                         <span th:text="${dto.club}">TVT</span>
                     </td>
-                    <td style="text-align: right;">
+                    <td class="right">
                         <a th:href="@{/sec/{organization}/athlete/{athleteId}/results(organization=${organization},athleteId=${dto.id},seriesId=${seriesId},competitionId=${competitionId})}"
                            th:text="#{messages.select}">Select</a>
                     </td>
                 </tr>
             </table>
 
+            <h2 th:if="${athlete != null}" th:text="#{messages.athlete}">Athlete</h2>
+
             <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.Athlete"*/-->
             <form th:if="${athlete != null}" action="#"
-                  th:action="@{/sec/{organization}/athlete(organization=${organization},competitionId=${competitionId})}"
+                  th:action="@{/sec/{organization}/athlete(organization=${organization},seriesId=${seriesId},mode='edit')}"
                   th:object="${athlete}" method="post">
 
-                <div class="form-group">
-                    <label for="id">ID</label>
-                    <input class="form-control" id="id" th:field="*{id}" readonly>
+                <div class="row">
+                    <div class="col">
+                        <label for="id">ID</label>
+                        <input class="form-control" id="id" th:field="*{id}" readonly>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="lastName" th:text="#{messages.last_name}">Doe</label>
-                    <input class="form-control" id="lastName" th:placeholder="#{messages.last_name}"
-                           th:field="*{lastName}" required readonly>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="lastName" th:text="#{messages.last_name}">Doe</label>
+                        <input class="form-control" id="lastName" th:placeholder="#{messages.last_name}"
+                               th:field="*{lastName}" required>
+                    </div>
+
+                    <div class="col">
+                        <label for="firstName" th:text="#{messages.first_name}">John</label>
+                        <input class="form-control" id="firstName" th:placeholder="#{messages.first_name}"
+                               th:field="*{firstName}" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="firstName" th:text="#{messages.first_name}">John</label>
-                    <input class="form-control" id="firstName" th:placeholder="#{messages.first_name}"
-                           th:field="*{firstName}" required readonly>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="yearOfBirth" th:text="#{messages.year_of_birth}">John</label>
+                        <input class="form-control" id="yearOfBirth" th:placeholder="#{messages.year_of_birth}"
+                               th:field="*{yearOfBirth}" required>
+                    </div>
+
+                    <div class="col">
+                        <label for="gender" th:text="#{messages.gender}">Gender</label>
+                        <select id="gender" class="form-control" th:field="*{gender}">
+                            <!--/*@thymesVar id="gender" type="ch.jtaf.entity.Gender"*/-->
+                            <option th:each="gender : ${T(ch.jtaf.entity.Gender).values()}"
+                                    th:value="${gender}"
+                                    th:text="${gender}">
+                            </option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="yearOfBirth" th:text="#{messages.year_of_birth}">John</label>
-                    <input class="form-control" id="yearOfBirth" th:placeholder="#{messages.year_of_birth}"
-                           th:field="*{yearOfBirth}" required readonly>
-                </div>
-                <div class="form-group">
-                    <label for="gender" th:text="#{messages.gender}">Gender</label>
-                    <select id="gender" class="form-control" th:field="*{gender}" readonly>
-                        <!--/*@thymesVar id="gender" type="ch.jtaf.entity.Gender"*/-->
-                        <option th:each="gender : ${T(ch.jtaf.entity.Gender).values()}"
-                                th:value="${gender}"
-                                th:text="${gender}">
-                        </option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="club" th:text="#{messages.club}">Club</label>
-                    <select id="club" class="form-control" th:field="*{club.id}" readonly>
-                        <!--/*@thymesVar id="clubs" type="java.util.List<Club>"*/-->
-                        <!--/*@thymesVar id="club" type="ch.jtaf.entity.Club"*/-->
-                        <option th:each="club : ${clubs}"
-                                th:value="${club.id}"
-                                th:text="${club.abbreviation}">
-                        </option>
-                    </select>
+
+                <div class="form-row">
+                    <div class="col">
+                        <label for="club" th:text="#{messages.club}">Club</label>
+                        <select id="club" class="form-control" th:field="*{club.id}">
+                            <!--/*@thymesVar id="clubs" type="java.util.List<Club>"*/-->
+                            <!--/*@thymesVar id="club" type="ch.jtaf.entity.Club"*/-->
+                            <option th:each="club : ${clubs}"
+                                    th:value="${club.id}"
+                                    th:text="${club.abbreviation}">
+                            </option>
+                        </select>
+                    </div>
                 </div>
                 <br>
-                <button type="submit" class="btn btn-primary" th:text="#{messages.save}" disabled>Save</button>
+                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
 
                 <!--/*@thymesVar id="message" type="java.lang.String"*/-->
                 <span th:text="${message}"></span>
             </form>
+
+            <h2 th:if="${!resultContainer.results.isEmpty()}" th:text="#{messages.results}">Results</h2>
 
             <!--/*@thymesVar id="resultContainer" type="ch.jtaf.boundary.ResultContainer"*/-->
             <form th:if="${!resultContainer.results.isEmpty()}" action="#" th:action="@{/sec/{organization}/results(organization=${organization})}"

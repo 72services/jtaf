@@ -17,8 +17,8 @@ class AthleteController(private val athleteRepository: AthleteRepository,
 
     @GetMapping("/sec/{organization}/athlete")
     fun get(@PathVariable("organization") organizationKey: String,
-            @RequestParam("seriesId") seriesId: Long,
-            @RequestParam("mode") mode: String): ModelAndView {
+            @RequestParam("seriesId", required = false) seriesId: Long?,
+            @RequestParam("mode", required = false) mode: String?): ModelAndView {
         val mav = ModelAndView("/sec/athlete")
         mav.model["message"] = ""
         mav.model["seriesId"] = seriesId
@@ -35,8 +35,8 @@ class AthleteController(private val athleteRepository: AthleteRepository,
     fun getById(@AuthenticationPrincipal user: User,
                 @PathVariable("organization") organizationKey: String,
                 @PathVariable("id") id: Long,
-                @RequestParam("seriesId") seriesId: Long,
-                @RequestParam("mode") mode: String): ModelAndView {
+                @RequestParam("seriesId", required = false) seriesId: Long?,
+                @RequestParam("mode", required = false) mode: String?): ModelAndView {
         val mav = ModelAndView("/sec/athlete")
         mav.model["message"] = ""
         mav.model["seriesId"] = seriesId
@@ -53,8 +53,8 @@ class AthleteController(private val athleteRepository: AthleteRepository,
     @PostMapping("/sec/{organization}/athlete")
     fun post(@AuthenticationPrincipal user: User,
              @PathVariable("organization") organizationKey: String,
-             @RequestParam("seriesId") seriesId: Long,
-             @RequestParam("mode") mode: String,
+             @RequestParam("seriesId", required = false) seriesId: Long?,
+             @RequestParam("mode", required = false) mode: String?,
              athlete: Athlete): ModelAndView {
 
         val organization = organizationRepository.findByKey(organizationKey)

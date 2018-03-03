@@ -17,13 +17,14 @@
                 <tr>
                     <th th:text="#{messages.key}">Key</th>
                     <th th:text="#{messages.name}">Name</th>
-                    <th style="text-align: right;"><a href="/sec/organization" th:text="#{messages.add_organization}"
-                                                      style="text-align: right;">Add Series</a></th>
+                    <th class="right">
+                        <a href="/sec/organization" th:text="#{messages.add_organization}" class="right">Add Series</a>
+                    </th>
                 </tr>
                 <tr th:each="organization: ${organizations}">
                     <td th:text="${organization.key}">tverlach</td>
                     <td th:text="${organization.name}">Turnverein Erlach</td>
-                    <td style="text-align: right;">
+                    <td class="right">
                         <a th:href="@{/sec/{organization}(organization=${organization.key})}"
                            th:text="#{messages.select}">Select</a>
 

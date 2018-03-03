@@ -71,9 +71,9 @@
                     <th>A</th>
                     <th>B</th>
                     <th>C</th>
-                    <th style="text-align: right;">
+                    <th class="right">
                         <a th:href="@{/sec/{organization}/events(organization=${organization},mode='select', categoryId=${category.id})}"
-                           th:text="#{messages.add_event}" style="text-align: right;">Add Event</a>
+                           th:text="#{messages.add_event}" class="right">Add Event</a>
                     </th>
                 </tr>
                 <!--/*@thymesVar id="event" type="ch.jtaf.entity.Event"*/-->
@@ -85,7 +85,7 @@
                     <td th:text="${event.a}"></td>
                     <td th:text="${event.b}"></td>
                     <td th:text="${event.c}"></td>
-                    <td style="text-align: right;">
+                    <td class="right">
                         <a th:href="@{/sec/category/{id}/event/{eventId}/delete(id=${category.id}, eventId=${event.id})}"
                            th:text="#{messages.delete}"
                            onclick="return confirm('Are you sure?')">Delete</a>

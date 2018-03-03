@@ -17,7 +17,7 @@ class AthleteRepositoryTest : AbstractRepositoryTest() {
 
     @Test
     fun findByOrganizationId() {
-        val list = athleteRepository.findByOrganizationId(1)
+        val list = athleteRepository.findByOrganizationId(organizationId)
 
         assertEquals(1, list.size)
         assertEquals("Max", list[0].firstName)
@@ -25,7 +25,7 @@ class AthleteRepositoryTest : AbstractRepositoryTest() {
 
     @Test
     fun findByOrganizationIdAndNotAssignedToSeries() {
-        val list = athleteRepository.findByOrganizationIdAndNotAssignedToSeries(1, 1)
+        val list = athleteRepository.findByOrganizationIdAndNotAssignedToSeries(organizationId, seriesId)
 
         assertEquals(0, list.size)
     }

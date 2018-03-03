@@ -22,10 +22,10 @@
                     <th>A</th>
                     <th>B</th>
                     <th>C</th>
-                    <th style="text-align: right;">
+                    <th class="right">
                         <a th:if="${mode == 'edit'}"
                            th:href="@{/sec/{organization}/event(organization=${organization})}"
-                           th:text="#{messages.add_event}" style="text-align: right;">Add Event</a>
+                           th:text="#{messages.add_event}" class="right">Add Event</a>
                     </th>
                 </tr>
                 <!--/*@thymesVar id="events" type="java.util.List<Event>"*/-->
@@ -39,7 +39,7 @@
                     <td th:text="${event.b}"></td>
                     <td th:text="${event.c}"></td>
 
-                    <td style="text-align: right;">
+                    <td class="right">
                         <a th:if="${mode == 'edit'}"
                            th:href="@{/sec/{organization}/event/{id}(organization=${organization},id=${event.id})}"
                            th:text="#{messages.edit}"></a>
