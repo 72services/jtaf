@@ -10,6 +10,7 @@ abstract class AbstractRepositoryTest {
     val email = "john.doe@jtaf.ch"
     var organizationId = 0L
     var seriesId = 0L
+    var athleteId = 0L
 
     @Autowired
     private lateinit var em: EntityManager
@@ -37,6 +38,7 @@ abstract class AbstractRepositoryTest {
         val athlete = Athlete(lastName = "Meier", firstName = "Max", yearOfBirth = 2004, organizationId = organizationId)
         athlete.club = club
         em.persist(athlete)
+        athleteId = athlete.id!!
 
         val event = Event(abbreviation = "80", name = "80 m", organizationId = organizationId)
         em.persist(event)

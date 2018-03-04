@@ -29,7 +29,7 @@
             <!--/*@thymesVar id="athletes" type="java.util.List<ch.jtaf.entity.AthleteDTO>"*/-->
             <h2 th:if="${!athletes.isEmpty()}" th:text="#{messages.athletes}">Athletes</h2>
 
-            <table th:if="${!athletes.isEmpty()}" class="table" style="margin-top: 10px;">
+            <table th:if="${!athletes.isEmpty()}" class="table">
                 <!--/*@thymesVar id="dto" type="ch.jtaf.entity.AthleteDTO"*/-->
                 <tr th:each="dto: ${athletes}">
                     <td>
@@ -54,16 +54,26 @@
                 </tr>
             </table>
 
-            <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.Athlete"*/-->
+            <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.AthleteDTO"*/-->
             <h2 th:if="${athlete != null}" th:text="#{messages.athlete}">Athlete</h2>
 
-            <table>
+            <table th:if="${athlete != null}" class="table">
                 <tr>
-                    <td th:text="${athlete.lastName}">Doe</td>
-                    <td th:text="${athlete.firstName}">John</td>
-                    <td th:text="${athlete.yearOfBirth}">2012</td>
-                    <td th:text="${athlete.gender}">MALE</td>
-                    <td th:text="${athlete.club == null ? '' : athlete.club.abbreviation}">TVE</td>
+                    <td>
+                        <span th:text="${athlete.id}">1</span>
+                    </td>
+                    <td>
+                        <span th:text="${athlete.lastName}">Muster</span>
+                    </td>
+                    <td>
+                        <span th:text="${athlete.firstName}">Max</span>
+                    </td>
+                    <td>
+                        <span th:text="${athlete.category}">A</span>
+                    </td>
+                    <td>
+                        <span th:text="${athlete.club}">TVT</span>
+                    </td>
                     <td class="right">
                         <a th:href="@{/sec/{organization}/athlete/{id}(organization=${organization},id=${athlete.id},mode='edit')}"
                            th:text="#{messages.edit}"></a>

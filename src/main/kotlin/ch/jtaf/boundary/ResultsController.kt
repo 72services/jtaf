@@ -67,7 +67,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         mav.model["competitionId"] = competitionId
         mav.model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId = competitionId, term = athleteId.toString())
         mav.model["athletes"] = ArrayList<AthleteDTO>()
-        mav.model["athlete"] = athlete
+        mav.model["athlete"] = athleteRepository.getOneAthleteDTO(athleteId)
         mav.model["resultContainer"] = ResultContainer(seriesId, competitionId, athlete.id, results)
         return mav
     }
@@ -91,7 +91,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         mav.model["competitionId"] = null
         mav.model["searchRequest"] = SearchRequest(resultContainer.seriesId, resultContainer.competitionId)
         mav.model["athletes"] = ArrayList<AthleteDTO>()
-        mav.model["athlete"] = athleteRepository.getOne(resultContainer.athleteId!!)
+        mav.model["athlete"] = athleteRepository.getOneAthleteDTO(resultContainer.athleteId!!)
         mav.model["resultContainer"] = resultContainer
         return mav
     }
