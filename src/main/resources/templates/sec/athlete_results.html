@@ -54,72 +54,22 @@
                 </tr>
             </table>
 
+            <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.Athlete"*/-->
             <h2 th:if="${athlete != null}" th:text="#{messages.athlete}">Athlete</h2>
 
-            <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.Athlete"*/-->
-            <form th:if="${athlete != null}" action="#"
-                  th:action="@{/sec/{organization}/athlete(organization=${organization},seriesId=${seriesId},mode='edit')}"
-                  th:object="${athlete}" method="post">
-
-                <div class="row">
-                    <div class="col">
-                        <label for="id">ID</label>
-                        <input class="form-control" id="id" th:field="*{id}" readonly>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <label for="lastName" th:text="#{messages.last_name}">Doe</label>
-                        <input class="form-control" id="lastName" th:placeholder="#{messages.last_name}"
-                               th:field="*{lastName}" required>
-                    </div>
-
-                    <div class="col">
-                        <label for="firstName" th:text="#{messages.first_name}">John</label>
-                        <input class="form-control" id="firstName" th:placeholder="#{messages.first_name}"
-                               th:field="*{firstName}" required>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <label for="yearOfBirth" th:text="#{messages.year_of_birth}">John</label>
-                        <input class="form-control" id="yearOfBirth" th:placeholder="#{messages.year_of_birth}"
-                               th:field="*{yearOfBirth}" required>
-                    </div>
-
-                    <div class="col">
-                        <label for="gender" th:text="#{messages.gender}">Gender</label>
-                        <select id="gender" class="form-control" th:field="*{gender}">
-                            <!--/*@thymesVar id="gender" type="ch.jtaf.entity.Gender"*/-->
-                            <option th:each="gender : ${T(ch.jtaf.entity.Gender).values()}"
-                                    th:value="${gender}"
-                                    th:text="${gender}">
-                            </option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col">
-                        <label for="club" th:text="#{messages.club}">Club</label>
-                        <select id="club" class="form-control" th:field="*{club.id}">
-                            <!--/*@thymesVar id="clubs" type="java.util.List<Club>"*/-->
-                            <!--/*@thymesVar id="club" type="ch.jtaf.entity.Club"*/-->
-                            <option th:each="club : ${clubs}"
-                                    th:value="${club.id}"
-                                    th:text="${club.abbreviation}">
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-
-                <!--/*@thymesVar id="message" type="java.lang.String"*/-->
-                <span th:text="${message}"></span>
-            </form>
+            <table>
+                <tr>
+                    <td th:text="${athlete.lastName}">Doe</td>
+                    <td th:text="${athlete.firstName}">John</td>
+                    <td th:text="${athlete.yearOfBirth}">2012</td>
+                    <td th:text="${athlete.gender}">MALE</td>
+                    <td th:text="${athlete.club == null ? '' : athlete.club.abbreviation}">TVE</td>
+                    <td class="right">
+                        <a th:href="@{/sec/{organization}/athlete/{id}(organization=${organization},id=${athlete.id},mode='edit')}"
+                           th:text="#{messages.edit}"></a>
+                    </td>
+                </tr>
+            </table>
 
             <h2 th:if="${!resultContainer.results.isEmpty()}" th:text="#{messages.results}">Results</h2>
 
@@ -135,13 +85,15 @@
                     <!--/*@thymesVar id="result" type="ch.jtaf.entity.Result"*/-->
                     <tr th:each="result,i: *{results}">
                         <td>
+                            <input type="hidden" th:field="*{results[__${i.index}__].id}">
                             <span th:text="${result.event.name}">80 m</span>
                         </td>
                         <td>
-                            <input type="hidden" th:field="*{results[__${i.index}__].id}">
-
                             <input class="form-control" th:field="*{results[__${i.index}__].result}"
                                    th:autofocus="${!resultContainer.results.isEmpty() && i.index == 0}">
+                        </td>
+                        <td>
+                            <input class="form-control" th:field="*{results[__${i.index}__].points}" readonly>
                         </td>
                     </tr>
                 </table>
