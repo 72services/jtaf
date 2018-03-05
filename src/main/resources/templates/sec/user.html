@@ -3,10 +3,8 @@
 <head th:replace="common/head :: head"></head>
 <body>
 
-<!--/*@thymesVar id="user" type="org.springframework.security.core.userdetails.User"*/-->
-<!--/*@thymesVar id="authority" type="org.springframework.security.core.GrantedAuthority"*/-->
-
-<div th:include="sec/common/navigation :: navigation ('user')"></div>
+<!--/*@thymesVar id="organization" type="java.lang.String"*/-->
+<div th:include="sec/common/navigation :: navigation ('user', ${organization})"></div>
 
 <main role="main" class="container">
 
@@ -23,6 +21,8 @@
                     <th>Authority</th>
                 </tr>
                 </thead>
+                <!--/*@thymesVar id="user" type="org.springframework.security.core.userdetails.User"*/-->
+                <!--/*@thymesVar id="authority" type="org.springframework.security.core.GrantedAuthority"*/-->
                 <tr th:each="authority : ${user.getAuthorities()}">
                     <td th:text="${authority.authority}">Authority</td>
                 </tr>
