@@ -26,14 +26,13 @@
 
                 <button class="btn btn-primary">Sign In</button>
             </form>
-            <br/>
-            <div th:if="${param.error}" style="color: red;">
+
+            <div th:if="${param.error}" class="alert alert-danger" role="alert" style="margin-top: 20px;">
                 Invalid username and password.
             </div>
-            <div th:if="${param.logout}" style="color: darkgreen;">
+            <div th:if="${param.logout}" class="alert alert-success" role="alert" style="margin-top: 20px;">
                 You have been logged out.
             </div>
-
         </div>
     </div>
 

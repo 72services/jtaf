@@ -108,6 +108,9 @@
                     </tr>
                 </table>
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+
+                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.controller.Message"*/-->
+                <div th:include="common/message :: message (${message})"></div>
             </form>
         </div>
     </div>

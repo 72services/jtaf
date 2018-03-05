@@ -24,7 +24,7 @@ data class Event(
         var organizationId: Long? = null
 ) {
 
-    fun calculatePoints(result: String): Long {
+    fun calculatePoints(result: String): Int {
         var points = 0.0
         if (result.toDouble() > 0) {
             when (eventType) {
@@ -33,8 +33,7 @@ data class Event(
                 }
                 EventType.RUN_LONG -> {
                     val parts = result.split("\\.".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-                    var time = 0.0
-                    time = if (parts.size == 1) {
+                    var time = if (parts.size == 1) {
                         parts[0].toDouble() * 60
                     } else {
                         parts[0].toDouble() * 60 + parts[1].toDouble()
@@ -46,6 +45,6 @@ data class Event(
                 }
             }
         }
-        return Math.round(points)
+        return Math.round(points).toInt()
     }
 }

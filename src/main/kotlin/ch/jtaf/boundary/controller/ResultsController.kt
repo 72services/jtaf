@@ -82,6 +82,8 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         resultContainer.results.forEach {
             val result = resultRepository.getOne(it.id!!)
             result.result = it.result
+            result.points = result.event?.calculatePoints(result.result)!!
+
             val savedResult = resultRepository.save(result)
             savedResults.add(savedResult)
         }
@@ -95,7 +97,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         mav.model["athlete"] = athleteRepository.getOneAthleteDTO(resultContainer.athleteId!!)
         mav.model["resultContainer"] = resultContainer
 
-        mav.model["message"] = Message(Message.success, "Result saved!")
+        mav.model["message"] = Message(Message.success, "Results saved!")
         return mav
     }
 
