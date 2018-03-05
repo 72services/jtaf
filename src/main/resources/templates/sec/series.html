@@ -48,7 +48,7 @@
                 <tr>
                     <th th:text="#{messages.name}">Name</th>
                     <th th:text="#{messages.date}">Date</th>
-                    <th class="right">
+                    <th class="text-right">
                         <a th:href="@{/sec/{organization}/competition(organization=${organization},seriesId=${series.id})}"
                            th:text="#{messages.add_competition}">Add Competition</a>
                     </th>
@@ -57,7 +57,7 @@
                 <tr th:each="competition : ${series.competitions}">
                     <td th:text="${competition.name}">1. CIS Twann</td>
                     <td th:text="${competition.competitionDate}">2018-01-02</td>
-                    <td class="right">
+                    <td class="text-right">
                         <a th:href="@{/sec/{organization}/competition/{id}(organization=${organization},id=${competition.id})}"
                            th:text="#{messages.edit}">Edit</a>
                     </td>
@@ -72,7 +72,7 @@
                     <th th:text="#{messages.name}">Name</th>
                     <th th:text="#{messages.year_from}">Year From</th>
                     <th th:text="#{messages.year_to}">Year To</th>
-                    <th class="right">
+                    <th class="text-right">
                         <a th:href="@{/sec/{organization}/category(organization=${organization},seriesId=${series.id})}"
                            th:text="#{messages.add_category}">Add Category</a>
                     </th>
@@ -84,7 +84,7 @@
                     <td th:text="${category.name}">Knaben xy</td>
                     <td th:text="${category.yearFrom}">1900</td>
                     <td th:text="${category.yearTo}">2999</td>
-                    <td class="right">
+                    <td class="text-right">
                         <a th:href="@{/sec/{organization}/category/{id}(organization=${organization},id=${category.id})}"
                            th:text="#{messages.edit}">Edit</a>
                     </td>
@@ -104,9 +104,9 @@
                     <th th:text="#{messages.year_of_birth}">Year of Birth</th>
                     <th th:text="#{messages.gender}">Gender</th>
                     <th th:text="#{messages.club}">Club</th>
-                    <th class="right">
+                    <th class="text-right">
                         <a th:href="@{/sec/{organization}/athletes(organization=${organization}, mode='select', seriesId=${series.id})}"
-                           th:text="#{messages.add_athlete}" class="right">Add Athlete</a>
+                           th:text="#{messages.add_athlete}" class="text-right">Add Athlete</a>
                     </th>
                 </tr>
                 <!--/*@thymesVar id="athletes" type="java.util.List<AthleteDTO>"*/-->
@@ -118,7 +118,7 @@
                     <td th:text="${athlete.yearOfBirth}">2004</td>
                     <td th:text="${athlete.gender}">MALE</td>
                     <td th:text="${athlete.club}">TVE</td>
-                    <td class="right">
+                    <td class="text-right">
                         <a th:href="@{/sec/{organization}/series/{id}/athlete/{athleteId}/remove(organization=${organization},id=${series.id}, athleteId=${athlete.id})}"
                            th:text="#{messages.delete}">Remove</a>
                     </td>

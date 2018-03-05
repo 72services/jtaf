@@ -18,14 +18,14 @@
                 <tr>
                     <th th:text="#{messages.abbreviation}">Abbreviation</th>
                     <th th:text="#{messages.name}">Name</th>
-                    <th class="right">
+                    <th class="text-right">
                         <a th:href="@{/sec/{organization}/club(organization=${organization})}" th:text="#{messages.add_club}"
-                           class="right">Add Club</a></th>
+                           class="text-right">Add Club</a></th>
                 </tr>
                 <tr th:each="club: ${clubs}">
                     <td th:text="${club.abbreviation}">jump</td>
                     <td th:text="${club.name}">Long Jump</td>
-                    <td class="right"><a
+                    <td class="text-right"><a
                             th:href="@{/sec/{organization}/club/{id}(organization=${organization},id=${club.id})}"
                             th:text="#{messages.edit}">Edit</a></td>
                 </tr>

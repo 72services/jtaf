@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <h1 th:text="#{messages.enter_results}">Enter Results</h1>
 
-            <!--/*@thymesVar id="searchRequest" type="ch.jtaf.boundary.SearchRequest"*/-->
+            <!--/*@thymesVar id="searchRequest" type="ch.jtaf.boundary.controller.SearchRequest"*/-->
             <form action="#" th:action="@{/sec/{organization}/search(organization=${organization})}" th:object="${searchRequest}" method="post">
                 <input type="hidden" id="seriesId" th:field="*{seriesId}">
                 <input type="hidden" id="competitionId" th:field="*{competitionId}">
@@ -47,7 +47,7 @@
                     <td>
                         <span th:text="${dto.club}">TVT</span>
                     </td>
-                    <td class="right">
+                    <td class="text-right">
                         <a th:href="@{/sec/{organization}/athlete/{athleteId}/results(organization=${organization},athleteId=${dto.id},seriesId=${seriesId},competitionId=${competitionId})}"
                            th:text="#{messages.select}">Select</a>
                     </td>
@@ -74,7 +74,7 @@
                     <td>
                         <span th:text="${athlete.club}">TVT</span>
                     </td>
-                    <td class="right">
+                    <td class="text-right">
                         <a th:href="@{/sec/{organization}/athlete/{id}(organization=${organization},id=${athlete.id},mode='edit')}"
                            th:text="#{messages.edit}"></a>
                     </td>
@@ -83,7 +83,7 @@
 
             <h2 th:if="${!resultContainer.results.isEmpty()}" th:text="#{messages.results}">Results</h2>
 
-            <!--/*@thymesVar id="resultContainer" type="ch.jtaf.boundary.ResultContainer"*/-->
+            <!--/*@thymesVar id="resultContainer" type="ch.jtaf.boundary.controller.ResultContainer"*/-->
             <form th:if="${!resultContainer.results.isEmpty()}" action="#" th:action="@{/sec/{organization}/results(organization=${organization})}"
                   th:object="${resultContainer}" method="post">
                 <input type="hidden" id="result_seriesId" th:field="*{seriesId}">

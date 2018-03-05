@@ -64,7 +64,9 @@
                 <a th:href="@{/sec/{organization}/athletes(organization=${organization},seriesId=${seriesId},mode=${mode})}"
                    th:text="#{messages.back}">Back</a>
                 <!--/*@thymesVar id="message" type="java.lang.String"*/-->
-                <span th:text="${message}"></span>
+                <div th:if="${message != null}" class="alert alert-success" role="alert">
+                    <span th:text="${message}"></span>
+                </div>
             </form>
         </div>
     </div>

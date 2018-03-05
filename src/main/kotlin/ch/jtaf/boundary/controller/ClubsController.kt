@@ -1,4 +1,4 @@
-package ch.jtaf.boundary
+package ch.jtaf.boundary.controller
 
 import ch.jtaf.control.repository.ClubRepository
 import ch.jtaf.control.repository.OrganizationRepository

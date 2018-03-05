@@ -15,9 +15,9 @@
             <table class="table table-striped">
                 <tr>
                     <th th:text="#{messages.name}">Name</th>
-                    <th class="right">
+                    <th class="text-right">
                         <a th:href="@{/sec/{organization}/series(organization=${organization})}" th:text="#{messages.add_series}"
-                           class="right">Add Series</a>
+                           class="text-right">Add Series</a>
                     </th>
                 </tr>
                 <!--/*@thymesVar id="seriesList" type="java.util.List<Series>"*/-->
@@ -38,7 +38,7 @@
                                 <td>
                                     <span th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}"> Athletes 1/10</span>
                                 </td>
-                                <td class="right">
+                                <td class="text-right">
                                     <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}/results(organization=${organization},competitionId=${competition.id},seriesId=${series.id})}"
                                        th:text="#{messages.enter_results}">Enter Results</a>
 
@@ -47,7 +47,7 @@
                             </tr>
                         </table>
                     </td>
-                    <td class="right">
+                    <td class="text-right">
                         <a th:href="@{/sec/{organization}/series/{id}(organization=${organization},id=${series.id})}"
                            th:text="#{messages.edit}">Edit</a>
 

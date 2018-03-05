@@ -1,4 +1,4 @@
-package ch.jtaf.boundary
+package ch.jtaf.boundary.controller
 
 import ch.jtaf.control.repository.AthleteRepository
 import ch.jtaf.control.repository.ClubRepository
@@ -23,14 +23,16 @@ class AthleteController(private val athleteRepository: AthleteRepository,
             @RequestParam("seriesId", required = false) seriesId: Long?,
             @RequestParam("mode", required = false) mode: String?): ModelAndView {
         val mav = ModelAndView("/sec/athlete")
-        mav.model["message"] = ""
         mav.model["seriesId"] = seriesId
         mav.model["mode"] = mode
 
         val athlete = Athlete()
         mav.model["athlete"] = athlete
-        mav.model["clubs"] = clubRepository.findAll()
 
+        val organization = organizationRepository.findByKey(organizationKey)
+        mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
+
+        mav.model["message"] = null
         return mav
     }
 
@@ -41,7 +43,6 @@ class AthleteController(private val athleteRepository: AthleteRepository,
                 @RequestParam("seriesId", required = false) seriesId: Long?,
                 @RequestParam("mode", required = false) mode: String?): ModelAndView {
         val mav = ModelAndView("/sec/athlete")
-        mav.model["message"] = ""
         mav.model["seriesId"] = seriesId
         mav.model["mode"] = mode
 
@@ -50,6 +51,7 @@ class AthleteController(private val athleteRepository: AthleteRepository,
         val organization = organizationRepository.findByKey(organizationKey)
         mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
 
+        mav.model["message"] = null
         return mav
     }
 
@@ -69,9 +71,9 @@ class AthleteController(private val athleteRepository: AthleteRepository,
         mav.model["seriesId"] = seriesId
         mav.model["mode"] = mode
 
-        mav.model["message"] = "Athlete saved!"
-        mav.model["clubs"] = clubRepository.findAll()
+        mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
 
+        mav.model["message"] = "Athlete saved!"
         return mav
     }
 }
