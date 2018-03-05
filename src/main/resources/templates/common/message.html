@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="message (message)">
+    <!--/*@thymesVar id="message" type="ch.jtaf.boundary.controller.Message"*/-->
+    <div th:if="${message != null}" th:class="${'alert alert-' + message.level}" role="alert" style="margin-top: 20px;">
+        <span th:text="${message.message}"></span>
+    </div>
+</div>
+
+</body>
+</html>

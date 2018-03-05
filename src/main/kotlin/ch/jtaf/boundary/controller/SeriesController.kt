@@ -115,7 +115,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         mav.model["categories"] = categoryRepository.findAllBySeriesId(series.id!!)
         mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(series.id!!)
 
-        mav.model["message"] = "Series saved!"
+        mav.model["message"] = Message(Message.success, "Series saved!")
         return mav
     }
 

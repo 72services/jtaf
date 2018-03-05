@@ -47,7 +47,8 @@ class ClubController(private val clubRepository: ClubRepository,
         clubRepository.save(club)
 
         val mav = ModelAndView("/sec/club")
-        mav.model["message"] = "Club saved!"
+
+        mav.model["message"] = Message(Message.success, "Club saved!")
         return mav
     }
 }

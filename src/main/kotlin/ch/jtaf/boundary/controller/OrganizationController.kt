@@ -50,8 +50,7 @@ class OrganizationController(private val organizationRepository: OrganizationRep
             mav.model["organization"] = organizationFromDb
         }
 
-        mav.model["message"] = "Organization saved!"
-
+        mav.model["message"] = Message(Message.success, "Organization saved!")
         return mav
     }
 }

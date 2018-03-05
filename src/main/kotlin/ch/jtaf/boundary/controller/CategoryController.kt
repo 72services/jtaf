@@ -98,7 +98,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
             mav.model["category"] = categoryFromDb
         }
 
-        mav.model["message"] = "Category saved!"
+        mav.model["message"] = Message(Message.success, "Category saved!")
         return mav
     }
 }

@@ -31,10 +31,8 @@
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
                 <a href="/sec/organizations" th:text="#{messages.back}">Back</a>
 
-                <!--/*@thymesVar id="message" type="java.lang.String"*/-->
-                <div th:if="${message != null}" class="alert alert-success" role="alert" style="margin-top: 20px;">
-                    <span th:text="${message}"></span>
-                </div>
+                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.controller.Message"*/-->
+                <div th:include="common/message :: message (${message})"></div>
             </form>
 
         </div>

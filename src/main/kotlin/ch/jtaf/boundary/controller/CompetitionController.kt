@@ -61,7 +61,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         competitionRepository.save(competition)
 
         val mav = ModelAndView("/sec/series")
-        mav.model["message"] = "Competition saved!"
+        mav.model["message"] = Message(Message.success, "Competition saved!")
         return mav
     }
 }

@@ -47,7 +47,7 @@ class EventController(private val eventRepository: EventRepository,
         eventRepository.save(event)
 
         val mav = ModelAndView("/sec/event")
-        mav.model["message"] = "Event saved!"
+        mav.model["message"] = Message(Message.success, "Event saved!")
         return mav
     }
 }

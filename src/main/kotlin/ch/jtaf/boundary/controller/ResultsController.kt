@@ -88,7 +88,6 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         resultContainer.results = savedResults
 
         val mav = ModelAndView("/sec/athlete_results")
-        mav.model["message"] = "Results saved!"
         mav.model["seriesId"] = null
         mav.model["competitionId"] = null
         mav.model["searchRequest"] = SearchRequest(resultContainer.seriesId, resultContainer.competitionId)
@@ -96,7 +95,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         mav.model["athlete"] = athleteRepository.getOneAthleteDTO(resultContainer.athleteId!!)
         mav.model["resultContainer"] = resultContainer
 
-        mav.model["message"] = null
+        mav.model["message"] = Message(Message.success, "Result saved!")
         return mav
     }
 

@@ -73,7 +73,7 @@ class AthleteController(private val athleteRepository: AthleteRepository,
 
         mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
 
-        mav.model["message"] = "Athlete saved!"
+        mav.model["message"] = Message(Message.success, "Athlete saved!")
         return mav
     }
 }
