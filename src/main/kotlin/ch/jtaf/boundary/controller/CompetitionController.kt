@@ -17,12 +17,12 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
     fun get(@PathVariable("organization") organizationKey: String,
             @PathVariable("seriesId") seriesId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
-        mav.model["message"] = ""
 
         val competition = Competition()
         competition.seriesId = seriesId
         mav.model["competition"] = competition
 
+        mav.model["message"] = null
         return mav
     }
 
@@ -31,10 +31,10 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
                 @PathVariable("seriesId") seriesId: Long,
                 @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
-        mav.model["message"] = ""
 
         mav.model["competition"] = competitionRepository.getOne(id)
 
+        mav.model["message"] = null
         return mav
     }
 
@@ -43,13 +43,14 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
                      @PathVariable("seriesId") seriesId: Long,
                      @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/athlete_results")
-        mav.model["message"] = ""
         mav.model["seriesId"] = seriesId
         mav.model["competitionId"] = id
         mav.model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId = id)
         mav.model["athletes"] = ArrayList<AthleteDTO>()
         mav.model["athlete"] = null
         mav.model["resultContainer"] = ResultContainer(seriesId, id, null)
+
+        mav.model["message"] = null
         return mav
     }
 

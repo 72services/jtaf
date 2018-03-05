@@ -29,7 +29,6 @@ class ResultsController(private val athleteRepository: AthleteRepository,
             return getWithAthlete(user, organizationKey, id, searchRequest.seriesId, searchRequest.competitionId)
         } else {
             val mav = ModelAndView("/sec/athlete_results")
-            mav.model["message"] = ""
             mav.model["seriesId"] = searchRequest.seriesId
             mav.model["competitionId"] = searchRequest.competitionId
 
@@ -39,6 +38,8 @@ class ResultsController(private val athleteRepository: AthleteRepository,
             mav.model["athletes"] = athletes
             mav.model["athlete"] = null
             mav.model["resultContainer"] = ResultContainer(searchRequest.seriesId, searchRequest.competitionId, null)
+
+            mav.model["message"] = null
             return mav
         }
     }
@@ -62,13 +63,14 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         checkIfResultsCompleteOrAddMissingResults(category, athlete, competition, results)
 
         val mav = ModelAndView("/sec/athlete_results")
-        mav.model["message"] = ""
         mav.model["seriesId"] = seriesId
         mav.model["competitionId"] = competitionId
         mav.model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId = competitionId, term = athleteId.toString())
         mav.model["athletes"] = ArrayList<AthleteDTO>()
         mav.model["athlete"] = athleteRepository.getOneAthleteDTO(athleteId)
         mav.model["resultContainer"] = ResultContainer(seriesId, competitionId, athlete.id, results)
+
+        mav.model["message"] = null
         return mav
     }
 
@@ -93,6 +95,8 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         mav.model["athletes"] = ArrayList<AthleteDTO>()
         mav.model["athlete"] = athleteRepository.getOneAthleteDTO(resultContainer.athleteId!!)
         mav.model["resultContainer"] = resultContainer
+
+        mav.model["message"] = null
         return mav
     }
 

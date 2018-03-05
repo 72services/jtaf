@@ -18,11 +18,11 @@ class EventController(private val eventRepository: EventRepository,
     @GetMapping("/sec/{organization}/event")
     fun get(@PathVariable("organization") organizationKey: String): ModelAndView {
         val mav = ModelAndView("/sec/event")
-        mav.model["message"] = ""
 
         val event = Event()
         mav.model["event"] = event
 
+        mav.model["message"] = null
         return mav
     }
 
@@ -30,10 +30,10 @@ class EventController(private val eventRepository: EventRepository,
     fun getById(@PathVariable("organization") organizationKey: String,
                 @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/event")
-        mav.model["message"] = ""
 
         mav.model["event"] = eventRepository.getOne(id)
 
+        mav.model["message"] = null
         return mav
     }
 

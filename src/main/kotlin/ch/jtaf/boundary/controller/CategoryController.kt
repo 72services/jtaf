@@ -19,12 +19,12 @@ class CategoryController(private val categoryRepository: CategoryRepository,
     fun get(@PathVariable("organization") organizationKey: String,
             @RequestParam("seriesId") seriesId: Long): ModelAndView {
         val mav = ModelAndView("/sec/category")
-        mav.model["message"] = ""
 
         val category = Category()
         category.seriesId = seriesId
         mav.model["category"] = category
 
+        mav.model["message"] = null
         return mav
     }
 
@@ -32,10 +32,10 @@ class CategoryController(private val categoryRepository: CategoryRepository,
     fun getById(@PathVariable("organization") organizationKey: String,
                 @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/category")
-        mav.model["message"] = ""
 
         mav.model["category"] = categoryRepository.getOne(id)
 
+        mav.model["message"] = null
         return mav
     }
 
@@ -44,7 +44,6 @@ class CategoryController(private val categoryRepository: CategoryRepository,
                  @PathVariable("id") id: Long,
                  @PathVariable("eventId") eventId: Long): ModelAndView {
         val mav = ModelAndView("/sec/category")
-        mav.model["message"] = ""
 
         val category = categoryRepository.getOne(id)
         val event = eventRepository.getOne(eventId)
@@ -55,6 +54,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
 
         mav.model["category"] = category
 
+        mav.model["message"] = null
         return mav
     }
 
@@ -63,7 +63,6 @@ class CategoryController(private val categoryRepository: CategoryRepository,
                    @PathVariable("id") id: Long,
                    @PathVariable("eventId") eventId: Long): ModelAndView {
         val mav = ModelAndView("/sec/category")
-        mav.model["message"] = ""
 
         val category = categoryRepository.getOne(id)
         val event = eventRepository.getOne(eventId)
@@ -74,6 +73,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
 
         mav.model["category"] = category
 
+        mav.model["message"] = null
         return mav
     }
 

@@ -33,8 +33,11 @@
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
                 <a th:href="@{/sec/{organization}/clubs(organization=${organization})}"
                    th:text="#{messages.back}">Back</a>
+
                 <!--/*@thymesVar id="message" type="java.lang.String"*/-->
-                <span th:text="${message}"></span>
+                <div th:if="${message != null}" class="alert alert-success" role="alert" style="margin-top: 20px;">
+                    <span th:text="${message}"></span>
+                </div>
             </form>
         </div>
     </div>

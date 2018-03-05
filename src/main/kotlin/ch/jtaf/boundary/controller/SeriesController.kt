@@ -22,8 +22,9 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     @GetMapping("/sec/{organization}/series")
     fun get(@PathVariable("organization") organizationKey: String): ModelAndView {
         val mav = ModelAndView("/sec/series")
-        mav.model["message"] = ""
         mav.model["series"] = Series()
+
+        mav.model["message"] = null
         return mav
     }
 
@@ -31,11 +32,11 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     fun getById(@PathVariable("organization") organizationKey: String,
                 @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
-        mav.model["message"] = ""
         mav.model["series"] = seriesRepository.getOne(id)
         mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
         mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
 
+        mav.model["message"] = null
         return mav
     }
 
@@ -43,7 +44,6 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     fun addEvent(@PathVariable("organization") organizationKey: String,
                  @PathVariable("id") id: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
-        mav.model["message"] = ""
 
         val series = seriesRepository.getOne(id)
         val athlete = athleteRepository.getOne(athleteId)
@@ -62,6 +62,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
         mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
 
+        mav.model["message"] = null
         return mav
     }
 
@@ -69,7 +70,6 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     fun deleteById(@PathVariable("organization") organizationKey: String,
                    @PathVariable("id") id: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
-        mav.model["message"] = ""
 
         val series = seriesRepository.getOne(id)
         val athlete = athleteRepository.getOne(athleteId)
@@ -83,6 +83,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
         mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
 
+        mav.model["message"] = null
         return mav
     }
 
@@ -111,11 +112,10 @@ class SeriesController(private val seriesRepository: SeriesRepository,
             mav.model["series"] = seriesFromDb
         }
 
-        mav.model["message"] = "Series saved!"
-
         mav.model["categories"] = categoryRepository.findAllBySeriesId(series.id!!)
         mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(series.id!!)
 
+        mav.model["message"] = "Series saved!"
         return mav
     }
 
@@ -130,6 +130,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         val organization = organizationRepository.findByKey(organizationKey)
         mav.model["seriesList"] = seriesRepository.findByOrganizationId(organization.id!!)
 
+        mav.model["message"] = null
         return mav
     }
 
