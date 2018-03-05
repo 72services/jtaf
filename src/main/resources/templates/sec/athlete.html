@@ -12,11 +12,13 @@
         <div class="col-md-12">
             <h1 th:text="#{messages.edit_athlete}">Edit Athlete</h1>
 
-            <!--/*@thymesVar id="seriesId" type="java.lang.String"*/-->
+            <!--/*@thymesVar id="seriesId" type="java.lang.Long"*/-->
             <!--/*@thymesVar id="mode" type="java.lang.String"*/-->
             <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.Athlete"*/-->
+            <!--/*@thymesVar id="competitionId" type="java.lang.Long"*/-->
+            <!--/*@thymesVar id="returnTo" type="java.lang.String"*/-->
             <form action="#"
-                  th:action="@{/sec/{organization}/athlete(organization=${organization},seriesId=${seriesId},mode=${mode})}"
+                  th:action="@{/sec/{organization}/athlete(organization=${organization},seriesId=${seriesId},competitionId=${competitionId},mode=${mode},returnTo=${returnTo})}"
                   th:object="${athlete}" method="post">
 
                 <div class="form-group">

@@ -16,14 +16,18 @@ import org.springframework.web.servlet.ModelAndView
 @Controller
 class AthleteController(private val athleteRepository: AthleteRepository,
                         private val clubRepository: ClubRepository,
-                        private val organizationRepository: OrganizationRepository) {
+                        private val organizationRepository: OrganizationRepository,
+                        private val resultsController: ResultsController) {
 
     @GetMapping("/sec/{organization}/athlete")
     fun get(@PathVariable("organization") organizationKey: String,
             @RequestParam("seriesId", required = false) seriesId: Long?,
-            @RequestParam("mode", required = false) mode: String?): ModelAndView {
+            @RequestParam("competitionId", required = false) competitionId: Long?,
+            @RequestParam("mode", required = false) mode: String?,
+            @RequestParam("returnTo", required = false) returnTo: String?): ModelAndView {
         val mav = ModelAndView("/sec/athlete")
         mav.model["seriesId"] = seriesId
+        mav.model["competitionId"] = competitionId
         mav.model["mode"] = mode
 
         val athlete = Athlete()
@@ -41,10 +45,15 @@ class AthleteController(private val athleteRepository: AthleteRepository,
                 @PathVariable("organization") organizationKey: String,
                 @PathVariable("id") id: Long,
                 @RequestParam("seriesId", required = false) seriesId: Long?,
-                @RequestParam("mode", required = false) mode: String?): ModelAndView {
+                @RequestParam("competitionId", required = false) competitionId: Long?,
+                @RequestParam("mode", required = false) mode: String?,
+                @RequestParam("returnTo", required = false) returnTo: String?): ModelAndView {
         val mav = ModelAndView("/sec/athlete")
         mav.model["seriesId"] = seriesId
+        mav.model["competitionId"] = competitionId
         mav.model["mode"] = mode
+        mav.model["returnTo"] = returnTo
+        mav.model["returnTo"] = returnTo
 
         mav.model["athlete"] = athleteRepository.getOne(id)
 
@@ -59,7 +68,9 @@ class AthleteController(private val athleteRepository: AthleteRepository,
     fun post(@AuthenticationPrincipal user: User,
              @PathVariable("organization") organizationKey: String,
              @RequestParam("seriesId", required = false) seriesId: Long?,
+             @RequestParam("competitionId", required = false) competitionId: Long?,
              @RequestParam("mode", required = false) mode: String?,
+             @RequestParam("returnTo", required = false) returnTo: String?,
              athlete: Athlete): ModelAndView {
 
         val organization = organizationRepository.findByKey(organizationKey)
@@ -67,13 +78,19 @@ class AthleteController(private val athleteRepository: AthleteRepository,
 
         athleteRepository.save(athlete)
 
-        val mav = ModelAndView("/sec/athlete")
-        mav.model["seriesId"] = seriesId
-        mav.model["mode"] = mode
+        if (returnTo == "results") {
+            return resultsController.getWithAthlete(user, organizationKey, athlete.id!!, seriesId!!, competitionId!!)
+        } else {
+            val mav = ModelAndView("/sec/athlete")
+            mav.model["seriesId"] = seriesId
+            mav.model["competitionId"] = competitionId
+            mav.model["mode"] = mode
+            mav.model["returnTo"] = returnTo
 
-        mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
+            mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
 
-        mav.model["message"] = Message(Message.success, "Athlete saved!")
-        return mav
+            mav.model["message"] = Message(Message.success, "Athlete saved!")
+            return mav
+        }
     }
 }

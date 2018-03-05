@@ -77,6 +77,8 @@ class ResultsController(private val athleteRepository: AthleteRepository,
     @PostMapping("/sec/{organization}/results")
     fun postResults(@AuthenticationPrincipal user: User,
                     @PathVariable("organization") organizationKey: String,
+                    @RequestParam("seriesId") seriesId: Long,
+                    @RequestParam("competitionId") competitionId: Long,
                     resultContainer: ResultContainer): ModelAndView {
         val savedResults = ArrayList<Result>()
         resultContainer.results.forEach {
@@ -90,8 +92,8 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         resultContainer.results = savedResults
 
         val mav = ModelAndView("/sec/athlete_results")
-        mav.model["seriesId"] = null
-        mav.model["competitionId"] = null
+        mav.model["seriesId"] = seriesId
+        mav.model["competitionId"] = competitionId
         mav.model["searchRequest"] = SearchRequest(resultContainer.seriesId, resultContainer.competitionId)
         mav.model["athletes"] = ArrayList<AthleteDTO>()
         mav.model["athlete"] = athleteRepository.getOneAthleteDTO(resultContainer.athleteId!!)

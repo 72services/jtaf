@@ -15,12 +15,14 @@
             <h1 th:text="#{messages.enter_results}">Enter Results</h1>
 
             <!--/*@thymesVar id="searchRequest" type="ch.jtaf.boundary.controller.SearchRequest"*/-->
-            <form action="#" th:action="@{/sec/{organization}/search(organization=${organization})}" th:object="${searchRequest}" method="post">
+            <form action="#" th:action="@{/sec/{organization}/search(organization=${organization})}"
+                  th:object="${searchRequest}" method="post">
                 <input type="hidden" id="seriesId" th:field="*{seriesId}">
                 <input type="hidden" id="competitionId" th:field="*{competitionId}">
                 <div class="form-group">
                     <label for="term" th:text="#{messages.search_athletes}">Search Athletes</label>
-                    <input class="form-control" id="term" th:field="*{term}" th:autofocus="${resultContainer.results.isEmpty()}">
+                    <input class="form-control" id="term" th:field="*{term}"
+                           th:autofocus="${resultContainer.results.isEmpty()}">
                 </div>
 
                 <button type="submit" class="btn btn-primary" th:text="#{messages.search}">Search</button>
@@ -75,7 +77,7 @@
                         <span th:text="${athlete.club}">TVT</span>
                     </td>
                     <td class="text-right">
-                        <a th:href="@{/sec/{organization}/athlete/{id}(organization=${organization},id=${athlete.id},mode='edit')}"
+                        <a th:href="@{/sec/{organization}/athlete/{id}(organization=${organization},id=${athlete.id},seriesId=${seriesId},competitionId=${competitionId},mode='edit',returnTo='results')}"
                            th:text="#{messages.edit}"></a>
                     </td>
                 </tr>
@@ -84,7 +86,8 @@
             <h2 th:if="${!resultContainer.results.isEmpty()}" th:text="#{messages.results}">Results</h2>
 
             <!--/*@thymesVar id="resultContainer" type="ch.jtaf.boundary.controller.ResultContainer"*/-->
-            <form th:if="${!resultContainer.results.isEmpty()}" action="#" th:action="@{/sec/{organization}/results(organization=${organization})}"
+            <form th:if="${!resultContainer.results.isEmpty()}" action="#"
+                  th:action="@{/sec/{organization}/results(organization=${organization},seriesId=${seriesId},competitionId=${competitionId})}"
                   th:object="${resultContainer}" method="post">
                 <input type="hidden" id="result_seriesId" th:field="*{seriesId}">
                 <input type="hidden" id="result_competitionId" th:field="*{competitionId}">
@@ -111,6 +114,7 @@
 
                 <!--/*@thymesVar id="message" type="ch.jtaf.boundary.controller.Message"*/-->
                 <div th:include="common/message :: message (${message})"></div>
+
             </form>
         </div>
     </div>
