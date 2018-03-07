@@ -1,5 +1,6 @@
 package ch.jtaf.entity
 
+import java.lang.Math.*
 import javax.persistence.*
 import javax.persistence.GenerationType.IDENTITY
 
@@ -25,26 +26,27 @@ data class Event(
 ) {
 
     fun calculatePoints(result: String): Int {
-        var points = 0.0
         if (result.toDouble() > 0) {
-            when (eventType) {
+            val points = when (eventType) {
                 EventType.RUN -> {
-                    points = a * Math.pow((b - result.toDouble() * 100) / 100, c)
+                    a * pow((b - result.toDouble() * 100) / 100, c)
                 }
                 EventType.RUN_LONG -> {
                     val parts = result.split("\\.".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-                    var time = if (parts.size == 1) {
+                    val time = if (parts.size == 1) {
                         parts[0].toDouble() * 60
                     } else {
                         parts[0].toDouble() * 60 + parts[1].toDouble()
                     }
-                    points = a * Math.pow((b - time * 100) / 100, c)
+                    a * pow((b - time * 100) / 100, c)
                 }
                 EventType.JUMP_THROW -> {
-                    points = a * Math.pow((result.toDouble() * 100 - b) / 100, c)
+                    a * pow((result.toDouble() * 100 - b) / 100, c)
                 }
             }
+            return round(points).toInt()
+        } else {
+            return 0;
         }
-        return Math.round(points).toInt()
     }
 }
