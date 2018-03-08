@@ -30,7 +30,7 @@
                             <span th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}">Athletes 1/10</span>
                         </div>
                         <div class="col-md-3">
-                            <a th:href="@{/ranking/competition/{id}(id=${competition.id})}">Ranking</a>
+                            <a th:href="@{/ranking/competition/{id}/pdf(id=${competition.id})}">Ranking</a>
                         </div>
                     </div>
                 </div>

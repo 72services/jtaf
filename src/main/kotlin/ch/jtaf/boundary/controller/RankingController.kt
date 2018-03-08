@@ -9,22 +9,25 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpHeaders
+import org.springframework.web.servlet.ModelAndView
 
 
 @Controller
 class RankingController(private val rankingService: CompetitionRankingService) {
 
-    @GetMapping("/ranking/competition/{id}", produces = arrayOf(APPLICATION_PDF_VALUE))
-    fun get(@PathVariable("id") competitionId: Long): ResponseEntity<ByteArray> {
+    val httpContentUtil = HttpContentUtil()
+
+    @GetMapping("/ranking/competition/{id}/pdf", produces = [APPLICATION_PDF_VALUE])
+    fun getCompetitionRankingAsPdf(@PathVariable("id") competitionId: Long): ResponseEntity<ByteArray> {
         val competitionRanking = rankingService.createCompetitionRanking(competitionId)
+        return httpContentUtil.getContentAsPdf("competition_$competitionId.pdf", competitionRanking)
+    }
 
-        val headers = HttpHeaders()
-        headers.contentType = MediaType.parseMediaType("application/pdf")
-        val filename = "competition_$competitionId.pdf"
-        headers.setContentDispositionFormData(filename, filename)
-        headers.cacheControl = "must-revalidate, post-check=0, pre-check=0"
-
-        return ResponseEntity(competitionRanking, headers, HttpStatus.OK)
+    @GetMapping("/ranking/competition/{id}")
+    fun getCompetitionRanking(@PathVariable("id") competitionId: Long): ModelAndView {
+        val mav = ModelAndView("/ranking/competition")
+        mav.model["competitionRanking"] = rankingService.getCompetitionRankingData(competitionId)
+        return mav
     }
 
 }
