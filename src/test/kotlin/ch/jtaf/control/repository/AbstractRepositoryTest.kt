@@ -3,6 +3,7 @@ package ch.jtaf.control.repository
 import ch.jtaf.entity.*
 import org.junit.Before
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
 
 abstract class AbstractRepositoryTest {
@@ -10,6 +11,7 @@ abstract class AbstractRepositoryTest {
     val email = "john.doe@jtaf.ch"
     var organizationId = 0L
     var seriesId = 0L
+    var competitionId = 0L
     var athleteId = 0L
 
     @Autowired
@@ -45,6 +47,8 @@ abstract class AbstractRepositoryTest {
 
         val competition = Competition(name = "1. CIS Twann", seriesId = series.id)
         em.persist(competition)
+        competitionId = competition.id!!
+
         series.competitions.add(competition)
 
         val category = Category(abbreviation = "A", name = "Boys", yearFrom = 2000, yearTo = 2004, seriesId = series.id)
