@@ -17,8 +17,8 @@ class EventsController(private val eventRepository: EventRepository,
     @GetMapping("/sec/{organization}/events")
     fun get(@AuthenticationPrincipal user: User,
             @PathVariable("organization") organizationKey: String,
-            @RequestParam("mode", required = false) mode: String?,
-            @RequestParam("categoryId", required = false) categoryId: Long?): ModelAndView {
+            @RequestParam("mode") mode: String?,
+            @RequestParam("categoryId") categoryId: Long?): ModelAndView {
         val mav = ModelAndView("/sec/events")
 
         val organization = organizationRepository.findByKey(organizationKey)

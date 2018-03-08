@@ -17,8 +17,8 @@ class AthletesController(private val athleteRepository: AthleteRepository,
     @GetMapping("/sec/{organization}/athletes")
     fun get(@AuthenticationPrincipal user: User,
             @PathVariable("organization") organizationKey: String,
-            @RequestParam("mode", required = false) mode: String?,
-            @RequestParam("seriesId", required = false) seriesId: Long?): ModelAndView {
+            @RequestParam("mode") mode: String?,
+            @RequestParam("seriesId") seriesId: Long?): ModelAndView {
 
         val mav = ModelAndView("/sec/athletes")
 
