@@ -17,6 +17,8 @@ import java.util.*
 
 class SeriesRanking(private val ranking: SeriesRankingData, locale: Locale) : Ranking(locale) {
 
+    private val logger = LoggerFactory.getLogger(SeriesRanking::class.java)
+
     private var document: Document? = null
 
     fun create(): ByteArray {
@@ -31,36 +33,32 @@ class SeriesRanking(private val ranking: SeriesRankingData, locale: Locale) : Ra
                 pdfWriter.flush()
                 return baos.toByteArray()
             }
-        } catch (e: DocumentException) {
-            LOGGER.error(e.message, e)
-            return ByteArray(0)
-        } catch (e: IOException) {
-            LOGGER.error(e.message, e)
+        } catch (e: Exception) {
+            logger.error(e.message, e)
             return ByteArray(0)
         }
 
     }
 
-    @Throws(DocumentException::class)
     private fun createRanking() {
-        for (category in ranking.categories) {
+        ranking.categories.forEach {
             if (numberOfRows > 22) {
                 document!!.newPage()
             }
             var table = createAthletesTable()
-            createCategoryTitle(table, category)
-            numberOfRows = numberOfRows + 2
+            createCategoryTitle(table, it)
+            numberOfRows += 2
 
             var position = 1
-            for (athlete in category.athletes) {
+            it.athletes.forEach {
                 if (numberOfRows > 22) {
                     document!!.add(table)
                     document!!.newPage()
                     table = createAthletesTable()
                 }
-                createAthleteRow(table, position, athlete)
+                createAthleteRow(table, position, it)
                 position++
-                numberOfRows = numberOfRows + 1
+                numberOfRows += 1
             }
             document!!.add(table)
         }
@@ -75,9 +73,7 @@ class SeriesRanking(private val ranking: SeriesRankingData, locale: Locale) : Ra
 
     private fun createCategoryTitle(table: PdfPTable, category: SeriesRankingCategoryData) {
         addCategoryTitleCellWithColspan(table, category.category.abbreviation, 1)
-        addCategoryTitleCellWithColspan(table, category.category.name + " "
-                + category.category.yearFrom + " - " + category.category.yearTo, 5)
-
+        addCategoryTitleCellWithColspan(table, category.category.name + " " + category.category.yearFrom + " - " + category.category.yearTo, 5)
         addCategoryTitleCellWithColspan(table, " ", 6)
     }
 
@@ -87,31 +83,17 @@ class SeriesRanking(private val ranking: SeriesRankingData, locale: Locale) : Ra
         addCell(table, athlete.athlete.firstName)
         addCell(table, athlete.athlete.yearOfBirth.toString())
         addCell(table, if (athlete.athlete.club == null) "" else athlete.athlete.club!!.abbreviation)
-        addCellAlignRight(table, getSeriesPoints(athlete.results).toString())
+        addCellAlignRight(table, athlete.results.sumBy { it.points }.toString())
 
         val sb = StringBuilder()
-        for (competition in ranking.series.competitions) {
+        ranking.series.competitions.forEach { competition ->
             sb.append(competition.name)
             sb.append(": ")
-            sb.append(getCompetitionPoints(athlete.results, competition))
+            sb.append(athlete.results.filter { it.competition == competition }.sumBy { it.points })
             sb.append(" ")
         }
         addCell(table, "")
         addResultsCell(table, sb.toString())
     }
 
-    private fun getCompetitionPoints(results: List<Result>, competition: Competition): Int {
-        // TODO
-        return 0
-    }
-
-    private fun getSeriesPoints(results: List<Result>): Int {
-        // TODO
-        return 0
-    }
-
-    companion object {
-
-        private val LOGGER = LoggerFactory.getLogger(SeriesRanking::class.java)
-    }
 }

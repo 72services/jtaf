@@ -81,10 +81,12 @@ class ResultsController(private val athleteRepository: AthleteRepository,
                     @RequestParam("competitionId") competitionId: Long,
                     resultContainer: ResultContainer): ModelAndView {
         val savedResults = ArrayList<Result>()
+        var position = 0
         resultContainer.results.forEach {
             val result = resultRepository.getOne(it.id!!)
             result.result = it.result
-            result.points = result.event?.calculatePoints(result.result)!!
+            result.points = result.event!!.calculatePoints(result.result)
+            result.position = position++
 
             val savedResult = resultRepository.save(result)
             savedResults.add(savedResult)
@@ -111,12 +113,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
             val newResults = ArrayList<Result>()
             category.events.forEach { event: Event ->
                 if (!results.any { it.event == event }) {
-                    val result = Result()
-                    result.event = event
-                    result.athlete = athlete
-                    result.competition = competition
-                    result.position = event.position
-
+                    val result = Result(category = category, event = event, athlete = athlete, competition = competition, position = event.position)
                     resultRepository.save(result)
                     newResults.add(result)
                 }

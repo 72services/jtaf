@@ -6,16 +6,16 @@ import ch.jtaf.entity.AthleteWithResultsDTO
 import ch.jtaf.entity.Category
 import ch.jtaf.entity.Competition
 import com.itextpdf.text.Document
-import com.itextpdf.text.DocumentException
 import com.itextpdf.text.PageSize
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import org.slf4j.LoggerFactory
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import java.util.*
 
 class CompetitionRanking(private val ranking: CompetitionRankingData, locale: Locale) : Ranking(locale) {
+
+    private val logger = LoggerFactory.getLogger(CompetitionRanking::class.java)
 
     private var document: Document? = null
 
@@ -24,25 +24,25 @@ class CompetitionRanking(private val ranking: CompetitionRankingData, locale: Lo
             ByteArrayOutputStream().use { baos ->
                 val border = cmToPixel(1.5f)
                 document = Document(PageSize.A4, border, border, border, border)
+
                 val pdfWriter = PdfWriter.getInstance(document!!, baos)
                 pdfWriter.pageEvent = HeaderFooter("Ranking", ranking.competition.name, sdf.format(ranking.competition.competitionDate))
+
                 document!!.open()
+
                 createRanking()
+
                 document!!.close()
+
                 pdfWriter.flush()
                 return baos.toByteArray()
             }
-        } catch (e: DocumentException) {
-            LOGGER.error(e.message, e)
-            return ByteArray(0)
-        } catch (e: IOException) {
-            LOGGER.error(e.message, e)
+        } catch (e: Exception) {
+            logger.error(e.message, e)
             return ByteArray(0)
         }
-
     }
 
-    @Throws(DocumentException::class)
     private fun createRanking() {
         for (category in ranking.categories) {
             if (numberOfRows > 24) {
@@ -50,10 +50,10 @@ class CompetitionRanking(private val ranking: CompetitionRankingData, locale: Lo
             }
             var table = createAthletesTable()
             createCategoryTitle(table, category.category)
-            numberOfRows = numberOfRows + 2
+            numberOfRows += 2
 
             var rank = 1
-            for (athlete in category.athletes) {
+            category.getAthletesSortedByPointsDesc().forEach { athlete ->
                 if (numberOfRows > 23) {
                     document!!.add(table)
                     table = createAthletesTable()
@@ -61,7 +61,7 @@ class CompetitionRanking(private val ranking: CompetitionRankingData, locale: Lo
                 }
                 createAthleteRow(table, rank, athlete, calculateNumberOfMedals(category))
                 rank++
-                numberOfRows = numberOfRows + 1
+                numberOfRows += 1
             }
             document!!.add(table)
         }
@@ -102,10 +102,10 @@ class CompetitionRanking(private val ranking: CompetitionRankingData, locale: Lo
         addCell(table, athlete.athlete.firstName)
         addCell(table, athlete.athlete.yearOfBirth.toString())
         addCell(table, if (athlete.athlete.club == null) "" else athlete.athlete.club!!.abbreviation)
-        addCellAlignRight(table, calculateTotalPoints(ranking.competition).toString())
+        addCellAlignRight(table, athlete.results.sumBy { it.points }.toString())
 
         val sb = StringBuilder()
-        for (result in athlete.results) {
+        athlete.results.forEach { result ->
             sb.append(result.event!!.name)
             sb.append(": ")
             sb.append(result.result)
@@ -115,16 +115,6 @@ class CompetitionRanking(private val ranking: CompetitionRankingData, locale: Lo
         }
         addCell(table, "")
         addResultsCell(table, sb.toString())
-    }
-
-    private fun calculateTotalPoints(competition: Competition?): Int {
-        // TODO
-        return 0
-    }
-
-    companion object {
-
-        private val LOGGER = LoggerFactory.getLogger(CompetitionRanking::class.java)
     }
 
 }

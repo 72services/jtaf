@@ -15,36 +15,37 @@ class CategoryController(private val categoryRepository: CategoryRepository,
                          private val eventRepository: EventRepository,
                          private val organizationAuthorizationChecker: OrganizationAuthorizationChecker) {
 
-    @GetMapping("/sec/{organization}/category")
+    @GetMapping("/sec/{organization}/series/{seriesId}/category")
     fun get(@PathVariable("organization") organizationKey: String,
-            @RequestParam("seriesId") seriesId: Long): ModelAndView {
-        val mav = ModelAndView("/sec/category")
-
+            @PathVariable("seriesId") seriesId: Long): ModelAndView {
         val category = Category()
         category.seriesId = seriesId
+
+        val mav = ModelAndView("/sec/category")
+        mav.model["seriesId"] = seriesId
         mav.model["category"] = category
 
         mav.model["message"] = null
         return mav
     }
 
-    @GetMapping("/sec/{organization}/category/{id}")
+    @GetMapping("/sec/{organization}/series/{seriesId}/category/{id}")
     fun getById(@PathVariable("organization") organizationKey: String,
+                @PathVariable("seriesId") seriesId: Long,
                 @PathVariable("id") id: Long): ModelAndView {
         val mav = ModelAndView("/sec/category")
-
+        mav.model["seriesId"] = seriesId
         mav.model["category"] = categoryRepository.getOne(id)
 
         mav.model["message"] = null
         return mav
     }
 
-    @GetMapping("/sec/{organization}/category/{id}/event/{eventId}")
+    @GetMapping("/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}")
     fun addEvent(@PathVariable("organization") organizationKey: String,
                  @PathVariable("id") id: Long,
+                 @PathVariable("seriesId") seriesId: Long,
                  @PathVariable("eventId") eventId: Long): ModelAndView {
-        val mav = ModelAndView("/sec/category")
-
         val category = categoryRepository.getOne(id)
         val event = eventRepository.getOne(eventId)
         category.events.add(event)
@@ -52,18 +53,19 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         category.updateEventPositions()
         categoryRepository.save(category)
 
+        val mav = ModelAndView("/sec/category")
+        mav.model["seriesId"] = seriesId
         mav.model["category"] = category
 
         mav.model["message"] = null
         return mav
     }
 
-    @GetMapping("/sec/{organization}/category/{id}/event/{eventId}/delete")
+    @GetMapping("/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/delete")
     fun deleteById(@PathVariable("organization") organizationKey: String,
                    @PathVariable("id") id: Long,
+                   @PathVariable("seriesId") seriesId: Long,
                    @PathVariable("eventId") eventId: Long): ModelAndView {
-        val mav = ModelAndView("/sec/category")
-
         val category = categoryRepository.getOne(id)
         val event = eventRepository.getOne(eventId)
         category.events.remove(event)
@@ -71,16 +73,20 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         category.updateEventPositions()
         categoryRepository.save(category)
 
+        val mav = ModelAndView("/sec/category")
+        mav.model["seriesId"] = seriesId
         mav.model["category"] = category
 
         mav.model["message"] = null
         return mav
     }
 
-    @PostMapping("/sec/{organization}/category/")
+    @PostMapping("/sec/{organization}/series/{seriesId}/category/")
     fun post(@PathVariable("organization") organizationKey: String,
+             @PathVariable("seriesId") seriesId: Long,
              category: Category): ModelAndView {
         val mav = ModelAndView("/sec/category")
+        mav.model["seriesId"] = seriesId
 
         if (category.id == null) {
             categoryRepository.save(category)

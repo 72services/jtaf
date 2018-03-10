@@ -10,16 +10,14 @@ import java.util.Locale
 abstract class Ranking protected constructor(locale: Locale) : AbstractReport(locale) {
 
     protected fun addCategoryTitleCellWithColspan(table: PdfPTable, text: String, colspan: Int) {
-        val cell = PdfPCell(
-                Phrase(text, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12f)))
+        val cell = PdfPCell(Phrase(text, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12f)))
         cell.border = 0
         cell.colspan = colspan
         table.addCell(cell)
     }
 
     protected fun addResultsCell(table: PdfPTable, text: String) {
-        val cell = PdfPCell(
-                Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, 7f)))
+        val cell = PdfPCell(Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, 7f)))
         cell.colspan = 5
         cell.border = 0
         cell.paddingBottom = 8f

@@ -9,9 +9,15 @@ import org.slf4j.LoggerFactory
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.util.*
-import java.util.function.Predicate
 
 class Sheets : AbstractReport {
+
+    private val logger = LoggerFactory.getLogger(Sheets::class.java)
+
+    private val fontSizeInfo = 8f
+    private val fontSizeText = 16f
+    private val infoLineHeight = 40f
+
     private var document: Document? = null
     private var pdfWriter: PdfWriter? = null
     private val competition: Competition?
@@ -51,7 +57,7 @@ class Sheets : AbstractReport {
                 document!!.open()
                 var first = true
                 var number = 1
-                for (athlete in athletes) {
+                athletes.forEach { athlete ->
                     if (!first) {
                         document!!.newPage()
                     }
@@ -59,7 +65,7 @@ class Sheets : AbstractReport {
                     createCategory(athlete)
                     createAthleteInfo(athlete, number)
                     createCompetitionRow()
-                    createEventTable(getCategoryByAbbreviation(athlete.category)!!)
+                    createEventTable(categories.find { it.abbreviation == athlete.category }!!)
                     first = false
                     number++
                 }
@@ -67,21 +73,12 @@ class Sheets : AbstractReport {
                 pdfWriter!!.flush()
                 return baos.toByteArray()
             }
-        } catch (e: DocumentException) {
-            LOGGER.error(e.message, e)
-            return ByteArray(0)
-        } catch (e: IOException) {
-            LOGGER.error(e.message, e)
+        } catch (e: Exception) {
+            logger.error(e.message, e)
             return ByteArray(0)
         }
-
     }
 
-    private fun getCategoryByAbbreviation(categoryAbbreviation: String): Category? {
-        return categories.find { it.abbreviation == categoryAbbreviation }
-    }
-
-    @Throws(DocumentException::class, IOException::class)
     private fun createLogo() {
         if (logo != null) {
             val image = Image.getInstance(logo)
@@ -101,7 +98,6 @@ class Sheets : AbstractReport {
         table.writeSelectedRows(0, 1, document!!.leftMargin(), cmToPixel(20.5f), pdfWriter!!.directContent)
     }
 
-    @Throws(DocumentException::class)
     private fun createAthleteInfo(athlete: AthleteDTO, number: Int) {
         val table = PdfPTable(2)
         table.widthPercentage = 100f
@@ -142,35 +138,30 @@ class Sheets : AbstractReport {
         document!!.add(table)
     }
 
-    @Throws(DocumentException::class)
     private fun createCompetitionRow() {
         val table = PdfPTable(1)
         table.widthPercentage = 100f
         table.spacingBefore = cmToPixel(0.5f)
         table.spacingAfter = cmToPixel(0.5f)
 
-        addCompetitionCell(table, if (competition == null)
-            ""
-        else
-            competition.name + " " + sdf.format(competition.competitionDate))
+        addCompetitionCell(table, if (competition == null) "" else competition.name + " " + sdf.format(competition.competitionDate))
 
         document!!.add(table)
     }
 
-    @Throws(DocumentException::class)
     private fun createEventTable(category: Category) {
         val table = PdfPTable(4)
         table.widthPercentage = 100f
         table.spacingBefore = cmToPixel(1f)
 
-        for (event in category.events) {
-            if (event.eventType.equals(EventType.JUMP_THROW)) {
-                addInfoCell(table, event.name)
+        category.events.forEach {
+            if (it.eventType.equals(EventType.JUMP_THROW)) {
+                addInfoCell(table, it.name)
                 addInfoCellWithBorder(table, "")
                 addInfoCellWithBorder(table, "")
                 addInfoCellWithBorder(table, "")
             } else {
-                addInfoCellWithColspan(table, event.name, 3)
+                addInfoCellWithColspan(table, it.name, 3)
                 addInfoCellWithBorder(table, "")
             }
         }
@@ -178,52 +169,38 @@ class Sheets : AbstractReport {
         document!!.add(table)
     }
 
-    protected fun addCategoryCell(table: PdfPTable, text: String) {
-        val cell = PdfPCell(
-                Phrase(text, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 80f)))
+    private fun addCategoryCell(table: PdfPTable, text: String) {
+        val cell = PdfPCell(Phrase(text, FontFactory.getFont(FontFactory.HELVETICA_BOLD, 80f)))
         cell.border = 0
         cell.horizontalAlignment = PdfPCell.ALIGN_RIGHT
         table.addCell(cell)
     }
 
     private fun addCompetitionCell(table: PdfPTable, text: String) {
-        val cell = PdfPCell(
-                Phrase(text, FontFactory.getFont(FontFactory.HELVETICA_BOLD, FONT_SIZE_TEXT)))
+        val cell = PdfPCell(Phrase(text, FontFactory.getFont(FontFactory.HELVETICA_BOLD, fontSizeText)))
         cell.border = 0
         table.addCell(cell)
     }
 
     private fun addInfoCell(table: PdfPTable, text: String) {
-        val cell = PdfPCell(
-                Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, FONT_SIZE_TEXT)))
+        val cell = PdfPCell(Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, fontSizeText)))
         cell.border = 0
-        cell.minimumHeight = INFO_LINE_HEIGHT
+        cell.minimumHeight = infoLineHeight
         table.addCell(cell)
     }
 
     private fun addInfoCellWithColspan(table: PdfPTable, text: String, colspan: Int) {
-        val cell = PdfPCell(
-                Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, FONT_SIZE_TEXT)))
+        val cell = PdfPCell(Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, fontSizeText)))
         cell.border = 0
         cell.colspan = colspan
-        cell.minimumHeight = INFO_LINE_HEIGHT
+        cell.minimumHeight = infoLineHeight
         table.addCell(cell)
     }
 
     private fun addInfoCellWithBorder(table: PdfPTable, text: String) {
-        val cell = PdfPCell(
-                Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, FONT_SIZE_INFO)))
-        cell.minimumHeight = INFO_LINE_HEIGHT
+        val cell = PdfPCell(Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, fontSizeInfo)))
+        cell.minimumHeight = infoLineHeight
         cell.borderWidth = 1f
         table.addCell(cell)
-    }
-
-    companion object {
-
-        private val LOGGER = LoggerFactory.getLogger(Sheets::class.java)
-
-        private val FONT_SIZE_INFO = 8f
-        private val FONT_SIZE_TEXT = 16f
-        val INFO_LINE_HEIGHT = 40f
     }
 }

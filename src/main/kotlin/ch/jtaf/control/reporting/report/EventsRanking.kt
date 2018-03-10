@@ -4,16 +4,16 @@ import ch.jtaf.control.reporting.data.EventsRankingData
 import ch.jtaf.control.reporting.data.EventsRankingEventData
 import ch.jtaf.entity.AthleteWithEventDTO
 import com.itextpdf.text.Document
-import com.itextpdf.text.DocumentException
 import com.itextpdf.text.PageSize
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import org.slf4j.LoggerFactory
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import java.util.*
 
 class EventsRanking(private val ranking: EventsRankingData, locale: Locale) : Ranking(locale) {
+
+    private val logger = LoggerFactory.getLogger(EventsRanking::class.java)
 
     private var document: Document? = null
 
@@ -30,28 +30,24 @@ class EventsRanking(private val ranking: EventsRankingData, locale: Locale) : Ra
                 pdfWriter.flush()
                 return baos.toByteArray()
             }
-        } catch (e: DocumentException) {
-            LOGGER.error(e.message, e)
-            return ByteArray(0)
-        } catch (e: IOException) {
-            LOGGER.error(e.message, e)
+        } catch (e: Exception) {
+            logger.error(e.message, e)
             return ByteArray(0)
         }
     }
 
-    @Throws(DocumentException::class)
     private fun createRanking() {
-        for (event in ranking.events) {
+        ranking.events.forEach {
             val table = PdfPTable(floatArrayOf(2f, 10f, 10f, 2f, 2f, 5f, 5f))
             table.widthPercentage = 100f
             table.spacingBefore = cmToPixel(1f)
             table.keepTogether = true
 
-            createEventTitle(table, event)
+            createEventTitle(table, it)
 
             var position = 1
-            for (athlete in event.athletes) {
-                createAthleteRow(table, position, athlete)
+            it.athletes.forEach {
+                createAthleteRow(table, position, it)
                 position++
             }
             document!!.add(table)
@@ -72,11 +68,6 @@ class EventsRanking(private val ranking: EventsRankingData, locale: Locale) : Ra
         addCell(table, athlete.category.abbreviation)
         addCell(table, if (athlete.athlete.club == null) "" else athlete.athlete.club?.abbreviation!!)
         addCellAlignRight(table, athlete.result.result)
-    }
-
-    companion object {
-
-        private val LOGGER = LoggerFactory.getLogger(EventsRanking::class.java)
     }
 
 }

@@ -13,10 +13,9 @@
             <h1 th:text="#{messages.edit_category}">Edit Category</h1>
 
             <!--/*@thymesVar id="category" type="ch.jtaf.entity.Category"*/-->
-            <form action="#" th:action="@{/sec/{organization}/category(organization=${organization})}"
+            <!--/*@thymesVar id="seriesId" type="java.lang.Long"*/-->
+            <form action="#" th:action="@{/sec/{organization}/series/{seriesId}/category(seriesId=${seriesId},organization=${organization})}"
                   th:object="${category}" method="post">
-                <input type="hidden" id="seriesId" th:field="*{seriesId}">
-
                 <div class="form-group">
                     <label for="id">ID</label>
                     <input class="form-control" id="id" readonly th:field="*{id}">
@@ -87,7 +86,7 @@
                     <td th:text="${event.b}"></td>
                     <td th:text="${event.c}"></td>
                     <td class="text-right">
-                        <a th:href="@{/sec/category/{id}/event/{eventId}/delete(id=${category.id}, eventId=${event.id})}"
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/delete(seriesId=${seriesId},organization=${organization},id=${category.id}, eventId=${event.id})}"
                            th:text="#{messages.delete}"
                            onclick="return confirm('Are you sure?')">Delete</a>
                     </td>

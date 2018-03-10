@@ -30,16 +30,10 @@ class CompetitionRankingService(private val competitionRepository: CompetitionRe
         val categories = categoryRepository.findAllBySeriesId(competition.seriesId!!)
         val results = resultRepository.findByCompetitionId(competition.id!!)
 
-        return categories.map { category ->
-            CompetitionRankingCategoryData(category, category.athletes
-                    .map { athlete ->
-                        AthleteWithResultsDTO(athlete, results
-                                .filter { result ->
-                                    result.athlete == athlete
-                                }
-                        )
-                    }
-            )
+        return categories.map {
+            CompetitionRankingCategoryData(it, it.athletes.map { athlete ->
+                AthleteWithResultsDTO(athlete, results.filter { it.athlete == athlete })
+            })
         }
     }
 

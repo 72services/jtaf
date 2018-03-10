@@ -14,13 +14,16 @@ data class Result(
         var result: String = "",
         var points: Int = 0,
 
-        @ManyToOne
-        var athlete: Athlete? = null,
+        @ManyToOne(optional = false)
+        var category: Category? = null,
 
-        @ManyToOne
+        @ManyToOne(optional = false)
         var event: Event? = null,
 
-        @ManyToOne
+        @ManyToOne(optional = false)
+        var athlete: Athlete? = null,
+
+        @ManyToOne(optional = false)
         var competition: Competition? = null,
 
         var position: Int = 0

@@ -1,17 +1,18 @@
 package ch.jtaf.control.reporting.report
 
-import ch.jtaf.entity.Athlete
 import ch.jtaf.entity.AthleteDTO
 import com.itextpdf.text.*
 import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
-
 import java.io.ByteArrayOutputStream
 import java.io.IOException
-import java.util.Locale
+import java.util.*
 
 class Numbers(private val athletes: List<AthleteDTO>, locale: Locale) : AbstractReport(locale) {
+
+    private val fontSizeInfo = 12f
+    private val fontSizeText = 90f
 
     fun create(): ByteArray {
         try {
@@ -22,14 +23,14 @@ class Numbers(private val athletes: List<AthleteDTO>, locale: Locale) : Abstract
                 var i = 0
                 var number = 1
                 var table = createMainTable()
-                for (athlete in athletes) {
+                athletes.forEach {
                     if (i > 9) {
                         document.add(table)
                         document.newPage()
                         i = 0
                         table = createMainTable()
                     }
-                    addAthleteInfo(table, athlete, number)
+                    addAthleteInfo(table, it, number)
                     if (i % 2 == 0) {
                         addEmptyCell(table)
                     }
@@ -44,10 +45,7 @@ class Numbers(private val athletes: List<AthleteDTO>, locale: Locale) : Abstract
                 pdfWriter.flush()
                 return baos.toByteArray()
             }
-        } catch (e: DocumentException) {
-            e.printStackTrace()
-            return ByteArray(0)
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
             return ByteArray(0)
         }
@@ -70,9 +68,7 @@ class Numbers(private val athletes: List<AthleteDTO>, locale: Locale) : Abstract
         val atable = PdfPTable(1)
         atable.widthPercentage = 100f
 
-        val cellId = PdfPCell(
-                Phrase(number.toString() + "",
-                        FontFactory.getFont(FontFactory.HELVETICA, FONT_SIZE_TEXT)))
+        val cellId = PdfPCell(Phrase(number.toString() + "", FontFactory.getFont(FontFactory.HELVETICA, fontSizeText)))
         cellId.border = 0
         cellId.minimumHeight = cmToPixel(2.5f)
         cellId.horizontalAlignment = PdfPCell.ALIGN_CENTER
@@ -84,7 +80,7 @@ class Numbers(private val athletes: List<AthleteDTO>, locale: Locale) : Abstract
             text += " / " + athlete.club
         }
 
-        val cellName = PdfPCell(Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, FONT_SIZE_INFO)))
+        val cellName = PdfPCell(Phrase(text, FontFactory.getFont(FontFactory.HELVETICA, fontSizeInfo)))
         cellName.border = 0
         cellName.minimumHeight = cmToPixel(1.8f)
         cellName.horizontalAlignment = PdfPCell.ALIGN_CENTER
@@ -111,12 +107,6 @@ class Numbers(private val athletes: List<AthleteDTO>, locale: Locale) : Abstract
         cellName.minimumHeight = cmToPixel(0.5f)
         cellName.horizontalAlignment = PdfPCell.ALIGN_CENTER
         table.addCell(cellName)
-    }
-
-    companion object {
-
-        private val FONT_SIZE_INFO = 12f
-        private val FONT_SIZE_TEXT = 90f
     }
 
 }

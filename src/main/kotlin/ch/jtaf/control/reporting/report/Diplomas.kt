@@ -1,7 +1,6 @@
 package ch.jtaf.control.reporting.report
 
 import ch.jtaf.control.reporting.data.CompetitionRankingData
-import ch.jtaf.entity.Athlete
 import ch.jtaf.entity.AthleteWithResultsDTO
 import ch.jtaf.entity.Category
 import com.itextpdf.text.*
@@ -10,11 +9,15 @@ import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import org.slf4j.LoggerFactory
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class Diplomas(private val ranking: CompetitionRankingData, private val logo: ByteArray?, locale: Locale) : AbstractReport(locale) {
+
+    private val logger = LoggerFactory.getLogger(Diplomas::class.java)
+
+    private val simpleDateFormat = SimpleDateFormat("d. MMMMM yyyy")
+    private val athleteFontSize = 12f
 
     private var document: Document? = null
 
@@ -28,14 +31,14 @@ class Diplomas(private val ranking: CompetitionRankingData, private val logo: By
                 var first = true
                 for (cat in ranking.categories) {
                     var rank = 1
-                    for (athlete in cat.athletes) {
+                    cat.athletes.forEach {
                         if (!first) {
                             document!!.newPage()
                         }
                         createTitle()
                         createLogo()
                         createCompetitionInfo()
-                        createAthleteInfo(rank, athlete, cat.category)
+                        createAthleteInfo(rank, it, cat.category)
                         first = false
                         rank++
                     }
@@ -44,17 +47,13 @@ class Diplomas(private val ranking: CompetitionRankingData, private val logo: By
                 pdfWriter.flush()
                 return baos.toByteArray()
             }
-        } catch (e: DocumentException) {
-            LOGGER.error(e.message, e)
-            return ByteArray(0)
-        } catch (e: IOException) {
-            LOGGER.error(e.message, e)
+        } catch (e: Exception) {
+            logger.error(e.message, e)
             return ByteArray(0)
         }
 
     }
 
-    @Throws(DocumentException::class, IOException::class)
     private fun createLogo() {
         if (logo != null) {
             val image = Image.getInstance(logo)
@@ -65,22 +64,20 @@ class Diplomas(private val ranking: CompetitionRankingData, private val logo: By
         }
     }
 
-    @Throws(DocumentException::class)
     private fun createAthleteInfo(rank: Int, athlete: AthleteWithResultsDTO, category: Category) {
         val table = PdfPTable(floatArrayOf(2f, 10f, 10f, 3f, 2f))
         table.widthPercentage = 100f
         table.spacingBefore = cmToPixel(1.5f)
 
-        addCell(table, rank.toString() + ".", ATHLETE_FONT_SIZE)
-        addCell(table, athlete.athlete.lastName, ATHLETE_FONT_SIZE)
-        addCell(table, athlete.athlete.firstName, ATHLETE_FONT_SIZE)
-        addCell(table, athlete.athlete.yearOfBirth.toString(), ATHLETE_FONT_SIZE)
-        addCell(table, category.abbreviation, ATHLETE_FONT_SIZE)
+        addCell(table, rank.toString() + ".", athleteFontSize)
+        addCell(table, athlete.athlete.lastName, athleteFontSize)
+        addCell(table, athlete.athlete.firstName, athleteFontSize)
+        addCell(table, athlete.athlete.yearOfBirth.toString(), athleteFontSize)
+        addCell(table, category.abbreviation, athleteFontSize)
 
         document!!.add(table)
     }
 
-    @Throws(DocumentException::class)
     private fun createTitle() {
         val table = PdfPTable(1)
         table.widthPercentage = 100f
@@ -93,7 +90,6 @@ class Diplomas(private val ranking: CompetitionRankingData, private val logo: By
         document!!.add(table)
     }
 
-    @Throws(DocumentException::class)
     private fun createCompetitionInfo() {
         val table = PdfPTable(1)
         table.widthPercentage = 100f
@@ -104,7 +100,7 @@ class Diplomas(private val ranking: CompetitionRankingData, private val logo: By
         cell.horizontalAlignment = PdfPCell.ALIGN_CENTER
         table.addCell(cell)
 
-        cell = PdfPCell(Phrase(SDF.format(ranking.competition.competitionDate), FontFactory.getFont(FontFactory.HELVETICA, 25f)))
+        cell = PdfPCell(Phrase(simpleDateFormat.format(ranking.competition.competitionDate), FontFactory.getFont(FontFactory.HELVETICA, 25f)))
         cell.border = 0
         cell.horizontalAlignment = PdfPCell.ALIGN_CENTER
         table.addCell(cell)
@@ -112,11 +108,4 @@ class Diplomas(private val ranking: CompetitionRankingData, private val logo: By
         document!!.add(table)
     }
 
-    companion object {
-
-        private val LOGGER = LoggerFactory.getLogger(Diplomas::class.java)
-
-        private val SDF = SimpleDateFormat("d. MMMMM yyyy")
-        private val ATHLETE_FONT_SIZE = 12f
-    }
 }

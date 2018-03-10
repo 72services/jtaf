@@ -23,7 +23,7 @@ interface AthleteRepository : JpaRepository<Athlete, Long> {
     @Query("SELECT COUNT(a) FROM Category c JOIN c.athletes a WHERE c.seriesId = ?1")
     fun getTotalNumberOfAthletesForSeries(id: Long): Int?
 
-    @Query("SELECT COUNT(r.athlete) FROM Result r WHERE r.competition.id = ?1 GROUP BY r.athlete")
+    @Query("SELECT COUNT(DISTINCT r.athlete) FROM Result r WHERE r.competition.id = ?1 GROUP BY r.competition")
     fun getTotalNumberOfAthleteWithResultsForCompetition(id: Long): Int?
 
     @Query("SELECT NEW ch.jtaf.entity.AthleteDTO" +

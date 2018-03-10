@@ -50,7 +50,7 @@
                     <th th:text="#{messages.name}">Name</th>
                     <th th:text="#{messages.date}">Date</th>
                     <th class="text-right">
-                        <a th:href="@{/sec/{organization}/competition(organization=${organization},seriesId=${series.id})}"
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/competition(organization=${organization},seriesId=${series.id})}"
                            th:text="#{messages.add_competition}">Add Competition</a>
                     </th>
                 </tr>
@@ -59,7 +59,7 @@
                     <td th:text="${competition.name}">1. CIS Twann</td>
                     <td th:text="${competition.competitionDate}">2018-01-02</td>
                     <td class="text-right">
-                        <a th:href="@{/sec/{organization}/competition/{id}(organization=${organization},id=${competition.id})}"
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}(organization=${organization},seriesId=${series.id},competitionId=${competition.id})}"
                            th:text="#{messages.edit}">Edit</a>
                     </td>
                 </tr>
@@ -120,8 +120,8 @@
                     <td th:text="${athlete.gender}">MALE</td>
                     <td th:text="${athlete.club}">TVE</td>
                     <td class="text-right">
-                        <a th:href="@{/sec/{organization}/series/{id}/athlete/{athleteId}/remove(organization=${organization},id=${series.id}, athleteId=${athlete.id})}"
-                           th:text="#{messages.delete}">Remove</a>
+                        <a th:href="@{/sec/{organization}/series/{id}/athlete/{athleteId}/delete(organization=${organization},id=${series.id}, athleteId=${athlete.id})}"
+                           th:text="#{messages.delete}" onclick="return confirm('Are you sure?')">Remove</a>
                     </td>
                 </tr>
             </table>

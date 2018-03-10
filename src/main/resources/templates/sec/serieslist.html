@@ -42,7 +42,7 @@
                                     <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}/results(organization=${organization},competitionId=${competition.id},seriesId=${series.id})}"
                                        th:text="#{messages.enter_results}">Enter Results</a>
 
-                                    <a th:href="@{/ranking/{id}(id=${competition.id})}" th:text="#{messages.ranking}">Ranking</a>
+                                    <a th:href="@{/ranking/competition/{id}/pdf(id=${competition.id})}" th:text="#{messages.ranking}">Ranking</a>
                                 </td>
                             </tr>
                         </table>

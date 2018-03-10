@@ -1,13 +1,11 @@
 package ch.jtaf.boundary.controller
 
-import ch.jtaf.control.repository.AthleteRepository
-import ch.jtaf.control.repository.CategoryRepository
-import ch.jtaf.control.repository.OrganizationRepository
-import ch.jtaf.control.repository.SeriesRepository
+import ch.jtaf.control.repository.*
 import ch.jtaf.entity.Series
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -17,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView
 class SeriesController(private val seriesRepository: SeriesRepository,
                        private val categoryRepository: CategoryRepository,
                        private val athleteRepository: AthleteRepository,
+                       private val resultRepository: ResultRepository,
                        private val organizationRepository: OrganizationRepository) {
 
     @GetMapping("/sec/{organization}/series")
@@ -66,22 +65,27 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return mav
     }
 
-    @GetMapping("sec/{organization}/series/{id}/athlete/{athleteId}/delete")
+    @Transactional
+    @GetMapping("sec/{organization}/series/{seriesId}/athlete/{athleteId}/delete")
     fun deleteById(@PathVariable("organization") organizationKey: String,
-                   @PathVariable("id") id: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
+                   @PathVariable("seriesId") seriesId: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
 
-        val series = seriesRepository.getOne(id)
+        val series = seriesRepository.getOne(seriesId)
         val athlete = athleteRepository.getOne(athleteId)
 
-        val category = categoryRepository.getOne(id)
-        category.athletes.remove(athlete)
+        val categories = categoryRepository.findByAthletesId(athleteId)
 
-        categoryRepository.save(category)
+        categories.forEach {
+            it.athletes.remove(athlete)
+            categoryRepository.save(it)
+
+            resultRepository.deleteResultsByCategoryIdAndAthleteId(it.id, athleteId)
+        }
 
         mav.model["series"] = series
-        mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
+        mav.model["categories"] = categoryRepository.findAllBySeriesId(seriesId)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(seriesId)
 
         mav.model["message"] = null
         return mav
