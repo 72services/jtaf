@@ -8,13 +8,13 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
+import javax.persistence.EntityManager
 
 @Controller
 class CategoryController(private val categoryRepository: CategoryRepository,
                          private val eventRepository: EventRepository,
-                         private val organizationAuthorizationChecker: OrganizationAuthorizationChecker) {
+                         private val entityManager: EntityManager) {
 
     @GetMapping("/sec/{organization}/series/{seriesId}/category")
     fun get(@PathVariable("organization") organizationKey: String,
@@ -61,6 +61,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return mav
     }
 
+    @Transactional
     @GetMapping("/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/up")
     fun eventMoveUp(@PathVariable("organization") organizationKey: String,
                     @PathVariable("id") id: Long,
@@ -69,6 +70,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return moveEvent(id, seriesId, eventId, true)
     }
 
+    @Transactional
     @GetMapping("/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/down")
     fun eventMoveDown(@PathVariable("organization") organizationKey: String,
                       @PathVariable("id") id: Long,
@@ -97,6 +99,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
 
         category.events = ArrayList()
         categoryRepository.save(category)
+        entityManager.flush()
 
         category.events = events
         categoryRepository.save(category)
