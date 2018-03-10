@@ -86,6 +86,11 @@
                     <td th:text="${event.b}"></td>
                     <td th:text="${event.c}"></td>
                     <td class="text-right">
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/up(seriesId=${seriesId},organization=${organization},id=${category.id}, eventId=${event.id})}"
+                           th:text="#{messages.up}">Up</a>
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/down(seriesId=${seriesId},organization=${organization},id=${category.id}, eventId=${event.id})}"
+                           th:text="#{messages.down}">Down</a>
+
                         <a th:href="@{/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/delete(seriesId=${seriesId},organization=${organization},id=${category.id}, eventId=${event.id})}"
                            th:text="#{messages.delete}"
                            onclick="return confirm('Are you sure?')">Delete</a>

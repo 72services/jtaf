@@ -111,9 +111,10 @@ class ResultsController(private val athleteRepository: AthleteRepository,
             return
         } else {
             val newResults = ArrayList<Result>()
+            var i = 0
             category.events.forEach { event: Event ->
                 if (!results.any { it.event == event }) {
-                    val result = Result(category = category, event = event, athlete = athlete, competition = competition, position = event.position)
+                    val result = Result(category = category, event = event, athlete = athlete, competition = competition, position = i++)
                     resultRepository.save(result)
                     newResults.add(result)
                 }

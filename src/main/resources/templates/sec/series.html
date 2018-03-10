@@ -74,7 +74,7 @@
                     <th th:text="#{messages.year_from}">Year From</th>
                     <th th:text="#{messages.year_to}">Year To</th>
                     <th class="text-right">
-                        <a th:href="@{/sec/{organization}/category(organization=${organization},seriesId=${series.id})}"
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/category(organization=${organization},seriesId=${series.id})}"
                            th:text="#{messages.add_category}">Add Category</a>
                     </th>
                 </tr>
@@ -86,7 +86,7 @@
                     <td th:text="${category.yearFrom}">1900</td>
                     <td th:text="${category.yearTo}">2999</td>
                     <td class="text-right">
-                        <a th:href="@{/sec/{organization}/category/{id}(organization=${organization},id=${category.id})}"
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{id}(organization=${organization},seriesId=${series.id},id=${category.id})}"
                            th:text="#{messages.edit}">Edit</a>
                     </td>
                 </tr>

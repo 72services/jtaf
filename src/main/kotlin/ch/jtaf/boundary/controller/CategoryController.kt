@@ -4,6 +4,7 @@ import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.EventRepository
 import ch.jtaf.entity.Category
 import org.springframework.stereotype.Controller
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -50,7 +51,6 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         val event = eventRepository.getOne(eventId)
         category.events.add(event)
 
-        category.updateEventPositions()
         categoryRepository.save(category)
 
         val mav = ModelAndView("/sec/category")
@@ -61,6 +61,55 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return mav
     }
 
+    @GetMapping("/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/up")
+    fun eventMoveUp(@PathVariable("organization") organizationKey: String,
+                    @PathVariable("id") id: Long,
+                    @PathVariable("seriesId") seriesId: Long,
+                    @PathVariable("eventId") eventId: Long): ModelAndView {
+        return moveEvent(id, seriesId, eventId, true)
+    }
+
+    @GetMapping("/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/down")
+    fun eventMoveDown(@PathVariable("organization") organizationKey: String,
+                      @PathVariable("id") id: Long,
+                      @PathVariable("seriesId") seriesId: Long,
+                      @PathVariable("eventId") eventId: Long): ModelAndView {
+        return moveEvent(id, seriesId, eventId, false)
+    }
+
+    private fun moveEvent(id: Long, seriesId: Long, eventId: Long, up: Boolean): ModelAndView {
+        val category = categoryRepository.getOne(id)
+        val event = eventRepository.getOne(eventId)
+
+        val events = category.events
+        val index = events.indexOf(event)
+        if (up) {
+            if (index > 0) {
+                events.remove(event)
+                events.add(index - 1, event)
+            }
+        } else {
+            if (index < category.events.size - 1) {
+                events.remove(event)
+                events.add(index + 1, event)
+            }
+        }
+
+        category.events = ArrayList()
+        categoryRepository.save(category)
+
+        category.events = events
+        categoryRepository.save(category)
+
+        val mav = ModelAndView("/sec/category")
+        mav.model["seriesId"] = seriesId
+        mav.model["category"] = category
+
+        mav.model["message"] = null
+        return mav
+    }
+
+
     @GetMapping("/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/delete")
     fun deleteById(@PathVariable("organization") organizationKey: String,
                    @PathVariable("id") id: Long,
@@ -70,7 +119,6 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         val event = eventRepository.getOne(eventId)
         category.events.remove(event)
 
-        category.updateEventPositions()
         categoryRepository.save(category)
 
         val mav = ModelAndView("/sec/category")
