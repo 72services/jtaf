@@ -22,6 +22,13 @@ class ResultRepositoryTest : AbstractRepositoryTest() {
     }
 
     @Test
+    fun findByCompetitionSeriesId() {
+        val list = resultRepository.findByCompetitionSeriesId(seriesId)
+
+        assertEquals(0, list.size)
+    }
+
+    @Test
     fun findByAthleteIdAndCompetitionId() {
         val list = resultRepository.findByAthleteIdAndCompetitionId(athleteId, competitionId)
 

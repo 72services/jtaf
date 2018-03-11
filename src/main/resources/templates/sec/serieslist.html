@@ -48,6 +48,8 @@
                         </table>
                     </td>
                     <td class="text-right">
+                        <a th:href="@{/ranking/series/{id}/pdf(id=${series.id})}" th:text="#{messages.ranking}">Ranking</a>
+
                         <a th:href="@{/sec/{organization}/series/{id}(organization=${organization},id=${series.id})}"
                            th:text="#{messages.edit}">Edit</a>
 

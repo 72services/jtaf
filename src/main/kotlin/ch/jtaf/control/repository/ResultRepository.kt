@@ -13,6 +13,8 @@ interface ResultRepository : JpaRepository<Result, Long> {
 
     fun findByCompetitionId(competitionId: Long): List<Result>
 
+    fun findByCompetitionSeriesId(seriesId: Long): List<Result>
+
     @Modifying
     @Query("delete from Result r where r.id in (select r.id from Result r where r.competition.competitionDate <= current_date and r.athlete.id = ?1)")
     fun deleteResultsFromActiveCompetitions(id: Long)
