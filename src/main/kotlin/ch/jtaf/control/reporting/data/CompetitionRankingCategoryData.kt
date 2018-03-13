@@ -7,6 +7,6 @@ import java.util.*
 class CompetitionRankingCategoryData(val category: Category, val athletes: List<AthleteWithResultsDTO>) {
 
     fun getAthletesSortedByPointsDesc(): List<AthleteWithResultsDTO> {
-        return athletes.sortedByDescending { it.results.sumBy { it.points } }
+        return athletes.filter { it.results.sumBy { it.points } != 0 }.sortedByDescending { it.results.sumBy { it.points } }
     }
 }

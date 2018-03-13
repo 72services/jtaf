@@ -4,7 +4,6 @@ import ch.jtaf.control.reporting.data.CompetitionRankingCategoryData
 import ch.jtaf.control.reporting.data.CompetitionRankingData
 import ch.jtaf.entity.AthleteWithResultsDTO
 import ch.jtaf.entity.Category
-import ch.jtaf.entity.Competition
 import com.itextpdf.text.Document
 import com.itextpdf.text.PageSize
 import com.itextpdf.text.pdf.PdfPTable
@@ -92,20 +91,20 @@ class CompetitionRanking(private val ranking: CompetitionRankingData, locale: Lo
         addCategoryTitleCellWithColspan(table, " ", 6)
     }
 
-    private fun createAthleteRow(table: PdfPTable, rank: Int, athlete: AthleteWithResultsDTO, numberOfMedals: Int) {
+    private fun createAthleteRow(table: PdfPTable, rank: Int, dto: AthleteWithResultsDTO, numberOfMedals: Int) {
         if (rank <= numberOfMedals) {
             addCell(table, "* $rank.")
         } else {
             addCell(table, rank.toString() + ".")
         }
-        addCell(table, athlete.athlete.lastName)
-        addCell(table, athlete.athlete.firstName)
-        addCell(table, athlete.athlete.yearOfBirth.toString())
-        addCell(table, if (athlete.athlete.club == null) "" else athlete.athlete.club!!.abbreviation)
-        addCellAlignRight(table, athlete.results.sumBy { it.points }.toString())
+        addCell(table, dto.athlete.lastName)
+        addCell(table, dto.athlete.firstName)
+        addCell(table, dto.athlete.yearOfBirth.toString())
+        addCell(table, if (dto.athlete.club == null) "" else dto.athlete.club!!.abbreviation)
+        addCellAlignRight(table, dto.getTotalPoints().toString())
 
         val sb = StringBuilder()
-        athlete.results.forEach { result ->
+        dto.results.forEach { result ->
             sb.append(result.event!!.name)
             sb.append(": ")
             sb.append(result.result)
