@@ -10,17 +10,13 @@
     <div class="row">
         <div class="col-md-12">
             <h1 th:text="#{messages.ranking}">Ranking</h1>
-            <!--/*@thymesVar id="data" type="ch.jtaf.control.reporting.data.CompetitionRankingData"*/-->
-            <h2 th:text="${data.competition.name + ' ' + data.competition.competitionDate}">CIS 1</h2>
+            <!--/*@thymesVar id="data" type="ch.jtaf.control.reporting.data.SeriesRankingData"*/-->
+            <h2 th:text="${data.series.name}">CIS 2018</h2>
 
             <a href="#" th:text="#{messages.download_as_pdf}">Download as PDF</a>
-            &nbsp;
-            <a href="#" th:text="#{messages.event_ranking}">Event Ranking</a>
-            &nbsp;
-            <a href="#" th:text="#{messages.diplomas}">Diplomas</a>
 
             <div>
-                <!--/*@thymesVar id="categoryData" type="ch.jtaf.control.reporting.data.CompetitionRankingCategoryData"*/-->
+                <!--/*@thymesVar id="categoryData" type="ch.jtaf.control.reporting.data.SeriesRankingCategoryData"*/-->
                 <div class="row" th:each="categoryData : ${data.getCategories()}">
                     <div class="col-lg-12">
                         <h3 th:text="${categoryData.getCategory().abbreviation + ' ' + categoryData.getCategory().name}">
@@ -40,7 +36,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-1"></div>
-                                <div class="col-lg-11" style="font-size: small;" th:text="${athleteData.competitionResultsAsString()}">...</div>
+                                <div class="col-lg-11" style="font-size: small;"
+                                     th:text="${athleteData.seriesResultsAsString()}">...
+                                </div>
                             </div>
                         </div>
                     </div>
