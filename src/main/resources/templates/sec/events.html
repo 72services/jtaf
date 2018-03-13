@@ -48,9 +48,10 @@
                            th:href="@{/sec/{organization}/events/{id}/delete(organization=${organization},id=${event.id})}"
                            th:text="#{messages.delete}" onclick="return confirm('Are you sure?')">Delete</a>
 
+                        <!--/*@thymesVar id="seriesId" type="java.lang.Long"*/-->
                         <!--/*@thymesVar id="categoryId" type="java.lang.Long"*/-->
                         <a th:if="${mode == 'select'}"
-                           th:href="@{/sec/{organization}/category/{categoryId}/event/{id}(organization=${organization},categoryId=${categoryId}, id=${event.id})}"
+                           th:href="@{/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{id}(organization=${organization},seriesId=${seriesId},categoryId=${categoryId}, id=${event.id})}"
                            th:text="#{messages.select}">Select</a>
                     </td>
                 </tr>

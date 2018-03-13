@@ -14,7 +14,8 @@
 
             <!--/*@thymesVar id="category" type="ch.jtaf.entity.Category"*/-->
             <!--/*@thymesVar id="seriesId" type="java.lang.Long"*/-->
-            <form action="#" th:action="@{/sec/{organization}/series/{seriesId}/category(seriesId=${seriesId},organization=${organization})}"
+            <form action="#"
+                  th:action="@{/sec/{organization}/series/{seriesId}/category(seriesId=${seriesId},organization=${organization})}"
                   th:object="${category}" method="post">
                 <div class="form-group">
                     <label for="id">ID</label>
@@ -72,7 +73,7 @@
                     <th>B</th>
                     <th>C</th>
                     <th class="text-right">
-                        <a th:href="@{/sec/{organization}/events(organization=${organization},mode='select', categoryId=${category.id})}"
+                        <a th:href="@{/sec/{organization}/events(organization=${organization},mode='select',seriesId=${category.seriesId},categoryId=${category.id})}"
                            th:text="#{messages.add_event}" class="text-right">Add Event</a>
                     </th>
                 </tr>

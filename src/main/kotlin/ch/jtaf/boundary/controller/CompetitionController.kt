@@ -54,7 +54,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         return mav
     }
 
-    @PostMapping("/sec/{organization}/series/{seriesId}/competition/{od}")
+    @PostMapping("/sec/{organization}/series/{seriesId}/competition")
     fun post(@PathVariable("organization") organizationKey: String,
              @PathVariable("seriesId") seriesId: Long,
              competition: Competition): ModelAndView {

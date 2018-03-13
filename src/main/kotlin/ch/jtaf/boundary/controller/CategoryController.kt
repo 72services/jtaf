@@ -42,12 +42,12 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}")
+    @GetMapping("/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}")
     fun addEvent(@PathVariable("organization") organizationKey: String,
-                 @PathVariable("id") id: Long,
+                 @PathVariable("categoryId") categoryId: Long,
                  @PathVariable("seriesId") seriesId: Long,
                  @PathVariable("eventId") eventId: Long): ModelAndView {
-        val category = categoryRepository.getOne(id)
+        val category = categoryRepository.getOne(categoryId)
         val event = eventRepository.getOne(eventId)
         category.events.add(event)
 
@@ -132,7 +132,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return mav
     }
 
-    @PostMapping("/sec/{organization}/series/{seriesId}/category/")
+    @PostMapping("/sec/{organization}/series/{seriesId}/category")
     fun post(@PathVariable("organization") organizationKey: String,
              @PathVariable("seriesId") seriesId: Long,
              category: Category): ModelAndView {

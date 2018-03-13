@@ -18,6 +18,7 @@ class EventsController(private val eventRepository: EventRepository,
     fun get(@AuthenticationPrincipal user: User,
             @PathVariable("organization") organizationKey: String,
             @RequestParam("mode") mode: String?,
+            @RequestParam("categoryId") seriesId: Long?,
             @RequestParam("categoryId") categoryId: Long?): ModelAndView {
         val mav = ModelAndView("/sec/events")
 
@@ -25,6 +26,9 @@ class EventsController(private val eventRepository: EventRepository,
         mav.model["events"] = eventRepository.findByOrganizationId(organization.id!!)
 
         mav.model["mode"] = mode ?: "edit"
+        if (seriesId != null) {
+            mav.model["seriesId"] = seriesId
+        }
         if (categoryId != null) {
             mav.model["categoryId"] = categoryId
         }

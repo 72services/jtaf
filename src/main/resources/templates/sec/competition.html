@@ -13,7 +13,7 @@
             <h1 th:text="#{messages.edit_competition}">Edit Competition</h1>
 
             <!--/*@thymesVar id="competition" type="ch.jtaf.entity.Competition"*/-->
-            <form action="#" th:action="@{/sec/{organization}/competition(organization=${organization})}"
+            <form th:action="@{/sec/{organization}/series/{seriesId}/competition(organization=${organization},seriesId=${competition.seriesId})}"
                   th:object="${competition}" method="post">
                 <input type="hidden" id="seriesId" th:field="*{seriesId}">
 
