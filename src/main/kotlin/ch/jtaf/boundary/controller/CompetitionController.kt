@@ -16,7 +16,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
     @GetMapping("/sec/{organization}/series/{seriesId}/competition")
     fun get(@PathVariable("organization") organizationKey: String,
             @PathVariable("seriesId") seriesId: Long): ModelAndView {
-        val mav = ModelAndView("/sec/series")
+        val mav = ModelAndView("/sec/competition")
 
         val competition = Competition()
         competition.seriesId = seriesId
@@ -30,7 +30,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
     fun getById(@PathVariable("organization") organizationKey: String,
                 @PathVariable("seriesId") seriesId: Long,
                 @PathVariable("id") id: Long): ModelAndView {
-        val mav = ModelAndView("/sec/series")
+        val mav = ModelAndView("/sec/competition")
 
         mav.model["competition"] = competitionRepository.getOne(id)
 
@@ -54,13 +54,13 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         return mav
     }
 
-    @PostMapping("/sec/{organization}/series/{seriesId}/competition")
+    @PostMapping("/sec/{organization}/series/{seriesId}/competition/{od}")
     fun post(@PathVariable("organization") organizationKey: String,
              @PathVariable("seriesId") seriesId: Long,
              competition: Competition): ModelAndView {
         competitionRepository.save(competition)
 
-        val mav = ModelAndView("/sec/series")
+        val mav = ModelAndView("/sec/competition")
         mav.model["message"] = Message(Message.success, "Competition saved!")
         return mav
     }
