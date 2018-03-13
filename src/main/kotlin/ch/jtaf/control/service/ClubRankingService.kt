@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 @Component
 class ClubRankingService {
 
-    fun createClubRanking(): ByteArray {
+    fun createClubRanking(seriesId: Long): ByteArray {
 
         return ByteArray(0)
     }

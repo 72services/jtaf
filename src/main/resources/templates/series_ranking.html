@@ -13,7 +13,11 @@
             <!--/*@thymesVar id="data" type="ch.jtaf.control.reporting.data.SeriesRankingData"*/-->
             <h2 th:text="${data.series.name}">CIS 2018</h2>
 
-            <a th:href="@{/ranking/series/{id}/pdf(id=${data.series.id})}" th:text="#{messages.download_as_pdf}">Download as PDF</a>
+            <a th:href="@{/ranking/series/{id}/pdf(id=${data.series.id})}" th:text="#{messages.download_as_pdf}">Download
+                as PDF</a>
+            &nbsp;
+            <a th:href="@{/ranking/club/{id}/pdf(id=${data.series.id})}" th:text="#{messages.club_ranking}">Club
+                Ranking</a>
 
             <div>
                 <!--/*@thymesVar id="categoryData" type="ch.jtaf.control.reporting.data.SeriesRankingCategoryData"*/-->

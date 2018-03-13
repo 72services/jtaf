@@ -1,5 +1,6 @@
 package ch.jtaf.boundary.controller
 
+import ch.jtaf.control.service.ClubRankingService
 import ch.jtaf.control.service.CompetitionRankingService
 import ch.jtaf.control.service.SeriesRankingService
 import org.springframework.http.MediaType.*
@@ -12,7 +13,8 @@ import org.springframework.web.servlet.ModelAndView
 
 @Controller
 class RankingController(private val competitionRankingService: CompetitionRankingService,
-                        private val seriesRankingService: SeriesRankingService) {
+                        private val seriesRankingService: SeriesRankingService,
+                        private val clubRankingService: ClubRankingService) {
 
     val httpContentUtil = HttpContentUtil()
 
@@ -40,6 +42,12 @@ class RankingController(private val competitionRankingService: CompetitionRankin
     fun getSeriesRankingAsPdf(@PathVariable("id") seriesId: Long): ResponseEntity<ByteArray> {
         val competitionRanking = seriesRankingService.createSeriesRanking(seriesId)
         return httpContentUtil.getContentAsPdf("series_$seriesId.pdf", competitionRanking)
+    }
+
+    @GetMapping("/ranking/club/{id}/pdf", produces = [APPLICATION_PDF_VALUE])
+    fun getClubRankingAsPdf(@PathVariable("id") seriesId: Long): ResponseEntity<ByteArray> {
+        val competitionRanking = clubRankingService.createClubRanking(seriesId)
+        return httpContentUtil.getContentAsPdf("clubs_$seriesId.pdf", competitionRanking)
     }
 
 }
