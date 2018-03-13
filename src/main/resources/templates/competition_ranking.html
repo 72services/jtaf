@@ -13,7 +13,7 @@
             <!--/*@thymesVar id="data" type="ch.jtaf.control.reporting.data.CompetitionRankingData"*/-->
             <h2 th:text="${data.competition.name + ' ' + data.competition.competitionDate}">CIS 1</h2>
 
-            <a href="#" th:text="#{messages.download_as_pdf}">Download as PDF</a>
+            <a th:href="@{/ranking/competition/{id}/pdf(id=${data.competition.id})}" th:text="#{messages.download_as_pdf}">Download as PDF</a>
             &nbsp;
             <a href="#" th:text="#{messages.event_ranking}">Event Ranking</a>
             &nbsp;
