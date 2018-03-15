@@ -59,6 +59,15 @@
                     <td th:text="${competition.name}">1. CIS Twann</td>
                     <td th:text="${competition.competitionDate}">2018-01-02</td>
                     <td class="text-right">
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}/sheets(organization=${organization},seriesId=${series.id},competitionId=${competition.id},orderBy='category')}"
+                           th:text="#{messages.sheets}">Sheets</a>
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}/sheets(organization=${organization},seriesId=${series.id},competitionId=${competition.id},orderBy='club')}"
+                           th:text="#{messages.sheets}">Sheets</a>
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}/numbers(organization=${organization},seriesId=${series.id},competitionId=${competition.id},orderBy='category')}"
+                           th:text="#{messages.sheets}">Sheets</a>
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}/numbers(organization=${organization},seriesId=${series.id},competitionId=${competition.id},orderBy='club')}"
+                           th:text="#{messages.sheets}">Sheets</a>
+
                         <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}(organization=${organization},seriesId=${series.id},competitionId=${competition.id})}"
                            th:text="#{messages.edit}">Edit</a>
                     </td>
