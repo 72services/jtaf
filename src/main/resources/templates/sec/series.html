@@ -62,11 +62,11 @@
                         <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}/sheets(organization=${organization},seriesId=${series.id},competitionId=${competition.id},orderBy='category')}"
                            th:text="#{messages.sheets}">Sheets</a>
                         <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}/sheets(organization=${organization},seriesId=${series.id},competitionId=${competition.id},orderBy='club')}"
-                           th:text="#{messages.sheets}">Sheets</a>
+                           th:text="#{messages.sheets_order_by_club}">Sheets by club</a>
                         <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}/numbers(organization=${organization},seriesId=${series.id},competitionId=${competition.id},orderBy='category')}"
-                           th:text="#{messages.sheets}">Sheets</a>
+                           th:text="#{messages.numbers}">Number</a>
                         <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}/numbers(organization=${organization},seriesId=${series.id},competitionId=${competition.id},orderBy='club')}"
-                           th:text="#{messages.sheets}">Sheets</a>
+                           th:text="#{messages.numbers_order_by_club}">Numbers by club</a>
 
                         <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}(organization=${organization},seriesId=${series.id},competitionId=${competition.id})}"
                            th:text="#{messages.edit}">Edit</a>
