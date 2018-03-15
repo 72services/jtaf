@@ -3,7 +3,6 @@ package ch.jtaf.boundary.controller
 import ch.jtaf.boundary.dto.Message
 import ch.jtaf.boundary.dto.ResultContainer
 import ch.jtaf.boundary.util.HttpContentProducer
-import ch.jtaf.boundary.util.OrganizationAuthorizationChecker
 import ch.jtaf.control.repository.CompetitionRepository
 import ch.jtaf.control.service.NumberService
 import ch.jtaf.control.service.SheetService
@@ -82,7 +81,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
                   @PathVariable("competitionId") competitionId: Long,
                   @RequestParam("orderBy") orderBy: String): ResponseEntity<ByteArray> {
 
-        val sheets = sheetService.createSheets(orderBy != null && orderBy == "club")
+        val sheets = sheetService.createSheets(competitionId, orderBy == "club")
         return httpContentUtil.getContentAsPdf("sheets_$competitionId.pdf", sheets)
     }
 
@@ -92,7 +91,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
                    @PathVariable("competitionId") competitionId: Long,
                    @RequestParam("orderBy") orderBy: String): ResponseEntity<ByteArray> {
 
-        val numbers = numberService.createNumbers(orderBy != null && orderBy == "club")
+        val numbers = numberService.createNumbers(seriesId, orderBy == "club")
         return httpContentUtil.getContentAsPdf("numbers_$competitionId.pdf", numbers)
     }
 }

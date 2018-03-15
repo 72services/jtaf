@@ -1,6 +1,5 @@
 package ch.jtaf.control.service
 
-import ch.jtaf.control.reporting.data.CompetitionRankingCategoryData
 import ch.jtaf.control.reporting.data.SeriesRankingCategoryData
 import ch.jtaf.control.reporting.data.SeriesRankingData
 import ch.jtaf.control.reporting.report.SeriesRanking

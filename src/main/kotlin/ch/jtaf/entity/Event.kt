@@ -1,6 +1,7 @@
 package ch.jtaf.entity
 
-import java.lang.Math.*
+import java.lang.Math.pow
+import java.lang.Math.round
 import javax.persistence.*
 import javax.persistence.GenerationType.IDENTITY
 

@@ -21,11 +21,11 @@ class Sheets : AbstractReport {
     private var document: Document? = null
     private var pdfWriter: PdfWriter? = null
     private val competition: Competition?
-    private val athletes: MutableList<AthleteDTO>
+    private val athletes: List<AthleteDTO>
     private val categories: List<Category>
     private val logo: ByteArray?
 
-    constructor(athlete: AthleteDTO, categories: List<Category>, logo: ByteArray, locale: Locale) : super(locale) {
+    constructor(athlete: AthleteDTO, categories: List<Category>, logo: ByteArray?, locale: Locale) : super(locale) {
         this.competition = null
         this.athletes = ArrayList()
         this.athletes.add(athlete)
@@ -33,7 +33,7 @@ class Sheets : AbstractReport {
         this.logo = logo
     }
 
-    constructor(competition: Competition, athlete: AthleteDTO, categories: List<Category>, logo: ByteArray, locale: Locale) : super(locale) {
+    constructor(competition: Competition, athlete: AthleteDTO, categories: List<Category>, logo: ByteArray?, locale: Locale) : super(locale) {
         this.competition = competition
         this.athletes = ArrayList()
         this.athletes.add(athlete)
@@ -41,7 +41,7 @@ class Sheets : AbstractReport {
         this.logo = logo
     }
 
-    constructor(competition: Competition, athletes: MutableList<AthleteDTO>, categories: List<Category>, logo: ByteArray, locale: Locale) : super(locale) {
+    constructor(competition: Competition, athletes: List<AthleteDTO>, categories: List<Category>, logo: ByteArray?, locale: Locale) : super(locale) {
         this.competition = competition
         this.athletes = athletes
         this.categories = categories

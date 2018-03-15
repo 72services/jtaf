@@ -4,7 +4,7 @@ import ch.jtaf.boundary.util.HttpContentProducer
 import ch.jtaf.control.service.ClubRankingService
 import ch.jtaf.control.service.CompetitionRankingService
 import ch.jtaf.control.service.SeriesRankingService
-import org.springframework.http.MediaType.*
+import org.springframework.http.MediaType.APPLICATION_PDF_VALUE
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
