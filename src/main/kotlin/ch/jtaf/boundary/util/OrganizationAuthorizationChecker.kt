@@ -1,4 +1,4 @@
-package ch.jtaf.boundary.controller
+package ch.jtaf.boundary.util
 
 import ch.jtaf.control.repository.OrganizationRepository
 import org.springframework.security.core.context.SecurityContextHolder

@@ -1,5 +1,6 @@
 package ch.jtaf.boundary.controller
 
+import ch.jtaf.boundary.dto.Message
 import ch.jtaf.control.repository.EventRepository
 import ch.jtaf.control.repository.OrganizationRepository
 import ch.jtaf.entity.Event

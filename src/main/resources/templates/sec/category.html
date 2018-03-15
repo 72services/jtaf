@@ -55,7 +55,7 @@
                 <a th:href="@{/sec/{organization}/series/{id}(organization=${organization},id=${category.seriesId})}"
                    th:text="#{messages.back}">Back</a>
 
-                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.controller.Message"*/-->
+                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
                 <div th:include="common/message :: message (${message})"></div>
             </form>
 

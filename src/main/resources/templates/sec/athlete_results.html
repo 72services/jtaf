@@ -85,7 +85,7 @@
 
             <h2 th:if="${!resultContainer.results.isEmpty()}" th:text="#{messages.results}">Results</h2>
 
-            <!--/*@thymesVar id="resultContainer" type="ch.jtaf.boundary.controller.ResultContainer"*/-->
+            <!--/*@thymesVar id="resultContainer" type="ch.jtaf.boundary.dto.ResultContainer"*/-->
             <form th:if="${!resultContainer.results.isEmpty()}" action="#"
                   th:action="@{/sec/{organization}/results(organization=${organization},seriesId=${seriesId},competitionId=${competitionId})}"
                   th:object="${resultContainer}" method="post">
@@ -112,7 +112,7 @@
                 </table>
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
 
-                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.controller.Message"*/-->
+                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
                 <div th:include="common/message :: message (${message})"></div>
 
             </form>

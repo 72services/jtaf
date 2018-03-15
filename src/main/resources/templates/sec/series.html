@@ -38,7 +38,7 @@
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
                 <a th:href="@{/sec/{organization}(organization=${organization})}" th:text="#{messages.back}">Back</a>
 
-                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.controller.Message"*/-->
+                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
                 <div th:include="common/message :: message (${message})"></div>
             </form>
             <br>

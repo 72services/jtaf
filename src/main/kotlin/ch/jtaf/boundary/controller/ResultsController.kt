@@ -1,5 +1,7 @@
 package ch.jtaf.boundary.controller
 
+import ch.jtaf.boundary.dto.Message
+import ch.jtaf.boundary.dto.ResultContainer
 import ch.jtaf.control.repository.AthleteRepository
 import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.CompetitionRepository

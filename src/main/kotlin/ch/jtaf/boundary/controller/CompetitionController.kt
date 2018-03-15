@@ -1,6 +1,12 @@
 package ch.jtaf.boundary.controller
 
+import ch.jtaf.boundary.dto.Message
+import ch.jtaf.boundary.dto.ResultContainer
+import ch.jtaf.boundary.util.HttpContentProducer
+import ch.jtaf.boundary.util.OrganizationAuthorizationChecker
 import ch.jtaf.control.repository.CompetitionRepository
+import ch.jtaf.control.service.NumberService
+import ch.jtaf.control.service.SheetService
 import ch.jtaf.entity.AthleteDTO
 import ch.jtaf.entity.Competition
 import org.springframework.http.ResponseEntity
@@ -13,9 +19,10 @@ import org.springframework.web.servlet.ModelAndView
 
 @Controller
 class CompetitionController(private val competitionRepository: CompetitionRepository,
-                            private val organizationAuthorizationChecker: OrganizationAuthorizationChecker) {
+                            private val sheetService: SheetService,
+                            private val numberService: NumberService) {
 
-    val httpContentUtil = HttpContentUtil()
+    val httpContentUtil = HttpContentProducer()
 
     @GetMapping("/sec/{organization}/series/{seriesId}/competition")
     fun get(@PathVariable("organization") organizationKey: String,
@@ -75,7 +82,8 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
                   @PathVariable("competitionId") competitionId: Long,
                   @RequestParam("orderBy") orderBy: String): ResponseEntity<ByteArray> {
 
-        return httpContentUtil.getContentAsPdf("sheets_$competitionId.pdf", ByteArray(0))
+        val sheets = sheetService.createSheets(orderBy != null && orderBy == "club")
+        return httpContentUtil.getContentAsPdf("sheets_$competitionId.pdf", sheets)
     }
 
     @GetMapping("/sec/{organization}/series/{seriesId}/competition/{competitionId}/numbers")
@@ -84,6 +92,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
                    @PathVariable("competitionId") competitionId: Long,
                    @RequestParam("orderBy") orderBy: String): ResponseEntity<ByteArray> {
 
-        return httpContentUtil.getContentAsPdf("numbers_$competitionId.pdf", ByteArray(0))
+        val numbers = numberService.createNumbers(orderBy != null && orderBy == "club")
+        return httpContentUtil.getContentAsPdf("numbers_$competitionId.pdf", numbers)
     }
 }

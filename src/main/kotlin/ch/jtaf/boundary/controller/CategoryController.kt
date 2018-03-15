@@ -1,5 +1,7 @@
 package ch.jtaf.boundary.controller
 
+import ch.jtaf.boundary.dto.Message
+import ch.jtaf.boundary.util.HttpContentProducer
 import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.EventRepository
 import ch.jtaf.entity.Category
@@ -17,7 +19,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
                          private val eventRepository: EventRepository,
                          private val entityManager: EntityManager) {
 
-    val httpContentUtil = HttpContentUtil()
+    val httpContentUtil = HttpContentProducer()
 
     @GetMapping("/sec/{organization}/series/{seriesId}/category")
     fun get(@PathVariable("organization") organizationKey: String,

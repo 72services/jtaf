@@ -1,5 +1,6 @@
 package ch.jtaf.boundary.controller
 
+import ch.jtaf.boundary.util.HttpContentProducer
 import ch.jtaf.control.service.ClubRankingService
 import ch.jtaf.control.service.CompetitionRankingService
 import ch.jtaf.control.service.SeriesRankingService
@@ -16,7 +17,7 @@ class RankingController(private val competitionRankingService: CompetitionRankin
                         private val seriesRankingService: SeriesRankingService,
                         private val clubRankingService: ClubRankingService) {
 
-    val httpContentUtil = HttpContentUtil()
+    val httpContentUtil = HttpContentProducer()
 
     @GetMapping("/ranking/competition/{id}")
     fun getCompetitionRanking(@PathVariable("id") competitionId: Long): ModelAndView {

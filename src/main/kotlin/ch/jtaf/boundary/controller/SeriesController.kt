@@ -1,5 +1,6 @@
 package ch.jtaf.boundary.controller
 
+import ch.jtaf.boundary.dto.Message
 import ch.jtaf.control.repository.*
 import ch.jtaf.entity.Series
 import org.springframework.security.core.annotation.AuthenticationPrincipal
