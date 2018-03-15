@@ -22,10 +22,10 @@ class OrganizationController(private val organizationRepository: OrganizationRep
         return mav
     }
 
-    @GetMapping("/sec/organization/{id}")
-    fun getById(@PathVariable("id") id: Long): ModelAndView {
+    @GetMapping("/sec/organization/{organizationId}")
+    fun getById(@PathVariable("organizationId") organizationId: Long): ModelAndView {
         val mav = ModelAndView("/sec/organization")
-        mav.model["organization"] = organizationRepository.getOne(id)
+        mav.model["organization"] = organizationRepository.getOne(organizationId)
 
         mav.model["message"] = null
         return mav

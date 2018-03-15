@@ -41,10 +41,10 @@ class AthleteController(private val athleteRepository: AthleteRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/athlete/{id}")
+    @GetMapping("/sec/{organization}/athlete/{athleteId}")
     fun getById(@AuthenticationPrincipal user: User,
                 @PathVariable("organization") organizationKey: String,
-                @PathVariable("id") id: Long,
+                @PathVariable("athleteId") athleteId: Long,
                 @RequestParam("seriesId") seriesId: Long?,
                 @RequestParam("competitionId") competitionId: Long?,
                 @RequestParam("mode") mode: String?,
@@ -56,7 +56,7 @@ class AthleteController(private val athleteRepository: AthleteRepository,
         mav.model["returnTo"] = returnTo
         mav.model["returnTo"] = returnTo
 
-        mav.model["athlete"] = athleteRepository.getOne(id)
+        mav.model["athlete"] = athleteRepository.getOne(athleteId)
 
         val organization = organizationRepository.findByKey(organizationKey)
         mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)

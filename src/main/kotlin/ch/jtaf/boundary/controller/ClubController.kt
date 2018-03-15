@@ -26,12 +26,12 @@ class ClubController(private val clubRepository: ClubRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/club/{id}")
+    @GetMapping("/sec/{organization}/club/{clubId}")
     fun getById(@PathVariable("organization") organizationKey: String,
-                @PathVariable("id") id: Long): ModelAndView {
+                @PathVariable("clubId") clubId: Long): ModelAndView {
         val mav = ModelAndView("/sec/club")
 
-        mav.model["club"] = clubRepository.getOne(id)
+        mav.model["club"] = clubRepository.getOne(clubId)
 
         mav.model["message"] = null
         return mav

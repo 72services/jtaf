@@ -38,12 +38,12 @@ class AthletesController(private val athleteRepository: AthleteRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/athletes/{id}/delete")
+    @GetMapping("/sec/{organization}/athletes/{athleteId}/delete")
     fun deleteById(@AuthenticationPrincipal user: User,
                    @PathVariable("organization") organizationKey: String,
-                   @PathVariable("id") id: Long): ModelAndView {
+                   @PathVariable("athleteId") athleteId: Long): ModelAndView {
 
-        athleteRepository.deleteById(id)
+        athleteRepository.deleteById(athleteId)
 
         val mav = ModelAndView("/sec/athletes")
 

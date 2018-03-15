@@ -26,12 +26,12 @@ class EventController(private val eventRepository: EventRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/event/{id}")
+    @GetMapping("/sec/{organization}/event/{eventId}")
     fun getById(@PathVariable("organization") organizationKey: String,
-                @PathVariable("id") id: Long): ModelAndView {
+                @PathVariable("eventId") eventId: Long): ModelAndView {
         val mav = ModelAndView("/sec/event")
 
-        mav.model["event"] = eventRepository.getOne(id)
+        mav.model["event"] = eventRepository.getOne(eventId)
 
         mav.model["message"] = null
         return mav

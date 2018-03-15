@@ -36,11 +36,11 @@ class EventsController(private val eventRepository: EventRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/events/{id}/delete")
+    @GetMapping("/sec/{organization}/events/{eventId}/delete")
     fun deleteById(@AuthenticationPrincipal user: User,
                    @PathVariable("organization") organizationKey: String,
-                   @PathVariable("id") id: Long): ModelAndView {
-        eventRepository.deleteById(id)
+                   @PathVariable("eventId") eventId: Long): ModelAndView {
+        eventRepository.deleteById(eventId)
 
         val mav = ModelAndView("/sec/events")
 

@@ -27,13 +27,13 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return mav
     }
 
-    @GetMapping("sec/{organization}/series/{id}")
+    @GetMapping("sec/{organization}/series/{seriesId}")
     fun getById(@PathVariable("organization") organizationKey: String,
-                @PathVariable("id") id: Long): ModelAndView {
+                @PathVariable("seriesId") seriesId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
-        mav.model["series"] = seriesRepository.getOne(id)
-        mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
+        mav.model["series"] = seriesRepository.getOne(seriesId)
+        mav.model["categories"] = categoryRepository.findAllBySeriesId(seriesId)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(seriesId)
 
         mav.model["message"] = null
         return mav

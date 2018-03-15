@@ -3,6 +3,7 @@ package ch.jtaf.boundary.controller
 import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.EventRepository
 import ch.jtaf.entity.Category
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.GetMapping
@@ -15,6 +16,8 @@ import javax.persistence.EntityManager
 class CategoryController(private val categoryRepository: CategoryRepository,
                          private val eventRepository: EventRepository,
                          private val entityManager: EntityManager) {
+
+    val httpContentUtil = HttpContentUtil()
 
     @GetMapping("/sec/{organization}/series/{seriesId}/category")
     fun get(@PathVariable("organization") organizationKey: String,
@@ -30,13 +33,13 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/category/{id}")
+    @GetMapping("/sec/{organization}/series/{seriesId}/category/{categoryId}")
     fun getById(@PathVariable("organization") organizationKey: String,
                 @PathVariable("seriesId") seriesId: Long,
-                @PathVariable("id") id: Long): ModelAndView {
+                @PathVariable("categoryId") categoryId: Long): ModelAndView {
         val mav = ModelAndView("/sec/category")
         mav.model["seriesId"] = seriesId
-        mav.model["category"] = categoryRepository.getOne(id)
+        mav.model["category"] = categoryRepository.getOne(categoryId)
 
         mav.model["message"] = null
         return mav
@@ -62,21 +65,21 @@ class CategoryController(private val categoryRepository: CategoryRepository,
     }
 
     @Transactional
-    @GetMapping("/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/up")
+    @GetMapping("/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}/up")
     fun eventMoveUp(@PathVariable("organization") organizationKey: String,
-                    @PathVariable("id") id: Long,
+                    @PathVariable("categoryId") categoryId: Long,
                     @PathVariable("seriesId") seriesId: Long,
                     @PathVariable("eventId") eventId: Long): ModelAndView {
-        return moveEvent(id, seriesId, eventId, true)
+        return moveEvent(categoryId, seriesId, eventId, true)
     }
 
     @Transactional
-    @GetMapping("/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/down")
+    @GetMapping("/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}/down")
     fun eventMoveDown(@PathVariable("organization") organizationKey: String,
-                      @PathVariable("id") id: Long,
+                      @PathVariable("categoryId") categoryId: Long,
                       @PathVariable("seriesId") seriesId: Long,
                       @PathVariable("eventId") eventId: Long): ModelAndView {
-        return moveEvent(id, seriesId, eventId, false)
+        return moveEvent(categoryId, seriesId, eventId, false)
     }
 
     private fun moveEvent(id: Long, seriesId: Long, eventId: Long, up: Boolean): ModelAndView {
@@ -113,12 +116,12 @@ class CategoryController(private val categoryRepository: CategoryRepository,
     }
 
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/delete")
+    @GetMapping("/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}/delete")
     fun deleteById(@PathVariable("organization") organizationKey: String,
-                   @PathVariable("id") id: Long,
+                   @PathVariable("categoryId") categoryId: Long,
                    @PathVariable("seriesId") seriesId: Long,
                    @PathVariable("eventId") eventId: Long): ModelAndView {
-        val category = categoryRepository.getOne(id)
+        val category = categoryRepository.getOne(categoryId)
         val event = eventRepository.getOne(eventId)
         category.events.remove(event)
 
@@ -157,5 +160,13 @@ class CategoryController(private val categoryRepository: CategoryRepository,
 
         mav.model["message"] = Message(Message.success, "Category saved!")
         return mav
+    }
+
+    @GetMapping("/sec/{organization}/series/{seriesId}/category/{categoryId}/sheet")
+    fun getSheet(@PathVariable("organization") organizationKey: String,
+                 @PathVariable("seriesId") seriesId: Long,
+                 @PathVariable("categoryId") categoryId: Long): ResponseEntity<ByteArray> {
+
+        return httpContentUtil.getContentAsPdf("sheet_category_$categoryId.pdf", ByteArray(0))
     }
 }
