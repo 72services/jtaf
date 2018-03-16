@@ -52,7 +52,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
     fun enterResults(@PathVariable("organization") organizationKey: String,
                      @PathVariable("seriesId") seriesId: Long,
                      @PathVariable("competitionId") competitionId: Long): ModelAndView {
-        val mav = ModelAndView("/sec/athlete_results")
+        val mav = ModelAndView("/sec/results")
         mav.model["seriesId"] = seriesId
         mav.model["competitionId"] = competitionId
         mav.model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId = competitionId)

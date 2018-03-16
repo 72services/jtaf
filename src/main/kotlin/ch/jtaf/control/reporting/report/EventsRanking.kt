@@ -2,7 +2,7 @@ package ch.jtaf.control.reporting.report
 
 import ch.jtaf.control.reporting.data.EventsRankingData
 import ch.jtaf.control.reporting.data.EventsRankingEventData
-import ch.jtaf.entity.AthleteWithEventDTO
+import ch.jtaf.entity.Result
 import com.itextpdf.text.Document
 import com.itextpdf.text.PageSize
 import com.itextpdf.text.pdf.PdfPTable
@@ -60,14 +60,14 @@ class EventsRanking(private val ranking: EventsRankingData, locale: Locale) : Ra
         addCategoryTitleCellWithColspan(table, " ", 7)
     }
 
-    private fun createAthleteRow(table: PdfPTable, position: Int, athlete: AthleteWithEventDTO) {
+    private fun createAthleteRow(table: PdfPTable, position: Int, result: Result) {
         addCell(table, position.toString() + ".")
-        addCell(table, athlete.athlete.lastName)
-        addCell(table, athlete.athlete.firstName)
-        addCell(table, athlete.athlete.yearOfBirth.toString())
-        addCell(table, athlete.category.abbreviation)
-        addCell(table, if (athlete.athlete.club == null) "" else athlete.athlete.club?.abbreviation!!)
-        addCellAlignRight(table, athlete.result.result)
+        addCell(table, result.athlete!!.lastName)
+        addCell(table, result.athlete!!.firstName)
+        addCell(table, result.athlete!!.yearOfBirth.toString())
+        addCell(table, result.category!!.abbreviation)
+        addCell(table, if (result.athlete!!.club == null) "" else result.athlete!!.club?.abbreviation!!)
+        addCellAlignRight(table, result.result)
     }
 
 }

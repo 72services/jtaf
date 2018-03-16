@@ -15,9 +15,9 @@
 
             <a th:href="@{/ranking/competition/{id}/pdf(id=${data.competition.id})}" th:text="#{messages.download_as_pdf}">Download as PDF</a>
             &nbsp;
-            <a href="#" th:text="#{messages.event_ranking}">Event Ranking</a>
+            <a th:href="@{/ranking/competition/{id}/events(id=${data.competition.id})}" th:text="#{messages.event_ranking}">Event Ranking</a>
             &nbsp;
-            <a href="#" th:text="#{messages.diplomas}">Diplomas</a>
+            <a th:href="@{/ranking/competition/{id}/diplomas(id=${data.competition.id})}"  th:text="#{messages.diplomas}">Diplomas</a>
 
             <div>
                 <!--/*@thymesVar id="categoryData" type="ch.jtaf.control.reporting.data.CompetitionRankingCategoryData"*/-->

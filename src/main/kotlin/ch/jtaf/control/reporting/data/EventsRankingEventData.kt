@@ -1,7 +1,6 @@
 package ch.jtaf.control.reporting.data
 
-import ch.jtaf.entity.AthleteWithEventDTO
 import ch.jtaf.entity.Event
-import java.util.*
+import ch.jtaf.entity.Result
 
-class EventsRankingEventData(val event: Event, val athletes: List<AthleteWithEventDTO>)
+class EventsRankingEventData(val event: Event, val athletes: List<Result>)

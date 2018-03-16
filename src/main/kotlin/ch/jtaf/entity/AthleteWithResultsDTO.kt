@@ -4,18 +4,6 @@ data class AthleteWithResultsDTO(val athlete: Athlete, val results: List<Result>
 
     fun getTotalPoints(): Int = results.sumBy { it.points }
 
-    fun getPointsPerCompetiton(): HashMap<Competition, Int> {
-        var map = HashMap<Competition, Int>()
-        results.sortedBy { it.competition!!.competitionDate }.forEach {
-            if (map.containsKey(it.competition!!)) {
-                map.put(it.competition!!, map.get(it.competition!!)!! + it.points)
-            } else {
-                map.put(it.competition!!, it.points)
-            }
-        }
-        return map
-    }
-
     fun competitionResultsAsString(): String {
         val sb = StringBuilder()
         results.forEach {
@@ -40,4 +28,17 @@ data class AthleteWithResultsDTO(val athlete: Athlete, val results: List<Result>
         }
         return sb.toString()
     }
+
+    private fun getPointsPerCompetiton(): HashMap<Competition, Int> {
+        var map = HashMap<Competition, Int>()
+        results.sortedBy { it.competition!!.competitionDate }.forEach {
+            if (map.containsKey(it.competition!!)) {
+                map.put(it.competition!!, map.get(it.competition!!)!! + it.points)
+            } else {
+                map.put(it.competition!!, it.points)
+            }
+        }
+        return map
+    }
+
 }

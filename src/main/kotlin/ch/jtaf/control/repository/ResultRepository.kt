@@ -1,5 +1,6 @@
 package ch.jtaf.control.repository
 
+import ch.jtaf.entity.AthleteDTO
 import ch.jtaf.entity.Result
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
@@ -22,5 +23,4 @@ interface ResultRepository : JpaRepository<Result, Long> {
     @Modifying
     @Query("delete from Result r where r.id in (select r.id from Result r where r.category.id =?1 and r.athlete.id = ?2)")
     fun deleteResultsByCategoryIdAndAthleteId(id: Long?, athleteId: Long)
-
 }

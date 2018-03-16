@@ -32,6 +32,18 @@ class RankingController(private val competitionRankingService: CompetitionRankin
         return httpContentUtil.getContentAsPdf("competition_$competitionId.pdf", competitionRanking)
     }
 
+    @GetMapping("/ranking/competition/{id}/events", produces = [APPLICATION_PDF_VALUE])
+    fun getEventRanking(@PathVariable("id") competitionId: Long): ResponseEntity<ByteArray> {
+        val eventRanking = competitionRankingService.createEventsRanking(competitionId)
+        return httpContentUtil.getContentAsPdf("eventsranking_$competitionId.pdf", eventRanking)
+    }
+
+    @GetMapping("/ranking/competition/{id}/diplomas", produces = [APPLICATION_PDF_VALUE])
+    fun getDiplomas(@PathVariable("id") competitionId: Long): ResponseEntity<ByteArray> {
+        val diplomas = competitionRankingService.createDiplomas(competitionId)
+        return httpContentUtil.getContentAsPdf("diploma_$competitionId.pdf", diplomas)
+    }
+
     @GetMapping("/ranking/series/{id}")
     fun getSeriesRanking(@PathVariable("id") seriesId: Long): ModelAndView {
         val mav = ModelAndView("/series_ranking")

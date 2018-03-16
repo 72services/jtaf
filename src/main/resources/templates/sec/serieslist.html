@@ -44,13 +44,13 @@
                                     <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}/results(organization=${organization},competitionId=${competition.id},seriesId=${series.id})}"
                                        th:text="#{messages.enter_results}">Enter Results</a>
 
-                                    <a th:href="@{/ranking/competition/{id}/pdf(id=${competition.id})}" th:text="#{messages.ranking}">Ranking</a>
+                                    <a th:href="@{/ranking/competition/{id}(id=${competition.id})}" th:text="#{messages.ranking}">Ranking</a>
                                 </td>
                             </tr>
                         </table>
                     </td>
                     <td class="text-right">
-                        <a th:href="@{/ranking/series/{id}/pdf(id=${series.id})}" th:text="#{messages.ranking}">Ranking</a>
+                        <a th:href="@{/ranking/series/{id}(id=${series.id})}" th:text="#{messages.ranking}">Ranking</a>
 
                         <a th:href="@{/sec/{organization}/series/{id}(organization=${organization},id=${series.id})}"
                            th:text="#{messages.edit}">Edit</a>
