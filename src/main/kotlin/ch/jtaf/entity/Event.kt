@@ -25,27 +25,24 @@ data class Event(
 ) {
 
     fun calculatePoints(result: String): Int {
-        if (result.toDouble() > 0) {
-            val points = when (eventType) {
-                EventType.RUN -> {
-                    a * pow((b - result.toDouble() * 100) / 100, c)
-                }
-                EventType.RUN_LONG -> {
-                    val parts = result.split("\\.".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
-                    val time = if (parts.size == 1) {
-                        parts[0].toDouble() * 60
-                    } else {
-                        parts[0].toDouble() * 60 + parts[1].toDouble()
-                    }
-                    a * pow((b - time * 100) / 100, c)
-                }
-                EventType.JUMP_THROW -> {
-                    a * pow((result.toDouble() * 100 - b) / 100, c)
-                }
+        val points = when (eventType) {
+            EventType.RUN -> {
+                a * pow((b - result.toDouble() * 100) / 100, c)
             }
-            return round(points).toInt()
-        } else {
-            return 0;
+            EventType.RUN_LONG -> {
+                val parts = result.split("\\.".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
+                val time = when {
+                    parts.size == 1 -> (parts[0].toDouble() * 60)
+                    parts.size == 2 -> (parts[0].toDouble() * 60) + parts[1].toDouble()
+                    parts.size == 3 -> (parts[0].toDouble() * 60) + parts[1].toDouble() + (parts[1].toDouble() / 100)
+                    else -> 0.0
+                }
+                a * pow((b - time * 100) / 100, c)
+            }
+            EventType.JUMP_THROW -> {
+                a * pow((result.toDouble() * 100 - b) / 100, c)
+            }
         }
+        return round(points).toInt()
     }
 }

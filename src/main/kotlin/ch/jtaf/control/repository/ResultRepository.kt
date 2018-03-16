@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ResultRepository : JpaRepository<Result, Long> {
 
-    fun findByAthleteIdAndCompetitionId(athleteId: Long, competitionId: Long): MutableList<Result>
+    fun findByAthleteIdAndCompetitionIdOrderByPosition(athleteId: Long, competitionId: Long): MutableList<Result>
 
     fun findByCompetitionId(competitionId: Long): List<Result>
 

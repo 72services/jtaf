@@ -106,7 +106,7 @@
                                    th:autofocus="${!resultContainer.results.isEmpty() && i.index == 0}">
                         </td>
                         <td>
-                            <input class="form-control" th:field="*{results[__${i.index}__].points}" readonly>
+                            <input class="form-control" th:field="*{results[__${i.index}__].points}" readonly tabindex="-1">
                         </td>
                     </tr>
                 </table>
