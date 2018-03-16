@@ -5,6 +5,7 @@ import ch.jtaf.control.reporting.data.CompetitionRankingData
 import ch.jtaf.control.reporting.data.EventsRankingData
 import ch.jtaf.control.reporting.data.EventsRankingEventData
 import ch.jtaf.control.reporting.report.CompetitionRanking
+import ch.jtaf.control.reporting.report.Diplomas
 import ch.jtaf.control.reporting.report.EventsRanking
 import ch.jtaf.control.repository.*
 import ch.jtaf.entity.AthleteWithResultsDTO
@@ -53,7 +54,11 @@ class CompetitionRankingService(private val competitionRepository: CompetitionRe
     }
 
     fun createDiplomas(competitionId: Long): ByteArray {
-        return ByteArray(0)
+        val competition = competitionRepository.getOne(competitionId)
+        val series = seriesRepository.getOne(competition.seriesId!!)
+        val competitionRankingData = getCompetitionRankingData(competitionId)
+
+        return Diplomas(competitionRankingData, series.logo, Locale.ENGLISH).create()
     }
 
 }
