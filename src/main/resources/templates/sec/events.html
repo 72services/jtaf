@@ -31,7 +31,12 @@
                 <!--/*@thymesVar id="events" type="java.util.List<Event>"*/-->
                 <!--/*@thymesVar id="event" type="ch.jtaf.entity.Event"*/-->
                 <tr th:each="event: ${events}">
-                    <td th:text="${event.abbreviation}">jump</td>
+                    <td>
+                        <a th:if="${mode == 'edit'}"
+                           th:href="@{/sec/{organization}/event/{id}(organization=${organization},id=${event.id})}"
+                           th:text="${event.abbreviation}">80</a>
+                        <p th:if="${mode != 'edit'}" th:text="${event.abbreviation}"></p>
+                    </td>
                     <td th:text="${event.name}">Long Jump</td>
                     <td th:text="${event.eventType}">JUMP</td>
                     <td th:text="${event.gender}">MALE</td>
@@ -40,10 +45,6 @@
                     <td th:text="${event.c}"></td>
 
                     <td class="text-right">
-                        <a th:if="${mode == 'edit'}"
-                           th:href="@{/sec/{organization}/event/{id}(organization=${organization},id=${event.id})}"
-                           th:text="#{messages.edit}"></a>
-
                         <a th:if="${mode == 'edit'}"
                            th:href="@{/sec/{organization}/events/{id}/delete(organization=${organization},id=${event.id})}"
                            th:text="#{messages.delete}" onclick="return confirm('Are you sure?')">Delete</a>

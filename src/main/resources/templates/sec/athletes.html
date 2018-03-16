@@ -16,7 +16,7 @@
             <!--/*@thymesVar id="mode" type="java.lang.String"*/-->
             <table class="table table-striped">
                 <tr>
-                    <th th:text="#{messages.last_name}">Last Name</th>
+                    <th th:text="#{messages.last_name}"></th>
                     <th th:text="#{messages.first_name}">First Name</th>
                     <th th:text="#{messages.year_of_birth}">Year of Birth</th>
                     <th th:text="#{messages.gender}">Gender</th>
@@ -29,7 +29,10 @@
                 <!--/*@thymesVar id="athletes" type="java.util.List<Athlete>"*/-->
                 <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.Athlete"*/-->
                 <tr th:each="athlete: ${athletes}">
-                    <td th:text="${athlete.lastName}">Doe</td>
+                    <td>
+                        <a th:href="@{/sec/{organization}/athlete/{id}(organization=${organization},id=${athlete.id},mode=${mode})}"
+                           th:text="${athlete.lastName}">Doe</a>
+                    </td>
                     <td th:text="${athlete.firstName}">John</td>
                     <td th:text="${athlete.yearOfBirth}">2012</td>
                     <td th:text="${athlete.gender}">MALE</td>
@@ -38,9 +41,6 @@
                         <a th:if="${mode == 'select'}"
                            th:href="@{/sec/{organization}/series/{seriesId}/athlete/{id}(organization=${organization},seriesId=${seriesId},id=${athlete.id})}"
                            th:text="#{messages.select}">Select</a>
-
-                        <a th:href="@{/sec/{organization}/athlete/{id}(organization=${organization},id=${athlete.id},mode=${mode})}"
-                           th:text="#{messages.edit}"></a>
 
                         <a th:if="${mode == 'edit'}"
                            th:href="@{/sec/{organization}/athletes/{id}/delete(organization=${organization},id=${athlete.id})}"
