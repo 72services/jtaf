@@ -10,14 +10,21 @@
     <div class="row">
         <div class="col-md-12">
             <h1 th:text="#{messages.ranking}">Ranking</h1>
-            <!--/*@thymesVar id="data" type="ch.jtaf.control.reporting.data.CompetitionRankingData"*/-->
-            <h2 th:text="${data.competition.name + ' ' + data.competition.competitionDate}">CIS 1</h2>
 
-            <a th:href="@{/ranking/competition/{id}/pdf(id=${data.competition.id})}" th:text="#{messages.download_as_pdf}">Download as PDF</a>
-            &nbsp;
-            <a th:href="@{/ranking/competition/{id}/events(id=${data.competition.id})}" th:text="#{messages.event_ranking}">Event Ranking</a>
-            &nbsp;
-            <a th:href="@{/ranking/competition/{id}/diplomas(id=${data.competition.id})}"  th:text="#{messages.diplomas}">Diplomas</a>
+            <div class="row">
+                <div class="col-md-6">
+                    <!--/*@thymesVar id="data" type="ch.jtaf.control.reporting.data.CompetitionRankingData"*/-->
+                    <h2 th:text="${data.competition.name + ' ' + data.competition.competitionDate}">CIS 1</h2>
+                </div>
+                <div class="col-md-6 text-right align-bottom">
+                    <a class="btn btn-primary" th:href="@{/ranking/competition/{id}/pdf(id=${data.competition.id})}"
+                       th:text="#{messages.download_as_pdf}">Download as PDF</a>
+                    <a class="btn btn-primary" th:href="@{/ranking/competition/{id}/events(id=${data.competition.id})}"
+                       th:text="#{messages.event_ranking}">Event Ranking</a>
+                    <a class="btn btn-primary" th:href="@{/ranking/competition/{id}/diplomas(id=${data.competition.id})}"
+                       th:text="#{messages.diplomas}">Diplomas</a>
+                </div>
+            </div>
 
             <div>
                 <!--/*@thymesVar id="categoryData" type="ch.jtaf.control.reporting.data.CompetitionRankingCategoryData"*/-->

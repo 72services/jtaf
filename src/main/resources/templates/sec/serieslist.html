@@ -17,43 +17,67 @@
                class="text-right font-weight-bold">Add Series</a>
         </div>
     </div>
+
     <!--/*@thymesVar id="seriesList" type="java.util.List<Series>"*/-->
     <!--/*@thymesVar id="series" type="ch.jtaf.entity.Series"*/-->
-    <div class="row pt-2 pb-5" th:each="series: ${seriesList}">
-        <div class="col-lg-12">
-            <div class="row">
-                <div class="col-lg-8">
-                    <a th:href="@{/sec/{organization}/series/{id}(organization=${organization},id=${series.id})}"
-                       th:text="${series.name}" class="font-weight-bold">CIS 2018</a>
+    <div class="row">
+        <div class="col-lg-6" th:each="series : ${seriesList}" style="padding-top: 20px;">
+            <div class="card" style="width: 100%;">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <img th:if="${series.logo != null}" th:src="@{/series/{seriesId}/logo(seriesId=${series.id})}">
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h5 class="card-title">
+                                        <a th:href="@{/sec/{organization}/series/{id}(organization=${organization},id=${series.id})}"
+                                           th:text="${series.name}" class="font-weight-bold">CIS 2018</a>
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 text-right">
+                                    <a class="btn btn-primary" th:href="@{/sec/{organization}/{id}/delete(organization=${organization},id=${series.id})}"
+                                       th:text="#{messages.delete}" onclick="return confirm('Are you sure?')">Delete</a>
+                                    <a class="btn btn-primary" th:href="@{/ranking/series/{id}(id=${series.id})}" th:text="#{messages.series_ranking}">
+                                        Series Ranking
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-4 text-right">
-                    <a th:href="@{/sec/{organization}/{id}/delete(organization=${organization},id=${series.id})}"
-                       th:text="#{messages.delete}" onclick="return confirm('Are you sure?')">Delete</a>
-
-                    <a th:href="@{/ranking/series/{id}(id=${series.id})}" th:text="#{messages.ranking}">Ranking</a>
-                </div>
-            </div>
-
-            <!--/*@thymesVar id="competitions" type="java.util.List<Competition>"*/-->
-            <!--/*@thymesVar id="competition" type="ch.jtaf.entity.Competition"*/-->
-            <div class="row pt-3" th:if="${!series.competitions.isEmpty()}" th:each="competition: ${series.competitions}">
-                <div class="col-lg-7">
-                    <span th:text="${competition.name}">CIS 1</span>
-                </div>
-                <div class="col-lg-2">
-                    <span th:text="${competition.competitionDate.toString()}">2017-06-10</span>
-                </div>
-                <div class="col-lg-1">
-                    <span th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}"> Athletes 1/10</span>
-                </div>
-                <div class="col-lg-2 text-right">
-                    <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}/results(organization=${organization},competitionId=${competition.id},seriesId=${series.id})}"
-                       th:text="#{messages.enter_results}">Enter Results</a>
-
-                    <a th:href="@{/ranking/competition/{id}(id=${competition.id})}" th:text="#{messages.ranking}">Ranking</a>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:each="competition: ${series.competitions}">
+                            <div class="row">
+                                <div class="col-lg-7">
+                                    <span th:text="${competition.name}" class="font-weight-bold">CIS 1</span>
+                                </div>
+                                <div class="col-lg-3">
+                                    <span th:text="${competition.competitionDate.toString()}">2017-06-10</span>
+                                </div>
+                                <div class="col-lg-2 text-right">
+                                    <span th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}">Athletes 1/10</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 mt-3 text-right">
+                                    <a th:href="@{/sec/{organization}/series/{seriesId}/competition/{competitionId}/results(organization=${organization},competitionId=${competition.id},seriesId=${series.id})}"
+                                       th:text="#{messages.enter_results}" class="btn btn-primary">Enter Results</a>
+                                    <a th:href="@{/ranking/competition/{id}(id=${competition.id})}" th:text="#{messages.ranking}"
+                                       class="btn btn-primary">Ranking</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
     </div>
 
     <div th:include="common/footer :: copy"></div>
