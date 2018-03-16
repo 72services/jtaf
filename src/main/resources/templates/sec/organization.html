@@ -29,7 +29,7 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a href="/sec/organizations" th:text="#{messages.back}">Back</a>
+                <a href="/sec/organizations" th:text="#{messages.back}" class="btn">Back</a>
 
                 <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
                 <div th:include="common/message :: message (${message})"></div>

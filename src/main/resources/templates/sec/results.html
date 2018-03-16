@@ -26,6 +26,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary" th:text="#{messages.search}">Search</button>
+                <a th:href="@{/sec/{organization}(organization=${organization})}" th:text="#{messages.back}" class="btn">Back</a>
             </form>
 
             <!--/*@thymesVar id="athletes" type="java.util.List<ch.jtaf.entity.AthleteDTO>"*/-->
