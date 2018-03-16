@@ -13,30 +13,43 @@
 
             <!--/*@thymesVar id="seriesList" type="java.util.List<Series>"*/-->
             <!--/*@thymesVar id="series" type="ch.jtaf.entity.Series"*/-->
-            <div class="row" th:each="series : ${seriesList}">
-                <div class="col-md-12">
-                    <h2>
-                        <img th:src="@{/series/{seriesId}/logo(seriesId=${series.id})}">
-                        <span th:text="${series.name}">CIS 2018</span>
-                        <a th:href="@{/ranking/series/{id}(id=${series.id})}" th:text="#{messages.ranking}">Ranking</a>
-                    </h2>
+            <div class="row">
+                <div class="col-lg-6" th:each="series : ${seriesList}" style="padding-top: 20px;">
+                    <div th:if="${!series.competitions.isEmpty()}" class="card" style="width: 100%;">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <img th:if="${series.logo != null}" th:src="@{/series/{seriesId}/logo(seriesId=${series.id})}">
+                                </div>
+                                <div class="col-lg-9">
+                                    <h5 class="card-title" th:text="${series.name}">CIS 2018</h5>
+                                    <a class="card-link" th:href="@{/ranking/series/{id}(id=${series.id})}" th:text="#{messages.series_ranking}">Series
+                                        Ranking</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h6 th:text="#{messages.competitions}">Competitions</h6>
 
-                    <!--/*@thymesVar id="competitions" type="java.util.List<Competition>"*/-->
-                    <!--/*@thymesVar id="competition" type="ch.jtaf.entity.Competition"*/-->
-                    <div class="row" th:each="competition: ${series.competitions}">
-                        <div class="col-md-3">
-                            <span th:text="${competition.name}">CIS 1</span>
-                        </div>
-                        <div class="col-md-3">
-                            <span th:text="${competition.competitionDate.toString()}">2017-06-10</span>
-                        </div>
-                        <div class="col-md-3">
-                            <span th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}">Athletes 1/10</span>
-                        </div>
-                        <div class="col-md-3">
-                            <a th:href="@{/ranking/competition/{id}(id=${competition.id})}" th:text="#{messages.ranking}">Ranking</a>
+                            <div th:each="competition: ${series.competitions}">
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <span th:text="${competition.name}">CIS 1</span>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <span th:text="${competition.competitionDate.toString()}">2017-06-10</span>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <span th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}">Athletes 1/10</span>
+                                    </div>
+                                    <div class="col-lg-2 text-right">
+                                        <a th:href="@{/ranking/competition/{id}(id=${competition.id})}" th:text="#{messages.ranking}">Ranking</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
