@@ -4,6 +4,7 @@ import ch.jtaf.boundary.dto.Message
 import ch.jtaf.boundary.util.HttpContentProducer
 import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.EventRepository
+import ch.jtaf.control.service.SheetService
 import ch.jtaf.entity.Category
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -17,6 +18,7 @@ import javax.persistence.EntityManager
 @Controller
 class CategoryController(private val categoryRepository: CategoryRepository,
                          private val eventRepository: EventRepository,
+                         private val sheetService: SheetService,
                          private val entityManager: EntityManager) {
 
     val httpContentUtil = HttpContentProducer()
@@ -169,6 +171,9 @@ class CategoryController(private val categoryRepository: CategoryRepository,
                  @PathVariable("seriesId") seriesId: Long,
                  @PathVariable("categoryId") categoryId: Long): ResponseEntity<ByteArray> {
 
-        return httpContentUtil.getContentAsPdf("sheet_category_$categoryId.pdf", ByteArray(0))
+        val emptySheet = sheetService.createEmptySheet(seriesId, categoryId)
+
+        return httpContentUtil.getContentAsPdf("sheet_category_$categoryId.pdf", emptySheet)
     }
+
 }

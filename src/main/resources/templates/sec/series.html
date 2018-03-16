@@ -95,6 +95,10 @@
                     <td th:text="${category.yearFrom}">1900</td>
                     <td th:text="${category.yearTo}">2999</td>
                     <td class="text-right">
+
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{id}/sheet(organization=${organization},seriesId=${series.id},id=${category.id})}"
+                           th:text="#{messages.empty_sheet}">Sheet</a>
+
                         <a th:href="@{/sec/{organization}/series/{seriesId}/category/{id}(organization=${organization},seriesId=${series.id},id=${category.id})}"
                            th:text="#{messages.edit}">Edit</a>
                     </td>

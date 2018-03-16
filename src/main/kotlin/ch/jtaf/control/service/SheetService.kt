@@ -5,6 +5,10 @@ import ch.jtaf.control.repository.AthleteRepository
 import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.CompetitionRepository
 import ch.jtaf.control.repository.SeriesRepository
+import ch.jtaf.entity.Athlete
+import ch.jtaf.entity.AthleteDTO
+import ch.jtaf.entity.Category
+import ch.jtaf.entity.Series
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -23,6 +27,14 @@ class SheetService(private val competitionRepository: CompetitionRepository,
         val sheets = Sheets(competition, athletes, categories, series.logo, Locale.ENGLISH)
 
         return sheets.create()
+    }
+
+    fun createEmptySheet(seriesId: Long, categoryid: Long): ByteArray {
+        val category = categoryRepository.getOne(categoryid)
+        val series = seriesRepository.getOne(seriesId)
+
+        val sheet = Sheets(AthleteDTO(category = category.abbreviation), Arrays.asList(category), series.logo, Locale.ENGLISH)
+        return sheet.create()
     }
 
 }
