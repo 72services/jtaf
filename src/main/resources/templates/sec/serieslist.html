@@ -24,7 +24,9 @@
                 <!--/*@thymesVar id="series" type="ch.jtaf.entity.Series"*/-->
                 <tr th:each="series: ${seriesList}">
                     <td>
+                        <img th:src="@{/series/{seriesId}/logo(seriesId=${series.id})}">
                         <span th:text="${series.name}" style="font-weight: bold;">CIS 2018</span>
+
                         <table th:if="${!series.competitions.isEmpty()}" class="table" style="margin-top: 10px;">
                             <!--/*@thymesVar id="competitions" type="java.util.List<Competition>"*/-->
                             <!--/*@thymesVar id="competition" type="ch.jtaf.entity.Competition"*/-->

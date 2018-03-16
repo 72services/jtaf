@@ -1,8 +1,12 @@
 package ch.jtaf.boundary.controller
 
 import ch.jtaf.boundary.dto.Message
+import ch.jtaf.boundary.util.HttpContentProducer
 import ch.jtaf.control.repository.*
 import ch.jtaf.entity.Series
+import org.springframework.http.HttpEntity
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller
@@ -11,6 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.servlet.ModelAndView
+import java.awt.Image
+import java.awt.image.BufferedImage
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import javax.imageio.ImageIO
 
 @Controller
 class SeriesController(private val seriesRepository: SeriesRepository,
@@ -18,6 +27,8 @@ class SeriesController(private val seriesRepository: SeriesRepository,
                        private val athleteRepository: AthleteRepository,
                        private val resultRepository: ResultRepository,
                        private val organizationRepository: OrganizationRepository) {
+
+    val httpContentProducer = HttpContentProducer()
 
     @GetMapping("/sec/{organization}/series")
     fun get(@PathVariable("organization") organizationKey: String): ModelAndView {
@@ -28,7 +39,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return mav
     }
 
-    @GetMapping("sec/{organization}/series/{seriesId}")
+    @GetMapping("/sec/{organization}/series/{seriesId}")
     fun getById(@PathVariable("organization") organizationKey: String,
                 @PathVariable("seriesId") seriesId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
@@ -38,6 +49,23 @@ class SeriesController(private val seriesRepository: SeriesRepository,
 
         mav.model["message"] = null
         return mav
+    }
+
+    @GetMapping("/series/{seriesId}/logo", produces = [MediaType.IMAGE_PNG_VALUE])
+    fun getSeriesImage(@PathVariable seriesId: Long?): HttpEntity<*> {
+        val series = seriesRepository.getOne(seriesId!!)
+
+        if (series.logo != null && series.logo!!.isNotEmpty()) {
+            var bufferedImage = ImageIO.read(ByteArrayInputStream(series.logo!!))
+            if (bufferedImage != null) {
+                bufferedImage = scaleImageByFixedHeight(bufferedImage, BufferedImage.TYPE_INT_RGB, 60)
+                ByteArrayOutputStream().use { baos ->
+                    ImageIO.write(bufferedImage, "png", baos)
+                    return httpContentProducer.getContentAsPng("logo.png", baos.toByteArray())
+                }
+            }
+        }
+        return ResponseEntity.EMPTY
     }
 
     @GetMapping("/sec/{organization}/series/{id}/athlete/{athleteId}")
@@ -67,7 +95,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     }
 
     @Transactional
-    @GetMapping("sec/{organization}/series/{seriesId}/athlete/{athleteId}/delete")
+    @GetMapping("/sec/{organization}/series/{seriesId}/athlete/{athleteId}/delete")
     fun deleteById(@PathVariable("organization") organizationKey: String,
                    @PathVariable("seriesId") seriesId: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
@@ -93,7 +121,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     }
 
 
-    @PostMapping("sec/{organization}/series")
+    @PostMapping("/sec/{organization}/series")
     fun post(@AuthenticationPrincipal user: User,
              @PathVariable("organization") organizationKey: String,
              series: Series): ModelAndView {
@@ -139,4 +167,14 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return mav
     }
 
+    protected fun scaleImageByFixedHeight(image: BufferedImage, imageType: Int, newHeight: Int): BufferedImage {
+        val ratio = image.getWidth(null).toDouble() / image.getHeight(null).toDouble()
+        val newWidth = (ratio * newHeight).toInt()
+        val scaled = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH)
+        val newImage = BufferedImage(newWidth, newHeight, imageType)
+        val g = newImage.graphics
+        g.drawImage(scaled, 0, 0, null)
+        g.dispose()
+        return newImage
+    }
 }

@@ -17,4 +17,6 @@ data class Series(
     @OneToMany
     @JoinColumn(name = "series_id", insertable = false, updatable = false)
     var competitions: MutableList<Competition> = ArrayList()
+
+    var logo: ByteArray? = null
 }
