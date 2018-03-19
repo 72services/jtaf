@@ -30,14 +30,14 @@
                         </div>
                         <div class="col-lg-6">
                             <h5 class="card-title">
-                                <a th:href="@{/sec/{organization}/series/{id}(organization=${organization},id=${series.id})}"
+                                <a th:href="@{/sec/{organization}/series/{seriesId}(organization=${organization},seriesId=${series.id})}"
                                    th:text="${series.name}" class="font-weight-bold">CIS 2018</a>
                             </h5>
                         </div>
                         <div class="col-lg-4 text-right">
-                            <a class="btn" th:href="@{/sec/{organization}/{id}/delete(organization=${organization},id=${series.id})}"
+                            <a class="btn" th:href="@{/sec/{organization}/{seriesId}/delete(organization=${organization},seriesId=${series.id})}"
                                th:text="#{messages.delete}" onclick="return confirm('Are you sure?')">Delete</a>
-                            <a class="btn btn-primary" th:href="@{/ranking/series/{id}(id=${series.id})}" th:text="#{messages.series_ranking}">
+                            <a class="btn btn-primary" th:href="@{/ranking/series/{seriesId}(seriesId=${series.id})}" th:text="#{messages.series_ranking}">
                                 Series Ranking
                             </a>
                         </div>
@@ -58,7 +58,7 @@
                                     <span th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}">Athletes 1/10</span>
                                 </div>
                                 <div class="col-lg-4 text-right">
-                                    <a th:href="@{/ranking/competition/{id}(id=${competition.id})}" th:text="#{messages.ranking}"
+                                    <a th:href="@{/ranking/competition/{competitionId}(competitionId=${competition.id})}" th:text="#{messages.ranking}"
                                        class="btn btn-primary">Ranking</a>
                                 </div>
                             </div>

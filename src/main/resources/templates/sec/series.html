@@ -90,13 +90,13 @@
                 <!--/*@thymesVar id="category" type="ch.jtaf.entity.Category"*/-->
                 <tr th:each="category : ${categories}">
                     <td style="width: 50%;">
-                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{id}(organization=${organization},seriesId=${series.id},id=${category.id})}"
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{categoryId}(organization=${organization},seriesId=${series.id},categoryId=${category.id})}"
                            th:text="${category.abbreviation + ' ' + category.name}" class="font-weight-bold">A Knaben</a>
                     </td>
                     <td th:text="${category.yearFrom}">1900</td>
                     <td th:text="${category.yearTo}">2999</td>
                     <td class="text-right">
-                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{id}/sheet(organization=${organization},seriesId=${series.id},id=${category.id})}"
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{categoryId}/sheet(organization=${organization},seriesId=${series.id},categoryId=${category.id})}"
                            th:text="#{messages.empty_sheet}">Sheet</a>
                     </td>
                 </tr>
@@ -130,7 +130,7 @@
                     <td th:text="${athlete.gender}">MALE</td>
                     <td th:text="${athlete.club}">TVE</td>
                     <td class="text-right">
-                        <a th:href="@{/sec/{organization}/series/{id}/athlete/{athleteId}/delete(organization=${organization},id=${series.id}, athleteId=${athlete.id})}"
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/athlete/{athleteId}/delete(organization=${organization},seriesId=${series.id}, athleteId=${athlete.id})}"
                            th:text="#{messages.delete}" onclick="return confirm('Are you sure?')">Remove</a>
                     </td>
                 </tr>

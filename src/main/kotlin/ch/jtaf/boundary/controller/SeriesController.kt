@@ -68,16 +68,16 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return ResponseEntity.EMPTY
     }
 
-    @GetMapping("/sec/{organization}/series/{id}/athlete/{athleteId}")
+    @GetMapping("/sec/{organization}/series/{seriesId}/athlete/{athleteId}")
     fun addEvent(@PathVariable("organization") organizationKey: String,
-                 @PathVariable("id") id: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
+                 @PathVariable("seriesId") seriesId: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
 
-        val series = seriesRepository.getOne(id)
+        val series = seriesRepository.getOne(seriesId)
         val athlete = athleteRepository.getOne(athleteId)
 
         val category = categoryRepository.findBySeriesIdAndGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(
-                id, athlete.gender, athlete.yearOfBirth, athlete.yearOfBirth)
+                seriesId, athlete.gender, athlete.yearOfBirth, athlete.yearOfBirth)
 
         if (category == null) {
             mav.model["athletes_message"] = "No matching category found for gender " + athlete.gender + " and year " + athlete.yearOfBirth
@@ -87,8 +87,8 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         }
 
         mav.model["series"] = series
-        mav.model["categories"] = categoryRepository.findAllBySeriesId(id)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(id)
+        mav.model["categories"] = categoryRepository.findAllBySeriesId(seriesId)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(seriesId)
 
         mav.model["message"] = null
         return mav
@@ -152,11 +152,11 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/series/{id}/delete")
+    @GetMapping("/sec/{organization}/series/{seriesId}/delete")
     fun deleteById(@AuthenticationPrincipal user: User,
                    @PathVariable("organization") organizationKey: String,
-                   @PathVariable("id") id: Long): ModelAndView {
-        seriesRepository.deleteById(id)
+                   @PathVariable("seriesId") seriesId: Long): ModelAndView {
+        seriesRepository.deleteById(seriesId)
 
         val mav = ModelAndView("/sec/serieslist")
 

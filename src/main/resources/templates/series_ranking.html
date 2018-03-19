@@ -17,9 +17,9 @@
                     <h2 th:text="${data.series.name}">CIS 2018</h2>
                 </div>
                 <div class="col-md-6 text-right align-self-end">
-                    <a class="btn btn-primary" th:href="@{/ranking/series/{id}/pdf(id=${data.series.id})}" th:text="#{messages.download_as_pdf}">
+                    <a class="btn btn-primary" th:href="@{/ranking/series/{seriesId}/pdf(seriesId=${data.series.id})}" th:text="#{messages.download_as_pdf}">
                         Download as PDF</a>
-                    <a class="btn btn-primary" th:href="@{/ranking/club/{id}/pdf(id=${data.series.id})}" th:text="#{messages.club_ranking}">
+                    <a class="btn btn-primary" th:href="@{/ranking/club/{seriesId}/pdf(seriesId=${data.series.id})}" th:text="#{messages.club_ranking}">
                         Club Ranking</a>
                 </div>
             </div>

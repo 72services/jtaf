@@ -33,7 +33,7 @@
                 <tr th:each="event: ${events}">
                     <td>
                         <a th:if="${mode == 'edit'}"
-                           th:href="@{/sec/{organization}/event/{id}(organization=${organization},id=${event.id})}"
+                           th:href="@{/sec/{organization}/event/{eventId}(organization=${organization},eventId=${event.id})}"
                            th:text="${event.abbreviation}">80</a>
                         <p th:if="${mode != 'edit'}" th:text="${event.abbreviation}"></p>
                     </td>
@@ -46,13 +46,13 @@
 
                     <td class="text-right">
                         <a th:if="${mode == 'edit'}"
-                           th:href="@{/sec/{organization}/events/{id}/delete(organization=${organization},id=${event.id})}"
+                           th:href="@{/sec/{organization}/events/{eventId}/delete(organization=${organization},eventId=${event.id})}"
                            th:text="#{messages.delete}" onclick="return confirm('Are you sure?')">Delete</a>
 
                         <!--/*@thymesVar id="seriesId" type="java.lang.Long"*/-->
                         <!--/*@thymesVar id="categoryId" type="java.lang.Long"*/-->
                         <a th:if="${mode == 'select'}"
-                           th:href="@{/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{id}(organization=${organization},seriesId=${seriesId},categoryId=${categoryId}, id=${event.id})}"
+                           th:href="@{/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}(organization=${organization},seriesId=${seriesId},categoryId=${categoryId},eventId=${event.id})}"
                            th:text="#{messages.select}">Select</a>
                     </td>
                 </tr>

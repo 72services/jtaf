@@ -28,10 +28,10 @@
                         <a th:href="@{/sec/{organization}(organization=${organization.key})}"
                            th:text="#{messages.select}">Select</a>
 
-                        <a th:href="@{/sec/organization/{id}(id=${organization.id})}"
+                        <a th:href="@{/sec/organization/{organizationId}(organizationId=${organization.id})}"
                            th:text="#{messages.edit}">Edit</a>
 
-                        <a th:href="@{/sec/organization/{id}/delete(id=${organization.id})}"
+                        <a th:href="@{/sec/organization/{organizationId}/delete(organizationId=${organization.id})}"
                            th:text="#{messages.delete}"
                            onclick="return confirm('Are you sure?')">Delete</a>
                     </td>

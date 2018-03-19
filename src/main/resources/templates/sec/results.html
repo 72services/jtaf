@@ -78,7 +78,7 @@
                         <span th:text="${athlete.club}">TVT</span>
                     </td>
                     <td class="text-right">
-                        <a th:href="@{/sec/{organization}/athlete/{id}(organization=${organization},id=${athlete.id},seriesId=${seriesId},competitionId=${competitionId},mode='edit',returnTo='results')}"
+                        <a th:href="@{/sec/{organization}/athlete/{athleteId}(organization=${organization},athleteId=${athlete.id},seriesId=${seriesId},competitionId=${competitionId},mode='edit',returnTo='results')}"
                            th:text="#{messages.edit}"></a>
                     </td>
                 </tr>

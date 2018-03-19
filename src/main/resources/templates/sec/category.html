@@ -52,7 +52,7 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a th:href="@{/sec/{organization}/series/{id}(organization=${organization},id=${category.seriesId})}"
+                <a th:href="@{/sec/{organization}/series/{seriesId}(organization=${organization},seriesId=${category.seriesId})}"
                    th:text="#{messages.back}" class="btn">Back</a>
 
                 <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
@@ -87,12 +87,12 @@
                     <td th:text="${event.b}"></td>
                     <td th:text="${event.c}"></td>
                     <td class="text-right">
-                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/up(seriesId=${seriesId},organization=${organization},id=${category.id}, eventId=${event.id})}"
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}/up(seriesId=${seriesId},organization=${organization},categoryId=${category.id}, eventId=${event.id})}"
                            th:text="#{messages.up}">Up</a>
-                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/down(seriesId=${seriesId},organization=${organization},id=${category.id}, eventId=${event.id})}"
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}/down(seriesId=${seriesId},organization=${organization},categoryId=${category.id}, eventId=${event.id})}"
                            th:text="#{messages.down}">Down</a>
 
-                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{id}/event/{eventId}/delete(seriesId=${seriesId},organization=${organization},id=${category.id}, eventId=${event.id})}"
+                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}/delete(seriesId=${seriesId},organization=${organization},categoryId=${category.id}, eventId=${event.id})}"
                            th:text="#{messages.delete}"
                            onclick="return confirm('Are you sure?')">Delete</a>
                     </td>

@@ -27,7 +27,7 @@
                             <h5 class="card-title" th:text="${series.name}">CIS 2018</h5>
                         </div>
                         <div class="col-lg-4 text-right">
-                            <a class="btn btn-primary" th:href="@{/ranking/series/{id}(id=${series.id})}"
+                            <a class="btn btn-primary" th:href="@{/ranking/series/{seriesId}(seriesId=${series.id})}"
                                th:text="#{messages.series_ranking}"> Series Ranking</a>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                                     <span th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}">Athletes 1/10</span>
                                 </div>
                                 <div class="col-lg-3 text-right">
-                                    <a class="btn btn-primary" th:href="@{/ranking/competition/{id}(id=${competition.id})}"
+                                    <a class="btn btn-primary" th:href="@{/ranking/competition/{competitionId}(competitionId=${competition.id})}"
                                        th:text="#{messages.ranking}">Ranking</a>
                                 </div>
                             </div>

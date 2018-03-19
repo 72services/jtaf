@@ -30,7 +30,7 @@
                 <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.Athlete"*/-->
                 <tr th:each="athlete: ${athletes}">
                     <td>
-                        <a th:href="@{/sec/{organization}/athlete/{id}(organization=${organization},id=${athlete.id},mode=${mode})}"
+                        <a th:href="@{/sec/{organization}/athlete/{athleteId}(organization=${organization},athleteId=${athlete.id},mode=${mode})}"
                            th:text="${athlete.lastName}">Doe</a>
                     </td>
                     <td th:text="${athlete.firstName}">John</td>
@@ -39,11 +39,11 @@
                     <td th:text="${athlete.club == null ? '' : athlete.club.abbreviation}">TVE</td>
                     <td class="text-right">
                         <a th:if="${mode == 'select'}"
-                           th:href="@{/sec/{organization}/series/{seriesId}/athlete/{id}(organization=${organization},seriesId=${seriesId},id=${athlete.id})}"
+                           th:href="@{/sec/{organization}/series/{seriesId}/athlete/{athleteId}(organization=${organization},seriesId=${seriesId},athleteId=${athlete.id})}"
                            th:text="#{messages.select}">Select</a>
 
                         <a th:if="${mode == 'edit'}"
-                           th:href="@{/sec/{organization}/athletes/{id}/delete(organization=${organization},id=${athlete.id})}"
+                           th:href="@{/sec/{organization}/athletes/{athleteId}/delete(organization=${organization},athleteId=${athlete.id})}"
                            th:text="#{messages.delete}"
                            onclick="return confirm('Are you sure?')">Delete</a>
                     </td>
