@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
-<!--/*@thymesVar id="organization" type="java.lang.String"*/-->
-<div th:fragment="navigation (page, organization)">
+<!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
+<div th:fragment="navigation (page, organizationKey)">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="/">JTAF</a>
@@ -13,20 +13,20 @@
             <div class="collapse navbar-collapse" id="navbarLeft">
                 <div class="navbar-nav">
                     <a th:class="${page == 'series'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:text="${organization}"
-                       th:href="@{/sec/{organization}(organization=${organization})}">CIS</a>
+                       th:text="${organizationKey}"
+                       th:href="@{/sec/{organizationKey}(organizationKey=${organizationKey})}">CIS</a>
 
                     <a th:class="${page == 'events'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
                        th:text="#{messages.events}"
-                       th:href="@{/sec/{organization}/events(organization=${organization})}">Manage Events</a>
+                       th:href="@{/sec/{organizationKey}/events(organizationKey=${organizationKey})}">Manage Events</a>
 
                     <a th:class="${page == 'clubs'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
                        th:text="#{messages.clubs}"
-                       th:href="@{/sec/{organization}/clubs(organization=${organization})}">Manage Clubs</a>
+                       th:href="@{/sec/{organizationKey}/clubs(organizationKey=${organizationKey})}">Manage Clubs</a>
 
                     <a th:class="${page == 'athletes'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
                        th:text="#{messages.athletes}"
-                       th:href="@{/sec/{organization}/athletes(organization=${organization})}">Manage Athletes</a>
+                       th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey})}">Manage Athletes</a>
 
                     <a class="nav-item nav-link" href="https://github.com/simasch/jtaf/" target="_blank">About</a>
                 </div>

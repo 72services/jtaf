@@ -3,8 +3,8 @@
 <head th:replace="common/head :: head"></head>
 <body>
 
-<!--/*@thymesVar id="organization" type="java.lang.String"*/-->
-<div th:include="sec/common/navigation :: navigation ('series', ${organization})"></div>
+<!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
+<div th:include="sec/common/navigation :: navigation ('series', ${organizationKey})"></div>
 
 <main role="main" class="container">
 
@@ -15,7 +15,7 @@
             <h1 th:text="#{messages.enter_results}">Enter Results</h1>
 
             <!--/*@thymesVar id="searchRequest" type="ch.jtaf.boundary.controller.SearchRequest"*/-->
-            <form action="#" th:action="@{/sec/{organization}/search(organization=${organization})}"
+            <form action="#" th:action="@{/sec/{organizationKey}/search(organizationKey=${organizationKey})}"
                   th:object="${searchRequest}" method="post">
                 <input type="hidden" id="seriesId" th:field="*{seriesId}">
                 <input type="hidden" id="competitionId" th:field="*{competitionId}">
@@ -26,7 +26,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary" th:text="#{messages.search}">Search</button>
-                <a th:href="@{/sec/{organization}(organization=${organization})}" th:text="#{messages.back}" class="btn">Back</a>
+                <a th:href="@{/sec/{organizationKey}(organizationKey=${organizationKey})}" th:text="#{messages.back}" class="btn">Back</a>
             </form>
 
             <!--/*@thymesVar id="athletes" type="java.util.List<ch.jtaf.entity.AthleteDTO>"*/-->
@@ -51,7 +51,7 @@
                         <span th:text="${dto.club}">TVT</span>
                     </td>
                     <td class="text-right">
-                        <a th:href="@{/sec/{organization}/athlete/{athleteId}/results(organization=${organization},athleteId=${dto.id},seriesId=${seriesId},competitionId=${competitionId})}"
+                        <a th:href="@{/sec/{organizationKey}/athlete/{athleteId}/results(organizationKey=${organizationKey},athleteId=${dto.id},seriesId=${seriesId},competitionId=${competitionId})}"
                            th:text="#{messages.select}">Select</a>
                     </td>
                 </tr>
@@ -78,7 +78,7 @@
                         <span th:text="${athlete.club}">TVT</span>
                     </td>
                     <td class="text-right">
-                        <a th:href="@{/sec/{organization}/athlete/{athleteId}(organization=${organization},athleteId=${athlete.id},seriesId=${seriesId},competitionId=${competitionId},mode='edit',returnTo='results')}"
+                        <a th:href="@{/sec/{organizationKey}/athlete/{athleteId}(organizationKey=${organizationKey},athleteId=${athlete.id},seriesId=${seriesId},competitionId=${competitionId},mode='edit',returnTo='results')}"
                            th:text="#{messages.edit}"></a>
                     </td>
                 </tr>
@@ -88,7 +88,7 @@
 
             <!--/*@thymesVar id="resultContainer" type="ch.jtaf.boundary.dto.ResultContainer"*/-->
             <form th:if="${!resultContainer.results.isEmpty()}" action="#"
-                  th:action="@{/sec/{organization}/results(organization=${organization},seriesId=${seriesId},competitionId=${competitionId})}"
+                  th:action="@{/sec/{organizationKey}/results(organizationKey=${organizationKey},seriesId=${seriesId},competitionId=${competitionId})}"
                   th:object="${resultContainer}" method="post">
                 <input type="hidden" id="result_seriesId" th:field="*{seriesId}">
                 <input type="hidden" id="result_competitionId" th:field="*{competitionId}">

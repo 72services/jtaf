@@ -14,9 +14,9 @@ import org.springframework.web.servlet.ModelAndView
 class EventsController(private val eventRepository: EventRepository,
                        private val organizationRepository: OrganizationRepository) {
 
-    @GetMapping("/sec/{organization}/events")
+    @GetMapping("/sec/{organizationKey}/events")
     fun get(@AuthenticationPrincipal user: User,
-            @PathVariable("organization") organizationKey: String,
+            @PathVariable("organizationKey") organizationKey: String,
             @RequestParam("mode") mode: String?,
             @RequestParam("categoryId") seriesId: Long?,
             @RequestParam("categoryId") categoryId: Long?): ModelAndView {
@@ -36,9 +36,9 @@ class EventsController(private val eventRepository: EventRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/events/{eventId}/delete")
+    @GetMapping("/sec/{organizationKey}/events/{eventId}/delete")
     fun deleteById(@AuthenticationPrincipal user: User,
-                   @PathVariable("organization") organizationKey: String,
+                   @PathVariable("organizationKey") organizationKey: String,
                    @PathVariable("eventId") eventId: Long): ModelAndView {
         eventRepository.deleteById(eventId)
 

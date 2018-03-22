@@ -3,8 +3,8 @@
 <head th:replace="common/head :: head"></head>
 <body>
 
-<!--/*@thymesVar id="organization" type="java.lang.String"*/-->
-<div th:include="sec/common/navigation :: navigation ('athletes', ${organization})"></div>
+<!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
+<div th:include="sec/common/navigation :: navigation ('athletes', ${organizationKey})"></div>
 
 <main role="main" class="container">
 
@@ -18,7 +18,7 @@
             <!--/*@thymesVar id="competitionId" type="java.lang.Long"*/-->
             <!--/*@thymesVar id="returnTo" type="java.lang.String"*/-->
             <form action="#"
-                  th:action="@{/sec/{organization}/athlete(organization=${organization},seriesId=${seriesId},competitionId=${competitionId},mode=${mode},returnTo=${returnTo})}"
+                  th:action="@{/sec/{organizationKey}/athlete(organizationKey=${organizationKey},seriesId=${seriesId},competitionId=${competitionId},mode=${mode},returnTo=${returnTo})}"
                   th:object="${athlete}" method="post">
 
                 <div class="form-group">
@@ -63,7 +63,7 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a th:href="@{/sec/{organization}/athletes(organization=${organization},seriesId=${seriesId},mode=${mode})}"
+                <a th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey},seriesId=${seriesId},mode=${mode})}"
                    th:text="#{messages.back}" class="btn">Back</a>
 
                 <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->

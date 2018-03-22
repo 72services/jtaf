@@ -3,8 +3,8 @@
 <head th:replace="common/head :: head"></head>
 <body>
 
-<!--/*@thymesVar id="organization" type="java.lang.String"*/-->
-<div th:include="sec/common/navigation :: navigation ('series', ${organization})"></div>
+<!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
+<div th:include="sec/common/navigation :: navigation ('series', ${organizationKey})"></div>
 
 <main role="main" class="container">
 
@@ -15,7 +15,7 @@
             <!--/*@thymesVar id="category" type="ch.jtaf.entity.Category"*/-->
             <!--/*@thymesVar id="seriesId" type="java.lang.Long"*/-->
             <form action="#"
-                  th:action="@{/sec/{organization}/series/{seriesId}/category(seriesId=${seriesId},organization=${organization})}"
+                  th:action="@{/sec/{organizationKey}/series/{seriesId}/category(seriesId=${seriesId},organizationKey=${organizationKey})}"
                   th:object="${category}" method="post">
                 <div class="form-group">
                     <label for="id">ID</label>
@@ -52,7 +52,7 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a th:href="@{/sec/{organization}/series/{seriesId}(organization=${organization},seriesId=${category.seriesId})}"
+                <a th:href="@{/sec/{organizationKey}/series/{seriesId}(organizationKey=${organizationKey},seriesId=${category.seriesId})}"
                    th:text="#{messages.back}" class="btn">Back</a>
 
                 <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
@@ -73,7 +73,7 @@
                     <th>B</th>
                     <th>C</th>
                     <th class="text-right">
-                        <a th:href="@{/sec/{organization}/events(organization=${organization},mode='select',seriesId=${category.seriesId},categoryId=${category.id})}"
+                        <a th:href="@{/sec/{organizationKey}/events(organizationKey=${organizationKey},mode='select',seriesId=${category.seriesId},categoryId=${category.id})}"
                            th:text="#{messages.add_event}" class="text-right">Add Event</a>
                     </th>
                 </tr>
@@ -87,12 +87,12 @@
                     <td th:text="${event.b}"></td>
                     <td th:text="${event.c}"></td>
                     <td class="text-right">
-                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}/up(seriesId=${seriesId},organization=${organization},categoryId=${category.id}, eventId=${event.id})}"
+                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/up(seriesId=${seriesId},organizationKey=${organizationKey},categoryId=${category.id}, eventId=${event.id})}"
                            th:text="#{messages.up}">Up</a>
-                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}/down(seriesId=${seriesId},organization=${organization},categoryId=${category.id}, eventId=${event.id})}"
+                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/down(seriesId=${seriesId},organizationKey=${organizationKey},categoryId=${category.id}, eventId=${event.id})}"
                            th:text="#{messages.down}">Down</a>
 
-                        <a th:href="@{/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}/delete(seriesId=${seriesId},organization=${organization},categoryId=${category.id}, eventId=${event.id})}"
+                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/delete(seriesId=${seriesId},organizationKey=${organizationKey},categoryId=${category.id}, eventId=${event.id})}"
                            th:text="#{messages.delete}"
                            onclick="return confirm('Are you sure?')">Delete</a>
                     </td>

@@ -23,8 +23,8 @@ class CategoryController(private val categoryRepository: CategoryRepository,
 
     val httpContentUtil = HttpContentProducer()
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/category")
-    fun get(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/category")
+    fun get(@PathVariable("organizationKey") organizationKey: String,
             @PathVariable("seriesId") seriesId: Long): ModelAndView {
         val category = Category()
         category.seriesId = seriesId
@@ -37,8 +37,8 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/category/{categoryId}")
-    fun getById(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/category/{categoryId}")
+    fun getById(@PathVariable("organizationKey") organizationKey: String,
                 @PathVariable("seriesId") seriesId: Long,
                 @PathVariable("categoryId") categoryId: Long): ModelAndView {
         val mav = ModelAndView("/sec/category")
@@ -49,8 +49,8 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}")
-    fun addEvent(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}")
+    fun addEvent(@PathVariable("organizationKey") organizationKey: String,
                  @PathVariable("categoryId") categoryId: Long,
                  @PathVariable("seriesId") seriesId: Long,
                  @PathVariable("eventId") eventId: Long): ModelAndView {
@@ -69,8 +69,8 @@ class CategoryController(private val categoryRepository: CategoryRepository,
     }
 
     @Transactional
-    @GetMapping("/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}/up")
-    fun eventMoveUp(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/up")
+    fun eventMoveUp(@PathVariable("organizationKey") organizationKey: String,
                     @PathVariable("categoryId") categoryId: Long,
                     @PathVariable("seriesId") seriesId: Long,
                     @PathVariable("eventId") eventId: Long): ModelAndView {
@@ -78,8 +78,8 @@ class CategoryController(private val categoryRepository: CategoryRepository,
     }
 
     @Transactional
-    @GetMapping("/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}/down")
-    fun eventMoveDown(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/down")
+    fun eventMoveDown(@PathVariable("organizationKey") organizationKey: String,
                       @PathVariable("categoryId") categoryId: Long,
                       @PathVariable("seriesId") seriesId: Long,
                       @PathVariable("eventId") eventId: Long): ModelAndView {
@@ -120,8 +120,8 @@ class CategoryController(private val categoryRepository: CategoryRepository,
     }
 
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/category/{categoryId}/event/{eventId}/delete")
-    fun deleteById(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/delete")
+    fun deleteById(@PathVariable("organizationKey") organizationKey: String,
                    @PathVariable("categoryId") categoryId: Long,
                    @PathVariable("seriesId") seriesId: Long,
                    @PathVariable("eventId") eventId: Long): ModelAndView {
@@ -139,8 +139,8 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return mav
     }
 
-    @PostMapping("/sec/{organization}/series/{seriesId}/category")
-    fun post(@PathVariable("organization") organizationKey: String,
+    @PostMapping("/sec/{organizationKey}/series/{seriesId}/category")
+    fun post(@PathVariable("organizationKey") organizationKey: String,
              @PathVariable("seriesId") seriesId: Long,
              category: Category): ModelAndView {
         val mav = ModelAndView("/sec/category")
@@ -166,8 +166,8 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/category/{categoryId}/sheet")
-    fun getSheet(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/sheet")
+    fun getSheet(@PathVariable("organizationKey") organizationKey: String,
                  @PathVariable("seriesId") seriesId: Long,
                  @PathVariable("categoryId") categoryId: Long): ResponseEntity<ByteArray> {
 

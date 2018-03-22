@@ -30,8 +30,8 @@ class SeriesController(private val seriesRepository: SeriesRepository,
 
     val httpContentProducer = HttpContentProducer()
 
-    @GetMapping("/sec/{organization}/series")
-    fun get(@PathVariable("organization") organizationKey: String): ModelAndView {
+    @GetMapping("/sec/{organizationKey}/series")
+    fun get(@PathVariable("organizationKey") organizationKey: String): ModelAndView {
         val mav = ModelAndView("/sec/series")
         mav.model["series"] = Series()
 
@@ -39,8 +39,8 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/series/{seriesId}")
-    fun getById(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}")
+    fun getById(@PathVariable("organizationKey") organizationKey: String,
                 @PathVariable("seriesId") seriesId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
         mav.model["series"] = seriesRepository.getOne(seriesId)
@@ -68,8 +68,8 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return ResponseEntity.EMPTY
     }
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/athlete/{athleteId}")
-    fun addEvent(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/athlete/{athleteId}")
+    fun addEvent(@PathVariable("organizationKey") organizationKey: String,
                  @PathVariable("seriesId") seriesId: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
 
@@ -95,8 +95,8 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     }
 
     @Transactional
-    @GetMapping("/sec/{organization}/series/{seriesId}/athlete/{athleteId}/delete")
-    fun deleteById(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/athlete/{athleteId}/delete")
+    fun deleteById(@PathVariable("organizationKey") organizationKey: String,
                    @PathVariable("seriesId") seriesId: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
         val mav = ModelAndView("/sec/series")
 
@@ -121,9 +121,9 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     }
 
 
-    @PostMapping("/sec/{organization}/series")
+    @PostMapping("/sec/{organizationKey}/series")
     fun post(@AuthenticationPrincipal user: User,
-             @PathVariable("organization") organizationKey: String,
+             @PathVariable("organizationKey") organizationKey: String,
              series: Series): ModelAndView {
         val mav = ModelAndView("/sec/series")
 
@@ -152,9 +152,9 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/delete")
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/delete")
     fun deleteById(@AuthenticationPrincipal user: User,
-                   @PathVariable("organization") organizationKey: String,
+                   @PathVariable("organizationKey") organizationKey: String,
                    @PathVariable("seriesId") seriesId: Long): ModelAndView {
         seriesRepository.deleteById(seriesId)
 

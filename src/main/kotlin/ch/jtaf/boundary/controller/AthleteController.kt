@@ -23,8 +23,8 @@ class AthleteController(private val athleteRepository: AthleteRepository,
                         private val resultsController: ResultsController) {
 
     @CheckOrganizationAccess
-    @GetMapping("/sec/{organization}/athlete")
-    fun get(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/athlete")
+    fun get(@PathVariable("organizationKey") organizationKey: String,
             @RequestParam("seriesId") seriesId: Long?,
             @RequestParam("competitionId") competitionId: Long?,
             @RequestParam("mode") mode: String?,
@@ -46,9 +46,9 @@ class AthleteController(private val athleteRepository: AthleteRepository,
     }
 
     @CheckOrganizationAccess
-    @GetMapping("/sec/{organization}/athlete/{athleteId}")
+    @GetMapping("/sec/{organizationKey}/athlete/{athleteId}")
     fun getById(@AuthenticationPrincipal user: User,
-                @PathVariable("organization") organizationKey: String,
+                @PathVariable("organizationKey") organizationKey: String,
                 @PathVariable("athleteId") athleteId: Long,
                 @RequestParam("seriesId") seriesId: Long?,
                 @RequestParam("competitionId") competitionId: Long?,
@@ -73,9 +73,9 @@ class AthleteController(private val athleteRepository: AthleteRepository,
 
     @CheckOrganizationAccess
     @Transactional
-    @PostMapping("/sec/{organization}/athlete")
+    @PostMapping("/sec/{organizationKey}/athlete")
     fun post(@AuthenticationPrincipal user: User,
-             @PathVariable("organization") organizationKey: String,
+             @PathVariable("organizationKey") organizationKey: String,
              @RequestParam("seriesId") seriesId: Long?,
              @RequestParam("competitionId") competitionId: Long?,
              @RequestParam("mode") mode: String?,

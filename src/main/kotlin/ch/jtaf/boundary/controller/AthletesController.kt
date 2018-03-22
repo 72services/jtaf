@@ -14,9 +14,9 @@ import org.springframework.web.servlet.ModelAndView
 class AthletesController(private val athleteRepository: AthleteRepository,
                          private val organizationRepository: OrganizationRepository) {
 
-    @GetMapping("/sec/{organization}/athletes")
+    @GetMapping("/sec/{organizationKey}/athletes")
     fun get(@AuthenticationPrincipal user: User,
-            @PathVariable("organization") organizationKey: String,
+            @PathVariable("organizationKey") organizationKey: String,
             @RequestParam("mode") mode: String?,
             @RequestParam("seriesId") seriesId: Long?): ModelAndView {
 
@@ -38,9 +38,9 @@ class AthletesController(private val athleteRepository: AthleteRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/athletes/{athleteId}/delete")
+    @GetMapping("/sec/{organizationKey}/athletes/{athleteId}/delete")
     fun deleteById(@AuthenticationPrincipal user: User,
-                   @PathVariable("organization") organizationKey: String,
+                   @PathVariable("organizationKey") organizationKey: String,
                    @PathVariable("athleteId") athleteId: Long): ModelAndView {
 
         athleteRepository.deleteById(athleteId)

@@ -16,8 +16,8 @@ import org.springframework.web.servlet.ModelAndView
 class EventController(private val eventRepository: EventRepository,
                       private val organizationRepository: OrganizationRepository) {
 
-    @GetMapping("/sec/{organization}/event")
-    fun get(@PathVariable("organization") organizationKey: String): ModelAndView {
+    @GetMapping("/sec/{organizationKey}/event")
+    fun get(@PathVariable("organizationKey") organizationKey: String): ModelAndView {
         val mav = ModelAndView("/sec/event")
 
         val event = Event()
@@ -27,8 +27,8 @@ class EventController(private val eventRepository: EventRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/event/{eventId}")
-    fun getById(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/event/{eventId}")
+    fun getById(@PathVariable("organizationKey") organizationKey: String,
                 @PathVariable("eventId") eventId: Long): ModelAndView {
         val mav = ModelAndView("/sec/event")
 
@@ -38,9 +38,9 @@ class EventController(private val eventRepository: EventRepository,
         return mav
     }
 
-    @PostMapping("/sec/{organization}/event")
+    @PostMapping("/sec/{organizationKey}/event")
     fun post(@AuthenticationPrincipal user: User,
-             @PathVariable("organization") organizationKey: String,
+             @PathVariable("organizationKey") organizationKey: String,
              event: Event): ModelAndView {
         val organization = organizationRepository.findByKey(organizationKey)
         event.organizationId = organization.id

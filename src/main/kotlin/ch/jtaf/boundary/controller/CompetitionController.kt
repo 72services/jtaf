@@ -23,8 +23,8 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
 
     val httpContentUtil = HttpContentProducer()
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/competition")
-    fun get(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition")
+    fun get(@PathVariable("organizationKey") organizationKey: String,
             @PathVariable("seriesId") seriesId: Long): ModelAndView {
         val mav = ModelAndView("/sec/competition")
 
@@ -36,8 +36,8 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         return mav
     }
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/competition/{competitionId}")
-    fun getById(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}")
+    fun getById(@PathVariable("organizationKey") organizationKey: String,
                 @PathVariable("seriesId") seriesId: Long,
                 @PathVariable("competitionId") competitionId: Long): ModelAndView {
         val mav = ModelAndView("/sec/competition")
@@ -48,8 +48,8 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         return mav
     }
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/competition/{competitionId}/results")
-    fun enterResults(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/results")
+    fun enterResults(@PathVariable("organizationKey") organizationKey: String,
                      @PathVariable("seriesId") seriesId: Long,
                      @PathVariable("competitionId") competitionId: Long): ModelAndView {
         val mav = ModelAndView("/sec/results")
@@ -64,8 +64,8 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         return mav
     }
 
-    @PostMapping("/sec/{organization}/series/{seriesId}/competition")
-    fun post(@PathVariable("organization") organizationKey: String,
+    @PostMapping("/sec/{organizationKey}/series/{seriesId}/competition")
+    fun post(@PathVariable("organizationKey") organizationKey: String,
              @PathVariable("seriesId") seriesId: Long,
              competition: Competition): ModelAndView {
         competitionRepository.save(competition)
@@ -75,8 +75,8 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         return mav
     }
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/competition/{competitionId}/sheets")
-    fun getSheets(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/sheets")
+    fun getSheets(@PathVariable("organizationKey") organizationKey: String,
                   @PathVariable("seriesId") seriesId: Long,
                   @PathVariable("competitionId") competitionId: Long,
                   @RequestParam("orderBy") orderBy: String): ResponseEntity<ByteArray> {
@@ -85,8 +85,8 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         return httpContentUtil.getContentAsPdf("sheets_$competitionId.pdf", sheets)
     }
 
-    @GetMapping("/sec/{organization}/series/{seriesId}/competition/{competitionId}/numbers")
-    fun getNumbers(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/numbers")
+    fun getNumbers(@PathVariable("organizationKey") organizationKey: String,
                    @PathVariable("seriesId") seriesId: Long,
                    @PathVariable("competitionId") competitionId: Long,
                    @RequestParam("orderBy") orderBy: String): ResponseEntity<ByteArray> {

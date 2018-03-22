@@ -15,9 +15,9 @@ class SeriesListController(private val seriesRepository: SeriesRepository,
                            private val athleteRepository: AthleteRepository,
                            private val organizationRepository: OrganizationRepository) {
 
-    @GetMapping("/sec/{organization}")
+    @GetMapping("/sec/{organizationKey}")
     fun get(@AuthenticationPrincipal user: User,
-            @PathVariable("organization") organizationKey: String): ModelAndView {
+            @PathVariable("organizationKey") organizationKey: String): ModelAndView {
         val organization = organizationRepository.findByKey(organizationKey)
         val seriesList = seriesRepository.findByOrganizationId(organization.id!!)
 

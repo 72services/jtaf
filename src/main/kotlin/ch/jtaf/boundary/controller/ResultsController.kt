@@ -22,9 +22,9 @@ class ResultsController(private val athleteRepository: AthleteRepository,
                         private val resultRepository: ResultRepository,
                         private val categoryRepository: CategoryRepository) {
 
-    @PostMapping("/sec/{organization}/search")
+    @PostMapping("/sec/{organizationKey}/search")
     fun search(@AuthenticationPrincipal user: User,
-               @PathVariable("organization") organizationKey: String,
+               @PathVariable("organizationKey") organizationKey: String,
                searchRequest: SearchRequest): ModelAndView {
         val id = searchRequest.term.toLongOrNull()
         if (id != null) {
@@ -46,9 +46,9 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         }
     }
 
-    @GetMapping("/sec/{organization}/athlete/{athleteId}/results")
+    @GetMapping("/sec/{organizationKey}/athlete/{athleteId}/results")
     fun getWithAthlete(@AuthenticationPrincipal user: User,
-                       @PathVariable("organization") organizationKey: String,
+                       @PathVariable("organizationKey") organizationKey: String,
                        @PathVariable("athleteId") athleteId: Long,
                        @RequestParam("seriesId") seriesId: Long,
                        @RequestParam("competitionId") competitionId: Long): ModelAndView {
@@ -76,9 +76,9 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         return mav
     }
 
-    @PostMapping("/sec/{organization}/results")
+    @PostMapping("/sec/{organizationKey}/results")
     fun postResults(@AuthenticationPrincipal user: User,
-                    @PathVariable("organization") organizationKey: String,
+                    @PathVariable("organizationKey") organizationKey: String,
                     @RequestParam("seriesId") seriesId: Long,
                     @RequestParam("competitionId") competitionId: Long,
                     resultContainer: ResultContainer): ModelAndView {

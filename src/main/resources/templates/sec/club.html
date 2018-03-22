@@ -3,8 +3,8 @@
 <head th:replace="common/head :: head"></head>
 <body>
 
-<!--/*@thymesVar id="organization" type="java.lang.String"*/-->
-<div th:include="sec/common/navigation :: navigation ('clubs', ${organization})"></div>
+<!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
+<div th:include="sec/common/navigation :: navigation ('clubs', ${organizationKey})"></div>
 
 <main role="main" class="container">
 
@@ -13,7 +13,7 @@
             <h1 th:text="#{messages.edit_club}">Edit Club</h1>
 
             <!--/*@thymesVar id="club" type="ch.jtaf.entity.Club"*/-->
-            <form action="#" th:action="@{/sec/{organization}/club(organization=${organization})}" th:object="${club}"
+            <form action="#" th:action="@{/sec/{organizationKey}/club(organizationKey=${organizationKey})}" th:object="${club}"
                   method="post">
 
                 <div class="form-group">
@@ -31,7 +31,7 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a th:href="@{/sec/{organization}/clubs(organization=${organization})}"
+                <a th:href="@{/sec/{organizationKey}/clubs(organizationKey=${organizationKey})}"
                    th:text="#{messages.back}" class="btn">Back</a>
 
                 <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->

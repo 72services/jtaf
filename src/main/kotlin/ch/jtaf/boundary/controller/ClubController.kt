@@ -16,8 +16,8 @@ import org.springframework.web.servlet.ModelAndView
 class ClubController(private val clubRepository: ClubRepository,
                      private val organizationRepository: OrganizationRepository) {
 
-    @GetMapping("/sec/{organization}/club")
-    fun get(@PathVariable("organization") organizationKey: String): ModelAndView {
+    @GetMapping("/sec/{organizationKey}/club")
+    fun get(@PathVariable("organizationKey") organizationKey: String): ModelAndView {
         val mav = ModelAndView("/sec/club")
 
         val club = Club()
@@ -27,8 +27,8 @@ class ClubController(private val clubRepository: ClubRepository,
         return mav
     }
 
-    @GetMapping("/sec/{organization}/club/{clubId}")
-    fun getById(@PathVariable("organization") organizationKey: String,
+    @GetMapping("/sec/{organizationKey}/club/{clubId}")
+    fun getById(@PathVariable("organizationKey") organizationKey: String,
                 @PathVariable("clubId") clubId: Long): ModelAndView {
         val mav = ModelAndView("/sec/club")
 
@@ -38,9 +38,9 @@ class ClubController(private val clubRepository: ClubRepository,
         return mav
     }
 
-    @PostMapping("/sec/{organization}/club")
+    @PostMapping("/sec/{organizationKey}/club")
     fun post(@AuthenticationPrincipal user: User,
-             @PathVariable("organization") organizationKey: String,
+             @PathVariable("organizationKey") organizationKey: String,
              club: Club): ModelAndView {
         val organization = organizationRepository.findByKey(organizationKey)
         club.organizationId = organization.id
