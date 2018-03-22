@@ -1,6 +1,6 @@
 package ch.jtaf.boundary.controller
 
-import ch.jtaf.boundary.util.HttpContentProducer
+import ch.jtaf.boundary.web.HttpContentProducer
 import ch.jtaf.control.service.ClubRankingService
 import ch.jtaf.control.service.CompetitionRankingService
 import ch.jtaf.control.service.SeriesRankingService

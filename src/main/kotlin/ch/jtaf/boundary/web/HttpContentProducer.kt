@@ -1,4 +1,4 @@
-package ch.jtaf.boundary.util
+package ch.jtaf.boundary.web
 
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus

@@ -1,7 +1,7 @@
 package ch.jtaf.boundary.controller
 
 import ch.jtaf.boundary.dto.Message
-import ch.jtaf.boundary.util.HttpContentProducer
+import ch.jtaf.boundary.web.HttpContentProducer
 import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.EventRepository
 import ch.jtaf.control.service.SheetService

@@ -1,6 +1,7 @@
 package ch.jtaf.boundary.controller
 
 import ch.jtaf.boundary.dto.Message
+import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.control.repository.*
 import ch.jtaf.entity.Athlete
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -21,12 +22,14 @@ class AthleteController(private val athleteRepository: AthleteRepository,
                         private val resultRepository: ResultRepository,
                         private val resultsController: ResultsController) {
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organization}/athlete")
     fun get(@PathVariable("organization") organizationKey: String,
             @RequestParam("seriesId") seriesId: Long?,
             @RequestParam("competitionId") competitionId: Long?,
             @RequestParam("mode") mode: String?,
             @RequestParam("returnTo") returnTo: String?): ModelAndView {
+
         val mav = ModelAndView("/sec/athlete")
         mav.model["seriesId"] = seriesId
         mav.model["competitionId"] = competitionId
@@ -42,6 +45,7 @@ class AthleteController(private val athleteRepository: AthleteRepository,
         return mav
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organization}/athlete/{athleteId}")
     fun getById(@AuthenticationPrincipal user: User,
                 @PathVariable("organization") organizationKey: String,
@@ -50,6 +54,7 @@ class AthleteController(private val athleteRepository: AthleteRepository,
                 @RequestParam("competitionId") competitionId: Long?,
                 @RequestParam("mode") mode: String?,
                 @RequestParam("returnTo") returnTo: String?): ModelAndView {
+
         val mav = ModelAndView("/sec/athlete")
         mav.model["seriesId"] = seriesId
         mav.model["competitionId"] = competitionId
@@ -66,6 +71,7 @@ class AthleteController(private val athleteRepository: AthleteRepository,
         return mav
     }
 
+    @CheckOrganizationAccess
     @Transactional
     @PostMapping("/sec/{organization}/athlete")
     fun post(@AuthenticationPrincipal user: User,
