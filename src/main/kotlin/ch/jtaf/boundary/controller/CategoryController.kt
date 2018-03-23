@@ -29,7 +29,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         val category = Category()
         category.seriesId = seriesId
 
-        val mav = ModelAndView("/sec/category")
+        val mav = ModelAndView("sec/category")
         mav.model["seriesId"] = seriesId
         mav.model["category"] = category
 
@@ -41,7 +41,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
     fun getById(@PathVariable("organizationKey") organizationKey: String,
                 @PathVariable("seriesId") seriesId: Long,
                 @PathVariable("categoryId") categoryId: Long): ModelAndView {
-        val mav = ModelAndView("/sec/category")
+        val mav = ModelAndView("sec/category")
         mav.model["seriesId"] = seriesId
         mav.model["category"] = categoryRepository.getOne(categoryId)
 
@@ -60,7 +60,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
 
         categoryRepository.save(category)
 
-        val mav = ModelAndView("/sec/category")
+        val mav = ModelAndView("sec/category")
         mav.model["seriesId"] = seriesId
         mav.model["category"] = category
 
@@ -111,7 +111,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         category.events = events
         categoryRepository.save(category)
 
-        val mav = ModelAndView("/sec/category")
+        val mav = ModelAndView("sec/category")
         mav.model["seriesId"] = seriesId
         mav.model["category"] = category
 
@@ -131,7 +131,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
 
         categoryRepository.save(category)
 
-        val mav = ModelAndView("/sec/category")
+        val mav = ModelAndView("sec/category")
         mav.model["seriesId"] = seriesId
         mav.model["category"] = category
 
@@ -143,7 +143,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
     fun post(@PathVariable("organizationKey") organizationKey: String,
              @PathVariable("seriesId") seriesId: Long,
              category: Category): ModelAndView {
-        val mav = ModelAndView("/sec/category")
+        val mav = ModelAndView("sec/category")
         mav.model["seriesId"] = seriesId
 
         if (category.id == null) {

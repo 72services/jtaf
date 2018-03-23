@@ -21,7 +21,7 @@ class RankingController(private val competitionRankingService: CompetitionRankin
 
     @GetMapping("/ranking/competition/{competitionId}")
     fun getCompetitionRanking(@PathVariable("competitionId") competitionId: Long): ModelAndView {
-        val mav = ModelAndView("/competition_ranking")
+        val mav = ModelAndView("competition_ranking")
         mav.model["data"] = competitionRankingService.getCompetitionRankingData(competitionId)
         return mav
     }
@@ -46,7 +46,7 @@ class RankingController(private val competitionRankingService: CompetitionRankin
 
     @GetMapping("/ranking/series/{seriesId}")
     fun getSeriesRanking(@PathVariable("seriesId") seriesId: Long): ModelAndView {
-        val mav = ModelAndView("/series_ranking")
+        val mav = ModelAndView("series_ranking")
         mav.model["data"] = seriesRankingService.getSeriesRankingData(seriesId)
         return mav
     }

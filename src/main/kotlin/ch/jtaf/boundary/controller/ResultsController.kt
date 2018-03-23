@@ -30,7 +30,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         if (id != null) {
             return getWithAthlete(user, organizationKey, id, searchRequest.seriesId, searchRequest.competitionId)
         } else {
-            val mav = ModelAndView("/sec/results")
+            val mav = ModelAndView("sec/results")
             mav.model["seriesId"] = searchRequest.seriesId
             mav.model["competitionId"] = searchRequest.competitionId
 
@@ -64,7 +64,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
 
         checkIfResultsCompleteOrAddMissingResults(category, athlete, competition, results)
 
-        val mav = ModelAndView("/sec/results")
+        val mav = ModelAndView("sec/results")
         mav.model["seriesId"] = seriesId
         mav.model["competitionId"] = competitionId
         mav.model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId = competitionId, term = athleteId.toString())
@@ -95,7 +95,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         }
         resultContainer.results = savedResults
 
-        val mav = ModelAndView("/sec/results")
+        val mav = ModelAndView("sec/results")
         mav.model["seriesId"] = seriesId
         mav.model["competitionId"] = competitionId
         mav.model["searchRequest"] = SearchRequest(resultContainer.seriesId, resultContainer.competitionId)

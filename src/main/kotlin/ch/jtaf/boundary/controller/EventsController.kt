@@ -20,7 +20,7 @@ class EventsController(private val eventRepository: EventRepository,
             @RequestParam("mode") mode: String?,
             @RequestParam("categoryId") seriesId: Long?,
             @RequestParam("categoryId") categoryId: Long?): ModelAndView {
-        val mav = ModelAndView("/sec/events")
+        val mav = ModelAndView("sec/events")
 
         val organization = organizationRepository.findByKey(organizationKey)
         mav.model["events"] = eventRepository.findByOrganizationId(organization.id!!)
@@ -42,7 +42,7 @@ class EventsController(private val eventRepository: EventRepository,
                    @PathVariable("eventId") eventId: Long): ModelAndView {
         eventRepository.deleteById(eventId)
 
-        val mav = ModelAndView("/sec/events")
+        val mav = ModelAndView("sec/events")
 
         val organization = organizationRepository.findByKey(organizationKey)
         mav.model["events"] = eventRepository.findByOrganizationId(organization.id!!)

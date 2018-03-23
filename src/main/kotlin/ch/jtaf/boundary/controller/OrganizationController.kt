@@ -16,7 +16,7 @@ class OrganizationController(private val organizationRepository: OrganizationRep
 
     @GetMapping("/sec/organization")
     fun get(): ModelAndView {
-        val mav = ModelAndView("/sec/organization")
+        val mav = ModelAndView("sec/organization")
         mav.model["organization"] = Organization()
 
         mav.model["message"] = null
@@ -25,7 +25,7 @@ class OrganizationController(private val organizationRepository: OrganizationRep
 
     @GetMapping("/sec/organization/{organizationId}")
     fun getById(@PathVariable("organizationId") organizationId: Long): ModelAndView {
-        val mav = ModelAndView("/sec/organization")
+        val mav = ModelAndView("sec/organization")
         mav.model["organization"] = organizationRepository.getOne(organizationId)
 
         mav.model["message"] = null
@@ -35,7 +35,7 @@ class OrganizationController(private val organizationRepository: OrganizationRep
     @PostMapping("/sec/organization")
     fun post(@AuthenticationPrincipal user: User,
              organization: Organization): ModelAndView {
-        val mav = ModelAndView("/sec/organization")
+        val mav = ModelAndView("sec/organization")
 
         if (organization.id == null) {
             organization.owner = user.username

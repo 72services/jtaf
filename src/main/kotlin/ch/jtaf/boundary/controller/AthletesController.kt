@@ -20,7 +20,7 @@ class AthletesController(private val athleteRepository: AthleteRepository,
             @RequestParam("mode") mode: String?,
             @RequestParam("seriesId") seriesId: Long?): ModelAndView {
 
-        val mav = ModelAndView("/sec/athletes")
+        val mav = ModelAndView("sec/athletes")
 
         val organization = organizationRepository.findByKey(organizationKey)
 
@@ -45,7 +45,7 @@ class AthletesController(private val athleteRepository: AthleteRepository,
 
         athleteRepository.deleteById(athleteId)
 
-        val mav = ModelAndView("/sec/athletes")
+        val mav = ModelAndView("sec/athletes")
 
         val organization = organizationRepository.findByKey(organizationKey)
         mav.model["athletes"] = athleteRepository.findByOrganizationId(organization.id!!)

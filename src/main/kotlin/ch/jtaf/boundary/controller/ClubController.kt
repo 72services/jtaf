@@ -18,7 +18,7 @@ class ClubController(private val clubRepository: ClubRepository,
 
     @GetMapping("/sec/{organizationKey}/club")
     fun get(@PathVariable("organizationKey") organizationKey: String): ModelAndView {
-        val mav = ModelAndView("/sec/club")
+        val mav = ModelAndView("sec/club")
 
         val club = Club()
         mav.model["club"] = club
@@ -30,7 +30,7 @@ class ClubController(private val clubRepository: ClubRepository,
     @GetMapping("/sec/{organizationKey}/club/{clubId}")
     fun getById(@PathVariable("organizationKey") organizationKey: String,
                 @PathVariable("clubId") clubId: Long): ModelAndView {
-        val mav = ModelAndView("/sec/club")
+        val mav = ModelAndView("sec/club")
 
         mav.model["club"] = clubRepository.getOne(clubId)
 
@@ -47,7 +47,7 @@ class ClubController(private val clubRepository: ClubRepository,
 
         clubRepository.save(club)
 
-        val mav = ModelAndView("/sec/club")
+        val mav = ModelAndView("sec/club")
 
         mav.model["message"] = Message(Message.success, "Club saved!")
         return mav

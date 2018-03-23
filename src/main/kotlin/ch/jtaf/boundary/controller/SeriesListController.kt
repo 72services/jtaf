@@ -30,7 +30,7 @@ class SeriesListController(private val seriesRepository: SeriesRepository,
             }
         }
 
-        val mav = ModelAndView("/sec/serieslist")
+        val mav = ModelAndView("sec/serieslist")
         mav.model["seriesList"] = seriesList
         return mav
     }

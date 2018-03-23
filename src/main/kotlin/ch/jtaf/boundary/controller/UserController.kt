@@ -13,7 +13,7 @@ class UserController {
 
     @GetMapping
     fun get(@AuthenticationPrincipal user: User): ModelAndView {
-        val mav = ModelAndView("/sec/user")
+        val mav = ModelAndView("sec/user")
         mav.model["user"] = user
         return mav
     }

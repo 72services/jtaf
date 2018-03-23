@@ -30,7 +30,7 @@ class AthleteController(private val athleteRepository: AthleteRepository,
             @RequestParam("mode") mode: String?,
             @RequestParam("returnTo") returnTo: String?): ModelAndView {
 
-        val mav = ModelAndView("/sec/athlete")
+        val mav = ModelAndView("sec/athlete")
         mav.model["seriesId"] = seriesId
         mav.model["competitionId"] = competitionId
         mav.model["mode"] = mode
@@ -55,7 +55,7 @@ class AthleteController(private val athleteRepository: AthleteRepository,
                 @RequestParam("mode") mode: String?,
                 @RequestParam("returnTo") returnTo: String?): ModelAndView {
 
-        val mav = ModelAndView("/sec/athlete")
+        val mav = ModelAndView("sec/athlete")
         mav.model["seriesId"] = seriesId
         mav.model["competitionId"] = competitionId
         mav.model["mode"] = mode
@@ -113,7 +113,7 @@ class AthleteController(private val athleteRepository: AthleteRepository,
         return if (returnTo == "results") {
             resultsController.getWithAthlete(user, organizationKey, athlete.id!!, seriesId!!, competitionId!!)
         } else {
-            val mav = ModelAndView("/sec/athlete")
+            val mav = ModelAndView("sec/athlete")
             mav.model["seriesId"] = seriesId
             mav.model["competitionId"] = competitionId
             mav.model["mode"] = mode

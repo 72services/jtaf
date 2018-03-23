@@ -12,7 +12,7 @@ class OrganizationsController(private val organizationRepository: OrganizationRe
 
     @GetMapping("/sec/organizations")
     fun get(@AuthenticationPrincipal user: User): ModelAndView {
-        val mav = ModelAndView("/sec/organizations")
+        val mav = ModelAndView("sec/organizations")
         mav.model["organizations"] = organizationRepository.findAllByOwner(user.username)
         return mav
     }

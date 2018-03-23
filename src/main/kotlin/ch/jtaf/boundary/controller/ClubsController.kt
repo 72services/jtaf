@@ -16,7 +16,7 @@ class ClubsController(private val clubRepository: ClubRepository,
     @GetMapping("/sec/{organizationKey}/clubs")
     fun get(@AuthenticationPrincipal user: User,
             @PathVariable("organizationKey") organizationKey: String): ModelAndView {
-        val mav = ModelAndView("/sec/clubs")
+        val mav = ModelAndView("sec/clubs")
 
         val organization = organizationRepository.findByKey(organizationKey)
         mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)

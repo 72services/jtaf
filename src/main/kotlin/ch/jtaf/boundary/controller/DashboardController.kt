@@ -14,7 +14,7 @@ class DashboardController(private val seriesRepository: SeriesRepository,
 
     @GetMapping
     fun get(): ModelAndView {
-        val mav = ModelAndView("/dashboard")
+        val mav = ModelAndView("dashboard")
 
         val seriesList = seriesRepository.findAll()
         seriesList.forEach {

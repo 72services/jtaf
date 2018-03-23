@@ -32,7 +32,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
 
     @GetMapping("/sec/{organizationKey}/series")
     fun get(@PathVariable("organizationKey") organizationKey: String): ModelAndView {
-        val mav = ModelAndView("/sec/series")
+        val mav = ModelAndView("sec/series")
         mav.model["series"] = Series()
 
         mav.model["message"] = null
@@ -42,7 +42,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     @GetMapping("/sec/{organizationKey}/series/{seriesId}")
     fun getById(@PathVariable("organizationKey") organizationKey: String,
                 @PathVariable("seriesId") seriesId: Long): ModelAndView {
-        val mav = ModelAndView("/sec/series")
+        val mav = ModelAndView("sec/series")
         mav.model["series"] = seriesRepository.getOne(seriesId)
         mav.model["categories"] = categoryRepository.findAllBySeriesId(seriesId)
         mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(seriesId)
@@ -71,7 +71,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/athlete/{athleteId}")
     fun addEvent(@PathVariable("organizationKey") organizationKey: String,
                  @PathVariable("seriesId") seriesId: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
-        val mav = ModelAndView("/sec/series")
+        val mav = ModelAndView("sec/series")
 
         val series = seriesRepository.getOne(seriesId)
         val athlete = athleteRepository.getOne(athleteId)
@@ -98,7 +98,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/athlete/{athleteId}/delete")
     fun deleteById(@PathVariable("organizationKey") organizationKey: String,
                    @PathVariable("seriesId") seriesId: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
-        val mav = ModelAndView("/sec/series")
+        val mav = ModelAndView("sec/series")
 
         val series = seriesRepository.getOne(seriesId)
         val athlete = athleteRepository.getOne(athleteId)
@@ -125,7 +125,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     fun post(@AuthenticationPrincipal user: User,
              @PathVariable("organizationKey") organizationKey: String,
              series: Series): ModelAndView {
-        val mav = ModelAndView("/sec/series")
+        val mav = ModelAndView("sec/series")
 
         val organization = organizationRepository.findByKey(organizationKey)
 
@@ -158,7 +158,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
                    @PathVariable("seriesId") seriesId: Long): ModelAndView {
         seriesRepository.deleteById(seriesId)
 
-        val mav = ModelAndView("/sec/serieslist")
+        val mav = ModelAndView("sec/serieslist")
 
         val organization = organizationRepository.findByKey(organizationKey)
         mav.model["seriesList"] = seriesRepository.findByOrganizationId(organization.id!!)
