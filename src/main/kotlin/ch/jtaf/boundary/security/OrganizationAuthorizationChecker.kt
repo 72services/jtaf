@@ -2,8 +2,6 @@ package ch.jtaf.boundary.security
 
 import ch.jtaf.control.repository.OrganizationRepository
 import org.springframework.cache.annotation.Cacheable
-import org.springframework.security.core.Authentication
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 
 @Component

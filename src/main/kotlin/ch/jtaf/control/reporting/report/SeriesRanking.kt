@@ -3,16 +3,12 @@ package ch.jtaf.control.reporting.report
 import ch.jtaf.control.reporting.data.SeriesRankingCategoryData
 import ch.jtaf.control.reporting.data.SeriesRankingData
 import ch.jtaf.entity.AthleteWithResultsDTO
-import ch.jtaf.entity.Competition
-import ch.jtaf.entity.Result
 import com.itextpdf.text.Document
-import com.itextpdf.text.DocumentException
 import com.itextpdf.text.PageSize
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import org.slf4j.LoggerFactory
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import java.util.*
 
 class SeriesRanking(private val ranking: SeriesRankingData, locale: Locale) : Ranking(locale) {

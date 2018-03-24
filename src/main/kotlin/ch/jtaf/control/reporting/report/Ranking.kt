@@ -4,8 +4,7 @@ import com.itextpdf.text.FontFactory
 import com.itextpdf.text.Phrase
 import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
-
-import java.util.Locale
+import java.util.*
 
 abstract class Ranking protected constructor(locale: Locale) : AbstractReport(locale) {
 

@@ -1,13 +1,15 @@
 package ch.jtaf.control.reporting.report
 
-import ch.jtaf.entity.*
+import ch.jtaf.entity.AthleteDTO
+import ch.jtaf.entity.Category
+import ch.jtaf.entity.Competition
+import ch.jtaf.entity.EventType
 import com.itextpdf.text.*
 import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import org.slf4j.LoggerFactory
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import java.util.*
 
 class Sheets : AbstractReport {

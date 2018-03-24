@@ -3,7 +3,6 @@ package ch.jtaf.control.repository
 import ch.jtaf.entity.*
 import org.junit.Before
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
 
 abstract class AbstractRepositoryTest {

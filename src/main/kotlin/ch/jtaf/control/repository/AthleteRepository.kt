@@ -4,9 +4,7 @@ import ch.jtaf.entity.Athlete
 import ch.jtaf.entity.AthleteDTO
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
-import org.springframework.stereotype.Repository
 
-@Repository
 interface AthleteRepository : JpaRepository<Athlete, Long> {
 
     fun findByOrganizationId(organizationId: Long): List<Athlete>

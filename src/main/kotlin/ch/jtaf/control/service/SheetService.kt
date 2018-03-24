@@ -5,10 +5,7 @@ import ch.jtaf.control.repository.AthleteRepository
 import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.CompetitionRepository
 import ch.jtaf.control.repository.SeriesRepository
-import ch.jtaf.entity.Athlete
 import ch.jtaf.entity.AthleteDTO
-import ch.jtaf.entity.Category
-import ch.jtaf.entity.Series
 import org.springframework.stereotype.Component
 import java.util.*
 
