@@ -18,7 +18,7 @@ class EventsController(private val eventRepository: EventRepository,
     fun get(@AuthenticationPrincipal user: User,
             @PathVariable("organizationKey") organizationKey: String,
             @RequestParam("mode") mode: String?,
-            @RequestParam("categoryId") seriesId: Long?,
+            @RequestParam("seriesId") seriesId: Long?,
             @RequestParam("categoryId") categoryId: Long?): ModelAndView {
         val mav = ModelAndView("sec/events")
 
