@@ -2,6 +2,7 @@ package ch.jtaf.boundary.controller
 
 import ch.jtaf.control.repository.AthleteRepository
 import ch.jtaf.control.repository.SeriesRepository
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,7 +17,7 @@ class DashboardController(private val seriesRepository: SeriesRepository,
     fun get(): ModelAndView {
         val mav = ModelAndView("dashboard")
 
-        val seriesList = seriesRepository.findAll()
+        val seriesList = seriesRepository.findAllOrderByCompetitionDate()
         seriesList.forEach {
             val numberOfAthletes = athleteRepository.getTotalNumberOfAthletesForSeries(it.id!!)
 
