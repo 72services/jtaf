@@ -21,12 +21,12 @@ data class Category(
     @OrderColumn(name = "position")
     @JoinTable(name = "category_event",
             joinColumns = [(JoinColumn(name = "category_id", referencedColumnName = "id"))],
-            inverseJoinColumns = [(JoinColumn(name = "event_id", referencedColumnName = "id", unique = true))])
+            inverseJoinColumns = [(JoinColumn(name = "event_id", referencedColumnName = "id"))])
     var events: MutableList<Event> = ArrayList()
 
     @OneToMany
     @JoinTable(name = "category_athlete",
             joinColumns = [(JoinColumn(name = "category_id", referencedColumnName = "id"))],
-            inverseJoinColumns = [(JoinColumn(name = "athlete_id", referencedColumnName = "id", unique = true))])
+            inverseJoinColumns = [(JoinColumn(name = "athlete_id", referencedColumnName = "id"))])
     var athletes: MutableList<Athlete> = ArrayList()
 }
