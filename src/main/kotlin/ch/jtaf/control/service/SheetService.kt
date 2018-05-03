@@ -8,6 +8,7 @@ import ch.jtaf.control.repository.SeriesRepository
 import ch.jtaf.entity.AthleteDTO
 import org.springframework.stereotype.Component
 import java.util.*
+import kotlin.collections.ArrayList
 
 @Component
 class SheetService(private val competitionRepository: CompetitionRepository,
@@ -18,8 +19,15 @@ class SheetService(private val competitionRepository: CompetitionRepository,
     fun createSheets(competitionId: Long, orderByClub: Boolean): ByteArray {
         val competition = competitionRepository.getOne(competitionId)
         val series = seriesRepository.getOne(competition.seriesId!!)
-        val athletes = athleteRepository.findAthleteDTOsBySeriesId(competition.seriesId!!)
-        val categories = categoryRepository.findAllBySeriesId(competition.seriesId!!)
+
+        var athletes =
+                if (orderByClub) {
+                    athleteRepository.findAthleteDTOsBySeriesIdOrderByClub(competition.seriesId!!)
+                } else {
+                    athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(competition.seriesId!!)
+                }
+
+        val categories = categoryRepository.findAllBySeriesIdOrderByAbbreviation(competition.seriesId!!)
 
         val sheets = Sheets(competition, athletes, categories, series.logo, Locale.ENGLISH)
 

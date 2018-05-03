@@ -15,8 +15,13 @@ interface AthleteRepository : JpaRepository<Athlete, Long> {
 
     @Query("SELECT NEW ch.jtaf.entity.AthleteDTO" +
             "(a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, cl.abbreviation, c.abbreviation) " +
-            "FROM Category c JOIN c.athletes a LEFT JOIN a.club cl WHERE c.seriesId = ?1")
-    fun findAthleteDTOsBySeriesId(id: Long): List<AthleteDTO>
+            "FROM Category c JOIN c.athletes a LEFT JOIN a.club cl WHERE c.seriesId = ?1 order by c.abbreviation, a.lastName, a.firstName")
+    fun findAthleteDTOsBySeriesIdOrderByCategory(id: Long): List<AthleteDTO>
+
+    @Query("SELECT NEW ch.jtaf.entity.AthleteDTO" +
+            "(a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, cl.abbreviation, c.abbreviation) " +
+            "FROM Category c JOIN c.athletes a LEFT JOIN a.club cl WHERE c.seriesId = ?1 order by cl.abbreviation, c.abbreviation, a.lastName, a.firstName")
+    fun findAthleteDTOsBySeriesIdOrderByClub(id: Long): List<AthleteDTO>
 
     @Query("SELECT COUNT(a) FROM Category c JOIN c.athletes a WHERE c.seriesId = ?1")
     fun getTotalNumberOfAthletesForSeries(id: Long): Int?

@@ -28,7 +28,7 @@ class SeriesRankingService(private val seriesRepository: SeriesRepository,
     private fun createSeriesRankingData(seriesId: Long): SeriesRankingData {
         val series = seriesRepository.getOne(seriesId)
 
-        val categories = categoryRepository.findAllBySeriesId(seriesId)
+        val categories = categoryRepository.findAllBySeriesIdOrderByAbbreviation(seriesId)
         val results = resultRepository.findByCompetitionSeriesId(seriesId)
 
         return SeriesRankingData(series, categories.map {

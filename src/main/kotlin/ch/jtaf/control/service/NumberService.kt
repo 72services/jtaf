@@ -9,7 +9,11 @@ import java.util.*
 class NumberService(private val athleteRepository: AthleteRepository) {
 
     fun createNumbers(seriesId: Long, orderByClub: Boolean): ByteArray {
-        val athletes = athleteRepository.findAthleteDTOsBySeriesId(seriesId)
+        val athletes = if (orderByClub) {
+            athleteRepository.findAthleteDTOsBySeriesIdOrderByClub(seriesId)
+        } else {
+            athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(seriesId)
+        }
 
         val numbers = Numbers(athletes, Locale.ENGLISH)
 

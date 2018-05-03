@@ -44,8 +44,8 @@ class SeriesController(private val seriesRepository: SeriesRepository,
                 @PathVariable("seriesId") seriesId: Long): ModelAndView {
         val mav = ModelAndView("sec/series")
         mav.model["series"] = seriesRepository.getOne(seriesId)
-        mav.model["categories"] = categoryRepository.findAllBySeriesId(seriesId)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(seriesId)
+        mav.model["categories"] = categoryRepository.findAllBySeriesIdOrderByAbbreviation(seriesId)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(seriesId)
 
         mav.model["message"] = null
         return mav
@@ -87,8 +87,8 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         }
 
         mav.model["series"] = series
-        mav.model["categories"] = categoryRepository.findAllBySeriesId(seriesId)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(seriesId)
+        mav.model["categories"] = categoryRepository.findAllBySeriesIdOrderByAbbreviation(seriesId)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(seriesId)
 
         mav.model["message"] = null
         return mav
@@ -113,8 +113,8 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         }
 
         mav.model["series"] = series
-        mav.model["categories"] = categoryRepository.findAllBySeriesId(seriesId)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(seriesId)
+        mav.model["categories"] = categoryRepository.findAllBySeriesIdOrderByAbbreviation(seriesId)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(seriesId)
 
         mav.model["message"] = null
         return mav
@@ -145,8 +145,8 @@ class SeriesController(private val seriesRepository: SeriesRepository,
             mav.model["series"] = seriesFromDb
         }
 
-        mav.model["categories"] = categoryRepository.findAllBySeriesId(series.id!!)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesId(series.id!!)
+        mav.model["categories"] = categoryRepository.findAllBySeriesIdOrderByAbbreviation(series.id!!)
+        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(series.id!!)
 
         mav.model["message"] = Message(Message.success, "Series saved!")
         return mav

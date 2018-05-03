@@ -31,7 +31,7 @@ class CompetitionRankingService(private val competitionRepository: CompetitionRe
     }
 
     private fun createCompetitionRankingCategoryData(competition: Competition): List<CompetitionRankingCategoryData> {
-        val categories = categoryRepository.findAllBySeriesId(competition.seriesId!!)
+        val categories = categoryRepository.findAllBySeriesIdOrderByAbbreviation(competition.seriesId!!)
         val results = resultRepository.findByCompetitionId(competition.id!!)
 
         return categories.map {

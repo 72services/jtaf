@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface CategoryRepository : JpaRepository<Category, Long> {
 
-    fun findAllBySeriesId(seriesId: Long): List<Category>
+    fun findAllBySeriesIdOrderByAbbreviation(seriesId: Long): List<Category>
 
     fun findBySeriesIdAndGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(
             seriesId: Long, gender: Gender, dateFrom: Int, dateTo: Int): Category?
