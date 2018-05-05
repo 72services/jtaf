@@ -20,7 +20,7 @@
             </div>
             <div class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
                 <a th:class="${page == 'user'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                   href="/sec/user">
+                   th:href="@{/sec/user}">
                     <span th:text="${#authentication.principal == 'anonymousUser' ? '' : #authentication.principal.username}"></span></a>
             </div>
         </nav>

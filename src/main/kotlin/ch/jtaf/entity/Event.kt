@@ -27,7 +27,7 @@ data class Event(
     fun calculatePoints(result: String): Int {
         val points = when (eventType) {
             EventType.RUN -> {
-                a * pow(b - result.toDouble(), c)
+                a * pow((b - result.toDouble() * 100) / 100, c)
             }
             EventType.RUN_LONG -> {
                 val parts = result.split("\\.".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()
@@ -37,10 +37,10 @@ data class Event(
                     parts.size == 3 -> (parts[0].toDouble() * 60) + parts[1].toDouble() + (parts[1].toDouble() / 100)
                     else -> 0.0
                 }
-                a * pow(b - time, c)
+                a * pow((b - time * 100) / 100, c)
             }
             EventType.JUMP_THROW -> {
-                a * pow((result.toDouble() - b), c)
+                a * pow(((result.toDouble() * 100) - b) / 100, c)
             }
         }
         return round(points).toInt()

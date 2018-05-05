@@ -26,14 +26,16 @@
 
                     <a th:class="${page == 'athletes'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
                        th:text="#{messages.athletes}"
-                       th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey})}">Manage Athletes</a>
+                       th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey})}">Manage
+                        Athletes</a>
 
                     <a class="nav-item nav-link" href="https://github.com/simasch/jtaf/" target="_blank">About</a>
                 </div>
             </div>
             <div class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
                 <a sec:authorize="isAuthenticated()"
-                   th:class="${page == 'user'} ? 'nav-item nav-link active' : 'nav-item nav-link'" href="/sec/user">
+                   th:class="${page == 'user'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                   th:href="@{/sec/user(organizationKey=${organizationKey})}">
                     <span sec:authentication="name"></span>
                 </a>
             </div>
