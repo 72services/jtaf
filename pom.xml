@@ -205,5 +205,9 @@
             <id>72services-release</id>
             <url>packagecloud+https://packagecloud.io/72services/72services-release</url>
         </repository>
+        <snapshotRepository>
+            <id>72services-release</id>
+            <url>packagecloud+https://packagecloud.io/72services/72services-release</url>
+        </snapshotRepository>
     </distributionManagement>
 </project>
