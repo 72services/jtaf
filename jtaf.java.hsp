@@ -14,17 +14,17 @@
   <property name="project-excluded" />
   <property name="show-needs-to-compile" value="false" />
   <classpath>
-    <classpathentry kind="lib" path="jtaf-spring/target/jtaf-spring-1.0.0-SNAPSHOT.jar" />
-    <classpathentry kind="lib" path="jtaf-spring/target/test-classes" />
+    <classpathentry kind="lib" path="target/jtaf2-2.0.0-SNAPSHOT.jar" />
+    <classpathentry kind="lib" path="target/test-classes" />
   </classpath>
   <pom-root-files>
-    <pom path="jtaf-spring/pom.xml" />
+    <pom path="pom.xml" />
   </pom-root-files>
   <excludes>
     <exclude expression="test-classes.*" active="true" />
   </excludes>
   <excludes-from-xs>
-    <exclude-from-xs expression="C:\Users\simon\Workspace\jtaf\jtaf-spring\target\test-classes" active="true" />
+    <exclude-from-xs expression="test-classes" active="true" />
   </excludes-from-xs>
   <transformations>
     <transformation in="*" out="{jar}.*" />
@@ -32,8 +32,5 @@
   <restructuring>
     <set version="3" name="Model 1" hiview="Codemap" active="true" todo="false" list="0" />
   </restructuring>
-  <sourcepaths>
-    <pathentry type="file" path="C:\Users\simon\Workspace\jtaf\jtaf-spring\src\main\java" />
-  </sourcepaths>
   <grid-set sep="." version="4.2.12680" />
 </local-project>
