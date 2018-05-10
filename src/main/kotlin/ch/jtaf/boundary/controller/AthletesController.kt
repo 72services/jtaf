@@ -27,7 +27,7 @@ class AthletesController(private val athleteRepository: AthleteRepository,
         mav.model["athletes"] = if (mode == "select") {
             athleteRepository.findByOrganizationIdAndNotAssignedToSeries(organization.id!!, seriesId)
         } else {
-            athleteRepository.findByOrganizationId(organization.id!!)
+            athleteRepository.findByOrganizationIdOrderByLastNameAscFirstNameAsc(organization.id!!)
         }
 
         mav.model["mode"] = mode ?: "edit"
@@ -48,7 +48,7 @@ class AthletesController(private val athleteRepository: AthleteRepository,
         val mav = ModelAndView("sec/athletes")
 
         val organization = organizationRepository.findByKey(organizationKey)
-        mav.model["athletes"] = athleteRepository.findByOrganizationId(organization.id!!)
+        mav.model["athletes"] = athleteRepository.findByOrganizationIdOrderByLastNameAscFirstNameAsc(organization.id!!)
 
         mav.model["mode"] = "edit"
         return mav

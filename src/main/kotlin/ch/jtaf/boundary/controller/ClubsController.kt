@@ -19,7 +19,7 @@ class ClubsController(private val clubRepository: ClubRepository,
         val mav = ModelAndView("sec/clubs")
 
         val organization = organizationRepository.findByKey(organizationKey)
-        mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
+        mav.model["clubs"] = clubRepository.findByOrganizationIdOrderByAbbreviation(organization.id!!)
 
         return mav
     }

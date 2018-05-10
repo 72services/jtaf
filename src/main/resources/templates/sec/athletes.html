@@ -16,6 +16,7 @@
             <!--/*@thymesVar id="mode" type="java.lang.String"*/-->
             <table class="table table-striped">
                 <tr>
+                    <th th:text="#{messages.id}"></th>
                     <th th:text="#{messages.last_name}"></th>
                     <th th:text="#{messages.first_name}">First Name</th>
                     <th th:text="#{messages.year_of_birth}">Year of Birth</th>
@@ -29,6 +30,7 @@
                 <!--/*@thymesVar id="athletes" type="java.util.List<Athlete>"*/-->
                 <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.Athlete"*/-->
                 <tr th:each="athlete: ${athletes}">
+                    <td th:text="${athlete.id}">1</td>
                     <td>
                         <a th:href="@{/sec/{organizationKey}/athlete/{athleteId}(organizationKey=${organizationKey},athleteId=${athlete.id},mode=${mode})}"
                            th:text="${athlete.lastName}">Doe</a>

@@ -4,6 +4,8 @@ import ch.jtaf.boundary.dto.Message
 import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.control.repository.*
 import ch.jtaf.entity.Athlete
+import ch.jtaf.entity.Club
+import ch.jtaf.entity.Organization
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller
@@ -39,7 +41,7 @@ class AthleteController(private val athleteRepository: AthleteRepository,
         mav.model["athlete"] = athlete
 
         val organization = organizationRepository.findByKey(organizationKey)
-        mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
+        mav.model["clubs"] = getClubsWithEmpty(organization)
 
         mav.model["message"] = null
         return mav
@@ -65,7 +67,7 @@ class AthleteController(private val athleteRepository: AthleteRepository,
         mav.model["athlete"] = athleteRepository.getOne(athleteId)
 
         val organization = organizationRepository.findByKey(organizationKey)
-        mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
+        mav.model["clubs"] = getClubsWithEmpty(organization)
 
         mav.model["message"] = null
         return mav
@@ -119,10 +121,18 @@ class AthleteController(private val athleteRepository: AthleteRepository,
             mav.model["mode"] = mode
             mav.model["returnTo"] = returnTo
 
-            mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
+            mav.model["clubs"] = getClubsWithEmpty(organization)
 
             mav.model["message"] = Message(Message.success, "Athlete saved!")
             mav
         }
+    }
+
+    private fun getClubsWithEmpty(organization: Organization): ArrayList<Club?> {
+        val clubsFromDb = clubRepository.findByOrganizationIdOrderByAbbreviation(organization.id!!)
+        val clubs = ArrayList<Club?>()
+        //clubs.add(0, null)
+        clubs.addAll(clubsFromDb)
+        return clubs
     }
 }

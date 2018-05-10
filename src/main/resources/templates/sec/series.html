@@ -131,7 +131,7 @@
                     <td th:text="${athlete.club}">TVE</td>
                     <td class="text-right">
                         <a th:href="@{/sec/{organizationKey}/series/{seriesId}/athlete/{athleteId}/delete(organizationKey=${organizationKey},seriesId=${series.id}, athleteId=${athlete.id})}"
-                           th:text="#{messages.delete}" onclick="return confirm('Are you sure?')">Remove</a>
+                           th:text="#{messages.remove}" onclick="return confirm('Are you sure?')">Remove</a>
                     </td>
                 </tr>
             </table>

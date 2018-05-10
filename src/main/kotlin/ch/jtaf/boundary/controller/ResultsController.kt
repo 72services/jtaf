@@ -30,19 +30,23 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         if (id != null) {
             return getWithAthlete(user, organizationKey, id, searchRequest.seriesId, searchRequest.competitionId)
         } else {
-            val mav = ModelAndView("sec/results")
-            mav.model["seriesId"] = searchRequest.seriesId
-            mav.model["competitionId"] = searchRequest.competitionId
-
-            mav.model["searchRequest"] = searchRequest
-
             val athletes = athleteRepository.searchAthletes(searchRequest.seriesId, searchRequest.term + "%")
-            mav.model["athletes"] = athletes
-            mav.model["athlete"] = null
-            mav.model["resultContainer"] = ResultContainer(searchRequest.seriesId, searchRequest.competitionId, null)
+            if (athletes.size == 1) {
+                return getWithAthlete(user, organizationKey, athletes[0].id, searchRequest.seriesId, searchRequest.competitionId)
+            } else {
+                val mav = ModelAndView("sec/results")
+                mav.model["seriesId"] = searchRequest.seriesId
+                mav.model["competitionId"] = searchRequest.competitionId
 
-            mav.model["message"] = null
-            return mav
+                mav.model["searchRequest"] = searchRequest
+
+                mav.model["athletes"] = athletes
+                mav.model["athlete"] = null
+                mav.model["resultContainer"] = ResultContainer(searchRequest.seriesId, searchRequest.competitionId, null)
+
+                mav.model["message"] = null
+                return mav
+            }
         }
     }
 

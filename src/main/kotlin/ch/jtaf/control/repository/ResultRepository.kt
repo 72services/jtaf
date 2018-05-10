@@ -14,10 +14,10 @@ interface ResultRepository : JpaRepository<Result, Long> {
     fun findByCompetitionSeriesId(seriesId: Long): List<Result>
 
     @Modifying
-    @Query("delete from Result r where r.id in (select r.id from Result r where r.competition.competitionDate <= current_date and r.athlete.id = ?1)")
-    fun deleteResultsFromActiveCompetitions(id: Long)
+    @Query("delete from Result r where r.id in (select r.id from Result r where r.competition.competitionDate <= current_date and r.athlete.id = :athleteId)")
+    fun deleteResultsFromActiveCompetitions(athleteId: Long)
 
     @Modifying
-    @Query("delete from Result r where r.id in (select r.id from Result r where r.category.id =?1 and r.athlete.id = ?2)")
-    fun deleteResultsByCategoryIdAndAthleteId(id: Long?, athleteId: Long)
+    @Query("delete from Result r where r.id in (select r.id from Result r where r.category.id = :categoryId and r.athlete.id = :athleteId)")
+    fun deleteResultsByCategoryIdAndAthleteId(categoryId: Long?, athleteId: Long)
 }

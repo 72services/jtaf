@@ -103,7 +103,7 @@
                             <span th:text="${result.event.name}">80 m</span>
                         </td>
                         <td>
-                            <input class="form-control" th:field="*{results[__${i.index}__].result}"
+                            <input class="form-control" th:field="*{results[__${i.index}__].result}" required
                                    th:autofocus="${!resultContainer.results.isEmpty() && i.index == 0}">
                         </td>
                         <td>
