@@ -41,7 +41,7 @@
                     <td th:text="${athlete.club == null ? '' : athlete.club.abbreviation}">TVE</td>
                     <td class="text-right">
                         <a th:if="${mode == 'select'}"
-                           th:href="@{/sec/{organizationKey}/series/{seriesId}/athlete/{athleteId}(organizationKey=${organizationKey},seriesId=${seriesId},athleteId=${athlete.id})}"
+                           th:href="@{/sec/{organizationKey}/athletes/{athleteId}/series/{seriesId}/(organizationKey=${organizationKey},seriesId=${seriesId},athleteId=${athlete.id})}"
                            th:text="#{messages.select}">Select</a>
 
                         <a th:if="${mode == 'edit'}"

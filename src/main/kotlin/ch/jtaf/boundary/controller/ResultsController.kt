@@ -112,10 +112,8 @@ class ResultsController(private val athleteRepository: AthleteRepository,
     }
 
     private fun checkIfResultsCompleteOrAddMissingResults(category: Category, athlete: Athlete, competition: Competition, results: MutableList<Result>) {
-        if (category.events.size == results.size) {
+        if (category.events.size != results.size) {
             // TODO check if the results have the appropriate event type!
-            return
-        } else {
             val newResults = ArrayList<Result>()
             var i = 0
             category.events.forEach { event: Event ->
@@ -125,7 +123,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
                     newResults.add(result)
                 }
             }
-            results.addAll(results)
+            results.addAll(newResults)
         }
     }
 

@@ -68,32 +68,6 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return ResponseEntity.EMPTY
     }
 
-    @GetMapping("/sec/{organizationKey}/series/{seriesId}/athlete/{athleteId}")
-    fun addEvent(@PathVariable("organizationKey") organizationKey: String,
-                 @PathVariable("seriesId") seriesId: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
-        val mav = ModelAndView("sec/series")
-
-        val series = seriesRepository.getOne(seriesId)
-        val athlete = athleteRepository.getOne(athleteId)
-
-        val category = categoryRepository.findBySeriesIdAndGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(
-                seriesId, athlete.gender, athlete.yearOfBirth, athlete.yearOfBirth)
-
-        if (category == null) {
-            mav.model["athletes_message"] = "No matching category found for gender " + athlete.gender + " and year " + athlete.yearOfBirth
-        } else {
-            category.athletes.add(athlete)
-            categoryRepository.save(category)
-        }
-
-        mav.model["series"] = series
-        mav.model["categories"] = categoryRepository.findAllBySeriesIdOrderByAbbreviation(seriesId)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(seriesId)
-
-        mav.model["message"] = null
-        return mav
-    }
-
     @Transactional
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/athlete/{athleteId}/delete")
     fun deleteById(@PathVariable("organizationKey") organizationKey: String,
