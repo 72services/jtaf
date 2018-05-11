@@ -1,20 +1,23 @@
 package ch.jtaf.boundary.controller
 
+import ch.jtaf.boundary.controller.Views.SERIES
+import ch.jtaf.boundary.controller.Views.SERIESLIST
 import ch.jtaf.boundary.dto.Message
 import ch.jtaf.boundary.web.HttpContentProducer
 import ch.jtaf.control.repository.*
 import ch.jtaf.entity.Series
 import org.springframework.http.HttpEntity
 import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
+import org.springframework.http.ResponseEntity.EMPTY
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.ui.Model
+import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.servlet.ModelAndView
 import java.awt.Image
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
@@ -31,24 +34,20 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     val httpContentProducer = HttpContentProducer()
 
     @GetMapping("/sec/{organizationKey}/series")
-    fun get(@PathVariable("organizationKey") organizationKey: String): ModelAndView {
-        val mav = ModelAndView("sec/series")
-        mav.model["series"] = Series()
+    fun get(@PathVariable organizationKey: String, model: Model): String {
+        model["series"] = Series()
 
-        mav.model["message"] = null
-        return mav
+        return SERIES
     }
 
     @GetMapping("/sec/{organizationKey}/series/{seriesId}")
-    fun getById(@PathVariable("organizationKey") organizationKey: String,
-                @PathVariable("seriesId") seriesId: Long): ModelAndView {
-        val mav = ModelAndView("sec/series")
-        mav.model["series"] = seriesRepository.getOne(seriesId)
-        mav.model["categories"] = categoryRepository.findAllBySeriesIdOrderByAbbreviation(seriesId)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(seriesId)
+    fun getById(@PathVariable organizationKey: String, @PathVariable seriesId: Long, model: Model): String {
 
-        mav.model["message"] = null
-        return mav
+        model["series"] = seriesRepository.getOne(seriesId)
+        model["categories"] = categoryRepository.findAllBySeriesIdOrderByAbbreviation(seriesId)
+        model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(seriesId)
+
+        return SERIES
     }
 
     @GetMapping("/series/{seriesId}/logo", produces = [MediaType.IMAGE_PNG_VALUE])
@@ -65,14 +64,12 @@ class SeriesController(private val seriesRepository: SeriesRepository,
                 }
             }
         }
-        return ResponseEntity.EMPTY
+        return EMPTY
     }
 
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/athlete/{athleteId}")
-    fun addEvent(@PathVariable("organizationKey") organizationKey: String,
-                 @PathVariable("seriesId") seriesId: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
-        val mav = ModelAndView("sec/series")
-
+    fun addEvent(@PathVariable organizationKey: String, @PathVariable seriesId: Long, @PathVariable athleteId: Long,
+                 model: Model): String {
         val series = seriesRepository.getOne(seriesId)
         val athlete = athleteRepository.getOne(athleteId)
 
@@ -80,25 +77,23 @@ class SeriesController(private val seriesRepository: SeriesRepository,
                 seriesId, athlete.gender, athlete.yearOfBirth, athlete.yearOfBirth)
 
         if (category == null) {
-            mav.model["athletes_message"] = "No matching category found for gender " + athlete.gender + " and year " + athlete.yearOfBirth
+            model["athletes_message"] = "No matching category found for gender " + athlete.gender + " and year " + athlete.yearOfBirth
         } else {
             category.athletes.add(athlete)
             categoryRepository.save(category)
         }
 
-        mav.model["series"] = series
-        mav.model["categories"] = categoryRepository.findAllBySeriesIdOrderByAbbreviation(seriesId)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(seriesId)
+        model["series"] = series
+        model["categories"] = categoryRepository.findAllBySeriesIdOrderByAbbreviation(seriesId)
+        model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(seriesId)
 
-        mav.model["message"] = null
-        return mav
+        return SERIES
     }
 
     @Transactional
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/athlete/{athleteId}/delete")
-    fun deleteById(@PathVariable("organizationKey") organizationKey: String,
-                   @PathVariable("seriesId") seriesId: Long, @PathVariable("athleteId") athleteId: Long): ModelAndView {
-        val mav = ModelAndView("sec/series")
+    fun deleteById(@PathVariable organizationKey: String, @PathVariable seriesId: Long, @PathVariable athleteId: Long,
+                   model: Model): String {
 
         val series = seriesRepository.getOne(seriesId)
         val athlete = athleteRepository.getOne(athleteId)
@@ -112,20 +107,16 @@ class SeriesController(private val seriesRepository: SeriesRepository,
             resultRepository.deleteResultsByCategoryIdAndAthleteId(it.id, athleteId)
         }
 
-        mav.model["series"] = series
-        mav.model["categories"] = categoryRepository.findAllBySeriesIdOrderByAbbreviation(seriesId)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(seriesId)
+        model["series"] = series
+        model["categories"] = categoryRepository.findAllBySeriesIdOrderByAbbreviation(seriesId)
+        model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(seriesId)
 
-        mav.model["message"] = null
-        return mav
+        return SERIES
     }
 
 
     @PostMapping("/sec/{organizationKey}/series")
-    fun post(@AuthenticationPrincipal user: User,
-             @PathVariable("organizationKey") organizationKey: String,
-             series: Series): ModelAndView {
-        val mav = ModelAndView("sec/series")
+    fun post(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, series: Series, model: Model): String {
 
         val organization = organizationRepository.findByKey(organizationKey)
 
@@ -133,7 +124,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
             series.organizationId = organization.id
             seriesRepository.save(series)
 
-            mav.model["series"] = series
+            model["series"] = series
         } else {
             val seriesFromDb = seriesRepository.getOne(series.id!!)
             seriesFromDb.name = series.name
@@ -142,29 +133,26 @@ class SeriesController(private val seriesRepository: SeriesRepository,
             seriesFromDb.organizationId = organization.id
             seriesRepository.save(seriesFromDb)
 
-            mav.model["series"] = seriesFromDb
+            model["series"] = seriesFromDb
         }
 
-        mav.model["categories"] = categoryRepository.findAllBySeriesIdOrderByAbbreviation(series.id!!)
-        mav.model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(series.id!!)
+        model["categories"] = categoryRepository.findAllBySeriesIdOrderByAbbreviation(series.id!!)
+        model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(series.id!!)
 
-        mav.model["message"] = Message(Message.success, "Series saved!")
-        return mav
+        model["message"] = Message(Message.success, "Series saved!")
+
+        return SERIES
     }
 
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/delete")
-    fun deleteById(@AuthenticationPrincipal user: User,
-                   @PathVariable("organizationKey") organizationKey: String,
-                   @PathVariable("seriesId") seriesId: Long): ModelAndView {
+    fun deleteById(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, @PathVariable seriesId: Long,
+                   model: Model): String {
         seriesRepository.deleteById(seriesId)
 
-        val mav = ModelAndView("sec/serieslist")
-
         val organization = organizationRepository.findByKey(organizationKey)
-        mav.model["seriesList"] = seriesRepository.findByOrganizationId(organization.id!!)
+        model["seriesList"] = seriesRepository.findByOrganizationId(organization.id!!)
 
-        mav.model["message"] = null
-        return mav
+        return SERIESLIST
     }
 
     protected fun scaleImageByFixedHeight(image: BufferedImage, imageType: Int, newHeight: Int): BufferedImage {

@@ -1,5 +1,7 @@
 package ch.jtaf.boundary.controller
 
+import ch.jtaf.boundary.controller.Views.COMPETITION
+import ch.jtaf.boundary.controller.Views.RESULTS
 import ch.jtaf.boundary.dto.Message
 import ch.jtaf.boundary.dto.ResultContainer
 import ch.jtaf.boundary.web.HttpContentProducer
@@ -10,11 +12,12 @@ import ch.jtaf.entity.AthleteDTO
 import ch.jtaf.entity.Competition
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
+import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.servlet.ModelAndView
 
 @Controller
 class CompetitionController(private val competitionRepository: CompetitionRepository,
@@ -24,72 +27,53 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
     val httpContentUtil = HttpContentProducer()
 
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition")
-    fun get(@PathVariable("organizationKey") organizationKey: String,
-            @PathVariable("seriesId") seriesId: Long): ModelAndView {
-        val mav = ModelAndView("sec/competition")
-
+    fun get(@PathVariable organizationKey: String, @PathVariable seriesId: Long, model: Model): String {
         val competition = Competition()
         competition.seriesId = seriesId
-        mav.model["competition"] = competition
+        model["competition"] = competition
 
-        mav.model["message"] = null
-        return mav
+        return COMPETITION
     }
 
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}")
-    fun getById(@PathVariable("organizationKey") organizationKey: String,
-                @PathVariable("seriesId") seriesId: Long,
-                @PathVariable("competitionId") competitionId: Long): ModelAndView {
-        val mav = ModelAndView("sec/competition")
-
-        mav.model["competition"] = competitionRepository.getOne(competitionId)
-
-        mav.model["message"] = null
-        return mav
+    fun getById(@PathVariable organizationKey: String, @PathVariable seriesId: Long, @PathVariable competitionId: Long,
+                model: Model): String {
+        model["competition"] = competitionRepository.getOne(competitionId)
+        return COMPETITION
     }
 
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/results")
-    fun enterResults(@PathVariable("organizationKey") organizationKey: String,
-                     @PathVariable("seriesId") seriesId: Long,
-                     @PathVariable("competitionId") competitionId: Long): ModelAndView {
-        val mav = ModelAndView("sec/results")
-        mav.model["seriesId"] = seriesId
-        mav.model["competitionId"] = competitionId
-        mav.model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId = competitionId)
-        mav.model["athletes"] = ArrayList<AthleteDTO>()
-        mav.model["athlete"] = null
-        mav.model["resultContainer"] = ResultContainer(seriesId, competitionId, null)
+    fun enterResults(@PathVariable organizationKey: String, @PathVariable seriesId: Long, @PathVariable competitionId: Long,
+                     model: Model): String {
+        model["seriesId"] = seriesId
+        model["competitionId"] = competitionId
+        model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId = competitionId)
+        model["athletes"] = ArrayList<AthleteDTO>()
+        model["resultContainer"] = ResultContainer(seriesId, competitionId, null)
 
-        mav.model["message"] = null
-        return mav
+        return RESULTS
     }
 
     @PostMapping("/sec/{organizationKey}/series/{seriesId}/competition")
-    fun post(@PathVariable("organizationKey") organizationKey: String,
-             @PathVariable("seriesId") seriesId: Long,
-             competition: Competition): ModelAndView {
+    fun post(@PathVariable organizationKey: String, @PathVariable seriesId: Long, competition: Competition, model: Model): String {
         competitionRepository.save(competition)
 
-        val mav = ModelAndView("sec/competition")
-        mav.model["message"] = Message(Message.success, "Competition saved!")
-        return mav
+        model["message"] = Message(Message.success, "Competition saved!")
+
+        return COMPETITION
     }
 
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/sheets")
-    fun getSheets(@PathVariable("organizationKey") organizationKey: String,
-                  @PathVariable("seriesId") seriesId: Long,
-                  @PathVariable("competitionId") competitionId: Long,
-                  @RequestParam("orderBy") orderBy: String): ResponseEntity<ByteArray> {
+    fun getSheets(@PathVariable organizationKey: String, @PathVariable seriesId: Long, @PathVariable competitionId: Long,
+                  @RequestParam orderBy: String): ResponseEntity<ByteArray> {
 
         val sheets = sheetService.createSheets(competitionId, orderBy == "club")
         return httpContentUtil.getContentAsPdf("sheets_$competitionId.pdf", sheets)
     }
 
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/numbers")
-    fun getNumbers(@PathVariable("organizationKey") organizationKey: String,
-                   @PathVariable("seriesId") seriesId: Long,
-                   @PathVariable("competitionId") competitionId: Long,
-                   @RequestParam("orderBy") orderBy: String): ResponseEntity<ByteArray> {
+    fun getNumbers(@PathVariable organizationKey: String, @PathVariable seriesId: Long, @PathVariable competitionId: Long,
+                   @RequestParam orderBy: String): ResponseEntity<ByteArray> {
 
         val numbers = numberService.createNumbers(seriesId, orderBy == "club")
         return httpContentUtil.getContentAsPdf("numbers_$competitionId.pdf", numbers)

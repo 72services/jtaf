@@ -8,7 +8,6 @@ import ch.jtaf.control.repository.SeriesRepository
 import ch.jtaf.entity.AthleteDTO
 import org.springframework.stereotype.Component
 import java.util.*
-import kotlin.collections.ArrayList
 
 @Component
 class SheetService(private val competitionRepository: CompetitionRepository,
