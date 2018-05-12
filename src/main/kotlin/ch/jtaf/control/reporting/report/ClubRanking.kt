@@ -41,7 +41,7 @@ class ClubRanking(private val ranking: ClubRankingData, locale: Locale) : Rankin
         table.spacingBefore = cmToPixel(1f)
 
         var position = 1
-        ranking.clubs.forEach {
+        ranking.getSortedClubs().forEach {
             createClubRow(table, position, it)
             position++
         }
