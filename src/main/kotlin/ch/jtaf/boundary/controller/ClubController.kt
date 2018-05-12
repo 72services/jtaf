@@ -2,6 +2,7 @@ package ch.jtaf.boundary.controller
 
 import ch.jtaf.boundary.controller.Views.CLUB
 import ch.jtaf.boundary.dto.Message
+import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.control.repository.ClubRepository
 import ch.jtaf.control.repository.OrganizationRepository
 import ch.jtaf.entity.Club
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping
 class ClubController(private val clubRepository: ClubRepository,
                      private val organizationRepository: OrganizationRepository) {
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/club")
     fun get(@PathVariable organizationKey: String, model: Model): String {
         val club = Club()
@@ -26,6 +28,7 @@ class ClubController(private val clubRepository: ClubRepository,
         return CLUB
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/club/{clubId}")
     fun getById(@PathVariable organizationKey: String, @PathVariable clubId: Long, model: Model): String {
         model["club"] = clubRepository.getOne(clubId)
@@ -33,6 +36,7 @@ class ClubController(private val clubRepository: ClubRepository,
         return CLUB
     }
 
+    @CheckOrganizationAccess
     @PostMapping("/sec/{organizationKey}/club")
     fun post(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, club: Club, model: Model): String {
         val organization = organizationRepository.findByKey(organizationKey)

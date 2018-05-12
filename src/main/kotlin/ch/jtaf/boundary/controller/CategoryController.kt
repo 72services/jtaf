@@ -2,6 +2,7 @@ package ch.jtaf.boundary.controller
 
 import ch.jtaf.boundary.controller.Views.CATEGORY
 import ch.jtaf.boundary.dto.Message
+import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.boundary.web.HttpContentProducer
 import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.EventRepository
@@ -25,8 +26,9 @@ class CategoryController(private val categoryRepository: CategoryRepository,
 
     val httpContentUtil = HttpContentProducer()
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/category")
-    fun get(@PathVariable("organizationKey") organizationKey: String, @PathVariable("seriesId") seriesId: Long,
+    fun get(@PathVariable organizationKey: String, @PathVariable seriesId: Long,
             model: Model): String {
         val category = Category()
         category.seriesId = seriesId
@@ -37,6 +39,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return CATEGORY
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/category/{categoryId}")
     fun getById(@PathVariable("organizationKey") organizationKey: String, @PathVariable("seriesId") seriesId: Long,
                 @PathVariable("categoryId") categoryId: Long, model: Model): String {
@@ -47,9 +50,10 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return CATEGORY
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}")
-    fun addEvent(@PathVariable("organizationKey") organizationKey: String, @PathVariable("categoryId") categoryId: Long,
-                 @PathVariable("seriesId") seriesId: Long, @PathVariable("eventId") eventId: Long, model: Model): String {
+    fun addEvent(@PathVariable organizationKey: String, @PathVariable categoryId: Long,
+                 @PathVariable seriesId: Long, @PathVariable eventId: Long, model: Model): String {
         val category = categoryRepository.getOne(categoryId)
         val event = eventRepository.getOne(eventId)
         category.events.add(event)
@@ -62,6 +66,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return CATEGORY
     }
 
+    @CheckOrganizationAccess
     @Transactional
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/up")
     fun eventMoveUp(@PathVariable organizationKey: String, @PathVariable categoryId: Long, @PathVariable seriesId: Long,
@@ -69,6 +74,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return moveEvent(categoryId, seriesId, eventId, true, model)
     }
 
+    @CheckOrganizationAccess
     @Transactional
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/down")
     fun eventMoveDown(@PathVariable organizationKey: String, @PathVariable categoryId: Long,
@@ -107,7 +113,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return CATEGORY
     }
 
-
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/delete")
     fun deleteById(@PathVariable organizationKey: String, @PathVariable categoryId: Long, @PathVariable seriesId: Long,
                    @PathVariable eventId: Long, model: Model): String {
@@ -123,6 +129,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return CATEGORY
     }
 
+    @CheckOrganizationAccess
     @PostMapping("/sec/{organizationKey}/series/{seriesId}/category")
     fun post(@PathVariable organizationKey: String, @PathVariable seriesId: Long, category: Category, model: Model): String {
         model["seriesId"] = seriesId
@@ -148,6 +155,7 @@ class CategoryController(private val categoryRepository: CategoryRepository,
         return CATEGORY
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/sheet")
     fun getSheet(@PathVariable organizationKey: String, @PathVariable seriesId: Long, @PathVariable categoryId: Long):
             ResponseEntity<ByteArray> {

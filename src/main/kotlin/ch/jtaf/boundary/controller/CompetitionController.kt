@@ -4,6 +4,7 @@ import ch.jtaf.boundary.controller.Views.COMPETITION
 import ch.jtaf.boundary.controller.Views.RESULTS
 import ch.jtaf.boundary.dto.Message
 import ch.jtaf.boundary.dto.ResultContainer
+import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.boundary.web.HttpContentProducer
 import ch.jtaf.control.repository.CompetitionRepository
 import ch.jtaf.control.service.NumberService
@@ -26,6 +27,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
 
     val httpContentUtil = HttpContentProducer()
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition")
     fun get(@PathVariable organizationKey: String, @PathVariable seriesId: Long, model: Model): String {
         val competition = Competition()
@@ -35,6 +37,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         return COMPETITION
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}")
     fun getById(@PathVariable organizationKey: String, @PathVariable seriesId: Long, @PathVariable competitionId: Long,
                 model: Model): String {
@@ -42,6 +45,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         return COMPETITION
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/results")
     fun enterResults(@PathVariable organizationKey: String, @PathVariable seriesId: Long, @PathVariable competitionId: Long,
                      model: Model): String {
@@ -54,6 +58,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         return RESULTS
     }
 
+    @CheckOrganizationAccess
     @PostMapping("/sec/{organizationKey}/series/{seriesId}/competition")
     fun post(@PathVariable organizationKey: String, @PathVariable seriesId: Long, competition: Competition, model: Model): String {
         competitionRepository.save(competition)
@@ -63,6 +68,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         return COMPETITION
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/sheets")
     fun getSheets(@PathVariable organizationKey: String, @PathVariable seriesId: Long, @PathVariable competitionId: Long,
                   @RequestParam orderBy: String): ResponseEntity<ByteArray> {
@@ -71,6 +77,7 @@ class CompetitionController(private val competitionRepository: CompetitionReposi
         return httpContentUtil.getContentAsPdf("sheets_$competitionId.pdf", sheets)
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/numbers")
     fun getNumbers(@PathVariable organizationKey: String, @PathVariable seriesId: Long, @PathVariable competitionId: Long,
                    @RequestParam orderBy: String): ResponseEntity<ByteArray> {

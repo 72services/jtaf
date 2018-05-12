@@ -3,6 +3,7 @@ package ch.jtaf.boundary.controller
 import ch.jtaf.boundary.controller.Views.SERIES
 import ch.jtaf.boundary.controller.Views.SERIESLIST
 import ch.jtaf.boundary.dto.Message
+import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.boundary.web.HttpContentProducer
 import ch.jtaf.control.repository.*
 import ch.jtaf.entity.Series
@@ -33,6 +34,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
 
     val httpContentProducer = HttpContentProducer()
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/series")
     fun get(@PathVariable organizationKey: String, model: Model): String {
         model["series"] = Series()
@@ -40,6 +42,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return SERIES
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/series/{seriesId}")
     fun getById(@PathVariable organizationKey: String, @PathVariable seriesId: Long, model: Model): String {
 
@@ -67,6 +70,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return EMPTY
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/athlete/{athleteId}")
     fun addEvent(@PathVariable organizationKey: String, @PathVariable seriesId: Long, @PathVariable athleteId: Long,
                  model: Model): String {
@@ -90,6 +94,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return SERIES
     }
 
+    @CheckOrganizationAccess
     @Transactional
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/athlete/{athleteId}/delete")
     fun deleteById(@PathVariable organizationKey: String, @PathVariable seriesId: Long, @PathVariable athleteId: Long,
@@ -115,6 +120,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
     }
 
 
+    @CheckOrganizationAccess
     @PostMapping("/sec/{organizationKey}/series")
     fun post(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, series: Series, model: Model): String {
 
@@ -144,6 +150,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         return SERIES
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/series/{seriesId}/delete")
     fun deleteById(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, @PathVariable seriesId: Long,
                    model: Model): String {

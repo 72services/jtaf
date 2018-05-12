@@ -3,6 +3,7 @@ package ch.jtaf.boundary.controller
 import ch.jtaf.boundary.controller.Views.RESULTS
 import ch.jtaf.boundary.dto.Message
 import ch.jtaf.boundary.dto.ResultContainer
+import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.control.repository.AthleteRepository
 import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.CompetitionRepository
@@ -24,6 +25,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
                         private val resultRepository: ResultRepository,
                         private val categoryRepository: CategoryRepository) {
 
+    @CheckOrganizationAccess
     @PostMapping("/sec/{organizationKey}/search")
     fun search(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, searchRequest: SearchRequest,
                model: Model): String {
@@ -48,6 +50,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         }
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/athlete/{athleteId}/results")
     fun getWithAthlete(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, @PathVariable athleteId: Long,
                        @RequestParam seriesId: Long, @RequestParam competitionId: Long, model: Model): String {
@@ -73,6 +76,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         return RESULTS
     }
 
+    @CheckOrganizationAccess
     @PostMapping("/sec/{organizationKey}/results")
     fun postResults(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, @RequestParam seriesId: Long,
                     @RequestParam competitionId: Long, resultContainer: ResultContainer, model: Model): String {

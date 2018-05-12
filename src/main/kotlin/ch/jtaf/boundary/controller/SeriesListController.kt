@@ -1,6 +1,7 @@
 package ch.jtaf.boundary.controller
 
 import ch.jtaf.boundary.controller.Views.SERIESLIST
+import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.control.repository.AthleteRepository
 import ch.jtaf.control.repository.OrganizationRepository
 import ch.jtaf.control.repository.SeriesRepository
@@ -17,6 +18,7 @@ class SeriesListController(private val seriesRepository: SeriesRepository,
                            private val athleteRepository: AthleteRepository,
                            private val organizationRepository: OrganizationRepository) {
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}")
     fun get(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, model: Model): String {
         val organization = organizationRepository.findByKey(organizationKey)

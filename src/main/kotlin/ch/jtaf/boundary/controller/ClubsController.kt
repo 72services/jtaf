@@ -1,6 +1,7 @@
 package ch.jtaf.boundary.controller
 
 import ch.jtaf.boundary.controller.Views.CLUBS
+import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.control.repository.ClubRepository
 import ch.jtaf.control.repository.OrganizationRepository
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable
 class ClubsController(private val clubRepository: ClubRepository,
                       private val organizationRepository: OrganizationRepository) {
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/clubs")
     fun get(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, model: Model): String {
         val organization = organizationRepository.findByKey(organizationKey)

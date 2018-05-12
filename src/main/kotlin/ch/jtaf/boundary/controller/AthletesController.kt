@@ -1,6 +1,7 @@
 package ch.jtaf.boundary.controller
 
 import ch.jtaf.boundary.controller.Views.ATHLETES
+import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.control.repository.AthleteRepository
 import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.OrganizationRepository
@@ -17,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam
 @Controller
 class AthletesController(private val athleteRepository: AthleteRepository,
                          private val organizationRepository: OrganizationRepository,
-                         private val seriesRepository: SeriesRepository,
                          private val categoryRepository: CategoryRepository) {
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/athletes")
     fun get(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, @RequestParam mode: String?,
             @RequestParam seriesId: Long?, model: Model): String {
@@ -40,6 +41,7 @@ class AthletesController(private val athleteRepository: AthleteRepository,
         return ATHLETES
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/athletes/{athleteId}/delete")
     fun deleteById(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, @PathVariable athleteId: Long,
                    model: Model): String {
@@ -54,11 +56,10 @@ class AthletesController(private val athleteRepository: AthleteRepository,
         return ATHLETES
     }
 
+    @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/athletes/{athleteId}/series/{seriesId}")
-    fun addEvent(@AuthenticationPrincipal user: User,
-                 @PathVariable("organizationKey") organizationKey: String,
-                 @PathVariable("seriesId") seriesId: Long,
-                 @PathVariable("athleteId") athleteId: Long): ModelAndView {
+    fun addEvent(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String,
+                 @PathVariable seriesId: Long, @PathVariable athleteId: Long, model: Model): String {
 
         val athlete = athleteRepository.getOne(athleteId)
         val category = categoryRepository.findBySeriesIdAndGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(
@@ -71,7 +72,7 @@ class AthletesController(private val athleteRepository: AthleteRepository,
             categoryRepository.save(category)
         }
 
-        return get(user, organizationKey, "select", seriesId)
+        return get(user, organizationKey, "select", seriesId, model)
     }
 
 }
