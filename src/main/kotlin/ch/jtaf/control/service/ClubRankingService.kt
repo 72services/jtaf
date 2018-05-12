@@ -27,14 +27,14 @@ class ClubRankingService(private val seriesRepository: SeriesRepository,
     private fun getClubResultData(seriesId: Long): List<ClubResultData> {
         val seriesRankingData = seriesRankingService.getSeriesRankingData(seriesId)
         val pointsPerClub = HashMap<Club, ClubResultData>()
-        for (categoryData in seriesRankingData.categories) {
-            var points = categoryData.athletes.size
-            for (athlete in categoryData.athletes) {
-                if (pointsPerClub.containsKey(athlete.athlete.club)) {
-                    val clubResultData = pointsPerClub.get(athlete.athlete.club)
-                    clubResultData?.points = clubResultData?.points!! + athlete.getTotalPoints()
+        seriesRankingData.categories.forEach {
+            var points = it.athletes.size
+            it.athletes.forEach {
+                if (pointsPerClub.containsKey(it.athlete.club)) {
+                    val clubResultData = pointsPerClub[it.athlete.club]
+                    clubResultData?.points = clubResultData?.points!! + it.getTotalPoints()
                 } else {
-                    pointsPerClub.put(athlete.athlete.club!!, ClubResultData(athlete.athlete.club!!, points))
+                    pointsPerClub[it.athlete.club!!] = ClubResultData(it.athlete.club!!, points)
                 }
             }
             --points
