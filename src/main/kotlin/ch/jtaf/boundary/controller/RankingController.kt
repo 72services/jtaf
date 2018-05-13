@@ -13,6 +13,7 @@ import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestParam
 
 
 @Controller
@@ -23,9 +24,22 @@ class RankingController(private val competitionRankingService: CompetitionRankin
     val httpContentUtil = HttpContentProducer()
 
     @GetMapping("/ranking/competition/{competitionId}")
-    fun getCompetitionRanking(@PathVariable competitionId: Long, model: Model): String {
+    fun getCompetitionRanking(@RequestParam organizationKey: String?, @PathVariable competitionId: Long,
+                              model: Model): String {
         model["data"] = competitionRankingService.getCompetitionRankingData(competitionId)
+        if (organizationKey != null) {
+            model["organizationKey"] = organizationKey
+        }
         return COMPETITION_RANKING
+    }
+
+    @GetMapping("/ranking/series/{seriesId}")
+    fun getSeriesRanking(@RequestParam organizationKey: String?, @PathVariable seriesId: Long, model: Model): String {
+        model["data"] = seriesRankingService.getSeriesRankingData(seriesId)
+        if (organizationKey != null) {
+            model["organizationKey"] = organizationKey
+        }
+        return SERIES_RANKING
     }
 
     @GetMapping("/ranking/competition/{competitionId}/pdf", produces = [APPLICATION_PDF_VALUE])
@@ -44,12 +58,6 @@ class RankingController(private val competitionRankingService: CompetitionRankin
     fun getDiplomas(@PathVariable competitionId: Long): ResponseEntity<ByteArray> {
         val diplomas = competitionRankingService.createDiplomas(competitionId)
         return httpContentUtil.getContentAsPdf("diploma_$competitionId.pdf", diplomas)
-    }
-
-    @GetMapping("/ranking/series/{seriesId}")
-    fun getSeriesRanking(@PathVariable seriesId: Long, model: Model): String {
-        model["data"] = seriesRankingService.getSeriesRankingData(seriesId)
-        return SERIES_RANKING
     }
 
     @GetMapping("/ranking/series/{seriesId}/pdf", produces = [APPLICATION_PDF_VALUE])

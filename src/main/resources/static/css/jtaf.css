@@ -7,7 +7,7 @@ body {
     margin-bottom: 60px; /* Margin bottom by footer height */
 }
 
-h2 {
+h1, h2 {
     padding-top: 20px;
 }
 

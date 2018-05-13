@@ -4,7 +4,7 @@
 <body>
 
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
-<div th:include="sec/common/navigation :: navigation ('clubs', ${organizationKey})"></div>
+<div th:include="common/navigation :: navigation ('clubs', ${organizationKey})"></div>
 
 <main role="main" class="container">
 
@@ -23,11 +23,14 @@
                            class="text-right">Add Club</a></th>
                 </tr>
                 <tr th:each="club: ${clubs}">
-                    <td th:text="${club.abbreviation}">jump</td>
+                    <td>
+                        <a th:href="@{/sec/{organizationKey}/club/{clubId}(organizationKey=${organizationKey},clubId=${club.id})}"
+                           th:text="${club.abbreviation}">jump</a>
+                    </td>
                     <td th:text="${club.name}">Long Jump</td>
                     <td class="text-right"><a
-                            th:href="@{/sec/{organizationKey}/club/{clubId}(organizationKey=${organizationKey},clubId=${club.id})}"
-                            th:text="#{messages.edit}">Edit</a></td>
+                            th:href="@{/sec/{organizationKey}/club/{clubId}/delete(organizationKey=${organizationKey},clubId=${club.id})}"
+                            th:text="#{messages.delete}">Delete</a></td>
                 </tr>
             </table>
         </div>

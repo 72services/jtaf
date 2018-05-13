@@ -3,7 +3,8 @@
 <head th:replace="common/head :: head"></head>
 <body>
 
-<div th:include="common/navigation :: navigation ('organizations')"></div>
+<!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
+<div th:include="common/navigation :: navigation ('organizations', ${organizationKey})"></div>
 
 <main role="main" class="container">
 

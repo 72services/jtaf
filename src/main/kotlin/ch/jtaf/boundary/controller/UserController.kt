@@ -22,9 +22,11 @@ class UserController(private val securityUserRepository: SecurityUserRepository,
 
     @GetMapping
     fun get(@AuthenticationPrincipal user: User, @RequestParam organizationKey: String?, model: Model): String {
-        model["organizationKey"] = organizationKey ?: ""
         model["user"] = user
         model["passwordChangeDTO"] = PasswordChangeDTO(userName = user.username)
+        if (organizationKey != null) {
+            model["organizationKey"] = organizationKey
+        }
 
         return USER
     }
@@ -32,7 +34,6 @@ class UserController(private val securityUserRepository: SecurityUserRepository,
     @PostMapping
     fun changePassword(@AuthenticationPrincipal user: User, passwordChangeDTO: PasswordChangeDTO,
                        @RequestParam organizationKey: String?, model: Model): String {
-        model["organizationKey"] = organizationKey ?: ""
         model["user"] = user
 
         val securityUser = securityUserRepository.findByEmail(passwordChangeDTO.userName)
@@ -48,6 +49,10 @@ class UserController(private val securityUserRepository: SecurityUserRepository,
                 securityUserRepository.save(securityUser!!)
                 model["message"] = Message(Message.success, "Password changed!")
             }
+        }
+
+        if (organizationKey != null) {
+            model["organizationKey"] = organizationKey
         }
 
         return USER
