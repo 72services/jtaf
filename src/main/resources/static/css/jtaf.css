@@ -19,11 +19,11 @@ h1, h2 {
     color: rgba(0, 123, 255, .5);
 }
 
-.footer a, a:visited {
+.footer a, .footer a:visited {
     color: rgba(0, 123, 255, .5);
 }
 
-.footer a:active, a:hover {
+.footer a:active, .footer a:hover {
     color: rgba(0, 123, 255, .7);
     text-decoration: none;
 }
