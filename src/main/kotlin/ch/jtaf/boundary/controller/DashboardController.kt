@@ -16,7 +16,7 @@ class DashboardController(private val seriesRepository: SeriesRepository,
 
     @GetMapping
     fun get(model: Model): String {
-        val seriesList = seriesRepository.findAllOrderByCompetitionDate()
+        val seriesList = seriesRepository.findAll()
         seriesList.forEach {
             val numberOfAthletes = athleteRepository.getTotalNumberOfAthletesForSeries(it.id!!)
 

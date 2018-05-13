@@ -6,8 +6,5 @@ import org.springframework.data.jpa.repository.Query
 
 interface SeriesRepository : JpaRepository<Series, Long> {
 
-    @Query("select s from Series s join s.competitions c order by c.competitionDate")
-    fun findAllOrderByCompetitionDate(): List<Series>
-
     fun findByOrganizationId(organizationId: Long): List<Series>
 }
