@@ -24,4 +24,16 @@ class ClubsController(private val clubRepository: ClubRepository,
 
         return CLUBS
     }
+
+    @CheckOrganizationAccess
+    @GetMapping("/sec/{organizationKey}/clubs/{clubId}/delete")
+    fun deleteById(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, @PathVariable clubId: Long,
+                   model: Model): String {
+        clubRepository.deleteById(clubId)
+
+        val organization = organizationRepository.findByKey(organizationKey)
+        model["clubs"] = clubRepository.findByOrganizationIdOrderByAbbreviation(organization.id!!)
+
+        return CLUBS
+    }
 }
