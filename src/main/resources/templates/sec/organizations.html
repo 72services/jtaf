@@ -4,7 +4,7 @@
 <body>
 
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
-<div th:include="common/navigation :: navigation ('organizations', ${organizationKey})"></div>
+<div th:replace="common/navigation :: navigation ('organizations', ${organizationKey})"></div>
 
 <main role="main" class="container">
 
@@ -41,8 +41,9 @@
         </div>
     </div>
 
-    <div th:include="common/footer :: copy"></div>
-
 </main>
+
+<div th:replace="common/footer :: copy"></div>
+
 </body>
 </html>

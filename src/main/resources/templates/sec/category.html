@@ -4,7 +4,7 @@
 <body>
 
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
-<div th:include="common/navigation :: navigation ('series', ${organizationKey})"></div>
+<div th:replace="common/navigation :: navigation ('series', ${organizationKey})"></div>
 
 <main role="main" class="container">
 
@@ -56,7 +56,7 @@
                    th:text="#{messages.back}" class="btn">Back</a>
 
                 <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
-                <div th:include="common/message :: message (${message})"></div>
+                <div th:replace="common/message :: message (${message})"></div>
             </form>
 
             <br>
@@ -101,8 +101,9 @@
         </div>
     </div>
 
-    <div th:include="common/footer :: copy"></div>
-
 </main>
+
+<div th:replace="common/footer :: copy"></div>
+
 </body>
 </html>

@@ -16,4 +16,14 @@ h1, h2 {
     bottom: 0;
     height: 60px; /* Set the fixed height of the footer here */
     line-height: 60px; /* Vertically center the text there */
+    color: rgba(0, 123, 255, .5);
+}
+
+.footer a, a:visited {
+    color: rgba(0, 123, 255, .5);
+}
+
+.footer a:active, a:hover {
+    color: rgba(0, 123, 255, .7);
+    text-decoration: none;
 }
