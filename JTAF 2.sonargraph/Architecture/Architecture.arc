@@ -20,29 +20,69 @@ artifact jtaf2
 {
     include "jtaf2/**"
     
+    artifact Config
+    {
+        include "**/config/**"
+        connect to Control, Entity, External.Java, External.Kotlin, External.SpringFramework, External.Jetbrains
+    }
+    
     artifact Boundary
     {
         include "**/boundary/**"
-        connect to Control
-        connect to Entity
+        include "**/Jtaf2Application*"
+        connect to Control, Entity, External.Java, External.Kotlin, External.SpringFramework, External.Jetbrains, External.Slf4j, External.AspectJ
     }
     
     artifact Control
     {
         include "**/control/**"
-        connect to Entity
+        connect to Entity, External.IText, External.Java, External.Kotlin, External.SpringFramework, External.Jetbrains, External.Slf4j
     }
     
     artifact Entity
     {
         include "**/entity/**"
+        connect to External.Java, External.Kotlin, External.Jetbrains
     }
+}
+
+artifact External
+{
+    include "External [Java]/**"
     
-    artifact Config
+    exposed public artifact IText
     {
-        include "**/config/**"
-        connect to Control
-        connect to Entity
+        include "**/itextpdf/**"
     }
     
+    exposed public artifact Java
+    {
+        include "**/java/**"
+        include "**/javax/**"
+    }
+    
+    exposed public artifact Kotlin
+    {
+        include "**/kotlin/**"
+    }
+    
+    exposed public artifact SpringFramework
+    {
+        include "**/springframework/**"
+    }
+    
+    exposed public artifact AspectJ
+    {
+        include "**/aspectj/**"
+    }
+    
+    exposed public artifact Slf4j
+    {
+        include "**/slf4j/**"
+    }
+    
+    exposed public artifact Jetbrains
+    {
+        include "**/jetbrains/**"
+    }
 }
