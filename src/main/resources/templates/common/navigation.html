@@ -16,25 +16,30 @@
                     <a th:class="${page == 'index'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
                        th:href="@{/dashboard/{organizationKey}(organizationKey=${organizationKey})}">Dashboard</a>
 
-                    <a th:if="${organizationKey == null}" th:class="${page == 'organizations'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:text="#{messages.organizations}" th:href="@{/sec/organizations/{organizationKey}(organizationKey=${organizationKey})}">
+                    <a th:class="${page == 'organizations'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                       th:text="#{messages.organizations}"
+                       th:href="@{/sec/organizations(organizationKey=${organizationKey})}">
                         My Organizations</a>
 
-                    <a th:if="${organizationKey != null}" th:class="${page == 'series'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                    <a th:if="${organizationKey != null}"
+                       th:class="${page == 'series'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
                        th:inline="text"
                        th:href="@{/sec/{organizationKey}(organizationKey=${organizationKey})}">
                         [[#{messages.series}]] ([[${organizationKey}]])
                     </a>
 
-                    <a th:if="${organizationKey != null}" th:class="${page == 'events'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                    <a th:if="${organizationKey != null}"
+                       th:class="${page == 'events'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
                        th:text="#{messages.events}"
                        th:href="@{/sec/{organizationKey}/events(organizationKey=${organizationKey})}">Manage Events</a>
 
-                    <a th:if="${organizationKey != null}" th:class="${page == 'clubs'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                    <a th:if="${organizationKey != null}"
+                       th:class="${page == 'clubs'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
                        th:text="#{messages.clubs}"
                        th:href="@{/sec/{organizationKey}/clubs(organizationKey=${organizationKey})}">Manage Clubs</a>
 
-                    <a th:if="${organizationKey != null}" th:class="${page == 'athletes'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
+                    <a th:if="${organizationKey != null}"
+                       th:class="${page == 'athletes'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
                        th:text="#{messages.athletes}"
                        th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey})}">Manage
                         Athletes</a>
