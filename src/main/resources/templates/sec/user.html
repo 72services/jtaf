@@ -4,56 +4,63 @@
 <body>
 
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
-<div th:include="sec/common/navigation :: navigation ('user', ${organizationKey})"></div>
+<div th:replace="common/navigation :: navigation ('user', ${organizationKey})"></div>
 
-<main role="main" class="container">
+<div class="container-fluid position-fixed h-100">
+    <div class="row h-100">
+        <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h1>User</h1>
+        <main role="main" class="container">
 
-            <!--/*@thymesVar id="passwordChangeDTO" type="ch.jtaf.entity.PasswordChangeDTO"*/-->
-            <form action="#" th:action="@{/sec/user(organizationKey=${organizationKey})}"
-                  th:object="${passwordChangeDTO}"
-                  method="post">
-                <div class="form-group">
-                    <label for="userName" th:text="#{messages.user_name}"></label>
-                    <input class="form-control" id="userName" readonly th:field="*{userName}">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>User</h1>
+
+                    <!--/*@thymesVar id="passwordChangeDTO" type="ch.jtaf.entity.PasswordChangeDTO"*/-->
+                    <form action="#" th:action="@{/sec/user(organizationKey=${organizationKey})}"
+                          th:object="${passwordChangeDTO}"
+                          method="post">
+                        <div class="form-group">
+                            <label for="userName" th:text="#{messages.user_name}"></label>
+                            <input class="form-control" id="userName" readonly th:field="*{userName}">
+                        </div>
+                        <div class="form-group">
+                            <label for="oldPassword" th:text="#{messages.old_password}"></label>
+                            <input type="password" class="form-control" id="oldPassword" th:field="*{oldPassword}">
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword" th:text="#{messages.new_password}"></label>
+                            <input type="password" class="form-control" id="newPassword" th:field="*{newPassword}">
+                        </div>
+                        <div class="form-group">
+                            <label for="newPasswordConfirm" th:text="#{messages.new_password_confirm}"></label>
+                            <input type="password" class="form-control" id="newPasswordConfirm"
+                                   th:field="*{newPasswordConfirm}">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+                        <a th:href="@{/}" th:text="#{messages.back}" class="btn">Back</a>
+
+                        <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
+                        <div th:replace="common/message :: message (${message})"></div>
+                    </form>
+
+                    <h2>Authorities</h2>
+                    <table class="table  table-striped">
+                        <!--/*@thymesVar id="user" type="org.springframework.security.core.userdetails.User"*/-->
+                        <!--/*@thymesVar id="authority" type="org.springframework.security.core.GrantedAuthority"*/-->
+                        <tr th:each="authority : ${user.getAuthorities()}">
+                            <td th:text="${authority.authority}">Authority</td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="form-group">
-                    <label for="oldPassword" th:text="#{messages.old_password}"></label>
-                    <input type="password" class="form-control" id="oldPassword" th:field="*{oldPassword}">
-                </div>
-                <div class="form-group">
-                    <label for="newPassword" th:text="#{messages.new_password}"></label>
-                    <input type="password" class="form-control" id="newPassword" th:field="*{newPassword}">
-                </div>
-                <div class="form-group">
-                    <label for="newPasswordConfirm" th:text="#{messages.new_password_confirm}"></label>
-                    <input type="password" class="form-control" id="newPasswordConfirm"
-                           th:field="*{newPasswordConfirm}">
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a th:href="@{/}" th:text="#{messages.back}" class="btn">Back</a>
+            </div>
 
-                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
-                <div th:include="common/message :: message (${message})"></div>
-            </form>
-
-            <h2>Authorities</h2>
-            <table class="table  table-striped">
-                <!--/*@thymesVar id="user" type="org.springframework.security.core.userdetails.User"*/-->
-                <!--/*@thymesVar id="authority" type="org.springframework.security.core.GrantedAuthority"*/-->
-                <tr th:each="authority : ${user.getAuthorities()}">
-                    <td th:text="${authority.authority}">Authority</td>
-                </tr>
-            </table>
-        </div>
+        </main>
     </div>
+</div>
 
-    <div th:include="common/footer :: copy"></div>
+<div th:replace="common/footer :: copy"></div>
 
-</main>
 </body>
 </html>

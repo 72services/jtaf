@@ -17,8 +17,8 @@ class AthleteRepositoryTest : AbstractRepositoryTest() {
 
 
     @Test
-    fun findByOrganizationId() {
-        val list = athleteRepository.findByOrganizationId(organizationId)
+    fun findByOrganizationIdOrderByLastNameAscFirstNameAsc() {
+        val list = athleteRepository.findByOrganizationIdOrderByLastNameAscFirstNameAsc(organizationId)
 
         assertEquals(1, list.size)
         assertEquals("Max", list[0].firstName)

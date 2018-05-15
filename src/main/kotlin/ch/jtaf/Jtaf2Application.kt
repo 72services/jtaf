@@ -1,11 +1,11 @@
 package ch.jtaf
 
-import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
 
 @SpringBootApplication
 class Jtaf2Application
 
 fun main(args: Array<String>) {
-    SpringApplication.run(Jtaf2Application::class.java, *args)
+    runApplication<Jtaf2Application>(*args)
 }

@@ -4,75 +4,82 @@
 <body>
 
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
-<div th:include="sec/common/navigation :: navigation ('events', ${organizationKey})"></div>
+<div th:replace="common/navigation :: navigation ('events', ${organizationKey})"></div>
 
-<main role="main" class="container">
+<div class="container-fluid position-fixed h-100">
+    <div class="row h-100">
+        <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h1 th:text="#{messages.edit_event}">Edit Category</h1>
+        <main role="main" class="container">
 
-            <!--/*@thymesVar id="event" type="ch.jtaf.entity.Event"*/-->
-            <form action="#" th:action="@{/sec/{organizationKey}/event(organizationKey=${organizationKey})}" th:object="${event}"
-                  method="post">
-                <div class="form-group">
-                    <label for="id">ID</label>
-                    <input class="form-control" id="id" readonly th:field="*{id}">
-                </div>
-                <div class="form-group">
-                    <label for="abbreviation" th:text="#{messages.abbreviation}">Abbreviation</label>
-                    <input class="form-control" id="abbreviation" th:placeholder="#{messages.abbreviation}"
-                           th:field="*{abbreviation}" required th:autofocus="true">
-                </div>
-                <div class="form-group">
-                    <label for="name" th:text="#{messages.name}">Name</label>
-                    <input class="form-control" id="name" th:placeholder="#{messages.name}" th:field="*{name}" required>
-                </div>
-                <div class="form-group">
-                    <label for="eventType" th:text="#{messages.type}">type</label>
-                    <select id="eventType" class="form-control" th:field="*{eventType}">
-                        <!--/*@thymesVar id="eventType" type="ch.jtaf.entity.EventType"*/-->
-                        <option th:each="eventType : ${T(ch.jtaf.entity.EventType).values()}"
-                                th:value="${eventType}"
-                                th:text="${eventType}">
-                        </option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="gender" th:text="#{messages.gender}">Gender</label>
-                    <select id="gender" class="form-control" th:field="*{gender}">
-                        <!--/*@thymesVar id="gender" type="ch.jtaf.entity.Gender"*/-->
-                        <option th:each="gender : ${T(ch.jtaf.entity.Gender).values()}"
-                                th:value="${gender}"
-                                th:text="${gender}">
-                        </option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="a">A</label>
-                    <input class="form-control" id="a" placeholder="A" th:field="*{a}" required>
-                </div>
-                <div class="form-group">
-                    <label for="b">B</label>
-                    <input class="form-control" id="b" placeholder="B" th:field="*{b}" required>
-                </div>
-                <div class="form-group">
-                    <label for="c">C</label>
-                    <input class="form-control" id="c" placeholder="C" th:field="*{c}" required>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a th:href="@{/sec/{organizationKey}/events(organizationKey=${organizationKey})}"
-                   th:text="#{messages.back}" class="btn">Back</a>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 th:text="#{messages.edit_event}">Edit Category</h1>
 
-                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
-                <div th:include="common/message :: message (${message})"></div>
-            </form>
-        </div>
+                    <!--/*@thymesVar id="event" type="ch.jtaf.entity.Event"*/-->
+                    <form action="#" th:action="@{/sec/{organizationKey}/event(organizationKey=${organizationKey})}" th:object="${event}"
+                          method="post">
+                        <div class="form-group">
+                            <label for="id">ID</label>
+                            <input class="form-control" id="id" readonly th:field="*{id}">
+                        </div>
+                        <div class="form-group">
+                            <label for="abbreviation" th:text="#{messages.abbreviation}">Abbreviation</label>
+                            <input class="form-control" id="abbreviation" th:placeholder="#{messages.abbreviation}"
+                                   th:field="*{abbreviation}" required th:autofocus="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="name" th:text="#{messages.name}">Name</label>
+                            <input class="form-control" id="name" th:placeholder="#{messages.name}" th:field="*{name}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventType" th:text="#{messages.type}">type</label>
+                            <select id="eventType" class="form-control" th:field="*{eventType}">
+                                <!--/*@thymesVar id="eventType" type="ch.jtaf.entity.EventType"*/-->
+                                <option th:each="eventType : ${T(ch.jtaf.entity.EventType).values()}"
+                                        th:value="${eventType}"
+                                        th:text="${eventType}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender" th:text="#{messages.gender}">Gender</label>
+                            <select id="gender" class="form-control" th:field="*{gender}">
+                                <!--/*@thymesVar id="gender" type="ch.jtaf.entity.Gender"*/-->
+                                <option th:each="gender : ${T(ch.jtaf.entity.Gender).values()}"
+                                        th:value="${gender}"
+                                        th:text="${gender}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="a">A</label>
+                            <input class="form-control" id="a" placeholder="A" th:field="*{a}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="b">B</label>
+                            <input class="form-control" id="b" placeholder="B" th:field="*{b}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="c">C</label>
+                            <input class="form-control" id="c" placeholder="C" th:field="*{c}" required>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+                        <a th:href="@{/sec/{organizationKey}/events(organizationKey=${organizationKey})}"
+                           th:text="#{messages.back}" class="btn">Back</a>
+
+                        <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
+                        <div th:replace="common/message :: message (${message})"></div>
+                    </form>
+                </div>
+            </div>
+
+        </main>
     </div>
+</div>
 
-    <div th:include="common/footer :: copy"></div>
+<div th:replace="common/footer :: copy"></div>
 
-</main>
 </body>
 </html>
