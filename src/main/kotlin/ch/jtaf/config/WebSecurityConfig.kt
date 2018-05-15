@@ -22,7 +22,8 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 .anyRequest().permitAll()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
-                .and().logout().permitAll()
+                .and().logout().logoutUrl("/logout")
+                .logoutSuccessUrl("/dashboard").permitAll()
     }
 
     @Autowired

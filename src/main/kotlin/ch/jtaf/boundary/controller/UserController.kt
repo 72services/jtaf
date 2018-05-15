@@ -1,5 +1,6 @@
 package ch.jtaf.boundary.controller
 
+import ch.jtaf.boundary.controller.Views.DASHBOARD
 import ch.jtaf.boundary.controller.Views.USER
 import ch.jtaf.boundary.dto.Message
 import ch.jtaf.control.repository.SecurityUserRepository

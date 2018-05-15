@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<aside class="col-12 col-lg-2 p-0" th:fragment="side_navigation (page, organizationKey)">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarSide">
+            <ul class="navbar-nav flex-column">
+                <li th:class="${page == 'index'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:href="@{/dashboard/{organizationKey}(organizationKey=${organizationKey})}">Dashboard</a>
+                </li>
+                <li th:class="${page == 'organizations'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:text="#{messages.organizations}"
+                       th:href="@{/sec/organizations(organizationKey=${organizationKey})}">
+                        My Organizations</a>
+                </li>
+                <li th:class="${page == 'series'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:if="${organizationKey != null}" th:inline="text"
+                       th:href="@{/sec/{organizationKey}(organizationKey=${organizationKey})}">
+                        [[#{messages.series}]] ([[${organizationKey}]])
+                    </a>
+                </li>
+                <li th:class="${page == 'events'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:if="${organizationKey != null}" th:text="#{messages.events}"
+                       th:href="@{/sec/{organizationKey}/events(organizationKey=${organizationKey})}">Manage Events</a>
+                </li>
+                <li th:class="${page == 'clubs'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:if="${organizationKey != null}" th:text="#{messages.clubs}"
+                       th:href="@{/sec/{organizationKey}/clubs(organizationKey=${organizationKey})}">Manage Clubs</a>
+                </li>
+                <li th:class="${page == 'athletes'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:if="${organizationKey != null}" th:text="#{messages.athletes}"
+                       th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey})}">Manage
+                        Athletes</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</aside>
+</body>
+</html>

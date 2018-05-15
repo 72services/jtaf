@@ -1,60 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<div th:fragment="navigation (page, organizationKey)">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" th:href="@{/dashboard/{organizationKey}(organizationKey=${organizationKey})}">
-                <img th:src="@{/images/icon.png}" class="d-inline-block align-top">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarLeft"
-                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarLeft">
-                <div class="navbar-nav">
-                    <a th:class="${page == 'index'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:href="@{/dashboard/{organizationKey}(organizationKey=${organizationKey})}">Dashboard</a>
-
-                    <a th:class="${page == 'organizations'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:text="#{messages.organizations}"
-                       th:href="@{/sec/organizations(organizationKey=${organizationKey})}">
-                        My Organizations</a>
-
-                    <a th:if="${organizationKey != null}"
-                       th:class="${page == 'series'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:inline="text"
-                       th:href="@{/sec/{organizationKey}(organizationKey=${organizationKey})}">
-                        [[#{messages.series}]] ([[${organizationKey}]])
+<header th:fragment="navigation (page, organizationKey)">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" th:href="@{/dashboard/{organizationKey}(organizationKey=${organizationKey})}">
+            <img th:src="@{/images/icon.png}" class="d-inline-block align-top">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSide"
+                aria-controls="navbarSide" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/simasch/jtaf/" target="_blank">About</a>
+                </li>
+                <li th:if="${#authentication.principal == 'anonymousUser'}"
+                    th:class="${page == 'organizations'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:text="#{messages.login}"
+                       th:href="@{/sec/organizations(organizationKey=${organizationKey})}">Login</a>
+                </li>
+                <li th:if="${#authentication.principal != 'anonymousUser'}" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#"
+                       id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" th:text="${#authentication.principal.username}">
                     </a>
-
-                    <a th:if="${organizationKey != null}"
-                       th:class="${page == 'events'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:text="#{messages.events}"
-                       th:href="@{/sec/{organizationKey}/events(organizationKey=${organizationKey})}">Manage Events</a>
-
-                    <a th:if="${organizationKey != null}"
-                       th:class="${page == 'clubs'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:text="#{messages.clubs}"
-                       th:href="@{/sec/{organizationKey}/clubs(organizationKey=${organizationKey})}">Manage Clubs</a>
-
-                    <a th:if="${organizationKey != null}"
-                       th:class="${page == 'athletes'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                       th:text="#{messages.athletes}"
-                       th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey})}">Manage
-                        Athletes</a>
-
-                    <a class="nav-item nav-link" href="https://github.com/simasch/jtaf/" target="_blank">About</a>
-                </div>
-            </div>
-            <div class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
-                <a th:class="${page == 'user'} ? 'nav-item nav-link active' : 'nav-item nav-link'"
-                   th:href="@{/sec/user(organizationKey=${organizationKey})}">
-                    <span th:text="${#authentication.principal == 'anonymousUser' ? '' : #authentication.principal.username}"></span></a>
-            </div>
-        </nav>
-    </header>
-</div>
-
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/sec/user/logout(organizationKey=${organizationKey})}"
+                           th:text="#{messages.change_password}">
+                        </a>
+                        <a class="dropdown-item" href="javascript: document.logoutForm.submit()"
+                           th:text="#{messages.logout}"></a>
+                        <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+                            <input hidden type="submit" value="Sign Out"/>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
 </body>
 </html>
