@@ -6,38 +6,43 @@
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
 <div th:replace="common/navigation :: navigation ('clubs', ${organizationKey})"></div>
 
-<main role="main" class="container">
+<div class="container-fluid position-fixed h-100">
+    <div class="row h-100">
+        <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h1 th:text="#{messages.clubs}">Clubs</h1>
+        <main role="main" class="container">
 
-            <!--/*@thymesVar id="clubs" type="java.util.List<Club>"*/-->
-            <!--/*@thymesVar id="club" type="ch.jtaf.entity.Club"*/-->
-            <table class="table table-striped">
-                <tr>
-                    <th th:text="#{messages.abbreviation}">Abbreviation</th>
-                    <th th:text="#{messages.name}">Name</th>
-                    <th class="text-right">
-                        <a th:href="@{/sec/{organizationKey}/club(organizationKey=${organizationKey})}" th:text="#{messages.add_club}"
-                           class="text-right">Add Club</a></th>
-                </tr>
-                <tr th:each="club: ${clubs}">
-                    <td>
-                        <a th:href="@{/sec/{organizationKey}/club/{clubId}(organizationKey=${organizationKey},clubId=${club.id})}"
-                           th:text="${club.abbreviation}">jump</a>
-                    </td>
-                    <td th:text="${club.name}">Long Jump</td>
-                    <td class="text-right"><a
-                            th:href="@{/sec/{organizationKey}/club/{clubId}/delete(organizationKey=${organizationKey},clubId=${club.id})}"
-                            th:text="#{messages.delete}">Delete</a></td>
-                </tr>
-            </table>
-        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 th:text="#{messages.clubs}">Clubs</h1>
+
+                    <!--/*@thymesVar id="clubs" type="java.util.List<Club>"*/-->
+                    <!--/*@thymesVar id="club" type="ch.jtaf.entity.Club"*/-->
+                    <table class="table table-striped">
+                        <tr>
+                            <th th:text="#{messages.abbreviation}">Abbreviation</th>
+                            <th th:text="#{messages.name}">Name</th>
+                            <th class="text-right">
+                                <a th:href="@{/sec/{organizationKey}/club(organizationKey=${organizationKey})}" th:text="#{messages.add_club}"
+                                   class="text-right">Add Club</a></th>
+                        </tr>
+                        <tr th:each="club: ${clubs}">
+                            <td>
+                                <a th:href="@{/sec/{organizationKey}/club/{clubId}(organizationKey=${organizationKey},clubId=${club.id})}"
+                                   th:text="${club.abbreviation}">jump</a>
+                            </td>
+                            <td th:text="${club.name}">Long Jump</td>
+                            <td class="text-right"><a
+                                    th:href="@{/sec/{organizationKey}/club/{clubId}/delete(organizationKey=${organizationKey},clubId=${club.id})}"
+                                    th:text="#{messages.delete}">Delete</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </main>
     </div>
-
-</main>
-
+</div>
 <div th:replace="common/footer :: copy"></div>
 
 </body>

@@ -6,139 +6,145 @@
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
 <div th:replace="common/navigation :: navigation ('series', ${organizationKey})"></div>
 
-<main role="main" class="container">
+<div class="container-fluid position-fixed h-100">
+    <div class="row h-100">
+        <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h1 th:text="#{messages.edit_series}">Edit Series</h1>
+        <main role="main" class="container">
 
-            <!--/*@thymesVar id="series" type="ch.jtaf.entity.Series"*/-->
-            <form action="#" th:action="@{/sec/{organizationKey}/series(organizationKey=${organizationKey})}"
-                  th:object="${series}" method="post">
-                <div class="form-group">
-                    <label for="id">ID</label>
-                    <input class="form-control" id="id" readonly th:field="*{id}">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 th:text="#{messages.edit_series}">Edit Series</h1>
+
+                    <!--/*@thymesVar id="series" type="ch.jtaf.entity.Series"*/-->
+                    <form action="#" th:action="@{/sec/{organizationKey}/series(organizationKey=${organizationKey})}"
+                          th:object="${series}" method="post">
+                        <div class="form-group">
+                            <label for="id">ID</label>
+                            <input class="form-control" id="id" readonly th:field="*{id}">
+                        </div>
+                        <div class="form-group">
+                            <label for="name" th:text="#{messages.name}">Name</label>
+                            <input class="form-control" id="name" placeholder="Name" th:field="*{name}" required
+                                   th:autofocus="true">
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="locked" th:placeholder="#{messages.locked}"
+                                   th:field="*{locked}">
+                            <label class="form-check-label" for="locked" th:text="#{messages.locked}">Locked</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="hidden" th:placeholder="#{messages.hidden}"
+                                   th:field="*{hidden}">
+                            <label class="form-check-label" for="hidden" th:text="#{messages.hidden}">Hidden</label>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+                        <a th:href="@{/sec/{organizationKey}(organizationKey=${organizationKey})}" th:text="#{messages.back}" class="btn">Back</a>
+
+                        <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
+                        <div th:replace="common/message :: message (${message})"></div>
+                    </form>
+                    <br>
+
+                    <h2 th:text="#{messages.competitions}">Competitions</h2>
+
+                    <table class="table table-striped">
+                        <tr>
+                            <th th:text="#{messages.name}">Name</th>
+                            <th th:text="#{messages.date}">Date</th>
+                            <th class="text-right">
+                                <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition(organizationKey=${organizationKey},seriesId=${series.id})}"
+                                   th:text="#{messages.add_competition}">Add Competition</a>
+                            </th>
+                        </tr>
+                        <!--/*@thymesVar id="competition" type="ch.jtaf.entity.Competition"*/-->
+                        <tr th:each="competition : ${series.competitions}">
+                            <td>
+                                <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}(organizationKey=${organizationKey},seriesId=${series.id},competitionId=${competition.id})}"
+                                   th:text="${competition.name}" class="font-weight-bold">1. CIS Twann</a>
+                            </td>
+                            <td th:text="${competition.competitionDate}">2018-01-02</td>
+                            <td class="text-right">
+                                <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/sheets(organizationKey=${organizationKey},seriesId=${series.id},competitionId=${competition.id},orderBy='category')}"
+                                   th:text="#{messages.sheets}">Sheets</a>
+                                <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/sheets(organizationKey=${organizationKey},seriesId=${series.id},competitionId=${competition.id},orderBy='club')}"
+                                   th:text="#{messages.sheets_order_by_club}">Sheets by club</a>
+                                <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/numbers(organizationKey=${organizationKey},seriesId=${series.id},competitionId=${competition.id},orderBy='category')}"
+                                   th:text="#{messages.numbers}">Number</a>
+                                <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/numbers(organizationKey=${organizationKey},seriesId=${series.id},competitionId=${competition.id},orderBy='club')}"
+                                   th:text="#{messages.numbers_order_by_club}">Numbers by club</a>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <h2 th:text="#{messages.categories}">Categories</h2>
+
+                    <table class="table table-striped">
+                        <tr>
+                            <th th:text="#{messages.name}">Name</th>
+                            <th th:text="#{messages.year_from}">Year From</th>
+                            <th th:text="#{messages.year_to}">Year To</th>
+                            <th class="text-right">
+                                <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category(organizationKey=${organizationKey},seriesId=${series.id})}"
+                                   th:text="#{messages.add_category}">Add Category</a>
+                            </th>
+                        </tr>
+                        <!--/*@thymesVar id="categories" type="java.util.List"*/-->
+                        <!--/*@thymesVar id="category" type="ch.jtaf.entity.Category"*/-->
+                        <tr th:each="category : ${categories}">
+                            <td style="width: 50%;">
+                                <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}(organizationKey=${organizationKey},seriesId=${series.id},categoryId=${category.id})}"
+                                   th:text="${category.abbreviation + ' ' + category.name}" class="font-weight-bold">A Knaben</a>
+                            </td>
+                            <td th:text="${category.yearFrom}">1900</td>
+                            <td th:text="${category.yearTo}">2999</td>
+                            <td class="text-right">
+                                <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/sheet(organizationKey=${organizationKey},seriesId=${series.id},categoryId=${category.id})}"
+                                   th:text="#{messages.empty_sheet}">Sheet</a>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <h2 th:text="#{messages.athletes}">Athletes</h2>
+
+                    <!--/*@thymesVar id="athletes_message" type="java.lang.String"*/-->
+                    <span style="color: red;" th:text="${athletes_message}"></span>
+
+                    <table class="table table-striped">
+                        <tr>
+                            <th th:text="#{messages.category}">Category</th>
+                            <th th:text="#{messages.last_name}">Last Name</th>
+                            <th th:text="#{messages.first_name}">First Name</th>
+                            <th th:text="#{messages.year_of_birth}">Year of Birth</th>
+                            <th th:text="#{messages.gender}">Gender</th>
+                            <th th:text="#{messages.club}">Club</th>
+                            <th class="text-right">
+                                <a th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey}, mode='select', seriesId=${series.id})}"
+                                   th:text="#{messages.add_athlete}" class="text-right">Add Athlete</a>
+                            </th>
+                        </tr>
+                        <!--/*@thymesVar id="athletes" type="java.util.List<AthleteDTO>"*/-->
+                        <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.AthleteDTO"*/-->
+                        <tr th:each="athlete : ${athletes}">
+                            <td th:text="${athlete.category}">A</td>
+                            <td th:text="${athlete.lastName}">Muster</td>
+                            <td th:text="${athlete.firstName}">Peter</td>
+                            <td th:text="${athlete.yearOfBirth}">2004</td>
+                            <td th:text="${athlete.gender}">MALE</td>
+                            <td th:text="${athlete.club}">TVE</td>
+                            <td class="text-right">
+                                <a th:href="@{/sec/{organizationKey}/series/{seriesId}/athlete/{athleteId}/delete(organizationKey=${organizationKey},seriesId=${series.id}, athleteId=${athlete.id})}"
+                                   th:text="#{messages.remove}" onclick="return confirm('Are you sure?')">Remove</a>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="form-group">
-                    <label for="name" th:text="#{messages.name}">Name</label>
-                    <input class="form-control" id="name" placeholder="Name" th:field="*{name}" required
-                           th:autofocus="true">
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="locked" th:placeholder="#{messages.locked}"
-                           th:field="*{locked}">
-                    <label class="form-check-label" for="locked" th:text="#{messages.locked}">Locked</label>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="hidden" th:placeholder="#{messages.hidden}"
-                           th:field="*{hidden}">
-                    <label class="form-check-label" for="hidden" th:text="#{messages.hidden}">Hidden</label>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a th:href="@{/sec/{organizationKey}(organizationKey=${organizationKey})}" th:text="#{messages.back}" class="btn">Back</a>
+            </div>
 
-                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
-                <div th:replace="common/message :: message (${message})"></div>
-            </form>
-            <br>
-
-            <h2 th:text="#{messages.competitions}">Competitions</h2>
-
-            <table class="table table-striped">
-                <tr>
-                    <th th:text="#{messages.name}">Name</th>
-                    <th th:text="#{messages.date}">Date</th>
-                    <th class="text-right">
-                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition(organizationKey=${organizationKey},seriesId=${series.id})}"
-                           th:text="#{messages.add_competition}">Add Competition</a>
-                    </th>
-                </tr>
-                <!--/*@thymesVar id="competition" type="ch.jtaf.entity.Competition"*/-->
-                <tr th:each="competition : ${series.competitions}">
-                    <td>
-                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}(organizationKey=${organizationKey},seriesId=${series.id},competitionId=${competition.id})}"
-                           th:text="${competition.name}" class="font-weight-bold">1. CIS Twann</a>
-                    </td>
-                    <td th:text="${competition.competitionDate}">2018-01-02</td>
-                    <td class="text-right">
-                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/sheets(organizationKey=${organizationKey},seriesId=${series.id},competitionId=${competition.id},orderBy='category')}"
-                           th:text="#{messages.sheets}">Sheets</a>
-                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/sheets(organizationKey=${organizationKey},seriesId=${series.id},competitionId=${competition.id},orderBy='club')}"
-                           th:text="#{messages.sheets_order_by_club}">Sheets by club</a>
-                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/numbers(organizationKey=${organizationKey},seriesId=${series.id},competitionId=${competition.id},orderBy='category')}"
-                           th:text="#{messages.numbers}">Number</a>
-                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/numbers(organizationKey=${organizationKey},seriesId=${series.id},competitionId=${competition.id},orderBy='club')}"
-                           th:text="#{messages.numbers_order_by_club}">Numbers by club</a>
-                    </td>
-                </tr>
-            </table>
-
-            <h2 th:text="#{messages.categories}">Categories</h2>
-
-            <table class="table table-striped">
-                <tr>
-                    <th th:text="#{messages.name}">Name</th>
-                    <th th:text="#{messages.year_from}">Year From</th>
-                    <th th:text="#{messages.year_to}">Year To</th>
-                    <th class="text-right">
-                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category(organizationKey=${organizationKey},seriesId=${series.id})}"
-                           th:text="#{messages.add_category}">Add Category</a>
-                    </th>
-                </tr>
-                <!--/*@thymesVar id="categories" type="java.util.List"*/-->
-                <!--/*@thymesVar id="category" type="ch.jtaf.entity.Category"*/-->
-                <tr th:each="category : ${categories}">
-                    <td style="width: 50%;">
-                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}(organizationKey=${organizationKey},seriesId=${series.id},categoryId=${category.id})}"
-                           th:text="${category.abbreviation + ' ' + category.name}" class="font-weight-bold">A Knaben</a>
-                    </td>
-                    <td th:text="${category.yearFrom}">1900</td>
-                    <td th:text="${category.yearTo}">2999</td>
-                    <td class="text-right">
-                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/sheet(organizationKey=${organizationKey},seriesId=${series.id},categoryId=${category.id})}"
-                           th:text="#{messages.empty_sheet}">Sheet</a>
-                    </td>
-                </tr>
-            </table>
-
-            <h2 th:text="#{messages.athletes}">Athletes</h2>
-
-            <!--/*@thymesVar id="athletes_message" type="java.lang.String"*/-->
-            <span style="color: red;" th:text="${athletes_message}"></span>
-
-            <table class="table table-striped">
-                <tr>
-                    <th th:text="#{messages.category}">Category</th>
-                    <th th:text="#{messages.last_name}">Last Name</th>
-                    <th th:text="#{messages.first_name}">First Name</th>
-                    <th th:text="#{messages.year_of_birth}">Year of Birth</th>
-                    <th th:text="#{messages.gender}">Gender</th>
-                    <th th:text="#{messages.club}">Club</th>
-                    <th class="text-right">
-                        <a th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey}, mode='select', seriesId=${series.id})}"
-                           th:text="#{messages.add_athlete}" class="text-right">Add Athlete</a>
-                    </th>
-                </tr>
-                <!--/*@thymesVar id="athletes" type="java.util.List<AthleteDTO>"*/-->
-                <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.AthleteDTO"*/-->
-                <tr th:each="athlete : ${athletes}">
-                    <td th:text="${athlete.category}">A</td>
-                    <td th:text="${athlete.lastName}">Muster</td>
-                    <td th:text="${athlete.firstName}">Peter</td>
-                    <td th:text="${athlete.yearOfBirth}">2004</td>
-                    <td th:text="${athlete.gender}">MALE</td>
-                    <td th:text="${athlete.club}">TVE</td>
-                    <td class="text-right">
-                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/athlete/{athleteId}/delete(organizationKey=${organizationKey},seriesId=${series.id}, athleteId=${athlete.id})}"
-                           th:text="#{messages.remove}" onclick="return confirm('Are you sure?')">Remove</a>
-                    </td>
-                </tr>
-            </table>
-        </div>
+        </main>
     </div>
-
-</main>
+</div>
 
 <div th:replace="common/footer :: copy"></div>
 

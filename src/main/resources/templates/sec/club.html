@@ -6,42 +6,49 @@
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
 <div th:replace="common/navigation :: navigation ('clubs', ${organizationKey})"></div>
 
-<main role="main" class="container">
+<div class="container-fluid position-fixed h-100">
+    <div class="row h-100">
+        <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h1 th:text="#{messages.edit_club}">Edit Club</h1>
+        <main role="main" class="container">
 
-            <!--/*@thymesVar id="club" type="ch.jtaf.entity.Club"*/-->
-            <form action="#" th:action="@{/sec/{organizationKey}/club(organizationKey=${organizationKey})}" th:object="${club}"
-                  method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 th:text="#{messages.edit_club}">Edit Club</h1>
 
-                <div class="form-group">
-                    <label for="id">ID</label>
-                    <input class="form-control" id="id" readonly th:field="*{id}">
+                    <!--/*@thymesVar id="club" type="ch.jtaf.entity.Club"*/-->
+                    <form action="#" th:action="@{/sec/{organizationKey}/club(organizationKey=${organizationKey})}" th:object="${club}"
+                          method="post">
+
+                        <div class="form-group">
+                            <label for="id">ID</label>
+                            <input class="form-control" id="id" readonly th:field="*{id}">
+                        </div>
+                        <div class="form-group">
+                            <label for="abbreviation" th:text="#{messages.abbreviation}">Abbreviation</label>
+                            <input class="form-control" id="abbreviation" th:placeholder="#{messages.abbreviation}"
+                                   th:field="*{abbreviation}" required th:autofocus="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="name" th:text="#{messages.name}">Name</label>
+                            <input class="form-control" id="name" th:placeholder="#{messages.name}" th:field="*{name}" required>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+                        <a th:href="@{/sec/{organizationKey}/clubs(organizationKey=${organizationKey})}"
+                           th:text="#{messages.back}" class="btn">Back</a>
+
+                        <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
+                        <div th:replace="common/message :: message (${message})"></div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="abbreviation" th:text="#{messages.abbreviation}">Abbreviation</label>
-                    <input class="form-control" id="abbreviation" th:placeholder="#{messages.abbreviation}"
-                           th:field="*{abbreviation}" required th:autofocus="true">
-                </div>
-                <div class="form-group">
-                    <label for="name" th:text="#{messages.name}">Name</label>
-                    <input class="form-control" id="name" th:placeholder="#{messages.name}" th:field="*{name}" required>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a th:href="@{/sec/{organizationKey}/clubs(organizationKey=${organizationKey})}"
-                   th:text="#{messages.back}" class="btn">Back</a>
+            </div>
 
-                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
-                <div th:replace="common/message :: message (${message})"></div>
-            </form>
-        </div>
+        </main>
     </div>
+</div>
 
-    <div th:replace="common/footer :: copy"></div>
+<div th:replace="common/footer :: copy"></div>
 
-</main>
 </body>
 </html>

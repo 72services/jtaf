@@ -1,12 +1,12 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head th:replace="common/head :: head"></head>
-<body class="h-100">
+<body>
 
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
 <div th:replace="common/navigation :: navigation ('index', ${organizationKey})"></div>
 
-<div class="container-fluid h-100">
+<div class="container-fluid position-fixed h-100">
     <div class="row h-100">
         <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
 

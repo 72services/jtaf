@@ -6,60 +6,66 @@
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
 <div th:replace="common/navigation :: navigation ('series', ${organizationKey})"></div>
 
-<main role="main" class="container">
+<div class="container-fluid position-fixed h-100">
+    <div class="row h-100">
+        <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h1 th:text="#{messages.edit_competition}">Edit Competition</h1>
+        <main role="main" class="container">
 
-            <!--/*@thymesVar id="competition" type="ch.jtaf.entity.Competition"*/-->
-            <form th:action="@{/sec/{organizationKey}/series/{seriesId}/competition(organizationKey=${organizationKey},seriesId=${competition.seriesId})}"
-                  th:object="${competition}" method="post">
-                <input type="hidden" id="seriesId" th:field="*{seriesId}">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 th:text="#{messages.edit_competition}">Edit Competition</h1>
 
-                <div class="form-group">
-                    <label for="id">ID</label>
-                    <input class="form-control" id="id" readonly th:field="*{id}">
-                </div>
-                <div class="form-group">
-                    <label for="name" th:text="#{messages.name}">Name</label>
-                    <input class="form-control" id="name" th:placeholder="#{messages.name}" th:field="*{name}" required
-                           th:autofocus="true">
-                </div>
-                <div class="form-group">
-                    <label for="competitionDate" th:text="#{messages.date}">Date</label>
-                    <input type="date" class="form-control" id="competitionDate" th:placeholder="#{messages.date}"
-                           th:field="*{competitionDate}" required>
-                </div>
-                <div class="form-group">
-                    <label for="medalPercentage" th:text="#{messages.medalPercentage}">Date</label>
-                    <input class="form-control" id="medalPercentage" th:placeholder="#{messages.medalPercentage}"
-                           th:field="*{medalPercentage}">
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="alwaysFirstThreeMedals"
-                           th:placeholder="#{messages.alwaysFirstThreeMedals}" th:field="*{alwaysFirstThreeMedals}">
-                    <label class="form-check-label" for="alwaysFirstThreeMedals"
-                           th:text="#{messages.alwaysFirstThreeMedals}">Always First Three
-                        Medals</label>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="locked" th:placeholder="#{messages.locked}"
-                           th:field="*{locked}">
-                    <label class="form-check-label" for="locked" th:text="#{messages.locked}">Locked</label>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a th:href="@{/sec/{organizationKey}/series/{seriesId}(organizationKey=${organizationKey},seriesId=*{seriesId})}"
-                   th:text="#{messages.back}" class="btn">Back</a>
+                    <!--/*@thymesVar id="competition" type="ch.jtaf.entity.Competition"*/-->
+                    <form th:action="@{/sec/{organizationKey}/series/{seriesId}/competition(organizationKey=${organizationKey},seriesId=${competition.seriesId})}"
+                          th:object="${competition}" method="post">
+                        <input type="hidden" id="seriesId" th:field="*{seriesId}">
 
-                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
-                <div th:replace="common/message :: message (${message})"></div>
-            </form>
-        </div>
+                        <div class="form-group">
+                            <label for="id">ID</label>
+                            <input class="form-control" id="id" readonly th:field="*{id}">
+                        </div>
+                        <div class="form-group">
+                            <label for="name" th:text="#{messages.name}">Name</label>
+                            <input class="form-control" id="name" th:placeholder="#{messages.name}" th:field="*{name}" required
+                                   th:autofocus="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="competitionDate" th:text="#{messages.date}">Date</label>
+                            <input type="date" class="form-control" id="competitionDate" th:placeholder="#{messages.date}"
+                                   th:field="*{competitionDate}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="medalPercentage" th:text="#{messages.medalPercentage}">Date</label>
+                            <input class="form-control" id="medalPercentage" th:placeholder="#{messages.medalPercentage}"
+                                   th:field="*{medalPercentage}">
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="alwaysFirstThreeMedals"
+                                   th:placeholder="#{messages.alwaysFirstThreeMedals}" th:field="*{alwaysFirstThreeMedals}">
+                            <label class="form-check-label" for="alwaysFirstThreeMedals"
+                                   th:text="#{messages.alwaysFirstThreeMedals}">Always First Three
+                                Medals</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="locked" th:placeholder="#{messages.locked}"
+                                   th:field="*{locked}">
+                            <label class="form-check-label" for="locked" th:text="#{messages.locked}">Locked</label>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}(organizationKey=${organizationKey},seriesId=*{seriesId})}"
+                           th:text="#{messages.back}" class="btn">Back</a>
+
+                        <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
+                        <div th:replace="common/message :: message (${message})"></div>
+                    </form>
+                </div>
+            </div>
+
+        </main>
     </div>
-
-</main>
+</div>
 
 <div th:replace="common/footer :: copy"></div>
 

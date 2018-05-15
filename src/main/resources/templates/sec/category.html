@@ -6,102 +6,108 @@
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
 <div th:replace="common/navigation :: navigation ('series', ${organizationKey})"></div>
 
-<main role="main" class="container">
+<div class="container-fluid position-fixed h-100">
+    <div class="row h-100">
+        <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h1 th:text="#{messages.edit_category}">Edit Category</h1>
+        <main role="main" class="container">
 
-            <!--/*@thymesVar id="category" type="ch.jtaf.entity.Category"*/-->
-            <!--/*@thymesVar id="seriesId" type="java.lang.Long"*/-->
-            <form action="#"
-                  th:action="@{/sec/{organizationKey}/series/{seriesId}/category(seriesId=${seriesId},organizationKey=${organizationKey})}"
-                  th:object="${category}" method="post">
-                <div class="form-group">
-                    <label for="id">ID</label>
-                    <input class="form-control" id="id" readonly th:field="*{id}">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 th:text="#{messages.edit_category}">Edit Category</h1>
+
+                    <!--/*@thymesVar id="category" type="ch.jtaf.entity.Category"*/-->
+                    <!--/*@thymesVar id="seriesId" type="java.lang.Long"*/-->
+                    <form action="#"
+                          th:action="@{/sec/{organizationKey}/series/{seriesId}/category(seriesId=${seriesId},organizationKey=${organizationKey})}"
+                          th:object="${category}" method="post">
+                        <div class="form-group">
+                            <label for="id">ID</label>
+                            <input class="form-control" id="id" readonly th:field="*{id}">
+                        </div>
+                        <div class="form-group">
+                            <label for="abbreviation" th:text="#{messages.abbreviation}">Abbreviation</label>
+                            <input class="form-control" id="abbreviation" th:placeholder="#{messages.abbreviation}"
+                                   th:field="*{abbreviation}" required th:autofocus="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="name" th:text="#{messages.name}">Name</label>
+                            <input class="form-control" id="name" th:placeholder="#{messages.name}" th:field="*{name}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="yearFrom" th:text="#{messages.year_from}">Year From</label>
+                            <input class="form-control" id="yearFrom" th:placeholder="#{messages.year_from}"
+                                   th:field="*{yearFrom}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="yearTo" th:text="#{messages.year_to}">Year From</label>
+                            <input class="form-control" id="yearTo" th:placeholder="#{messages.year_to}"
+                                   th:field="*{yearTo}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender" th:text="#{messages.gender}">Gender</label>
+                            <select id="gender" class="form-control" th:field="*{gender}">
+                                <!--/*@thymesVar id="gender" type="ch.jtaf.entity.Gender"*/-->
+                                <option th:each="gender : ${T(ch.jtaf.entity.Gender).values()}"
+                                        th:value="${gender}"
+                                        th:text="${gender}">Genders
+                                </option>
+                            </select>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}(organizationKey=${organizationKey},seriesId=${category.seriesId})}"
+                           th:text="#{messages.back}" class="btn">Back</a>
+
+                        <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
+                        <div th:replace="common/message :: message (${message})"></div>
+                    </form>
+
+                    <br>
+
+                    <h2 th:text="#{messages.events}">Events</h2>
+
+                    <table class="table table-striped">
+                        <tr>
+                            <th th:text="#{messages.abbreviation}">Abbreviation</th>
+                            <th th:text="#{messages.name}">Name</th>
+                            <th th:text="#{messages.type}">Type</th>
+                            <th th:text="#{messages.gender}">Gender</th>
+                            <th>A</th>
+                            <th>B</th>
+                            <th>C</th>
+                            <th class="text-right">
+                                <a th:href="@{/sec/{organizationKey}/events(organizationKey=${organizationKey},mode='select',seriesId=${category.seriesId},categoryId=${category.id})}"
+                                   th:text="#{messages.add_event}" class="text-right">Add Event</a>
+                            </th>
+                        </tr>
+                        <!--/*@thymesVar id="event" type="ch.jtaf.entity.Event"*/-->
+                        <tr th:each="event: ${category.events}">
+                            <td th:text="${event.abbreviation}">jump</td>
+                            <td th:text="${event.name}">Long Jump</td>
+                            <td th:text="${event.eventType}">JUMP</td>
+                            <td th:text="${event.gender}">MALE</td>
+                            <td th:text="${event.a}"></td>
+                            <td th:text="${event.b}"></td>
+                            <td th:text="${event.c}"></td>
+                            <td class="text-right">
+                                <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/up(seriesId=${seriesId},organizationKey=${organizationKey},categoryId=${category.id}, eventId=${event.id})}"
+                                   th:text="#{messages.up}">Up</a>
+                                <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/down(seriesId=${seriesId},organizationKey=${organizationKey},categoryId=${category.id}, eventId=${event.id})}"
+                                   th:text="#{messages.down}">Down</a>
+
+                                <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/delete(seriesId=${seriesId},organizationKey=${organizationKey},categoryId=${category.id}, eventId=${event.id})}"
+                                   th:text="#{messages.delete}"
+                                   onclick="return confirm('Are you sure?')">Delete</a>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="form-group">
-                    <label for="abbreviation" th:text="#{messages.abbreviation}">Abbreviation</label>
-                    <input class="form-control" id="abbreviation" th:placeholder="#{messages.abbreviation}"
-                           th:field="*{abbreviation}" required th:autofocus="true">
-                </div>
-                <div class="form-group">
-                    <label for="name" th:text="#{messages.name}">Name</label>
-                    <input class="form-control" id="name" th:placeholder="#{messages.name}" th:field="*{name}" required>
-                </div>
-                <div class="form-group">
-                    <label for="yearFrom" th:text="#{messages.year_from}">Year From</label>
-                    <input class="form-control" id="yearFrom" th:placeholder="#{messages.year_from}"
-                           th:field="*{yearFrom}" required>
-                </div>
-                <div class="form-group">
-                    <label for="yearTo" th:text="#{messages.year_to}">Year From</label>
-                    <input class="form-control" id="yearTo" th:placeholder="#{messages.year_to}"
-                           th:field="*{yearTo}" required>
-                </div>
-                <div class="form-group">
-                    <label for="gender" th:text="#{messages.gender}">Gender</label>
-                    <select id="gender" class="form-control" th:field="*{gender}">
-                        <!--/*@thymesVar id="gender" type="ch.jtaf.entity.Gender"*/-->
-                        <option th:each="gender : ${T(ch.jtaf.entity.Gender).values()}"
-                                th:value="${gender}"
-                                th:text="${gender}">Genders
-                        </option>
-                    </select>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a th:href="@{/sec/{organizationKey}/series/{seriesId}(organizationKey=${organizationKey},seriesId=${category.seriesId})}"
-                   th:text="#{messages.back}" class="btn">Back</a>
+            </div>
 
-                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
-                <div th:replace="common/message :: message (${message})"></div>
-            </form>
-
-            <br>
-
-            <h2 th:text="#{messages.events}">Events</h2>
-
-            <table class="table table-striped">
-                <tr>
-                    <th th:text="#{messages.abbreviation}">Abbreviation</th>
-                    <th th:text="#{messages.name}">Name</th>
-                    <th th:text="#{messages.type}">Type</th>
-                    <th th:text="#{messages.gender}">Gender</th>
-                    <th>A</th>
-                    <th>B</th>
-                    <th>C</th>
-                    <th class="text-right">
-                        <a th:href="@{/sec/{organizationKey}/events(organizationKey=${organizationKey},mode='select',seriesId=${category.seriesId},categoryId=${category.id})}"
-                           th:text="#{messages.add_event}" class="text-right">Add Event</a>
-                    </th>
-                </tr>
-                <!--/*@thymesVar id="event" type="ch.jtaf.entity.Event"*/-->
-                <tr th:each="event: ${category.events}">
-                    <td th:text="${event.abbreviation}">jump</td>
-                    <td th:text="${event.name}">Long Jump</td>
-                    <td th:text="${event.eventType}">JUMP</td>
-                    <td th:text="${event.gender}">MALE</td>
-                    <td th:text="${event.a}"></td>
-                    <td th:text="${event.b}"></td>
-                    <td th:text="${event.c}"></td>
-                    <td class="text-right">
-                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/up(seriesId=${seriesId},organizationKey=${organizationKey},categoryId=${category.id}, eventId=${event.id})}"
-                           th:text="#{messages.up}">Up</a>
-                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/down(seriesId=${seriesId},organizationKey=${organizationKey},categoryId=${category.id}, eventId=${event.id})}"
-                           th:text="#{messages.down}">Down</a>
-
-                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}/delete(seriesId=${seriesId},organizationKey=${organizationKey},categoryId=${category.id}, eventId=${event.id})}"
-                           th:text="#{messages.delete}"
-                           onclick="return confirm('Are you sure?')">Delete</a>
-                    </td>
-                </tr>
-            </table>
-        </div>
+        </main>
     </div>
-
-</main>
+</div>
 
 <div th:replace="common/footer :: copy"></div>
 

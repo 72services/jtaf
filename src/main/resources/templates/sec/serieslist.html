@@ -6,70 +6,80 @@
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
 <div th:replace="common/navigation :: navigation ('series', ${organizationKey})"></div>
 
-<main role="main" class="container">
+<div class="container-fluid position-fixed h-100">
+    <div class="row h-100">
+        <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
 
-    <div class="row">
-        <div class="col-lg-10">
-            <h1 th:text="#{messages.series}">Series</h1>
-        </div>
-        <div class="col-lg-2 text-right" style="padding-top: 20px;">
-            <a th:href="@{/sec/{organizationKey}/series(organizationKey=${organizationKey})}" th:text="#{messages.add_series}"
-               class="text-right font-weight-bold">Add Series</a>
-        </div>
-    </div>
+        <main role="main" class="container">
 
-    <!--/*@thymesVar id="seriesList" type="java.util.List<Series>"*/-->
-    <!--/*@thymesVar id="series" type="ch.jtaf.entity.Series"*/-->
-    <div class="row">
-        <div class="col-lg-12" th:each="series : ${seriesList}" style="padding-top: 20px;">
-            <div class="card" style="width: 100%;">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <img th:if="${series.logo != null}" th:src="@{/series/{seriesId}/logo(seriesId=${series.id})}">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h1 th:text="#{messages.series}">Series</h1>
+                </div>
+                <div class="col-lg-2 text-right" style="padding-top: 20px;">
+                    <a th:href="@{/sec/{organizationKey}/series(organizationKey=${organizationKey})}" th:text="#{messages.add_series}"
+                       class="text-right font-weight-bold">Add Series</a>
+                </div>
+            </div>
+
+            <!--/*@thymesVar id="seriesList" type="java.util.List<Series>"*/-->
+            <!--/*@thymesVar id="series" type="ch.jtaf.entity.Series"*/-->
+            <div class="row">
+                <div class="col-lg-12" th:each="series : ${seriesList}" style="padding-top: 20px;">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <img th:if="${series.logo != null}" th:src="@{/series/{seriesId}/logo(seriesId=${series.id})}">
+                                </div>
+                                <div class="col-lg-6">
+                                    <h5 class="card-title">
+                                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}(organizationKey=${organizationKey},seriesId=${series.id})}"
+                                           th:text="${series.name}" class="font-weight-bold">CIS 2018</a>
+                                    </h5>
+                                </div>
+                                <div class="col-lg-4 text-right">
+                                    <a class="btn"
+                                       th:href="@{/sec/{organizationKey}/{seriesId}/delete(organizationKey=${organizationKey},seriesId=${series.id})}"
+                                       th:text="#{messages.delete}" onclick="return confirm('Are you sure?')">Delete</a>
+                                    <a class="btn btn-primary" th:href="@{/ranking/series/{seriesId}(seriesId=${series.id})}"
+                                       th:text="#{messages.series_ranking}">
+                                        Series Ranking
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-6">
-                            <h5 class="card-title">
-                                <a th:href="@{/sec/{organizationKey}/series/{seriesId}(organizationKey=${organizationKey},seriesId=${series.id})}"
-                                   th:text="${series.name}" class="font-weight-bold">CIS 2018</a>
-                            </h5>
-                        </div>
-                        <div class="col-lg-4 text-right">
-                            <a class="btn" th:href="@{/sec/{organizationKey}/{seriesId}/delete(organizationKey=${organizationKey},seriesId=${series.id})}"
-                               th:text="#{messages.delete}" onclick="return confirm('Are you sure?')">Delete</a>
-                            <a class="btn btn-primary" th:href="@{/ranking/series/{seriesId}(seriesId=${series.id})}" th:text="#{messages.series_ranking}">
-                                Series Ranking
-                            </a>
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" th:each="competition: ${series.competitions}">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <span th:text="${competition.competitionDate.toString()}">2017-06-10</span>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/results(organizationKey=${organizationKey},competitionId=${competition.id},seriesId=${series.id})}"
+                                               th:text="${competition.name}" class="font-weight-bold">CIS 1</a>
+                                        </div>
+                                        <div class="col-lg-1 text-right">
+                                            <span th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}">Athletes 1/10</span>
+                                        </div>
+                                        <div class="col-lg-4 text-right">
+                                            <a th:href="@{/ranking/competition/{competitionId}(competitionId=${competition.id})}"
+                                               th:text="#{messages.ranking}"
+                                               class="btn btn-primary">Ranking</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="card-body p-0">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item" th:each="competition: ${series.competitions}">
-                            <div class="row">
-                                <div class="col-lg-2">
-                                    <span th:text="${competition.competitionDate.toString()}">2017-06-10</span>
-                                </div>
-                                <div class="col-lg-5">
-                                    <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/results(organizationKey=${organizationKey},competitionId=${competition.id},seriesId=${series.id})}"
-                                       th:text="${competition.name}" class="font-weight-bold">CIS 1</a>
-                                </div>
-                                <div class="col-lg-1 text-right">
-                                    <span th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}">Athletes 1/10</span>
-                                </div>
-                                <div class="col-lg-4 text-right">
-                                    <a th:href="@{/ranking/competition/{competitionId}(competitionId=${competition.id})}" th:text="#{messages.ranking}"
-                                       class="btn btn-primary">Ranking</a>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
             </div>
-        </div>
-    </div>
 
-</main>
+        </main>
+
+    </div>
+</div>
 
 <div th:replace="common/footer :: copy"></div>
 
