@@ -1,18 +1,22 @@
 package ch.jtaf.boundary.controller
 
+import ch.jtaf.boundary.controller.Views.ATHLETE
 import ch.jtaf.boundary.dto.Message
 import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.control.repository.*
 import ch.jtaf.entity.Athlete
+import ch.jtaf.entity.Club
+import ch.jtaf.entity.Organization
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.ui.Model
+import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.servlet.ModelAndView
 
 @Controller
 class AthleteController(private val athleteRepository: AthleteRepository,
@@ -24,63 +28,53 @@ class AthleteController(private val athleteRepository: AthleteRepository,
 
     @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/athlete")
-    fun get(@PathVariable("organizationKey") organizationKey: String,
-            @RequestParam("seriesId") seriesId: Long?,
-            @RequestParam("competitionId") competitionId: Long?,
-            @RequestParam("mode") mode: String?,
-            @RequestParam("returnTo") returnTo: String?): ModelAndView {
+    fun get(@PathVariable organizationKey: String, @RequestParam seriesId: Long?, @RequestParam competitionId: Long?,
+            @RequestParam mode: String?, @RequestParam returnTo: String?, model: Model): String {
+        model["seriesId"] = seriesId!!
+        model["competitionId"] = competitionId!!
+        model["mode"] = mode!!
 
-        val mav = ModelAndView("sec/athlete")
-        mav.model["seriesId"] = seriesId
-        mav.model["competitionId"] = competitionId
-        mav.model["mode"] = mode
-
-        val athlete = Athlete()
-        mav.model["athlete"] = athlete
+        model["athlete"] = Athlete()
 
         val organization = organizationRepository.findByKey(organizationKey)
-        mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
+        model["clubs"] = getClubsWithEmpty(organization)
 
-        mav.model["message"] = null
-        return mav
+        return ATHLETE
     }
 
     @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/athlete/{athleteId}")
-    fun getById(@AuthenticationPrincipal user: User,
-                @PathVariable("organizationKey") organizationKey: String,
-                @PathVariable("athleteId") athleteId: Long,
-                @RequestParam("seriesId") seriesId: Long?,
-                @RequestParam("competitionId") competitionId: Long?,
-                @RequestParam("mode") mode: String?,
-                @RequestParam("returnTo") returnTo: String?): ModelAndView {
+    fun getById(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, @PathVariable athleteId: Long,
+                @RequestParam seriesId: Long?, @RequestParam competitionId: Long?, @RequestParam mode: String?,
+                @RequestParam returnTo: String?, model: Model): String {
 
-        val mav = ModelAndView("sec/athlete")
-        mav.model["seriesId"] = seriesId
-        mav.model["competitionId"] = competitionId
-        mav.model["mode"] = mode
-        mav.model["returnTo"] = returnTo
-        mav.model["returnTo"] = returnTo
+        if (seriesId != null) {
+            model["seriesId"] = seriesId
+        }
+        if (competitionId != null) {
+            model["competitionId"] = competitionId
+        }
+        if (mode != null) {
+            model["mode"] = mode
+        }
+        if (returnTo != null) {
+            model["returnTo"] = returnTo
+        }
 
-        mav.model["athlete"] = athleteRepository.getOne(athleteId)
+        model["athlete"] = athleteRepository.getOne(athleteId)
 
         val organization = organizationRepository.findByKey(organizationKey)
-        mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
+        model["clubs"] = getClubsWithEmpty(organization)
 
-        mav.model["message"] = null
-        return mav
+        return ATHLETE
     }
 
     @CheckOrganizationAccess
     @Transactional
     @PostMapping("/sec/{organizationKey}/athlete")
-    fun post(@AuthenticationPrincipal user: User,
-             @PathVariable("organizationKey") organizationKey: String,
-             @RequestParam("seriesId") seriesId: Long?,
-             @RequestParam("competitionId") competitionId: Long?,
-             @RequestParam("mode") mode: String?,
-             @RequestParam("returnTo") returnTo: String?,
-             athlete: Athlete): ModelAndView {
+    fun post(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String,
+             @RequestParam seriesId: Long?, @RequestParam competitionId: Long?, @RequestParam mode: String?,
+             @RequestParam returnTo: String?, athlete: Athlete, model: Model): String {
 
         val seriesIds = ArrayList<Long>()
         if (athlete.id != null) {
@@ -111,18 +105,26 @@ class AthleteController(private val athleteRepository: AthleteRepository,
         }
 
         return if (returnTo == "results") {
-            resultsController.getWithAthlete(user, organizationKey, athlete.id!!, seriesId!!, competitionId!!)
+            resultsController.getWithAthlete(user, organizationKey, athlete.id!!, seriesId!!, competitionId!!, model)
         } else {
-            val mav = ModelAndView("sec/athlete")
-            mav.model["seriesId"] = seriesId
-            mav.model["competitionId"] = competitionId
-            mav.model["mode"] = mode
-            mav.model["returnTo"] = returnTo
+            model["seriesId"] = seriesId!!
+            model["competitionId"] = competitionId!!
+            model["mode"] = mode!!
+            model["returnTo"] = returnTo!!
 
-            mav.model["clubs"] = clubRepository.findByOrganizationId(organization.id!!)
+            model["clubs"] = getClubsWithEmpty(organization)
 
-            mav.model["message"] = Message(Message.success, "Athlete saved!")
-            mav
+            model["message"] = Message(Message.success, "Athlete saved!")
+
+            return ATHLETE
         }
+    }
+
+    private fun getClubsWithEmpty(organization: Organization): ArrayList<Club?> {
+        val clubsFromDb = clubRepository.findByOrganizationIdOrderByAbbreviation(organization.id!!)
+        val clubs = ArrayList<Club?>()
+        //clubs.add(0, null)
+        clubs.addAll(clubsFromDb)
+        return clubs
     }
 }

@@ -3,43 +3,50 @@
 <head th:replace="common/head :: head"></head>
 <body>
 
-<div th:include="common/navigation :: navigation ('organizations')"></div>
+<div th:replace="common/navigation :: navigation ('organizations')"></div>
 
-<main role="main" class="container">
+<div class="container-fluid position-fixed h-100">
+    <div class="row h-100">
+        <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h1 th:text="#{messages.edit_organization}">Edit Organization</h1>
+        <main role="main" class="container">
 
-            <!--/*@thymesVar id="organization" type="ch.jtaf.entity.Organization"*/-->
-            <form action="#" th:action="@{/sec/organization}" th:object="${organization}" method="post">
-                <div class="form-group">
-                    <label for="id">ID</label>
-                    <input class="form-control" id="id" readonly th:field="*{id}">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 th:text="#{messages.edit_organization}">Edit Organization</h1>
+
+                    <!--/*@thymesVar id="organization" type="ch.jtaf.entity.Organization"*/-->
+                    <form action="#" th:action="@{/sec/organization}" th:object="${organization}" method="post">
+                        <div class="form-group">
+                            <label for="id">ID</label>
+                            <input class="form-control" id="id" readonly th:field="*{id}">
+                        </div>
+                        <div class="form-group">
+                            <label for="key" th:text="#{messages.key}">Key</label>
+                            <input class="form-control" id="key" placeholder="Key" th:field="*{key}" required
+                                   th:autofocus="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="name" th:text="#{messages.name}">Name</label>
+                            <input class="form-control" id="name" placeholder="Name" th:field="*{name}" required
+                                   th:autofocus="true">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+                        <a href="/sec/organizations" th:text="#{messages.back}" class="btn">Back</a>
+
+                        <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
+                        <div th:replace="common/message :: message (${message})"></div>
+                    </form>
+
                 </div>
-                <div class="form-group">
-                    <label for="key" th:text="#{messages.key}">Key</label>
-                    <input class="form-control" id="key" placeholder="Key" th:field="*{key}" required
-                           th:autofocus="true">
-                </div>
-                <div class="form-group">
-                    <label for="name" th:text="#{messages.name}">Name</label>
-                    <input class="form-control" id="name" placeholder="Name" th:field="*{name}" required
-                           th:autofocus="true">
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a href="/sec/organizations" th:text="#{messages.back}" class="btn">Back</a>
+            </div>
 
-                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
-                <div th:include="common/message :: message (${message})"></div>
-            </form>
-
-        </div>
+        </main>
     </div>
+</div>
 
-    <div th:include="common/footer :: copy"></div>
+<div th:replace="common/footer :: copy"></div>
 
-</main>
 </body>
 </html>

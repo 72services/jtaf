@@ -4,76 +4,84 @@
 <body>
 
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
-<div th:include="sec/common/navigation :: navigation ('athletes', ${organizationKey})"></div>
+<div th:replace="common/navigation :: navigation ('athletes', ${organizationKey})"></div>
 
-<main role="main" class="container">
+<div class="container-fluid position-fixed h-100">
+    <div class="row h-100">
+        <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h1 th:text="#{messages.edit_athlete}">Edit Athlete</h1>
+        <main role="main" class="container">
 
-            <!--/*@thymesVar id="seriesId" type="java.lang.Long"*/-->
-            <!--/*@thymesVar id="mode" type="java.lang.String"*/-->
-            <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.Athlete"*/-->
-            <!--/*@thymesVar id="competitionId" type="java.lang.Long"*/-->
-            <!--/*@thymesVar id="returnTo" type="java.lang.String"*/-->
-            <form action="#"
-                  th:action="@{/sec/{organizationKey}/athlete(organizationKey=${organizationKey},seriesId=${seriesId},competitionId=${competitionId},mode=${mode},returnTo=${returnTo})}"
-                  th:object="${athlete}" method="post">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 th:text="#{messages.edit_athlete}">Edit Athlete</h1>
 
-                <div class="form-group">
-                    <label for="id">ID</label>
-                    <input class="form-control" id="id" readonly th:field="*{id}">
-                </div>
-                <div class="form-group">
-                    <label for="lastName" th:text="#{messages.last_name}">Doe</label>
-                    <input class="form-control" id="lastName" th:placeholder="#{messages.last_name}"
-                           th:field="*{lastName}" required th:autofocus="true">
-                </div>
-                <div class="form-group">
-                    <label for="firstName" th:text="#{messages.first_name}">John</label>
-                    <input class="form-control" id="firstName" th:placeholder="#{messages.first_name}"
-                           th:field="*{firstName}" required>
-                </div>
-                <div class="form-group">
-                    <label for="yearOfBirth" th:text="#{messages.year_of_birth}">John</label>
-                    <input class="form-control" id="yearOfBirth" th:placeholder="#{messages.year_of_birth}"
-                           th:field="*{yearOfBirth}" required>
-                </div>
-                <div class="form-group">
-                    <label for="gender" th:text="#{messages.gender}">Gender</label>
-                    <select id="gender" class="form-control" th:field="*{gender}">
-                        <!--/*@thymesVar id="gender" type="ch.jtaf.entity.Gender"*/-->
-                        <option th:each="gender : ${T(ch.jtaf.entity.Gender).values()}"
-                                th:value="${gender}"
-                                th:text="${gender}">
-                        </option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="club" th:text="#{messages.club}">Club</label>
-                    <select id="club" class="form-control" th:field="*{club.id}">
-                        <!--/*@thymesVar id="clubs" type="java.util.List<Club>"*/-->
-                        <!--/*@thymesVar id="club" type="ch.jtaf.entity.Club"*/-->
-                        <option th:each="club : ${clubs}"
-                                th:value="${club.id}"
-                                th:text="${club.abbreviation}">
-                        </option>
-                    </select>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                <a th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey},seriesId=${seriesId},mode=${mode})}"
-                   th:text="#{messages.back}" class="btn">Back</a>
+                    <!--/*@thymesVar id="seriesId" type="java.lang.Long"*/-->
+                    <!--/*@thymesVar id="mode" type="java.lang.String"*/-->
+                    <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.Athlete"*/-->
+                    <!--/*@thymesVar id="competitionId" type="java.lang.Long"*/-->
+                    <!--/*@thymesVar id="returnTo" type="java.lang.String"*/-->
+                    <form action="#"
+                          th:action="@{/sec/{organizationKey}/athlete(organizationKey=${organizationKey},seriesId=${seriesId},competitionId=${competitionId},mode=${mode},returnTo=${returnTo})}"
+                          th:object="${athlete}" method="post">
 
-                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
-                <div th:include="common/message :: message (${message})"></div>
-            </form>
-        </div>
+                        <div class="form-group">
+                            <label for="id">ID</label>
+                            <input class="form-control" id="id" readonly th:field="*{id}">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" th:text="#{messages.last_name}">Doe</label>
+                            <input class="form-control" id="lastName" th:placeholder="#{messages.last_name}"
+                                   th:field="*{lastName}" required th:autofocus="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName" th:text="#{messages.first_name}">John</label>
+                            <input class="form-control" id="firstName" th:placeholder="#{messages.first_name}"
+                                   th:field="*{firstName}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="yearOfBirth" th:text="#{messages.year_of_birth}">John</label>
+                            <input class="form-control" id="yearOfBirth" th:placeholder="#{messages.year_of_birth}"
+                                   th:field="*{yearOfBirth}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender" th:text="#{messages.gender}">Gender</label>
+                            <select id="gender" class="form-control" th:field="*{gender}">
+                                <!--/*@thymesVar id="gender" type="ch.jtaf.entity.Gender"*/-->
+                                <option th:each="gender : ${T(ch.jtaf.entity.Gender).values()}"
+                                        th:value="${gender}"
+                                        th:text="${gender}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="club" th:text="#{messages.club}">Club</label>
+                            <select id="club" class="form-control" th:field="*{club.id}">
+                                <!--/*@thymesVar id="clubs" type="java.util.List<Club>"*/-->
+                                <!--/*@thymesVar id="club" type="ch.jtaf.entity.Club"*/-->
+                                <option th:each="club : ${clubs}"
+                                        th:value="${club.id}"
+                                        th:text="${club.abbreviation}">
+                                </option>
+                            </select>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+                        <a th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey},seriesId=${seriesId},mode=${mode})}"
+                           th:text="#{messages.back}" class="btn">Back</a>
+
+                        <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
+                        <div th:replace="common/message :: message (${message})"></div>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+
     </div>
+</div>
 
-    <div th:include="common/footer :: copy"></div>
+<div th:replace="common/footer :: copy"></div>
 
-</main>
 </body>
 </html>

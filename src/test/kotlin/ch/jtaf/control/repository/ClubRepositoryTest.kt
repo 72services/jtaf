@@ -15,8 +15,8 @@ class ClubRepositoryTest : AbstractRepositoryTest() {
     lateinit var clubRepository: ClubRepository
 
     @Test
-    fun findAllByOwner() {
-        val club = clubRepository.findByOrganizationId(organizationId)
+    fun findByOrganizationIdOrderByAbbreviation() {
+        val club = clubRepository.findByOrganizationIdOrderByAbbreviation(organizationId)
 
         assertEquals(1, club.size)
         assertEquals("TVT", club[0].abbreviation)

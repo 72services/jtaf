@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface ClubRepository : JpaRepository<Club, Long> {
 
-    fun findByOrganizationId(organizationId: Long): List<Club>
+    fun findByOrganizationIdOrderByAbbreviation(organizationId: Long): List<Club>
 }
