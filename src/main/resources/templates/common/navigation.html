@@ -27,7 +27,7 @@
                        aria-expanded="false" th:text="${#authentication.principal.username}">
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" th:href="@{/sec/user/logout(organizationKey=${organizationKey})}"
+                        <a class="dropdown-item" th:href="@{/sec/user(organizationKey=${organizationKey})}"
                            th:text="#{messages.change_password}">
                         </a>
                         <a class="dropdown-item" href="javascript: document.logoutForm.submit()"
