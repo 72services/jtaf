@@ -5,35 +5,45 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light h-100">
         <div class="h-100">
             <ul class="navbar-nav flex-column h-100">
-                <li th:class="${page == 'index'} ? 'nav-item active' : 'nav-item'">
-                    <a class="nav-link" th:href="@{/dashboard/{organizationKey}(organizationKey=${organizationKey})}">Dashboard</a>
+                <li th:class="${page == 'index'} ? 'nav-item active my-1' : 'nav-item my-1'">
+                    <img th:src="@{/svg/dashboard.svg}" src="../../static/svg/dashboard.svg" width="16" height="16">
+                    <a class="nav-link" style="display: inline;"
+                       th:href="@{/dashboard/{organizationKey}(organizationKey=${organizationKey})}">Dashboard</a>
                 </li>
                 <li th:if="${#authentication.principal != 'anonymousUser'}"
-                    th:class="${page == 'organizations'} ? 'nav-item active' : 'nav-item'">
-                    <a class="nav-link" th:text="#{messages.organizations}"
+                    th:class="${page == 'organizations'} ? 'nav-item active my-1' : 'nav-item my-1'">
+                    <img th:src="@{/svg/aperture.svg}" src="../../static/svg/aperture.svg" width="16" height="16">
+                    <a class="nav-link" style="display: inline;" th:text="#{messages.organizations}"
                        th:href="@{/sec/organizations(organizationKey=${organizationKey})}">
                         My Organizations</a>
                 </li>
                 <li th:if="${organizationKey != null && organizationKey != ''}"
-                    th:class="${page == 'series'} ? 'nav-item active' : 'nav-item'">
-                    <a class="nav-link" th:if="${organizationKey != null}" th:inline="text"
+                    th:class="${page == 'series'} ? 'nav-item active my-1' : 'nav-item my-1'">
+                    <img th:src="@{/svg/badge.svg}" src="../../static/svg/badge.svg" width="16" height="16">
+                    <a class="nav-link" style="display: inline;" th:if="${organizationKey != null}" th:inline="text"
                        th:href="@{/sec/{organizationKey}(organizationKey=${organizationKey})}">
                         [[#{messages.series}]] ([[${organizationKey}]])
                     </a>
                 </li>
                 <li th:if="${organizationKey != null && organizationKey != ''}"
-                    th:class="${page == 'events'} ? 'nav-item active' : 'nav-item'">
-                    <a class="nav-link" th:if="${organizationKey != null}" th:text="#{messages.events}"
+                    th:class="${page == 'events'} ? 'nav-item active my-1' : 'nav-item my-1'">
+                    <img th:src="@{/svg/clipboard.svg}" src="../../static/svg/clipboard.svg" width="16" height="16">
+                    <a class="nav-link" style="display: inline;" th:if="${organizationKey != null}"
+                       th:text="#{messages.events}"
                        th:href="@{/sec/{organizationKey}/events(organizationKey=${organizationKey})}">Manage Events</a>
                 </li>
                 <li th:if="${organizationKey != null && organizationKey != ''}"
-                    th:class="${page == 'clubs'} ? 'nav-item active' : 'nav-item'">
-                    <a class="nav-link" th:if="${organizationKey != null}" th:text="#{messages.clubs}"
+                    th:class="${page == 'clubs'} ? 'nav-item active my-1' : 'nav-item my-1'">
+                    <img th:src="@{/svg/people.svg}" src="../../static/svg/people.svg" width="16" height="16">
+                    <a class="nav-link" style="display: inline;" th:if="${organizationKey != null}"
+                       th:text="#{messages.clubs}"
                        th:href="@{/sec/{organizationKey}/clubs(organizationKey=${organizationKey})}">Manage Clubs</a>
                 </li>
                 <li th:if="${organizationKey != null && organizationKey != ''}"
-                    th:class="${page == 'athletes'} ? 'nav-item active' : 'nav-item'">
-                    <a class="nav-link" th:if="${organizationKey != null}" th:text="#{messages.athletes}"
+                    th:class="${page == 'athletes'} ? 'nav-item active my-1' : 'nav-item my-1'">
+                    <img th:src="@{/svg/person.svg}" src="../../static/svg/person.svg" width="16" height="16">
+                    <a class="nav-link" style="display: inline;" th:if="${organizationKey != null}"
+                       th:text="#{messages.athletes}"
                        th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey})}">Manage
                         Athletes</a>
                 </li>
