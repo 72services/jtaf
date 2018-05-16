@@ -5,7 +5,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light h-100">
         <div class="h-100">
             <ul class="navbar-nav flex-column h-100">
-                <li th:class="${page == 'index'} ? 'nav-item active my-2' : 'nav-item my-2'">
+                <li th:class="${page == 'index'} ? 'nav-item active mb-2 mt-4' : 'nav-item mb-2 mt-4'">
                     <img th:src="@{/svg/dashboard.svg}" width="16" height="16">
                     <a class="nav-link" style="display: inline;"
                        th:href="@{/dashboard/{organizationKey}(organizationKey=${organizationKey})}">Dashboard</a>
@@ -17,7 +17,7 @@
                        th:href="@{/sec/organizations(organizationKey=${organizationKey})}"></a>
                 </li>
 
-                <h4 class="mt-5" th:text="${organizationKey}"></h4>
+                <h4 class="mt-4" th:text="${organizationKey}"></h4>
                 <li th:if="${organizationKey != null && organizationKey != ''}"
                     th:class="${page == 'series'} ? 'nav-item active mb-2' : 'nav-item mb-2'" style="padding-top: 10px">
                     <img th:src="@{/svg/badge.svg}" width="16" height="16">
