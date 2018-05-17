@@ -27,8 +27,12 @@
             crossorigin="anonymous"></script>
 
     <script>
-        if (window.matchMedia("(max-width: 990px").matches) {
-            //$('#navbarSide').collapse('hide');
+        function toggleSidebar() {
+            if ($('.collapsibleNav').is(":visible")) {
+                $('#sidebar').hide();
+            } else {
+                $('#sidebar').show();
+            }
         }
     </script>
 </footer>
