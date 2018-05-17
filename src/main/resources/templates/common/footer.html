@@ -4,9 +4,16 @@
 
 <footer class="footer w-100" th:fragment="copy">
     <div class="container-fluid">
-            <span>Sponsored by
+        <div class="row">
+            <div class="col-lg-2">
+                Sponsored by
                 <a href="https://72.services/" target="_blank">72&reg; Services LLC</a>
-            </span>
+            </div>
+            <div class="col-lg-10 text-right">
+                <!--/*@thymesVar id="applicationVersion" type="java.lang.String"*/-->
+                Version <span th:text="${applicationVersion}"></span>
+            </div>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -18,6 +25,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
             integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
             crossorigin="anonymous"></script>
+
+    <script>
+        if (window.matchMedia("(max-width: 990px").matches) {
+            //$('#navbarSide').collapse('hide');
+        }
+    </script>
 </footer>
 
 </body>

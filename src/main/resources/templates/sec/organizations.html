@@ -8,12 +8,12 @@
 
 <div class="container-fluid position-fixed h-100">
     <div class="row h-100">
-        <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
+        <div th:replace="common/side_navigation :: side_navigation ('organizations', ${organizationKey})"></div>
 
         <main role="main" class="container">
 
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-lg-12">
                     <h1 th:text="#{messages.organizations}">My Organziations</h1>
 
                     <!--/*@thymesVar id="organizations" type="java.util.List<organizations>"*/-->

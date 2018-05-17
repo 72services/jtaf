@@ -7,10 +7,6 @@ body {
     margin-bottom: 60px; /* Margin bottom by footer height */
 }
 
-h1, h2 {
-    padding-top: 20px;
-}
-
 .footer {
     position: absolute;
     bottom: 0;
