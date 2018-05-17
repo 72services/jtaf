@@ -22,7 +22,9 @@
                             <th th:text="#{messages.key}">Key</th>
                             <th th:text="#{messages.name}">Name</th>
                             <th class="text-right">
-                                <a href="/sec/organization" th:text="#{messages.add_organization}" class="text-right">Add Series</a>
+                                <a th:href="@{/sec/organization(organizationKey=${organizationKey})}"
+                                   th:text="#{messages.add_organization}" class="text-right">Add
+                                    Series</a>
                             </th>
                         </tr>
                         <tr th:each="organization: ${organizations}">
@@ -32,10 +34,10 @@
                                 <a th:href="@{/sec/{organizationKey}(organizationKey=${organization.key})}"
                                    th:text="#{messages.select}">Select</a>
 
-                                <a th:href="@{/sec/organization/{organizationId}(organizationId=${organization.id})}"
+                                <a th:href="@{/sec/organization/{organizationId}(organizationId=${organization.id}, organizationKey=${organizationKey})}"
                                    th:text="#{messages.edit}">Edit</a>
 
-                                <a th:href="@{/sec/organization/{organizationId}/delete(organizationId=${organization.id})}"
+                                <a th:href="@{/sec/organization/{organizationId}/delete(organizationId=${organization.id}, organizationKey=${organizationKey})}"
                                    th:text="#{messages.delete}"
                                    onclick="return confirm('Are you sure?')">Delete</a>
                             </td>

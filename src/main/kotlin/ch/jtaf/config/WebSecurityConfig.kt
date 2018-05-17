@@ -20,10 +20,8 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 .authorizeRequests()
                 .antMatchers("/actuator/**", "/sec/**").authenticated()
                 .anyRequest().permitAll()
-                .and()
-                .formLogin().loginPage("/login").permitAll()
-                .and().logout().logoutUrl("/logout")
-                .logoutSuccessUrl("/dashboard").permitAll()
+                .and().formLogin().loginPage("/login").permitAll()
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/dashboard").permitAll()
     }
 
     @Autowired
