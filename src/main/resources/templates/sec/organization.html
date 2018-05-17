@@ -11,7 +11,7 @@
         <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
         <div th:replace="common/side_navigation :: side_navigation ('organizations', ${organizationKey})"></div>
 
-        <main role="main" class="col-lg-10 px-5 py-4 container">
+        <main id="content" role="main" class="col-lg-10 px-5 py-4 container">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 th:text="#{messages.edit_organization}">Edit Organization</h1>
