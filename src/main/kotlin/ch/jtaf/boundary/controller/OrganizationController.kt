@@ -13,19 +13,24 @@ import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 class OrganizationController(private val organizationRepository: OrganizationRepository) {
 
     @GetMapping("/sec/organization")
-    fun get(model: Model): String {
+    fun get(@RequestParam organizationKey: String?, model: Model): String {
         model["organization"] = Organization()
+        model["organizationKey"] = ""
+
         return ORGANIZATION
     }
 
     @GetMapping("/sec/organization/{organizationId}")
     fun getById(@PathVariable organizationId: Long, model: Model): String {
-        model["organization"] = organizationRepository.getOne(organizationId)
+        val organization = organizationRepository.getOne(organizationId)
+        model["organization"] = organization
+        model["organizationKey"] = organization.key
         return ORGANIZATION
     }
 
@@ -45,6 +50,7 @@ class OrganizationController(private val organizationRepository: OrganizationRep
             model["organization"] = organizationFromDb
         }
         model["message"] = Message(Message.success, "Organization saved!")
+        model["organizationKey"] = organization.key
 
         return ORGANIZATION
     }
