@@ -13,24 +13,30 @@ import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 class OrganizationController(private val organizationRepository: OrganizationRepository) {
 
     @GetMapping("/sec/organization")
-    fun get(model: Model): String {
+    fun get(@RequestParam organizationKey: String?, model: Model): String {
         model["organization"] = Organization()
+        model["organizationKey"] = organizationKey ?: ""
+
         return ORGANIZATION
     }
 
     @GetMapping("/sec/organization/{organizationId}")
-    fun getById(@PathVariable organizationId: Long, model: Model): String {
-        model["organization"] = organizationRepository.getOne(organizationId)
+    fun getById(@PathVariable organizationId: Long, @RequestParam organizationKey: String?, model: Model): String {
+        val organization = organizationRepository.getOne(organizationId)
+        model["organization"] = organization
+        model["organizationKey"] = organizationKey ?: ""
         return ORGANIZATION
     }
 
     @PostMapping("/sec/organization")
-    fun post(@AuthenticationPrincipal user: User, organization: Organization, model: Model): String {
+    fun post(@AuthenticationPrincipal user: User, @RequestParam organizationKey: String?,
+             organization: Organization, model: Model): String {
         if (organization.id == null) {
             organization.owner = user.username
             organizationRepository.save(organization)
@@ -45,6 +51,7 @@ class OrganizationController(private val organizationRepository: OrganizationRep
             model["organization"] = organizationFromDb
         }
         model["message"] = Message(Message.success, "Organization saved!")
+        model["organizationKey"] = organizationKey ?: ""
 
         return ORGANIZATION
     }

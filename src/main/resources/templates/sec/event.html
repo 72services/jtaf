@@ -6,14 +6,13 @@
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
 <div th:replace="common/navigation :: navigation ('events', ${organizationKey})"></div>
 
-<div class="container-fluid position-fixed h-100">
+<div class="container-fluid h-100">
     <div class="row h-100">
         <div th:replace="common/side_navigation :: side_navigation ('events', ${organizationKey})"></div>
 
-        <main role="main" class="container">
-
+        <main id="content" role="main" class="col-lg-10 px-5 py-4 container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-lg-12">
                     <h1 th:text="#{messages.edit_event}">Edit Category</h1>
 
                     <!--/*@thymesVar id="event" type="ch.jtaf.entity.Event"*/-->

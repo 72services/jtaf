@@ -6,24 +6,25 @@
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
 <div th:replace="common/navigation :: navigation ('organizations', ${organizationKey})"></div>
 
-<div class="container-fluid position-fixed h-100">
+<div class="container-fluid h-100">
     <div class="row h-100">
         <div th:replace="common/side_navigation :: side_navigation ('organizations', ${organizationKey})"></div>
 
-        <main role="main" class="container">
-
+        <main id="content" role="main" class="col-lg-10 px-5 py-4 container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-lg-12">
                     <h1 th:text="#{messages.organizations}">My Organziations</h1>
 
                     <!--/*@thymesVar id="organizations" type="java.util.List<organizations>"*/-->
                     <!--/*@thymesVar id="organization" type="ch.jtaf.entity.Organization"*/-->
-                    <table class="table table-striped">
+                    <table class="table table-striped mt-4">
                         <tr>
                             <th th:text="#{messages.key}">Key</th>
                             <th th:text="#{messages.name}">Name</th>
                             <th class="text-right">
-                                <a href="/sec/organization" th:text="#{messages.add_organization}" class="text-right">Add Series</a>
+                                <a th:href="@{/sec/organization(organizationKey=${organizationKey})}"
+                                   th:text="#{messages.add_organization}" class="text-right">Add
+                                    Series</a>
                             </th>
                         </tr>
                         <tr th:each="organization: ${organizations}">
@@ -33,10 +34,10 @@
                                 <a th:href="@{/sec/{organizationKey}(organizationKey=${organization.key})}"
                                    th:text="#{messages.select}">Select</a>
 
-                                <a th:href="@{/sec/organization/{organizationId}(organizationId=${organization.id})}"
+                                <a th:href="@{/sec/organization/{organizationId}(organizationId=${organization.id}, organizationKey=${organizationKey})}"
                                    th:text="#{messages.edit}">Edit</a>
 
-                                <a th:href="@{/sec/organization/{organizationId}/delete(organizationId=${organization.id})}"
+                                <a th:href="@{/sec/organization/{organizationId}/delete(organizationId=${organization.id}, organizationKey=${organizationKey})}"
                                    th:text="#{messages.delete}"
                                    onclick="return confirm('Are you sure?')">Delete</a>
                             </td>
