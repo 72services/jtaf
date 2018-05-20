@@ -29,8 +29,8 @@ class ClubRankingService(private val seriesRepository: SeriesRepository,
         val seriesRankingData = seriesRankingService.getSeriesRankingData(seriesId)
         val pointsPerClub = HashMap<Club, ClubResultData>()
         seriesRankingData.categories.forEach {
-            var points = it.athletes.size
-            it.athletes.forEach {
+            var points = it.getAthletesSortedByPointsDesc().size
+            it.getAthletesSortedByPointsDesc().forEach {
                 if (pointsPerClub.containsKey(it.athlete.club)) {
                     val clubResultData = pointsPerClub[it.athlete.club]
                     clubResultData?.points = clubResultData?.points!! + it.getTotalPoints()
