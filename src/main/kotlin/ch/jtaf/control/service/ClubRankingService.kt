@@ -5,6 +5,7 @@ import ch.jtaf.control.reporting.data.ClubResultData
 import ch.jtaf.control.reporting.report.ClubRanking
 import ch.jtaf.control.repository.SeriesRepository
 import ch.jtaf.entity.Club
+import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -14,7 +15,7 @@ class ClubRankingService(private val seriesRepository: SeriesRepository,
 
     fun createClubRanking(seriesId: Long): ByteArray {
         val clubRankingData = getClubRankingData(seriesId)
-        val clubRanking = ClubRanking(clubRankingData, Locale.ENGLISH)
+        val clubRanking = ClubRanking(clubRankingData,  LocaleContextHolder.getLocale())
 
         return clubRanking.create()
     }
