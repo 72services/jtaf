@@ -7,6 +7,7 @@ import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.ResultRepository
 import ch.jtaf.control.repository.SeriesRepository
 import ch.jtaf.entity.AthleteWithResultsDTO
+import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -16,8 +17,7 @@ class SeriesRankingService(private val seriesRepository: SeriesRepository,
                            private val resultRepository: ResultRepository) {
 
     fun createSeriesRanking(seriesId: Long): ByteArray {
-        val seriesRankingData = createSeriesRankingData(seriesId)
-        val seriesRanking = SeriesRanking(seriesRankingData, Locale.ENGLISH)
+        val seriesRanking = SeriesRanking(createSeriesRankingData(seriesId), LocaleContextHolder.getLocale())
         return seriesRanking.create()
     }
 
@@ -34,7 +34,7 @@ class SeriesRankingService(private val seriesRepository: SeriesRepository,
         return SeriesRankingData(series, categories.map {
             SeriesRankingCategoryData(it, it.athletes.map { athlete ->
                 AthleteWithResultsDTO(athlete, results.filter { it.athlete == athlete })
-            })
+            }, series.competitions.size)
         })
     }
 }

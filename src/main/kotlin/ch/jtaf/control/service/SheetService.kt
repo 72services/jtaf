@@ -6,6 +6,7 @@ import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.CompetitionRepository
 import ch.jtaf.control.repository.SeriesRepository
 import ch.jtaf.entity.AthleteDTO
+import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -28,7 +29,7 @@ class SheetService(private val competitionRepository: CompetitionRepository,
 
         val categories = categoryRepository.findAllBySeriesIdOrderByAbbreviation(competition.seriesId!!)
 
-        val sheets = Sheets(competition, athletes, categories, series.logo, Locale.ENGLISH)
+        val sheets = Sheets(competition, athletes, categories, series.logo, LocaleContextHolder.getLocale())
 
         return sheets.create()
     }
@@ -37,7 +38,7 @@ class SheetService(private val competitionRepository: CompetitionRepository,
         val category = categoryRepository.getOne(categoryid)
         val series = seriesRepository.getOne(seriesId)
 
-        val sheet = Sheets(AthleteDTO(category = category.abbreviation), Arrays.asList(category), series.logo, Locale.ENGLISH)
+        val sheet = Sheets(AthleteDTO(category = category.abbreviation), Arrays.asList(category), series.logo, LocaleContextHolder.getLocale())
         return sheet.create()
     }
 
