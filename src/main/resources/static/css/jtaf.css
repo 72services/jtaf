@@ -1,17 +1,22 @@
 html {
-    position: relative;
+    height: 100%;
     min-height: 100%;
 }
 
 body {
-    margin-bottom: 60px; /* Margin bottom by footer height */
+    height: 100%;
+    padding-bottom: 123px;
+}
+
+#content {
+    max-height: calc(100vh - 123px);
+    overflow-y: auto;
 }
 
 .footer {
     position: absolute;
-    bottom: 0;
-    height: 60px; /* Set the fixed height of the footer here */
-    line-height: 60px; /* Vertically center the text there */
+    height: 60px;
+    line-height: 60px;
     color: rgba(0, 123, 255, .5);
 }
 

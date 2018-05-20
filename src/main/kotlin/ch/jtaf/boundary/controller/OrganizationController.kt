@@ -21,21 +21,22 @@ class OrganizationController(private val organizationRepository: OrganizationRep
     @GetMapping("/sec/organization")
     fun get(@RequestParam organizationKey: String?, model: Model): String {
         model["organization"] = Organization()
-        model["organizationKey"] = ""
+        model["organizationKey"] = organizationKey ?: ""
 
         return ORGANIZATION
     }
 
     @GetMapping("/sec/organization/{organizationId}")
-    fun getById(@PathVariable organizationId: Long, model: Model): String {
+    fun getById(@PathVariable organizationId: Long, @RequestParam organizationKey: String?, model: Model): String {
         val organization = organizationRepository.getOne(organizationId)
         model["organization"] = organization
-        model["organizationKey"] = organization.key
+        model["organizationKey"] = organizationKey ?: ""
         return ORGANIZATION
     }
 
     @PostMapping("/sec/organization")
-    fun post(@AuthenticationPrincipal user: User, organization: Organization, model: Model): String {
+    fun post(@AuthenticationPrincipal user: User, @RequestParam organizationKey: String?,
+             organization: Organization, model: Model): String {
         if (organization.id == null) {
             organization.owner = user.username
             organizationRepository.save(organization)
@@ -50,7 +51,7 @@ class OrganizationController(private val organizationRepository: OrganizationRep
             model["organization"] = organizationFromDb
         }
         model["message"] = Message(Message.success, "Organization saved!")
-        model["organizationKey"] = organization.key
+        model["organizationKey"] = organizationKey ?: ""
 
         return ORGANIZATION
     }
