@@ -31,7 +31,7 @@ class Diplomas(private val ranking: CompetitionRankingData, private val logo: By
                 var first = true
                 for (cat in ranking.categories) {
                     var rank = 1
-                    cat.athletes.forEach {
+                    cat.getAthletesSortedByPointsDesc().forEach {
                         if (!first) {
                             document!!.newPage()
                         }

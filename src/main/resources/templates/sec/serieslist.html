@@ -41,7 +41,7 @@
                                     <a class="btn"
                                        th:href="@{/sec/{organizationKey}/{seriesId}/delete(organizationKey=${organizationKey},seriesId=${series.id})}"
                                        th:text="#{messages.delete}" onclick="return confirm('Are you sure?')">Delete</a>
-                                    <a class="btn btn-primary" th:href="@{/ranking/series/{seriesId}(seriesId=${series.id})}"
+                                    <a class="btn btn-primary" th:href="@{/ranking/series/{seriesId}(seriesId=${series.id}, organizationKey=${organizationKey})}"
                                        th:text="#{messages.series_ranking}">
                                         Series Ranking
                                     </a>
@@ -63,7 +63,7 @@
                                             <span th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}">Athletes 1/10</span>
                                         </div>
                                         <div class="col-lg-4 text-right">
-                                            <a th:href="@{/ranking/competition/{competitionId}(competitionId=${competition.id})}"
+                                            <a th:href="@{/ranking/competition/{competitionId}(competitionId=${competition.id}, organizationKey=${organizationKey})}"
                                                th:text="#{messages.ranking}"
                                                class="btn btn-primary">Ranking</a>
                                         </div>
