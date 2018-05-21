@@ -66,6 +66,9 @@
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+
+                        <a th:href="@{/sec/{organizationKey}/athlete(organizationKey=${organizationKey},seriesId=${seriesId},mode=${mode})}"
+                           th:text="#{messages.add_athlete}" class="btn">Add Athlete</a>
                         <a th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey},seriesId=${seriesId},mode=${mode})}"
                            th:text="#{messages.back}" class="btn">Back</a>
 
