@@ -95,7 +95,6 @@ class AthleteController(private val athleteRepository: AthleteRepository,
             }
         }
 
-
         val organization = organizationRepository.findByKey(organizationKey)
         athlete.organizationId = organization.id
 

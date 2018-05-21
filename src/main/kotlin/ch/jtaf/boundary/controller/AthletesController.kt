@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam
 @Controller
 class AthletesController(private val athleteRepository: AthleteRepository,
                          private val organizationRepository: OrganizationRepository,
-                         private val categoryRepository: CategoryRepository) {
+                         private val categoryRepository: CategoryRepository,
+                         private val seriesListController: SeriesListController) {
 
     @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/athletes")
@@ -59,7 +60,8 @@ class AthletesController(private val athleteRepository: AthleteRepository,
     @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/athletes/{athleteId}/series/{seriesId}")
     fun addEvent(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String,
-                 @PathVariable seriesId: Long, @PathVariable athleteId: Long, model: Model): String {
+                 @PathVariable seriesId: Long, @PathVariable athleteId: Long, @RequestParam returnTo: String?,
+                 model: Model): String {
 
         val athlete = athleteRepository.getOne(athleteId)
         val category = categoryRepository.findBySeriesIdAndGenderAndYearFromLessThanEqualAndYearToGreaterThanEqual(
@@ -72,7 +74,11 @@ class AthletesController(private val athleteRepository: AthleteRepository,
             categoryRepository.save(category)
         }
 
-        return get(user, organizationKey, "select", seriesId, model)
+        if (returnTo != null && returnTo == "serieslist") {
+            return seriesListController.get(user, organizationKey, model)
+        } else {
+            return get(user, organizationKey, "select", seriesId, model)
+        }
     }
 
 }
