@@ -30,9 +30,15 @@ class AthleteController(private val athleteRepository: AthleteRepository,
     @GetMapping("/sec/{organizationKey}/athlete")
     fun get(@PathVariable organizationKey: String, @RequestParam seriesId: Long?, @RequestParam competitionId: Long?,
             @RequestParam mode: String?, @RequestParam returnTo: String?, model: Model): String {
-        model["seriesId"] = seriesId!!
-        model["competitionId"] = competitionId!!
-        model["mode"] = mode!!
+        if (seriesId != null) {
+            model["seriesId"] = seriesId
+        }
+        if (competitionId != null) {
+            model["competitionId"] = competitionId
+        }
+        if (mode != null) {
+            model["mode"] = mode
+        }
 
         model["athlete"] = Athlete()
 
@@ -107,10 +113,18 @@ class AthleteController(private val athleteRepository: AthleteRepository,
         return if (returnTo == "results") {
             resultsController.getWithAthlete(user, organizationKey, athlete.id!!, seriesId!!, competitionId!!, model)
         } else {
-            model["seriesId"] = seriesId!!
-            model["competitionId"] = competitionId!!
-            model["mode"] = mode!!
-            model["returnTo"] = returnTo!!
+            if (seriesId != null) {
+                model["seriesId"] = seriesId
+            }
+            if (competitionId != null) {
+                model["competitionId"] = competitionId
+            }
+            if (mode != null) {
+                model["mode"] = mode
+            }
+            if (returnTo != null) {
+                model["returnTo"] = returnTo
+            }
 
             model["clubs"] = getClubsWithEmpty(organization)
 
