@@ -10,6 +10,7 @@ import ch.jtaf.control.reporting.report.EventsRanking
 import ch.jtaf.control.repository.*
 import ch.jtaf.entity.AthleteWithResultsDTO
 import ch.jtaf.entity.Competition
+import ch.jtaf.entity.Result
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.stereotype.Component
 import java.util.*
@@ -49,7 +50,7 @@ class CompetitionRankingService(private val competitionRepository: CompetitionRe
         val results = resultRepository.findByCompetitionId(competition.id!!)
 
         val list = events.map { event ->
-            EventsRankingEventData(event, results.filter { event == it.event }.sortedBy { it.result.replace("\\.".toRegex(), "").toInt() })
+            EventsRankingEventData(event, results.filter { result -> event == result.event }.sortedBy { result -> result.toInt() })
         }
         return EventsRanking(EventsRankingData(competition, list), LocaleContextHolder.getLocale()).create()
     }
@@ -61,5 +62,7 @@ class CompetitionRankingService(private val competitionRepository: CompetitionRe
 
         return Diplomas(competitionRankingData, series.logo, LocaleContextHolder.getLocale()).create()
     }
+
+    private fun resultStringToInt(): (Result) -> Int = { it.result.replace("\\.".toRegex(), "").toInt() }
 
 }
