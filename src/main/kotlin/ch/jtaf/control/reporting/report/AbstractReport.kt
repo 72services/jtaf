@@ -72,7 +72,7 @@ abstract class AbstractReport protected constructor(protected val locale: Locale
             cellLeft.borderWidthTop = 1f
             table.addCell(cellLeft)
 
-            val cellCenter = PdfPCell(Phrase("JTAF - Track and Field | www.jtaf.ch", FontFactory.getFont(FontFactory.HELVETICA, DEFAULT_FONT_SIZE)))
+            val cellCenter = PdfPCell(Phrase("JTAF - Track and Field | www.jtaf.io sponsored by 72 Services LLC", FontFactory.getFont(FontFactory.HELVETICA, DEFAULT_FONT_SIZE)))
             cellCenter.border = 0
             cellCenter.borderWidthTop = 1f
             cellCenter.horizontalAlignment = PdfPCell.ALIGN_CENTER
@@ -115,11 +115,11 @@ abstract class AbstractReport protected constructor(protected val locale: Locale
     }
 
     companion object {
-        protected val HEADER_FONT = 16f
-        protected val HEADER_FONT_SMALL = 12f
+        protected const val HEADER_FONT = 16f
+        protected const val HEADER_FONT_SMALL = 12f
 
-        protected val DEFAULT_FONT_SIZE = 9f
-        protected val CM_PER_INCH = 2.54f
-        protected val DPI = 72f
+        protected const val DEFAULT_FONT_SIZE = 9f
+        protected const val CM_PER_INCH = 2.54f
+        protected const val DPI = 72f
     }
 }

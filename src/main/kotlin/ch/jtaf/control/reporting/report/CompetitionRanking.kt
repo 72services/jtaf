@@ -70,7 +70,7 @@ class CompetitionRanking(private val ranking: CompetitionRankingData, locale: Lo
         var numberOfMedals = 0.0
         if (ranking.competition.medalPercentage > 0) {
             val percentage = ranking.competition.medalPercentage
-            numberOfMedals = (category.athletes.size * (percentage / 100)).toDouble()
+            numberOfMedals = (category.getAthletesSortedByPointsDesc().size * (percentage / 100)).toDouble()
             if (numberOfMedals < 3 && ranking.competition.alwaysFirstThreeMedals) {
                 numberOfMedals = 3.0
             }

@@ -46,7 +46,7 @@ class SeriesRanking(private val ranking: SeriesRankingData, locale: Locale) : Ra
             numberOfRows += 2
 
             var position = 1
-            it.athletes.forEach {
+            it.getAthletesSortedByPointsDesc().forEach {
                 if (numberOfRows > 22) {
                     document!!.add(table)
                     document!!.newPage()

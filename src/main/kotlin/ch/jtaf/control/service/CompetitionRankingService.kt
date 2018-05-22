@@ -10,6 +10,8 @@ import ch.jtaf.control.reporting.report.EventsRanking
 import ch.jtaf.control.repository.*
 import ch.jtaf.entity.AthleteWithResultsDTO
 import ch.jtaf.entity.Competition
+import ch.jtaf.entity.Result
+import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -21,7 +23,7 @@ class CompetitionRankingService(private val competitionRepository: CompetitionRe
                                 private val resultRepository: ResultRepository) {
 
     fun createCompetitionRanking(competitionId: Long): ByteArray {
-        val competitionRanking = CompetitionRanking(getCompetitionRankingData(competitionId), Locale.ENGLISH)
+        val competitionRanking = CompetitionRanking(getCompetitionRankingData(competitionId), LocaleContextHolder.getLocale())
         return competitionRanking.create()
     }
 
@@ -48,9 +50,9 @@ class CompetitionRankingService(private val competitionRepository: CompetitionRe
         val results = resultRepository.findByCompetitionId(competition.id!!)
 
         val list = events.map { event ->
-            EventsRankingEventData(event, results.filter { event == it.event }.sortedBy { it.result.replace("\\.".toRegex(), "").toInt() })
+            EventsRankingEventData(event, results.filter { result -> event == result.event }.sortedBy { result -> result.toInt() })
         }
-        return EventsRanking(EventsRankingData(competition, list), Locale.ENGLISH).create()
+        return EventsRanking(EventsRankingData(competition, list), LocaleContextHolder.getLocale()).create()
     }
 
     fun createDiplomas(competitionId: Long): ByteArray {
@@ -58,7 +60,9 @@ class CompetitionRankingService(private val competitionRepository: CompetitionRe
         val series = seriesRepository.getOne(competition.seriesId!!)
         val competitionRankingData = getCompetitionRankingData(competitionId)
 
-        return Diplomas(competitionRankingData, series.logo, Locale.ENGLISH).create()
+        return Diplomas(competitionRankingData, series.logo, LocaleContextHolder.getLocale()).create()
     }
+
+    private fun resultStringToInt(): (Result) -> Int = { it.result.replace("\\.".toRegex(), "").toInt() }
 
 }

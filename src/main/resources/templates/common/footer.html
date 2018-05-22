@@ -11,7 +11,7 @@
             </div>
             <div class="col-lg-10 text-right">
                 <!--/*@thymesVar id="applicationVersion" type="java.lang.String"*/-->
-                Version <span th:text="${applicationVersion}"></span>
+                <span th:text="${applicationVersion}"></span>
             </div>
         </div>
     </div>
@@ -27,6 +27,12 @@
             crossorigin="anonymous"></script>
 
     <script>
+        if (window.matchMedia('(max-width: 960px)').matches) {
+            $('#sidebar').hide();
+        } else {
+            $('#sidebar').show();
+        }
+
         function toggleSidebar() {
             if ($('.collapsibleNav').is(":visible")) {
                 $('#sidebar').hide();

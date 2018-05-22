@@ -66,6 +66,14 @@
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+
+                        <!--/*@thymesVar id="saved" type="java.lang.Boolean"*/-->
+                        <a th:if="${saved != null && saved}"
+                           th:href="@{/sec/{organizationKey}/athlete(organizationKey=${organizationKey},seriesId=${seriesId},mode=${mode})}"
+                           th:text="#{messages.add_athlete}" class="btn">Add Athlete</a>
+                        <a th:if="${saved != null && saved && seriesId != null}"
+                           th:href="@{/sec/{organizationKey}/athletes/{athleteId}/series/{seriesId}(organizationKey=${organizationKey},seriesId=${seriesId},athleteId=${athlete.id},returnTo=${returnTo})}"
+                           th:text="#{messages.add_to_series}" class="btn">Add to Series</a>
                         <a th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey},seriesId=${seriesId},mode=${mode})}"
                            th:text="#{messages.back}" class="btn">Back</a>
 

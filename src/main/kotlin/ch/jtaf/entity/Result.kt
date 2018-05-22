@@ -27,4 +27,8 @@ data class Result(
         var competition: Competition? = null,
 
         var position: Int = 0
-)
+) {
+    fun toInt(): Int {
+        return result.replace("\\.".toRegex(), "").toInt()
+    }
+}
