@@ -17,14 +17,14 @@ body {
     position: absolute;
     height: 60px;
     line-height: 60px;
-    color: rgba(0, 123, 255, .5);
+    color: rgba(0, 0, 0, .5);
 }
 
 .footer a, .footer a:visited {
-    color: rgba(0, 123, 255, .5);
+    color: rgba(0, 0, 0, .5);
 }
 
 .footer a:active, .footer a:hover {
-    color: rgba(0, 123, 255, .7);
+    color: rgba(0, 0, 0, .7);
     text-decoration: none;
 }

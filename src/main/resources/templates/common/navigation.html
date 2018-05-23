@@ -16,6 +16,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="https://github.com/simasch/jtaf/" target="_blank">About</a>
                 </li>
+                <li class="nav-item">
+                    <!--/*@thymesVar id="applicationVersion" type="java.lang.String"*/-->
+                    <a class="nav-link" href="https://github.com/simasch/jtaf/" target="_blank">v.[[${applicationVersion}]]</a>
+                </li>
                 <li th:if="${#authentication.principal == 'anonymousUser'}"
                     th:class="${page == 'organizations'} ? 'nav-item active' : 'nav-item'">
                     <a class="nav-link" th:text="#{messages.login}"
