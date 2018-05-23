@@ -2,9 +2,14 @@ html {
 }
 
 body {
+    height: 100vh;
 }
 
 #content {
+}
+
+#sidebar {
+    height: calc(100vh - 122px);
 }
 
 .footer {
@@ -12,7 +17,6 @@ body {
     height: 60px;
     line-height: 24px;
     bottom: 0;
-    color: rgba(0, 0, 0, .5);
 }
 
 .footer a, .footer a:visited {
