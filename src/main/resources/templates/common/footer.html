@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<footer class="footer col-lg-2 bg-light" th:fragment="copy">
+<footer id="footer" class="footer col-lg-2 bg-light" th:fragment="copy">
     <a href="https://72.services/" target="_blank">JTAF is free and open source<br>sponsored by 72&reg; Services LLC</a>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -18,8 +18,10 @@
     <script>
         if (window.matchMedia('(max-width: 960px)').matches) {
             $('#sidebar').hide();
+            $('#footer').hide();
         } else {
             $('#sidebar').show();
+            $('#footer').show();
         }
 
         function toggleSidebar() {
