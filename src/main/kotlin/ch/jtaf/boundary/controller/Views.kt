@@ -25,6 +25,7 @@ object Views {
 
     const val ORGANIZATION = "sec/organization"
     const val ORGANIZATIONS = "sec/organizations"
+    const val SHARE = "/sec/share"
 
     const val RESULTS = "sec/results"
 
@@ -32,4 +33,5 @@ object Views {
     const val SERIESLIST = "sec/serieslist"
 
     const val USER = "/sec/user"
+
 }

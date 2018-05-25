@@ -21,5 +21,4 @@ class OrganizationsController(private val organizationRepository: OrganizationRe
         }
         return ORGANIZATIONS
     }
-
 }

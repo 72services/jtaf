@@ -34,7 +34,7 @@
                                 <a th:href="@{/sec/{organizationKey}(organizationKey=${organization.key})}"
                                    th:text="#{messages.select}">Select</a>
 
-                                <a th:href="@{/sec/organization/share/{organizationId}(organizationId=${organization.id}, organizationKey=${organizationKey})}"
+                                <a th:href="@{/sec/organization/{organizationId}/share(organizationId=${organization.id}, organizationKey=${organizationKey})}"
                                    th:text="#{messages.share}">Share</a>
 
                                 <a th:href="@{/sec/organization/{organizationId}(organizationId=${organization.id}, organizationKey=${organizationKey})}"
