@@ -6,8 +6,8 @@
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
 <div th:replace="common/navigation :: navigation ('login', ${organizationKey})"></div>
 
-<div class="container-fluid">
-    <div class="row">
+<div class="container-fluid vh-100">
+    <div class="row vh-100">
         <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
 
         <main id="content" role="main" class="col-lg-10 px-5 py-4 container">
@@ -19,7 +19,7 @@
                     <form th:action="@{/login}" method="post">
 
                         <div class="form-group">
-                            <label for="username">User Name</label>
+                            <label for="username">E-Mail</label>
                             <input name="username" id="username" class="form-control"/>
                         </div>
 

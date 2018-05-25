@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head th:replace="common/head :: head"></head>
+<body>
+
+<!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
+<div th:replace="common/navigation :: navigation ('organizations', ${organizationKey})"></div>
+
+<div class="container-fluid vh-100">
+    <div class="row vh-100">
+        <div th:replace="common/side_navigation :: side_navigation ('organizations', ${organizationKey})"></div>
+
+        <main id="content" role="main" class="col-lg-10 px-5 py-4 container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 th:text="#{messages.error}">Error</h1>
+
+                    <p class="pt-3" th:text="#{messages.something_went_wrong}">Oops something went wrong...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<div th:replace="common/footer :: copy"></div>
+
+</body>
+</html>
