@@ -4,6 +4,9 @@ object Views {
 
     const val DASHBOARD = "dashboard"
 
+    const val REGISTER = "register"
+    const val REGISTER_CONFIRMATION = "register_confirmation"
+
     const val COMPETITION_RANKING = "competition_ranking"
     const val SERIES_RANKING = "series_ranking"
 
