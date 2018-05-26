@@ -34,5 +34,6 @@ header {
 
 .vh-100 {
     height: calc(100vh - 62px);
+    min-height: 100%;
 }
 
