@@ -1,15 +1,16 @@
-html {
-}
-
-body {
-    height: 100vh;
+html, body, .container, .container-fluid {
+    min-height: 100%;
 }
 
 header {
     position: sticky;
-    position: sticky;
     top: 0;
     z-index: 1071;
+}
+
+.sidebar {
+    display: table-cell;
+    height: 100%;
 }
 
 #content {
@@ -34,3 +35,4 @@ header {
 .vh-100 {
     height: calc(100vh - 62px);
 }
+
