@@ -7,6 +7,7 @@ import org.junit.Ignore
 import org.junit.Test
 
 import guru.nidi.codeassert.jacoco.CoverageType.*
+import guru.nidi.codeassert.jacoco.JacocoResult
 import guru.nidi.codeassert.junit.CodeAssertMatchers.hasEnoughCoverage
 import org.hamcrest.MatcherAssert.assertThat
 

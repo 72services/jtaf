@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
-class UserDetailsService(private val securityUserRepository: SecurityUserRepository) : UserDetailsService {
+class JtafUserDetailsService(private val securityUserRepository: SecurityUserRepository) : UserDetailsService {
 
     @Transactional
     override fun loadUserByUsername(email: String): UserDetails? {

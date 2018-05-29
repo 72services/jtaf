@@ -2,23 +2,21 @@ package ch.jtaf.architecture
 
 import guru.nidi.codeassert.config.AnalyzerConfig
 import guru.nidi.codeassert.config.In
+import guru.nidi.codeassert.config.Language
 import guru.nidi.codeassert.dependency.Dependencies
 import guru.nidi.codeassert.dependency.DependencyRule
-import guru.nidi.codeassert.pmd.CpdAnalyzer
-import guru.nidi.codeassert.pmd.CpdMatchCollector
-import guru.nidi.codeassert.pmd.PmdAnalyzer
-import guru.nidi.codeassert.pmd.PmdViolationCollector
 import net.sourceforge.pmd.RulePriority
 import org.junit.Test
 
 import guru.nidi.codeassert.junit.CodeAssertMatchers.hasNoCodeDuplications
 import guru.nidi.codeassert.junit.CodeAssertMatchers.hasNoPmdViolations
+import guru.nidi.codeassert.pmd.*
 import guru.nidi.codeassert.pmd.PmdRulesets.*
 import org.hamcrest.MatcherAssert.assertThat
 
 class PmdTest {
 
-    private val config = AnalyzerConfig.maven().main()
+    private val config = AnalyzerConfig.maven(Language.KOTLIN).main()
 
     @Test
     fun pmd() {
