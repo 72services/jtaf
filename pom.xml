@@ -145,7 +145,7 @@
         </dependency>
         <dependency>
             <groupId>com.tngtech.archunit</groupId>
-            <artifactId>archunit</artifactId>
+            <artifactId>archunit-junit</artifactId>
             <version>0.8.0</version>
             <scope>test</scope>
         </dependency>
