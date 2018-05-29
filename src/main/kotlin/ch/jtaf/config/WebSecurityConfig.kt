@@ -18,6 +18,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
                 .authorizeRequests()
+                .antMatchers("/actuator/health").permitAll()
                 .antMatchers("/actuator/**", "/sec/**").authenticated()
                 .anyRequest().permitAll()
                 .and().formLogin().loginPage("/login").permitAll()

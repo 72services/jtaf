@@ -4,6 +4,9 @@ object Views {
 
     const val DASHBOARD = "dashboard"
 
+    const val REGISTER = "register"
+    const val REGISTER_CONFIRMATION = "register_confirmation"
+
     const val COMPETITION_RANKING = "competition_ranking"
     const val SERIES_RANKING = "series_ranking"
 
@@ -22,6 +25,7 @@ object Views {
 
     const val ORGANIZATION = "sec/organization"
     const val ORGANIZATIONS = "sec/organizations"
+    const val SHARE = "/sec/share"
 
     const val RESULTS = "sec/results"
 
@@ -29,4 +33,5 @@ object Views {
     const val SERIESLIST = "sec/serieslist"
 
     const val USER = "/sec/user"
+
 }

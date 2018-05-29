@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head th:replace="common/head :: head"></head>
+<body>
+
+<!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
+<div th:replace="common/navigation :: navigation ('login', ${organizationKey})"></div>
+
+<div class="container-fluid vh-100">
+    <div class="row vh-100">
+        <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
+
+        <main id="content" role="main" class="col-lg-10 px-5 py-4 container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 th:text="#{messages.register}">Register</h1>
+
+                    <!--/*@thymesVar id="newUser" type="ch.jtaf.boundary.controller.NewUser"*/-->
+                    <form th:if="${confirmation == null}" action="#" th:action="@{/register}" th:object="${newUser}" method="post">
+
+                        <div class="form-group">
+                            <label for="email" th:text="#{messages.email}">E-Mail</label>
+                            <input class="form-control" id="email" th:placeholder="#{messages.email}"
+                                   th:field="*{email}" required th:autofocus="true">
+                        </div>
+                        <div class="form-group">
+                            <label for="first_name" th:text="#{messages.first_name}">E-Mail</label>
+                            <input class="form-control" id="first_name" th:placeholder="#{messages.first_name}"
+                                   th:field="*{firstName}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name" th:text="#{messages.last_name}">E-Mail</label>
+                            <input class="form-control" id="last_name" th:placeholder="#{messages.last_name}"
+                                   th:field="*{lastName}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" th:text="#{messages.password}">Password</label>
+                            <input class="form-control" id="password" th:placeholder="#{messages.password}"
+                                   th:field="*{password}" required type="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_confirm" th:text="#{messages.email}">Password Confirm</label>
+                            <input class="form-control" id="password_confirm"
+                                   th:placeholder="#{messages.password_confirm}"
+                                   th:field="*{passwordConfirmation}" required type="password">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary" th:text="#{messages.register}">Register</button>
+                    </form>
+
+                    <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
+                    <div th:replace="common/message :: message (${message})"></div>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+</div>
+
+<div th:replace="common/footer :: copy"></div>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head th:replace="common/head :: head"></head>
+<body>
+
+<!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
+<div th:replace="common/navigation :: navigation ('organizations', ${organizationKey})"></div>
+
+<div class="container-fluid vh-100">
+    <div class="row vh-100">
+        <div th:replace="common/side_navigation :: side_navigation ('organizations', ${organizationKey})"></div>
+
+        <main id="content" role="main" class="col-lg-10 px-5 py-4 container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 th:text="#{messages.share}">Share</h1>
+
+                    <h2>Users</h2>
+
+                    <table>
+                        <!--/*@thymesVar id="organizationUsers" type="java.util.List"*/-->
+                        <!--/*@thymesVar id="organizationUser" type="ch.jtaf.entity.OrganizationUser"*/-->
+                        <tr th:each="organizationUser: ${organizationUsers}">
+                            <td th:text="${organizationUser.user.email}"></td>
+                        </tr>
+                    </table>
+
+                    <h2>Add User</h2>
+
+                    <!--/*@thymesVar id="organizationShare" type="ch.jtaf.boundary.controller.OrganizationShare"*/-->
+                    <form action="#" th:action="@{/sec/organization/${organizationShare.organization.id}/share}"
+                          th:object="${organizationShare}" method="post">
+
+                        <div class="form-group">
+                            <label for="id" th:text="#{messages.organization}">Organization</label>
+                            <input class="form-control" id="id" readonly th:field="*{organization.key}">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" th:text="#{messages.email}"></label>
+                            <input class="form-control" id="email" th:placeholder="#{messages.email}"
+                                   th:field="*{email}" required th:autofocus="true">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary" th:text="#{messages.share}">Share</button>
+
+                        <a th:href="@{/sec/organizations}" th:text="#{messages.back}" class="btn">Back</a>
+
+                        <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
+                        <div th:replace="common/message :: message (${message})"></div>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+</div>
+
+<div th:replace="common/footer :: copy"></div>
+
+</body>
+</html>

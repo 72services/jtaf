@@ -95,7 +95,6 @@ class AthleteController(private val athleteRepository: AthleteRepository,
             }
         }
 
-
         val organization = organizationRepository.findByKey(organizationKey)
         athlete.organizationId = organization.id
 
@@ -129,6 +128,7 @@ class AthleteController(private val athleteRepository: AthleteRepository,
             model["clubs"] = getClubsWithEmpty(organization)
 
             model["message"] = Message(Message.success, "Athlete saved!")
+            model["saved"] = true
 
             return ATHLETE
         }

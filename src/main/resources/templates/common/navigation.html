@@ -8,13 +8,22 @@
             JTAF - Track and Field
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".collapsibleNav"
-                aria-controls="navbarTop navbarSide" aria-expanded="false" aria-label="Toggle navigation" onclick="toggleSidebar()">
+                aria-controls="navbarTop navbarSide" aria-expanded="false" aria-label="Toggle navigation"
+                onclick="toggleSidebar()">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapsibleNav collapse navbar-collapse" id="navbarTop">
             <ul class="navbar-nav ml-md-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="https://github.com/simasch/jtaf/" target="_blank">About</a>
+                </li>
+                <li class="nav-item">
+                    <!--/*@thymesVar id="applicationVersion" type="java.lang.String"*/-->
+                    <a class="nav-link" href="https://github.com/simasch/jtaf/" target="_blank">v.[[${applicationVersion}]]</a>
+                </li>
+                <li th:if="${#authentication.principal == 'anonymousUser'}"
+                    th:class="${page == 'organizations'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" th:text="#{messages.register}" th:href="@{/register}">Register</a>
                 </li>
                 <li th:if="${#authentication.principal == 'anonymousUser'}"
                     th:class="${page == 'organizations'} ? 'nav-item active' : 'nav-item'">

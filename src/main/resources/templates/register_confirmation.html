@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head th:replace="common/head :: head"></head>
+<body>
+
+<!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
+<div th:replace="common/navigation :: navigation ('login', ${organizationKey})"></div>
+
+<div class="container-fluid vh-100">
+    <div class="row vh-100">
+        <div th:replace="common/side_navigation :: side_navigation ('index', ${organizationKey})"></div>
+
+        <main id="content" role="main" class="col-lg-10 px-5 py-4 container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 th:text="#{messages.register_confirmed}">Registration Confirmed</h1>
+
+                    <p>Your registration has been confirmed</p>
+                    <p><a th:text="#{messages.please_login}"
+                          th:href="@{/sec/organizations(organizationKey=${organizationKey})}">Please Login</a>
+                    </p>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+</div>
+
+<div th:replace="common/footer :: copy"></div>
+
+</body>
+</html>

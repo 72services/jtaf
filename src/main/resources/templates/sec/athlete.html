@@ -6,8 +6,8 @@
 <!--/*@thymesVar id="organizationKey" type="java.lang.String"*/-->
 <div th:replace="common/navigation :: navigation ('athletes', ${organizationKey})"></div>
 
-<div class="container-fluid h-100">
-    <div class="row h-100">
+<div class="container-fluid vh-100">
+    <div class="row vh-100">
         <div th:replace="common/side_navigation :: side_navigation ('athletes', ${organizationKey})"></div>
 
         <main id="content" role="main" class="col-lg-10 px-5 py-4 container">
@@ -66,6 +66,14 @@
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+
+                        <!--/*@thymesVar id="saved" type="java.lang.Boolean"*/-->
+                        <a th:if="${saved != null && saved}"
+                           th:href="@{/sec/{organizationKey}/athlete(organizationKey=${organizationKey},seriesId=${seriesId},mode=${mode})}"
+                           th:text="#{messages.add_athlete}" class="btn">Add Athlete</a>
+                        <a th:if="${saved != null && saved && seriesId != null}"
+                           th:href="@{/sec/{organizationKey}/athletes/{athleteId}/series/{seriesId}(organizationKey=${organizationKey},seriesId=${seriesId},athleteId=${athlete.id},returnTo=${returnTo})}"
+                           th:text="#{messages.add_to_series}" class="btn">Add to Series</a>
                         <a th:href="@{/sec/{organizationKey}/athletes(organizationKey=${organizationKey},seriesId=${seriesId},mode=${mode})}"
                            th:text="#{messages.back}" class="btn">Back</a>
 

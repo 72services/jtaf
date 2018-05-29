@@ -2,19 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 
-<footer class="footer w-100" th:fragment="copy">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-2 bg-light">
-                Sponsored by
-                <a href="https://72.services/" target="_blank">72&reg; Services LLC</a>
-            </div>
-            <div class="col-lg-10 text-right">
-                <!--/*@thymesVar id="applicationVersion" type="java.lang.String"*/-->
-                <span th:text="${applicationVersion}"></span>
-            </div>
-        </div>
-    </div>
+<footer id="footer" class="footer col-lg-2 bg-light" th:fragment="copy">
+    <a href="https://72.services/" target="_blank">JTAF is free and open source<br>sponsored by 72&reg; Services LLC</a>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -29,8 +18,10 @@
     <script>
         if (window.matchMedia('(max-width: 960px)').matches) {
             $('#sidebar').hide();
+            $('#footer').hide();
         } else {
             $('#sidebar').show();
+            $('#footer').show();
         }
 
         function toggleSidebar() {
