@@ -26,8 +26,9 @@
                             <th th:text="#{messages.gender}">Gender</th>
                             <th th:text="#{messages.club}">Club</th>
                             <th class="text-right">
-                                <a th:href="@{/sec/{organizationKey}/athlete(organizationKey=${organizationKey},seriesId=${seriesId},mode=${mode})}"
-                                   th:text="#{messages.add_athlete}" class="text-right">Add Athlete</a>
+                                <a class="btn btn-primary text-right"
+                                   th:href="@{/sec/{organizationKey}/athlete(organizationKey=${organizationKey},seriesId=${seriesId},mode=${mode})}"
+                                   th:text="#{messages.add_athlete}">Add Athlete</a>
                             </th>
                         </tr>
                         <!--/*@thymesVar id="athletes" type="java.util.List<Athlete>"*/-->
@@ -43,11 +44,11 @@
                             <td th:text="${athlete.gender}">MALE</td>
                             <td th:text="${athlete.club == null ? '' : athlete.club.abbreviation}">TVE</td>
                             <td class="text-right">
-                                <a th:if="${mode == 'select'}"
+                                <a class="btn btn-primary" th:if="${mode == 'select'}"
                                    th:href="@{/sec/{organizationKey}/athletes/{athleteId}/series/{seriesId}/(organizationKey=${organizationKey},seriesId=${seriesId},athleteId=${athlete.id})}"
                                    th:text="#{messages.select}">Select</a>
 
-                                <a th:if="${mode == 'edit'}"
+                                <a class="btn btn-danger" th:if="${mode == 'edit'}"
                                    th:href="@{/sec/{organizationKey}/athletes/{athleteId}/delete(organizationKey=${organizationKey},athleteId=${athlete.id})}"
                                    th:text="#{messages.delete}"
                                    onclick="return confirm('Are you sure?')">Delete</a>
