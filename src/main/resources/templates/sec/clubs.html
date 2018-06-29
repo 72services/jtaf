@@ -22,8 +22,9 @@
                             <th th:text="#{messages.abbreviation}">Abbreviation</th>
                             <th th:text="#{messages.name}">Name</th>
                             <th class="text-right">
-                                <a th:href="@{/sec/{organizationKey}/club(organizationKey=${organizationKey})}" th:text="#{messages.add_club}"
-                                   class="text-right">Add Club</a></th>
+                                <a class="btn btn-primary text-right"
+                                   th:href="@{/sec/{organizationKey}/club(organizationKey=${organizationKey})}"
+                                   th:text="#{messages.add_club}">Add Club</a></th>
                         </tr>
                         <tr th:each="club: ${clubs}">
                             <td>
@@ -31,7 +32,7 @@
                                    th:text="${club.abbreviation}">jump</a>
                             </td>
                             <td th:text="${club.name}">Long Jump</td>
-                            <td class="text-right"><a
+                            <td class="text-right"><a class="btn btn-danger"
                                     th:href="@{/sec/{organizationKey}/club/{clubId}/delete(organizationKey=${organizationKey},clubId=${club.id})}"
                                     th:text="#{messages.delete}">Delete</a></td>
                         </tr>

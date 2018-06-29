@@ -2,7 +2,6 @@ package ch.jtaf.boundary.controller
 
 import ch.jtaf.boundary.controller.Views.ORGANIZATION
 import ch.jtaf.boundary.dto.Message
-import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.control.repository.OrganizationRepository
 import ch.jtaf.entity.Organization
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -55,4 +54,18 @@ class OrganizationController(private val organizationRepository: OrganizationRep
 
         return ORGANIZATION
     }
+
+    @GetMapping("/sec/organization/{organizationId}/share")
+    fun getShares(@AuthenticationPrincipal user: User, @PathVariable organizationId: Long, @RequestParam organizationKey: String?, model: Model): String {
+        val optional = organizationRepository.findById(organizationId)
+        if (optional.isPresent) {
+            val organization = optional.get()
+            model["organizationUsers"] = organization.users
+            model["organizationShare"] = OrganizationShare(organization)
+        }
+        model["organizationKey"] = organizationKey ?: ""
+
+        return Views.SHARE
+    }
+
 }

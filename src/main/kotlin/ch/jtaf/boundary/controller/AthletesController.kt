@@ -5,7 +5,6 @@ import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.control.repository.AthleteRepository
 import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.OrganizationRepository
-import ch.jtaf.control.repository.SeriesRepository
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller

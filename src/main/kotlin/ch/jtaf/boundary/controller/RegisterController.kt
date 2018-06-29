@@ -1,19 +1,11 @@
 package ch.jtaf.boundary.controller
 
-import ch.jtaf.boundary.controller.Views.DASHBOARD
 import ch.jtaf.boundary.controller.Views.REGISTER
 import ch.jtaf.boundary.controller.Views.REGISTER_CONFIRMATION
-import ch.jtaf.boundary.controller.Views.USER
 import ch.jtaf.boundary.dto.Message
 import ch.jtaf.control.repository.SecurityUserRepository
 import ch.jtaf.control.service.MailService
-import ch.jtaf.entity.PasswordChangeDTO
 import ch.jtaf.entity.SecurityUser
-import com.sendgrid.SendGrid
-import org.springframework.mail.SimpleMailMessage
-import org.springframework.mail.javamail.JavaMailSender
-import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model

@@ -16,8 +16,9 @@
                     <h1 th:text="#{messages.series}">Series</h1>
                 </div>
                 <div class="col-lg-2 text-right" style="padding-top: 20px;">
-                    <a th:href="@{/sec/{organizationKey}/series(organizationKey=${organizationKey})}" th:text="#{messages.add_series}"
-                       class="text-right font-weight-bold">Add Series</a>
+                    <a th:href="@{/sec/{organizationKey}/series(organizationKey=${organizationKey})}"
+                       th:text="#{messages.add_series}"
+                       class="btn btn-primary text-right">Add Series</a>
                 </div>
             </div>
 
@@ -29,22 +30,27 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-lg-2">
-                                    <img th:if="${series.logo != null}" th:src="@{/series/{seriesId}/logo(seriesId=${series.id})}">
+                                    <img th:if="${series.logo != null}"
+                                         th:src="@{/series/{seriesId}/logo(seriesId=${series.id})}">
                                 </div>
                                 <div class="col-lg-6">
-                                    <h5 class="card-title">
-                                        <a th:href="@{/sec/{organizationKey}/series/{seriesId}(organizationKey=${organizationKey},seriesId=${series.id})}"
-                                           th:text="${series.name}" class="font-weight-bold">CIS 2018</a>
+                                    <h5 class="card-title" th:text="${series.name}">
+                                        CIS 2018
                                     </h5>
                                 </div>
                                 <div class="col-lg-4 text-right">
-                                    <a class="btn"
-                                       th:href="@{/sec/{organizationKey}/{seriesId}/delete(organizationKey=${organizationKey},seriesId=${series.id})}"
-                                       th:text="#{messages.delete}" onclick="return confirm('Are you sure?')">Delete</a>
-                                    <a class="btn btn-primary" th:href="@{/ranking/series/{seriesId}(seriesId=${series.id}, organizationKey=${organizationKey})}"
-                                       th:text="#{messages.series_ranking}">
-                                        Series Ranking
-                                    </a>
+                                    <div class="btn-group" role="group">
+                                        <a class="btn btn-primary"
+                                           th:href="@{/ranking/series/{seriesId}(seriesId=${series.id}, organizationKey=${organizationKey})}"
+                                           th:text="#{messages.series_ranking}">Series Ranking</a>
+                                        <a class="btn btn-primary"
+                                           th:href="@{/sec/{organizationKey}/series/{seriesId}(organizationKey=${organizationKey},seriesId=${series.id})}"
+                                           th:text="#{messages.edit}"> CIS 2018</a>
+                                        <a class="btn btn-danger"
+                                           th:href="@{/sec/{organizationKey}/{seriesId}/delete(organizationKey=${organizationKey},seriesId=${series.id})}"
+                                           th:text="#{messages.delete}"
+                                           onclick="return confirm('Are you sure?')">Delete</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -56,16 +62,20 @@
                                             <span th:text="${competition.competitionDate.toString()}">2017-06-10</span>
                                         </div>
                                         <div class="col-lg-5">
-                                            <a th:href="@{/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/results(organizationKey=${organizationKey},competitionId=${competition.id},seriesId=${series.id})}"
-                                               th:text="${competition.name}" class="font-weight-bold">CIS 1</a>
+                                            <span th:text="${competition.name}">CIS 1</span>
                                         </div>
                                         <div class="col-lg-1 text-right">
                                             <span th:text="${competition.numberOfAthletesWithResults + '/' + competition.numberOfAthletes}">Athletes 1/10</span>
                                         </div>
                                         <div class="col-lg-4 text-right">
-                                            <a th:href="@{/ranking/competition/{competitionId}(competitionId=${competition.id}, organizationKey=${organizationKey})}"
-                                               th:text="#{messages.ranking}"
-                                               class="btn btn-primary">Ranking</a>
+                                            <div class="btn-group" role="group">
+                                                <a class="btn btn-primary"
+                                                   th:href="@{/ranking/competition/{competitionId}(competitionId=${competition.id}, organizationKey=${organizationKey})}"
+                                                   th:text="#{messages.ranking}">Ranking</a>
+                                                <a class="btn btn-primary"
+                                                   th:href="@{/sec/{organizationKey}/series/{seriesId}/competition/{competitionId}/results(organizationKey=${organizationKey},competitionId=${competition.id},seriesId=${series.id})}"
+                                                   th:text="#{messages.enter_results}">Enter Results</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </li>

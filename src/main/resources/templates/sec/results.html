@@ -33,7 +33,7 @@
                     </form>
 
                     <!--/*@thymesVar id="athletes" type="java.util.List<ch.jtaf.entity.AthleteDTO>"*/-->
-                    <h2 th:if="${!athletes.isEmpty()}" th:text="#{messages.athletes}">Athletes</h2>
+                    <h2 class="mt-4" th:if="${!athletes.isEmpty()}" th:text="#{messages.athletes}">Athletes</h2>
 
                     <table th:if="${!athletes.isEmpty()}" class="table">
                         <!--/*@thymesVar id="dto" type="ch.jtaf.entity.AthleteDTO"*/-->
@@ -61,7 +61,7 @@
                     </table>
 
                     <!--/*@thymesVar id="athlete" type="ch.jtaf.entity.AthleteDTO"*/-->
-                    <h2 th:if="${athlete != null}" th:text="#{messages.athlete}">Athlete</h2>
+                    <h2 class="mt-4" th:if="${athlete != null}" th:text="#{messages.athlete}">Athlete</h2>
 
                     <table th:if="${athlete != null}" class="table">
                         <tr>

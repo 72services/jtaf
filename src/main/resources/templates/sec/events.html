@@ -26,9 +26,9 @@
                             <th>B</th>
                             <th>C</th>
                             <th class="text-right">
-                                <a th:if="${mode == 'edit'}"
+                                <a class="btn btn-primary text-right" th:if="${mode == 'edit'}"
                                    th:href="@{/sec/{organizationKey}/event(organizationKey=${organizationKey})}"
-                                   th:text="#{messages.add_event}" class="text-right">Add Event</a>
+                                   th:text="#{messages.add_event}">Add Event</a>
                             </th>
                         </tr>
                         <!--/*@thymesVar id="events" type="java.util.List<Event>"*/-->
@@ -48,13 +48,13 @@
                             <td th:text="${event.c}"></td>
 
                             <td class="text-right">
-                                <a th:if="${mode == 'edit'}"
+                                <a class="btn btn-danger" th:if="${mode == 'edit'}"
                                    th:href="@{/sec/{organizationKey}/events/{eventId}/delete(organizationKey=${organizationKey},eventId=${event.id})}"
                                    th:text="#{messages.delete}" onclick="return confirm('Are you sure?')">Delete</a>
 
                                 <!--/*@thymesVar id="seriesId" type="java.lang.Long"*/-->
                                 <!--/*@thymesVar id="categoryId" type="java.lang.Long"*/-->
-                                <a th:if="${mode == 'select'}"
+                                <a class="btn btn-primary" th:if="${mode == 'select'}"
                                    th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}/event/{eventId}(organizationKey=${organizationKey},seriesId=${seriesId},categoryId=${categoryId},eventId=${event.id})}"
                                    th:text="#{messages.select}">Select</a>
                             </td>
