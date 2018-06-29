@@ -2,10 +2,8 @@ package ch.jtaf.boundary.controller
 
 import ch.jtaf.boundary.controller.Views.ORGANIZATION
 import ch.jtaf.boundary.dto.Message
-import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.control.repository.OrganizationRepository
 import ch.jtaf.entity.Organization
-import ch.jtaf.entity.OrganizationUser
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller

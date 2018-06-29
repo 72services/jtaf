@@ -7,12 +7,10 @@ import guru.nidi.codeassert.config.Language
 import guru.nidi.codeassert.dependency.DependencyRules
 import guru.nidi.codeassert.findbugs.BugCollector
 import guru.nidi.codeassert.findbugs.FindBugsAnalyzer
-import guru.nidi.codeassert.findbugs.FindBugsResult
-import guru.nidi.codeassert.pmd.PmdRuleset
-import org.junit.Test
-
 import guru.nidi.codeassert.junit.CodeAssertMatchers.hasNoBugs
+import guru.nidi.codeassert.pmd.PmdRuleset
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Test
 
 class FindBugsTest {
 

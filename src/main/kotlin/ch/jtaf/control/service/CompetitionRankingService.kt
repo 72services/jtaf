@@ -13,7 +13,6 @@ import ch.jtaf.entity.Competition
 import ch.jtaf.entity.Result
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.stereotype.Component
-import java.util.*
 
 @Component
 class CompetitionRankingService(private val competitionRepository: CompetitionRepository,

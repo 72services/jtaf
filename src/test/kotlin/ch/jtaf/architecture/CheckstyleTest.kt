@@ -2,16 +2,14 @@ package ch.jtaf.architecture
 
 import com.puppycrawl.tools.checkstyle.api.SeverityLevel
 import guru.nidi.codeassert.checkstyle.CheckstyleAnalyzer
-import guru.nidi.codeassert.checkstyle.CheckstyleResult
 import guru.nidi.codeassert.checkstyle.StyleChecks
 import guru.nidi.codeassert.checkstyle.StyleEventCollector
 import guru.nidi.codeassert.config.AnalyzerConfig
 import guru.nidi.codeassert.config.In
 import guru.nidi.codeassert.config.Language
-import org.junit.Test
-
 import guru.nidi.codeassert.junit.CodeAssertMatchers.hasNoCheckstyleIssues
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Test
 
 class CheckstyleTest {
 

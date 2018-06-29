@@ -2,14 +2,13 @@ package ch.jtaf.architecture
 
 import guru.nidi.codeassert.config.For
 import guru.nidi.codeassert.jacoco.CoverageCollector
-import guru.nidi.codeassert.jacoco.JacocoAnalyzer
-import org.junit.Ignore
-import org.junit.Test
-
 import guru.nidi.codeassert.jacoco.CoverageType.*
+import guru.nidi.codeassert.jacoco.JacocoAnalyzer
 import guru.nidi.codeassert.jacoco.JacocoResult
 import guru.nidi.codeassert.junit.CodeAssertMatchers.hasEnoughCoverage
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Ignore
+import org.junit.Test
 
 class CodeCoverageTest {
 

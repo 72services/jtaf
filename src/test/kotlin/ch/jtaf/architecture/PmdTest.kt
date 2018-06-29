@@ -5,14 +5,13 @@ import guru.nidi.codeassert.config.In
 import guru.nidi.codeassert.config.Language
 import guru.nidi.codeassert.dependency.Dependencies
 import guru.nidi.codeassert.dependency.DependencyRule
-import net.sourceforge.pmd.RulePriority
-import org.junit.Test
-
 import guru.nidi.codeassert.junit.CodeAssertMatchers.hasNoCodeDuplications
 import guru.nidi.codeassert.junit.CodeAssertMatchers.hasNoPmdViolations
 import guru.nidi.codeassert.pmd.*
 import guru.nidi.codeassert.pmd.PmdRulesets.*
+import net.sourceforge.pmd.RulePriority
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Test
 
 class PmdTest {
 

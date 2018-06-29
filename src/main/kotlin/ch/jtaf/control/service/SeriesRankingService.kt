@@ -9,7 +9,6 @@ import ch.jtaf.control.repository.SeriesRepository
 import ch.jtaf.entity.AthleteWithResultsDTO
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.stereotype.Component
-import java.util.*
 
 @Component
 class SeriesRankingService(private val seriesRepository: SeriesRepository,

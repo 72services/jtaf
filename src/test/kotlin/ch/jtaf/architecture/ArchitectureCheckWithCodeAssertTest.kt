@@ -4,10 +4,9 @@ import guru.nidi.codeassert.config.AnalyzerConfig
 import guru.nidi.codeassert.config.Language
 import guru.nidi.codeassert.dependency.*
 import guru.nidi.codeassert.junit.CodeAssertMatchers
-import org.junit.Test
-
 import guru.nidi.codeassert.junit.CodeAssertMatchers.matchesRulesExactly
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Test
 
 class ArchitectureCheckWithCodeAssertTest {
 
