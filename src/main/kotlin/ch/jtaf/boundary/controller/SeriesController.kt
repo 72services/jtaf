@@ -19,6 +19,8 @@ import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.multipart.MultipartFile
 import java.awt.Image
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
@@ -146,6 +148,26 @@ class SeriesController(private val seriesRepository: SeriesRepository,
         model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(series.id!!)
 
         model["message"] = Message(Message.success, "Series saved!")
+
+        return SERIES
+    }
+
+    @CheckOrganizationAccess
+    @PostMapping("/sec/{organizationKey}/series/{seriesId}/logo")
+    fun uploadLogo(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String,
+                   @PathVariable seriesId: Long, @RequestParam logo: MultipartFile, model: Model): String {
+        val series = seriesRepository.getOne(seriesId)
+
+        series.logo = logo.bytes;
+
+        seriesRepository.save(series)
+
+        model["series"] = series
+
+        model["categories"] = categoryRepository.findAllBySeriesIdOrderByAbbreviation(series.id!!)
+        model["athletes"] = athleteRepository.findAthleteDTOsBySeriesIdOrderByCategory(series.id!!)
+
+        model["message"] = Message(Message.success, "Logo succesfully uploaded!")
 
         return SERIES
     }
