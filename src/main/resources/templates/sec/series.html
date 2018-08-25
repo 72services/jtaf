@@ -16,34 +16,59 @@
                     <h1 th:text="#{messages.edit_series}">Edit Series</h1>
 
                     <!--/*@thymesVar id="series" type="ch.jtaf.entity.Series"*/-->
-                    <form action="#" th:action="@{/sec/{organizationKey}/series(organizationKey=${organizationKey})}"
-                          th:object="${series}" method="post">
-                        <div class="form-group">
-                            <label for="id">ID</label>
-                            <input class="form-control" id="id" readonly th:field="*{id}">
-                        </div>
-                        <div class="form-group">
-                            <label for="name" th:text="#{messages.name}">Name</label>
-                            <input class="form-control" id="name" placeholder="Name" th:field="*{name}" required
-                                   th:autofocus="true">
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="locked" th:placeholder="#{messages.locked}"
-                                   th:field="*{locked}">
-                            <label class="form-check-label" for="locked" th:text="#{messages.locked}">Locked</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="hidden" th:placeholder="#{messages.hidden}"
-                                   th:field="*{hidden}">
-                            <label class="form-check-label" for="hidden" th:text="#{messages.hidden}">Hidden</label>
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
-                        <a th:href="@{/sec/{organizationKey}(organizationKey=${organizationKey})}" th:text="#{messages.back}" class="btn">Back</a>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form action="#"
+                                  th:action="@{/sec/{organizationKey}/series(organizationKey=${organizationKey})}"
+                                  th:object="${series}" method="post">
+                                <div class="form-group">
+                                    <label for="id">ID</label>
+                                    <input class="form-control" id="id" readonly th:field="*{id}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" th:text="#{messages.name}">Name</label>
+                                    <input class="form-control" id="name" placeholder="Name" th:field="*{name}" required
+                                           th:autofocus="true">
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="locked"
+                                           th:placeholder="#{messages.locked}"
+                                           th:field="*{locked}">
+                                    <label class="form-check-label" for="locked"
+                                           th:text="#{messages.locked}">Locked</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="hidden"
+                                           th:placeholder="#{messages.hidden}"
+                                           th:field="*{hidden}">
+                                    <label class="form-check-label" for="hidden"
+                                           th:text="#{messages.hidden}">Hidden</label>
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-primary" th:text="#{messages.save}">Save</button>
+                                <a th:href="@{/sec/{organizationKey}(organizationKey=${organizationKey})}"
+                                   th:text="#{messages.back}" class="btn">Back</a>
 
-                        <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
-                        <div th:replace="common/message :: message (${message})"></div>
-                    </form>
+                                <!--/*@thymesVar id="message" type="ch.jtaf.boundary.dto.Message"*/-->
+                                <div th:replace="common/message :: message (${message})"></div>
+                            </form>
+                        </div>
+                        <div class="col-lg-6">
+                            <img th:if="${series.logo != null}"
+                                 th:src="@{/series/{seriesId}/logo(seriesId=${series.id})}">
+                            <br><br>
+                            <form action="#"
+                                  th:action="@{/sec/{organizationKey}/series/{seriesId}/logo(organizationKey=${organizationKey}, seriesId=${series.id})}"
+                                  method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="name" th:text="#{messages.logo}">Logo</label>
+                                    <input class="form-control" type="file" name="logo"/>
+                                </div>
+                                <button type="submit" class="btn btn-primary" th:text="#{messages.upload}"></button>
+                            </form>
+                        </div>
+                    </div>
+
                     <br>
 
                     <h2 th:text="#{messages.competitions}">Competitions</h2>
@@ -94,7 +119,8 @@
                         <tr th:each="category : ${categories}">
                             <td style="width: 50%;">
                                 <a th:href="@{/sec/{organizationKey}/series/{seriesId}/category/{categoryId}(organizationKey=${organizationKey},seriesId=${series.id},categoryId=${category.id})}"
-                                   th:text="${category.abbreviation + ' ' + category.name}" class="font-weight-bold">A Knaben</a>
+                                   th:text="${category.abbreviation + ' ' + category.name}" class="font-weight-bold">A
+                                    Knaben</a>
                             </td>
                             <td th:text="${category.yearFrom}">1900</td>
                             <td th:text="${category.yearTo}">2999</td>
