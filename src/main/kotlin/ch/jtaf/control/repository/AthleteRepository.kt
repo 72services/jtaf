@@ -9,9 +9,9 @@ interface AthleteRepository : JpaRepository<Athlete, Long> {
 
     fun findByOrganizationIdOrderByLastNameAscFirstNameAsc(organizationId: Long): List<Athlete>
 
-    @Query("SELECT a.* FROM athlete a WHERE a.organization_id = 1 AND a.id NOT IN (SELECT ca.athlete_id FROM category_athlete ca WHERE ca.athlete_id = a.id ORDER BY a.last_name, a.first_name)",
+    @Query("SELECT a.* FROM athlete a WHERE a.organization_id = :organizationId AND a.id NOT IN (SELECT ca.athlete_id FROM category_athlete ca JOIN category c on ca.category_id = c.id WHERE ca.athlete_id = a.id AND c.series_id = :seriesId ORDER BY a.last_name, a.first_name)",
             nativeQuery = true)
-    fun findByOrganizationIdAndNotAssignedToSeries(id: Long, seriesId: Long?): List<Athlete>
+    fun findByOrganizationIdAndNotAssignedToSeries(organizationId: Long, seriesId: Long?): List<Athlete>
 
     @Query("SELECT NEW ch.jtaf.entity.AthleteDTO" +
             "(a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, cl.abbreviation, c.abbreviation) " +
