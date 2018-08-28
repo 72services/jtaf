@@ -22,7 +22,7 @@ class EventsController(private val eventRepository: EventRepository,
     fun get(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, @RequestParam mode: String?,
             @RequestParam seriesId: Long?, @RequestParam categoryId: Long?, model: Model): String {
         val organization = organizationRepository.findByKey(organizationKey)
-        model["events"] = eventRepository.findByOrganizationId(organization.id!!)
+        model["events"] = eventRepository.findByOrganizationIdOrderByAbbreviationAscGenderDesc(organization.id!!)
 
         model["mode"] = mode ?: "edit"
         if (seriesId != null) {
@@ -42,7 +42,7 @@ class EventsController(private val eventRepository: EventRepository,
         eventRepository.deleteById(eventId)
 
         val organization = organizationRepository.findByKey(organizationKey)
-        model["events"] = eventRepository.findByOrganizationId(organization.id!!)
+        model["events"] = eventRepository.findByOrganizationIdOrderByAbbreviationAscGenderDesc(organization.id!!)
 
         model["mode"] = "edit"
 

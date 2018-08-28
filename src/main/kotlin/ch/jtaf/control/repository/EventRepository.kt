@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface EventRepository : JpaRepository<Event, Long> {
 
-    fun findByOrganizationId(organizationId: Long): List<Event>
+    fun findByOrganizationIdOrderByAbbreviationAscGenderDesc(organizationId: Long): List<Event>
 }
