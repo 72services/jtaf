@@ -16,7 +16,7 @@ class EventRepositoryTest : AbstractRepositoryTest() {
 
     @Test
     fun findAll() {
-        val list = eventRepository.findByOrganizationId(organizationId)
+        val list = eventRepository.findByOrganizationIdOrderByAbbreviationAscGenderDesc(organizationId)
 
         assertEquals(1, list.size)
         assertEquals("80", list[0].abbreviation)
