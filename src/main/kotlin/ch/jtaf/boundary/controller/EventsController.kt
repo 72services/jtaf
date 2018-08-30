@@ -2,6 +2,7 @@ package ch.jtaf.boundary.controller
 
 import ch.jtaf.boundary.controller.Views.EVENTS
 import ch.jtaf.boundary.security.CheckOrganizationAccess
+import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.EventRepository
 import ch.jtaf.control.repository.OrganizationRepository
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -15,14 +16,21 @@ import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 class EventsController(private val eventRepository: EventRepository,
-                       private val organizationRepository: OrganizationRepository) {
+                       private val organizationRepository: OrganizationRepository,
+                       private val categoryRepository: CategoryRepository) {
 
     @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/events")
     fun get(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, @RequestParam mode: String?,
             @RequestParam seriesId: Long?, @RequestParam categoryId: Long?, model: Model): String {
         val organization = organizationRepository.findByKey(organizationKey)
-        model["events"] = eventRepository.findByOrganizationIdOrderByAbbreviationAscGenderDesc(organization.id!!)
+
+        if (categoryId == null) {
+            model["events"] = eventRepository.findByOrganizationIdOrderByAbbreviationAscGenderDesc(organization.id!!)
+        } else {
+            val category = categoryRepository.getOne(categoryId)
+            model["events"] = eventRepository.findByOrganizationIdAndGenderOrderByAbbreviationAsc(organization.id!!, category.gender)
+        }
 
         model["mode"] = mode ?: "edit"
         if (seriesId != null) {
