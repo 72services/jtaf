@@ -45,7 +45,7 @@ class CompetitionRankingService(private val competitionRepository: CompetitionRe
     fun createEventsRanking(competitionId: Long): ByteArray {
         val competition = competitionRepository.getOne(competitionId)
         val series = seriesRepository.getOne(competition.seriesId!!)
-        val events = eventRepository.findByOrganizationId(series.organizationId!!)
+        val events = eventRepository.findByOrganizationIdOrderByAbbreviationAscGenderDesc(series.organizationId!!)
         val results = resultRepository.findByCompetitionId(competition.id!!)
 
         val list = events.map { event ->
