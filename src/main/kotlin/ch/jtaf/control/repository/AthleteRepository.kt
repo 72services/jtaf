@@ -4,6 +4,7 @@ import ch.jtaf.entity.Athlete
 import ch.jtaf.entity.AthleteDTO
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import java.util.*
 
 interface AthleteRepository : JpaRepository<Athlete, Long> {
 
@@ -38,5 +39,10 @@ interface AthleteRepository : JpaRepository<Athlete, Long> {
             "(a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, cl.abbreviation, c.abbreviation) " +
             "FROM Category c JOIN c.athletes a LEFT JOIN a.club cl WHERE a.id = :athleteId")
     fun getOneAthleteDTO(athleteId: Long): AthleteDTO
+
+    @Query("SELECT NEW ch.jtaf.entity.AthleteDTO" +
+            "(a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, cl.abbreviation, c.abbreviation) " +
+            "FROM Category c JOIN c.athletes a LEFT JOIN a.club cl WHERE c.seriesId = :seriesId AND a.id = :id")
+    fun findAthleteDTOByIdAndSeriesId(id: Long, seriesId: Long): Optional<AthleteDTO>
 
 }

@@ -75,4 +75,12 @@ class AthleteRepositoryTest : AbstractRepositoryTest() {
 
         assertNotNull(athlete)
     }
+
+    @Test
+    fun findAthleteDTOByIdAndSeriesId() {
+        val athlete = athleteRepository.findAthleteDTOByIdAndSeriesId(athleteId, seriesId)
+
+        assertNotNull(athlete)
+    }
+
 }

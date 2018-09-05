@@ -29,6 +29,11 @@ data class Result(
         var position: Int = 0
 ) {
     fun toInt(): Int {
-        return result.replace("\\.".toRegex(), "").toInt()
+        val resultOnlyNumber = result.replace("\\.".toRegex(), "")
+        return if (resultOnlyNumber.isNotBlank()) {
+            resultOnlyNumber.toInt()
+        } else {
+            0
+        }
     }
 }
