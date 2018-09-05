@@ -29,25 +29,29 @@ class ResultsController(private val athleteRepository: AthleteRepository,
     @PostMapping("/sec/{organizationKey}/search")
     fun search(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, searchRequest: SearchRequest,
                model: Model): String {
+        var athletes: List<AthleteDTO> = ArrayList()
+
         val id = searchRequest.term.toLongOrNull()
         if (id != null) {
-            return getWithAthlete(user, organizationKey, id, searchRequest.seriesId, searchRequest.competitionId, model)
+            val athlete = athleteRepository.findAthleteDTOByIdAndSeriesId(id, searchRequest.seriesId)
+            if (athlete.isPresent) {
+                return getWithAthlete(user, organizationKey, id, searchRequest.seriesId, searchRequest.competitionId, model)
+            }
         } else {
-            val athletes = athleteRepository.searchAthletes(searchRequest.seriesId, searchRequest.term + "%")
+            athletes = athleteRepository.searchAthletes(searchRequest.seriesId, searchRequest.term + "%")
             if (athletes.size == 1) {
                 return getWithAthlete(user, organizationKey, athletes[0].id, searchRequest.seriesId, searchRequest.competitionId, model)
-            } else {
-                model["seriesId"] = searchRequest.seriesId
-                model["competitionId"] = searchRequest.competitionId
-
-                model["searchRequest"] = searchRequest
-
-                model["athletes"] = athletes
-                model["resultContainer"] = ResultContainer(searchRequest.seriesId, searchRequest.competitionId, null)
-
-                return RESULTS
             }
         }
+        model["seriesId"] = searchRequest.seriesId
+        model["competitionId"] = searchRequest.competitionId
+
+        model["searchRequest"] = searchRequest
+
+        model["athletes"] = athletes
+        model["resultContainer"] = ResultContainer(searchRequest.seriesId, searchRequest.competitionId, null)
+
+        return RESULTS
     }
 
     @CheckOrganizationAccess
