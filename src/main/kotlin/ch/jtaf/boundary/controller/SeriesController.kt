@@ -111,7 +111,7 @@ class SeriesController(private val seriesRepository: SeriesRepository,
             it.athletes.remove(athlete)
             categoryRepository.save(it)
 
-            resultRepository.deleteResultsByCategoryIdAndAthleteId(it.id, athleteId)
+            resultRepository.deleteResultsByCategoryIdAndAthleteId(it.id!!, athleteId)
         }
 
         model["series"] = series

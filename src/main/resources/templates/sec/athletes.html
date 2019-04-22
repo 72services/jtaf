@@ -36,7 +36,7 @@
                         <tr th:each="athlete: ${athletes}">
                             <td th:text="${athlete.id}">1</td>
                             <td>
-                                <a th:href="@{/sec/{organizationKey}/athlete/{athleteId}(organizationKey=${organizationKey},athleteId=${athlete.id},mode=${mode})}"
+                                <a th:href="@{/sec/{organizationKey}/athlete/{athleteId}(organizationKey=${organizationKey},seriesId=${seriesId},athleteId=${athlete.id},mode=${mode})}"
                                    th:text="${athlete.lastName}">Doe</a>
                             </td>
                             <td th:text="${athlete.firstName}">John</td>
