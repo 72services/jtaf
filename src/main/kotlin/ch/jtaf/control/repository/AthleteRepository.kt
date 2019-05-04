@@ -37,8 +37,8 @@ interface AthleteRepository : JpaRepository<Athlete, Long> {
 
     @Query("SELECT NEW ch.jtaf.entity.AthleteDTO" +
             "(a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, cl.abbreviation, c.abbreviation) " +
-            "FROM Category c JOIN c.athletes a LEFT JOIN a.club cl WHERE a.id = :athleteId")
-    fun getOneAthleteDTO(athleteId: Long): AthleteDTO
+            "FROM Category c JOIN c.athletes a LEFT JOIN a.club cl WHERE c.seriesId = :seriesId and a.id = :athleteId")
+    fun getOneAthleteDTO(athleteId: Long, seriesId: Long): AthleteDTO
 
     @Query("SELECT NEW ch.jtaf.entity.AthleteDTO" +
             "(a.id, a.lastName, a.firstName, a.yearOfBirth, a.gender, cl.abbreviation, c.abbreviation) " +

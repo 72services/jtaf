@@ -74,7 +74,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         model["competitionId"] = competitionId
         model["searchRequest"] = SearchRequest(seriesId = seriesId, competitionId = competitionId, term = athleteId.toString())
         model["athletes"] = ArrayList<AthleteDTO>()
-        model["athlete"] = athleteRepository.getOneAthleteDTO(athleteId)
+        model["athlete"] = athleteRepository.getOneAthleteDTO(athleteId, seriesId)
         model["resultContainer"] = ResultContainer(seriesId, competitionId, athlete.id, results)
 
         return RESULTS
@@ -101,7 +101,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
         model["competitionId"] = competitionId
         model["searchRequest"] = SearchRequest(resultContainer.seriesId, resultContainer.competitionId)
         model["athletes"] = ArrayList<AthleteDTO>()
-        model["athlete"] = athleteRepository.getOneAthleteDTO(resultContainer.athleteId!!)
+        model["athlete"] = athleteRepository.getOneAthleteDTO(resultContainer.athleteId!!, seriesId)
         model["resultContainer"] = resultContainer
 
         model["message"] = Message(Message.success, "Results saved!")
