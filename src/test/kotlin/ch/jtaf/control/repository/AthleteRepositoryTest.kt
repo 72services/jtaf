@@ -71,7 +71,7 @@ class AthleteRepositoryTest : AbstractRepositoryTest() {
 
     @Test
     fun getOneAthleteDTO() {
-        val athlete = athleteRepository.getOneAthleteDTO(athleteId)
+        val athlete = athleteRepository.getOneAthleteDTO(athleteId, seriesId)
 
         assertNotNull(athlete)
     }
