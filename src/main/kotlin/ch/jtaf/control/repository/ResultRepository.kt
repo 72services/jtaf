@@ -9,7 +9,7 @@ interface ResultRepository : JpaRepository<Result, Long> {
 
     fun findByAthleteIdAndCompetitionIdOrderByPosition(athleteId: Long, competitionId: Long): MutableList<Result>
 
-    fun findByCompetitionId(competitionId: Long): List<Result>
+    fun findByCompetitionIdOrderByPosition(competitionId: Long): List<Result>
 
     fun findByCompetitionSeriesId(seriesId: Long): List<Result>
 

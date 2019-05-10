@@ -16,7 +16,7 @@ class ResultRepositoryTest : AbstractRepositoryTest() {
 
     @Test
     fun findByCompetitionId() {
-        val list = resultRepository.findByCompetitionId(competitionId)
+        val list = resultRepository.findByCompetitionIdOrderByPosition(competitionId)
 
         assertEquals(0, list.size)
     }
