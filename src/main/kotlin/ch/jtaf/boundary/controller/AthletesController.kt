@@ -5,9 +5,11 @@ import ch.jtaf.boundary.security.CheckOrganizationAccess
 import ch.jtaf.control.repository.AthleteRepository
 import ch.jtaf.control.repository.CategoryRepository
 import ch.jtaf.control.repository.OrganizationRepository
+import ch.jtaf.control.repository.ResultRepository
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Controller
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
@@ -18,7 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam
 class AthletesController(private val athleteRepository: AthleteRepository,
                          private val organizationRepository: OrganizationRepository,
                          private val categoryRepository: CategoryRepository,
-                         private val seriesListController: SeriesListController) {
+                         private val seriesListController: SeriesListController,
+                         private val resultRepository: ResultRepository) {
 
     @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/athletes")
@@ -41,11 +44,13 @@ class AthletesController(private val athleteRepository: AthleteRepository,
         return ATHLETES
     }
 
+    @Transactional
     @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/athletes/{athleteId}/delete")
     fun deleteById(@AuthenticationPrincipal user: User, @PathVariable organizationKey: String, @PathVariable athleteId: Long,
                    model: Model): String {
 
+        resultRepository.deleteResultsFromActiveCompetitions(athleteId)
         athleteRepository.deleteById(athleteId)
 
         val organization = organizationRepository.findByKey(organizationKey)
