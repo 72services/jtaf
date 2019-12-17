@@ -1,13 +1,10 @@
 package ch.jtaf.control.repository
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import org.springframework.test.context.junit4.SpringRunner
 
-@RunWith(SpringRunner::class)
 @DataJpaTest
 class ResultRepositoryTest : AbstractRepositoryTest() {
 
@@ -16,7 +13,7 @@ class ResultRepositoryTest : AbstractRepositoryTest() {
 
     @Test
     fun findByCompetitionId() {
-        val list = resultRepository.findByCompetitionId(competitionId)
+        val list = resultRepository.findByCompetitionIdOrderByPosition(competitionId)
 
         assertEquals(0, list.size)
     }

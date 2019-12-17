@@ -1,7 +1,7 @@
 package ch.jtaf.control.repository
 
 import ch.jtaf.entity.*
-import org.junit.Before
+import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import javax.persistence.EntityManager
 
@@ -16,7 +16,7 @@ abstract class AbstractRepositoryTest {
     @Autowired
     private lateinit var em: EntityManager
 
-    @Before
+    @BeforeEach
     fun createTestData() {
         val securityGroup = SecurityGroup(name = "ADMIN")
         em.persist(securityGroup)
@@ -25,7 +25,7 @@ abstract class AbstractRepositoryTest {
         securityUser.groups.add(securityGroup)
         em.persist(securityUser)
 
-        val organization = Organization(key = "cis", name ="Concours Intersection", owner = email)
+        val organization = Organization(key = "cis", name = "Concours Intersection", owner = email)
         em.persist(organization)
         organizationId = organization.id!!
 

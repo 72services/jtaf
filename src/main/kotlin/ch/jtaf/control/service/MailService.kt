@@ -1,6 +1,9 @@
 package ch.jtaf.control.service
 
 import com.sendgrid.*
+import com.sendgrid.helpers.mail.Mail
+import com.sendgrid.helpers.mail.objects.Content
+import com.sendgrid.helpers.mail.objects.Email
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 

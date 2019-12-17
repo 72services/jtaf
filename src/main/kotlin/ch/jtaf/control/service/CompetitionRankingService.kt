@@ -33,7 +33,7 @@ class CompetitionRankingService(private val competitionRepository: CompetitionRe
 
     private fun createCompetitionRankingCategoryData(competition: Competition): List<CompetitionRankingCategoryData> {
         val categories = categoryRepository.findAllBySeriesIdOrderByAbbreviation(competition.seriesId!!)
-        val results = resultRepository.findByCompetitionId(competition.id!!)
+        val results = resultRepository.findByCompetitionIdOrderByPosition(competition.id!!)
 
         return categories.map {
             CompetitionRankingCategoryData(it, it.athletes.map { athlete ->
@@ -46,7 +46,7 @@ class CompetitionRankingService(private val competitionRepository: CompetitionRe
         val competition = competitionRepository.getOne(competitionId)
         val series = seriesRepository.getOne(competition.seriesId!!)
         val events = eventRepository.findByOrganizationIdOrderByAbbreviationAscGenderDesc(series.organizationId!!)
-        val results = resultRepository.findByCompetitionId(competition.id!!)
+        val results = resultRepository.findByCompetitionIdOrderByPosition(competition.id!!)
 
         val list = events.map { event ->
             EventsRankingEventData(event, results.filter { result -> event == result.event }.sortedBy { result -> result.toInt() })

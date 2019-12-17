@@ -4,10 +4,9 @@ import com.tngtech.archunit.core.importer.ClassFileImporter
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses
 import com.tngtech.archunit.library.Architectures.layeredArchitecture
 import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition.slices
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
-
-class ArchitectureCheckWithArchUnitTest {
+class ArchitectureCheckTest {
 
     private val basePackage = "ch.jtaf"
 

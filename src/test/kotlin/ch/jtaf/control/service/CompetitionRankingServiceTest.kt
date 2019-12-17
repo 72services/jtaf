@@ -4,16 +4,13 @@ import ch.jtaf.control.repository.CompetitionRepository
 import ch.jtaf.control.repository.SeriesRepository
 import ch.jtaf.entity.Competition
 import ch.jtaf.entity.Series
-import org.junit.After
-import org.junit.Assert.assertNotNull
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.junit4.SpringRunner
 
-@RunWith(SpringRunner::class)
 @SpringBootTest
 class CompetitionRankingServiceTest {
 
@@ -27,7 +24,7 @@ class CompetitionRankingServiceTest {
     private var competitionId: Long = 0L
     private var seriesId: Long = 0L
 
-    @Before
+    @BeforeEach
     fun createTestData() {
         val series = seriesRepository.save(Series(name = "Test"))
         seriesId = series.id!!
@@ -36,7 +33,7 @@ class CompetitionRankingServiceTest {
         competitionId = competition.id!!
     }
 
-    @After
+    @AfterEach
     fun removeTestData() {
         competitionRepository.deleteById(competitionId)
         seriesRepository.deleteById(seriesId)

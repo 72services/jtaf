@@ -9,15 +9,15 @@ interface ResultRepository : JpaRepository<Result, Long> {
 
     fun findByAthleteIdAndCompetitionIdOrderByPosition(athleteId: Long, competitionId: Long): MutableList<Result>
 
-    fun findByCompetitionId(competitionId: Long): List<Result>
+    fun findByCompetitionIdOrderByPosition(competitionId: Long): List<Result>
 
     fun findByCompetitionSeriesId(seriesId: Long): List<Result>
 
     @Modifying
-    @Query("delete from Result r where r.id in (select r.id from Result r where r.competition.competitionDate <= current_date and r.athlete.id = :athleteId)")
+    @Query("delete from Result r where r.athlete.id = :athleteId ")
     fun deleteResultsFromActiveCompetitions(athleteId: Long)
 
     @Modifying
-    @Query("delete from Result r where r.id in (select r.id from Result r where r.category.id = :categoryId and r.athlete.id = :athleteId)")
-    fun deleteResultsByCategoryIdAndAthleteId(categoryId: Long?, athleteId: Long)
+    @Query("delete from Result r where r.category.id = :categoryId and r.athlete.id = :athleteId")
+    fun deleteResultsByCategoryIdAndAthleteId(categoryId: Long, athleteId: Long)
 }

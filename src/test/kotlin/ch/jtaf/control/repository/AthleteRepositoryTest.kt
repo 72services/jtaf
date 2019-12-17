@@ -1,20 +1,17 @@
 package ch.jtaf.control.repository
 
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.test.context.junit4.SpringRunner
 
-@RunWith(SpringRunner::class)
 @DataJpaTest
 class AthleteRepositoryTest : AbstractRepositoryTest() {
 
     @Autowired
     lateinit var athleteRepository: AthleteRepository
-
 
     @Test
     fun findByOrganizationIdOrderByLastNameAscFirstNameAsc() {
@@ -71,7 +68,7 @@ class AthleteRepositoryTest : AbstractRepositoryTest() {
 
     @Test
     fun getOneAthleteDTO() {
-        val athlete = athleteRepository.getOneAthleteDTO(athleteId)
+        val athlete = athleteRepository.getOneAthleteDTO(athleteId, seriesId)
 
         assertNotNull(athlete)
     }
