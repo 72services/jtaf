@@ -111,7 +111,7 @@ class ResultsController(private val athleteRepository: AthleteRepository,
 
     private fun checkIfResultsCompleteOrAddMissingResults(category: Category, athlete: Athlete, competition: Competition, results: MutableList<Result>) {
         if (category.events.size != results.size) {
-            // TODO check if the results have the appropriate event type!
+            // TODO check if the results has the appropriate event type!
             val newResults = ArrayList<Result>()
             var i = 0
             category.events.forEach { event: Event ->

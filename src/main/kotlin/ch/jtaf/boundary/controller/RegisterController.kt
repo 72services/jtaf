@@ -36,9 +36,9 @@ class RegisterController(private val securityUserRepository: SecurityUserReposit
         if (newUser.password != newUser.passwordConfirmation) {
             model["message"] = Message(Message.danger, "Password confirm does not match!")
         } else {
-            var securityUser = SecurityUser(email = newUser.email!!, secret = passwordEncoder.encode(newUser.password), firstName = newUser.firstName
+            val securityUser = SecurityUser(email = newUser.email!!, secret = passwordEncoder.encode(newUser.password), firstName = newUser.firstName
                     ?: "", lastName = newUser.lastName ?: "", confirmationId = UUID.randomUUID().toString())
-            //securityUserRepository.save(securityUser)
+            securityUserRepository.save(securityUser)
 
             mailService.sendText(MailService.DEFAULT_FROM, newUser.email!!, "Your Registration on jtaf.io",
                     "Please confirm your registration by clicking on the link " +

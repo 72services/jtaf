@@ -22,8 +22,7 @@ class ClubController(private val clubRepository: ClubRepository,
     @CheckOrganizationAccess
     @GetMapping("/sec/{organizationKey}/club")
     fun get(@PathVariable organizationKey: String, model: Model): String {
-        val club = Club()
-        model["club"] = club
+        model["club"] = Club()
 
         return CLUB
     }
